@@ -136,94 +136,11 @@
         <button class="filter-btn" data-filter="philosophy">Philosophy</button>
       </div>
 
-      <!-- Netflix Style Grid -->
-      <div class="netflix-grid reveal">
-
-        <!-- Interstellar -->
-        <div class="netflix-card" data-category="sci-fi">
-          <div class="netflix-poster-wrap">
-            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGUtNzI2My00NTQ1LWIwNDctYmQxODIwMDM3YmRlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Interstellar Poster">
-            <div class="netflix-overlay">
-              <h2 class="netflix-title">Interstellar (2014)</h2>
-              <div class="netflix-meta">
-                <span>Sci-Fi / Space</span>
-                <span class="netflix-rating">10/10</span>
-              </div>
-              <p class="netflix-desc">
-                Christopher Nolan's visual masterpiece. Hans Zimmer's organ score adds an almost gothic scale to the void of space.
-              </p>
-              <div class="netflix-sre-box">
-                <strong>SRE Analogy: Time Dilation</strong>
-                Latency regression: 1 hour on Miller's planet is 7 years in callers' thread. Model your API timeouts!
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Inception -->
-        <div class="netflix-card" data-category="thriller">
-          <div class="netflix-poster-wrap">
-            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" alt="Inception Poster">
-            <div class="netflix-overlay">
-              <h2 class="netflix-title">Inception (2010)</h2>
-              <div class="netflix-meta">
-                <span>Thriller / Heist</span>
-                <span class="netflix-rating">9.5/10</span>
-              </div>
-              <p class="netflix-desc">
-                Architectural logic of dreams defined like code. City folding cinematography is stunning.
-              </p>
-              <div class="netflix-sre-box">
-                <strong>SRE Analogy: Virtualization</strong>
-                Nested VMs (dream layers). A crash in a lower layer propagates up. Monitor base resources closely.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Blade Runner 2049 -->
-        <div class="netflix-card" data-category="sci-fi">
-          <div class="netflix-poster-wrap">
-            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYzg0NGM2NjAtN2VjNy00MjY0LWIyM2UtYzg4M2M1YjkyMGU2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Blade Runner 2049 Poster">
-            <div class="netflix-overlay">
-              <h2 class="netflix-title">Blade Runner 2049 (2017)</h2>
-              <div class="netflix-meta">
-                <span>Sci-Fi / Cyberpunk</span>
-                <span class="netflix-rating">9.8/10</span>
-              </div>
-              <p class="netflix-desc">
-                Denis Villeneuve visual masterpiece. Slow burn detailing memory relics and what makes a soul.
-              </p>
-              <div class="netflix-sre-box">
-                <strong>SRE Analogy: Containers</strong>
-                Replicants are containers instantiated from a base immutable image. Drift defines their separate lifecycles.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2001: A Space Odyssey -->
-        <div class="netflix-card" data-category="philosophy">
-          <div class="netflix-poster-wrap">
-            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYmQyNTA1ZGItNjZjMi00NzFlLWIyNDUtYjlhYjM0MWRmYTMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="2001: A Space Odyssey Poster">
-            <div class="netflix-overlay">
-              <h2 class="netflix-title">2001: A Space Odyssey (1968)</h2>
-              <div class="netflix-meta">
-                <span>Philosophy / Classic</span>
-                <span class="netflix-rating">10/10</span>
-              </div>
-              <p class="netflix-desc">
-                Kubrick's masterpiece. The monolith acts as a cosmic rulebook. HAL 9000 shows tragedy of system conflict.
-              </p>
-              <div class="netflix-sre-box">
-                <strong>SRE Analogy: Split-Brain</strong>
-                HAL 9000 conflicting rules nervous breakdown. Partitioned cluster nodes thinking they are both master.
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /netflix-grid -->
+      <!-- Netflix Style Grid (Constructed dynamically by JavaScript) -->
+      <div class="netflix-grid reveal" id="movies-container">
+        <!-- Loader -->
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading cinema coordinates from database...</p>
+      </div>
 
     </div>
   </main>
@@ -252,5 +169,78 @@
 
 </div>
 <script src="assets/js/main.js"></script>
+
+<!-- Dynamic Movie Loader Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('movies-container');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    async function loadMovies() {
+      try {
+        const res = await fetch('/api/movies');
+        const movies = await res.json();
+        
+        container.innerHTML = '';
+        
+        if (movies.length === 0) {
+          container.innerHTML = '<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">No movies found in database.</p>';
+          return;
+        }
+
+        movies.forEach(movie => {
+          const card = document.createElement('div');
+          card.className = 'netflix-card';
+          card.dataset.category = movie.genre;
+          
+          card.innerHTML = `
+            <div class="netflix-poster-wrap">
+              <img class="netflix-poster" src="${movie.poster_url}" alt="${movie.title} Poster" onerror="this.src='../assets/images/logo.png'">
+              <div class="netflix-overlay">
+                <h2 class="netflix-title">${movie.title}</h2>
+                <div class="netflix-meta">
+                  <span>${movie.director}</span>
+                  <span class="netflix-rating">${movie.rating}/10</span>
+                </div>
+                <p class="netflix-desc">${movie.description}</p>
+                <div class="netflix-sre-box">
+                  <strong>SRE Analogy: ${movie.sre_analogy?.title || 'System'}</strong>
+                  ${movie.sre_analogy?.description || 'N/A'}
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+        // Initialize filters after dynamic items are loaded
+        initFilters();
+
+      } catch (err) {
+        container.innerHTML = `<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-red)">Failed to load data from server: ${err.message}</p>`;
+      }
+    }
+
+    function initFilters() {
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          document.querySelectorAll('.netflix-card').forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    loadMovies();
+  });
+</script>
 </body>
 </html>

@@ -183,68 +183,9 @@
       </header>
 
       <!-- Blog List -->
-      <section class="blog-list reveal">
-
-        <!-- Post 1: KubeCon -->
-        <a href="blog/kubecon-india-learnings.html" class="blog-item">
-          <div class="blog-header">
-            <div>
-              <h2 class="blog-title">KubeCon India 2026: Key Telemetry and SRE Lessons</h2>
-              <div class="blog-meta">Posted: 11 Aug 2026 · Category: Conference Notes</div>
-            </div>
-            <span class="read-time-badge">6 min read</span>
-          </div>
-          <div class="blog-tag-row">
-            <span class="blog-tag">Kubernetes</span>
-            <span class="blog-tag">OpenTelemetry</span>
-            <span class="blog-tag">eBPF</span>
-            <span class="blog-tag">KubeCon</span>
-          </div>
-          <p class="blog-summary">
-            A comprehensive breakdown of key sessions at KubeCon India. Detailing the shift towards eBPF-based auto-instrumentation, advanced OpenTelemetry collector pipelines, and managing CPU throttle metrics in multi-tenant SaaS environments.
-          </p>
-        </a>
-
-        <!-- Post 2: Runbooks -->
-        <a href="blog/automating-toil-mitratech.html" class="blog-item">
-          <div class="blog-header">
-            <div>
-              <h2 class="blog-title">Lessons in Toil Elimination: Reducing Deployments from 50 to 10 Minutes</h2>
-              <div class="blog-meta">Posted: 24 Jul 2026 · Category: Case Studies</div>
-            </div>
-            <span class="read-time-badge">4 min read</span>
-          </div>
-          <div class="blog-tag-row">
-            <span class="blog-tag">Automation</span>
-            <span class="blog-tag">FinOps</span>
-            <span class="blog-tag">SQL</span>
-            <span class="blog-tag">IIS</span>
-          </div>
-          <p class="blog-summary">
-            Walkthrough of how I identified and removed redundant database loops and sync blockages in Mitratech's TAP deployment pipeline. Resulted in a 4x deployment speedup and $4,300+ in annual operational savings.
-          </p>
-        </a>
-
-        <!-- Post 3: Observability -->
-        <a href="blog/new-relic-dashboard-strategy.html" class="blog-item">
-          <div class="blog-header">
-            <div>
-              <h2 class="blog-title">Building Observability Platforms that Product Teams Actually Use</h2>
-              <div class="blog-meta">Posted: 03 Jun 2026 · Category: Reliability</div>
-            </div>
-            <span class="read-time-badge">8 min read</span>
-          </div>
-          <div class="blog-tag-row">
-            <span class="blog-tag">New Relic</span>
-            <span class="blog-tag">SLOs</span>
-            <span class="blog-tag">Alerting</span>
-            <span class="blog-tag">Dashboards</span>
-          </div>
-          <p class="blog-summary">
-            Why default dashboards fail. A guide on structuring telemetry boards around the Four Golden Signals, defining alerts on rate-of-change anomalies rather than static thresholds, and getting developers engaged with SLO metrics.
-          </p>
-        </a>
-
+      <section class="blog-list reveal" id="blogs-container">
+        <!-- Loader -->
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading journal coordinates from database...</p>
       </section>
 
     </div>
@@ -274,5 +215,56 @@
 
 </div>
 <script src="assets/js/main.js"></script>
+
+<!-- Dynamic Blog Loader Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('blogs-container');
+
+    async function loadBlogs() {
+      try {
+        const res = await fetch('/api/blogs');
+        const blogs = await res.json();
+        
+        container.innerHTML = '';
+        
+        if (blogs.length === 0) {
+          container.innerHTML = '<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">No blog posts found in database.</p>';
+          return;
+        }
+
+        blogs.forEach(post => {
+          const item = document.createElement('a');
+          item.href = `blog/${post.slug}.html`;
+          item.className = 'blog-item';
+
+          const tagsHTML = post.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('');
+          
+          item.innerHTML = `
+            <div class="blog-header">
+              <div>
+                <h2 class="blog-title">${post.title}</h2>
+                <div class="blog-meta">Posted: ${post.created_at} · Category: ${post.category}</div>
+              </div>
+              <span class="read-time-badge">${post.read_time} min read</span>
+            </div>
+            <div class="blog-tag-row">
+              ${tagsHTML}
+            </div>
+            <p class="blog-summary">
+              ${post.summary}
+            </p>
+          `;
+          container.appendChild(item);
+        });
+
+      } catch (err) {
+        container.innerHTML = `<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-red)">Failed to load data from server: ${err.message}</p>`;
+      }
+    }
+
+    loadBlogs();
+  });
+</script>
 </body>
 </html>

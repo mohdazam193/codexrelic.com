@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console Dashboard — codexrelic.com</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--sp-6);
+      margin-top: var(--sp-6);
+    }
+
+    .dashboard-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+    }
+
+    .dashboard-card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--c-text);
+      border-bottom: 1px solid var(--c-border);
+      padding-bottom: var(--sp-2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--c-text-muted);
+      text-transform: uppercase;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-sm);
+      padding: var(--sp-3);
+      color: var(--c-text);
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--c-accent);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: var(--sp-3);
+      border-bottom: 1px solid var(--c-border);
+      margin-bottom: var(--sp-6);
+    }
+
+    .tab-btn {
+      padding: var(--sp-3) var(--sp-4);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--c-text-secondary);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: var(--c-accent);
+      border-bottom-color: var(--c-accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="../index.html">
+      <img src="../assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+    <nav class="nav">
+      <span class="nav-group-label">Sys Console</span>
+      <a class="nav-link active" href="/admin/dashboard.html">Dashboard</a>
+      <a class="nav-link" href="../index.html">View Site</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="theme-toggle"><span class="toggle-label">Light mode</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content-wrap">
+      
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">Administrative Node</p>
+          <h1 class="page-title">Console Dashboard</h1>
+          <p class="page-subtitle">Manage resume source, cinéma catalogs, and technical logs stored on MongoDB Atlas.</p>
+        </div>
+      </header>
+
+      <!-- Tabs Bar -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('movies')">Cinema Ingress</button>
+        <button class="tab-btn" onclick="switchTab('blogs')">Log Composer</button>
+        <button class="tab-btn" onclick="switchTab('resume')">Resume Upload</button>
+      </div>
+
+      <!-- Tab: Movies Ingress -->
+      <div class="tab-content active" id="tab-movies">
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">
+            <span>Add Recommended Movie</span>
+            <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--c-accent)">db.movies.insert()</span>
+          </div>
+          
+          <form onsubmit="submitForm(event, '/api/admin/movies')">
+            <div class="dashboard-grid" style="margin-top:0">
+              <div class="form-group">
+                <label class="form-label">Movie Title</label>
+                <input class="form-input" type="text" name="title" required placeholder="e.g. Interstellar">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Director</label>
+                <input class="form-input" type="text" name="director" required placeholder="e.g. Christopher Nolan">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rating (Out of 10)</label>
+                <input class="form-input" type="number" step="0.1" min="0" max="10" name="rating" required placeholder="9.5">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Genre</label>
+                <select class="form-input" name="genre" required style="background:var(--c-surface)">
+                  <option value="sci-fi">Sci-Fi</option>
+                  <option value="thriller">Thriller</option>
+                  <option value="philosophy">Philosophy</option>
+                </select>
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label class="form-label">IMDb Poster URL</label>
+                <input class="form-input" type="url" name="poster_url" required placeholder="https://m.media-amazon.com/images/...">
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label class="form-label">Review / Movie Description</label>
+                <textarea class="form-textarea" name="description" required placeholder="Write your review here..."></textarea>
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label class="form-label">SRE / DevOps Analogy Title</label>
+                <input class="form-input" type="text" name="sre_title" required placeholder="e.g. Time Dilation / Split-Brain">
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label class="form-label">SRE Analogy Description</label>
+                <textarea class="form-textarea" name="sre_desc" required placeholder="Detail the SRE concept analogy..."></textarea>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit" style="margin-top:var(--sp-5)">Insert Document</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tab: Blogs Composer -->
+      <div class="tab-content" id="tab-blogs">
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">
+            <span>Compose Technical Log Entry</span>
+            <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--c-accent)">db.blogs.insert()</span>
+          </div>
+
+          <form onsubmit="submitForm(event, '/api/admin/blogs')">
+            <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+              <div class="form-group">
+                <label class="form-label">Post Title</label>
+                <input class="form-input" type="text" name="title" required placeholder="e.g. Navigating Multi-Tenant Kubernetes Clusters">
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)">
+                <div class="form-group">
+                  <label class="form-label">Category</label>
+                  <input class="form-input" type="text" name="category" required placeholder="Conference Notes / Case Studies / Reliability">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Read Time (minutes)</label>
+                  <input class="form-input" type="number" name="read_time" required placeholder="5">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tags (comma-separated)</label>
+                <input class="form-input" type="text" name="tags" placeholder="SRE, Kubernetes, Telemetry">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Post Summary</label>
+                <input class="form-input" type="text" name="summary" required placeholder="Write a short post brief description...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Content Body (Markdown Supported)</label>
+                <textarea class="form-textarea" name="content" required style="min-height:220px" placeholder="Write markdown body content here..."></textarea>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit" style="margin-top:var(--sp-5)">Publish Log</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tab: Resume Upload -->
+      <div class="tab-content" id="tab-resume">
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">
+            <span>Upload LaTeX Source File</span>
+            <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--c-accent)">fs.write('resume.tex')</span>
+          </div>
+
+          <form onsubmit="submitResume(event)">
+            <div class="form-group">
+              <label class="form-label">Drop your resume.tex file here</label>
+              <input class="form-input" type="file" id="resume-file-input" accept=".tex" required style="background:var(--c-surface)">
+            </div>
+            <button class="btn btn-primary" type="submit" style="margin-top:var(--sp-5)">Overwrite Resume Source</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    
+    event.currentTarget.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  // Generic JSON form submit
+  async function submitForm(event, actionUrl) {
+    event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Inserting Document...';
+
+    try {
+      const res = await fetch(actionUrl, {
+        method: 'POST',
+        body: data
+      });
+      const result = await res.json();
+      if (res.ok) {
+        alert(result.message || 'Data committed successfully!');
+        form.reset();
+      } else {
+        throw new Error(result.detail || 'Write execution failed');
+      }
+    } catch (err) {
+      alert('DATABASE ERROR: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Insert Document';
+    }
+  }
+
+  // File upload form submit
+  async function submitResume(event) {
+    event.preventDefault();
+    const fileInput = document.getElementById('resume-file-input');
+    if (fileInput.files.length === 0) return;
+
+    const data = new FormData();
+    data.append('file', fileInput.files[0]);
+
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Uploading...';
+
+    try {
+      const res = await fetch('/api/admin/resume', {
+        method: 'POST',
+        body: data
+      });
+      const result = await res.json();
+      if (res.ok) {
+        alert(result.message || 'LaTeX file updated!');
+        fileInput.value = '';
+      } else {
+        throw new Error(result.detail || 'Upload failed');
+      }
+    } catch (err) {
+      alert('FILESYSTEM ERROR: ' + err.message);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Overwrite Resume Source';
+    }
+  }
+</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

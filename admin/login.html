@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +8,10 @@
   <title>System Login — codexrelic.com</title>
 
   <script>
-    (function () {
-      var t = localStorage.getItem('cr-theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', t);
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
     })();
   </script>
 
@@ -39,10 +38,7 @@
       content: " ";
       display: block;
       position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
+      top: 0; left: 0; bottom: 0; right: 0;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
       z-index: 10;
       background-size: 100% 4px, 6px 100%;
@@ -108,15 +104,8 @@
     }
 
     @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 0;
-      }
-
-      50% {
-        opacity: 1;
-      }
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
     }
 
     /* Hidden elements revealed sequentially */
@@ -140,7 +129,6 @@
       transition: color var(--t-fast), text-shadow var(--t-fast);
       text-shadow: 0 0 2px rgba(51, 255, 51, 0.4);
     }
-
     .back-link:hover {
       color: #33ff33;
       text-shadow: 0 0 4px rgba(51, 255, 51, 0.8);
@@ -149,119 +137,137 @@
 </head>
 
 <body>
-  <div class="terminal-container">
+<div class="terminal-container">
 
-    <!-- Security Disclaimer Banner -->
-    <div class="system-banner">
-      ========================================================================
-      [ WARNING: SECURE NODE REGISTRATION REQUIRED ]
-      ========================================================================
-      UNAUTHORIZED ACCESS ATTEMPTS TO THIS SERVER CAN LEAD TO LEGAL ACTION.
-      ALL CONNECTION TELEMETRY AND CLIENT IP ADDRESSES ARE LOGGED AND TRACKED.
-      IF YOU ARE NOT AN AUTHORIZED ADMINISTRATOR, DISCONNECT IMMEDIATELY.
-      ENTER AT YOUR OWN RISK.
-      ========================================================================
-    </div>
-
-    <div class="system-banner">
-      codexrelic login console (ttyv0)
-    </div>
-
-    <!-- Interactive Terminal Form -->
-    <form class="terminal-form" id="login-form" action="/admin/dashboard" method="POST">
-
-      <!-- Step 1: Login -->
-      <div class="terminal-row step-row active" id="row-login">
-        <label class="terminal-label" for="username">Realm Name:</label>
-        <input class="terminal-input-element" type="password" id="username" name="username" required autocomplete="off"
-          autofocus style="color: transparent; caret-color: transparent;">
-      </div>
-
-      <!-- Step 2: Password -->
-      <div class="terminal-row step-row" id="row-password">
-        <label class="terminal-label" for="password">passkey:</label>
-        <input class="terminal-input-element" type="password" id="password" name="password" required autocomplete="off"
-          style="color: transparent; caret-color: transparent;">
-      </div>
-
-      <!-- Step 3: Quantum Key -->
-      <div class="terminal-row step-row" id="row-key">
-        <label class="terminal-label" for="quantum-key">code to enter the realm:</label>
-        <input class="terminal-input-element" type="text" id="quantum-key" name="quantum_key" required
-          autocomplete="off" placeholder="[Paste RSA 256-bit token]">
-      </div>
-
-    </form>
-
-    <a class="back-link" href="../index.html">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-        stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12" />
-        <polyline points="12 19 5 12 12 5" />
-      </svg>
-      Exit shell (Back to Home)
-    </a>
-
+  <!-- Security Disclaimer Banner -->
+  <div class="system-banner">
+========================================================================
+[ WARNING: SECURE NODE REGISTRATION REQUIRED ]
+========================================================================
+UNAUTHORIZED ACCESS ATTEMPTS TO THIS SERVER CAN LEAD TO LEGAL ACTION.
+ALL CONNECTION TELEMETRY AND CLIENT IP ADDRESSES ARE LOGGED AND TRACKED.
+IF YOU ARE NOT AN AUTHORIZED ADMINISTRATOR, DISCONNECT IMMEDIATELY.
+ENTER AT YOUR OWN RISK.
+========================================================================
   </div>
 
-  <!-- Terminal Input Controller -->
-  <script>
-    const loginForm = document.getElementById('login-form');
-    const loginInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const keyInput = document.getElementById('quantum-key');
+  <div class="system-banner">
+codexrelic login console (ttyv0)
+  </div>
 
-    const rowPassword = document.getElementById('row-password');
-    const rowKey = document.getElementById('row-key');
+  <!-- Interactive Terminal Form -->
+  <form class="terminal-form" id="login-form" action="/api/login" method="POST">
+    
+    <!-- Step 1: Login -->
+    <div class="terminal-row step-row active" id="row-login">
+      <label class="terminal-label" for="username">Enterrealm name:</label>
+      <input class="terminal-input-element" type="password" id="username" name="username" required autocomplete="off" autofocus style="color: transparent; caret-color: transparent;">
+    </div>
 
-    // Keep terminal focused on click
-    document.addEventListener('click', () => {
-      if (loginInput.parentElement.classList.contains('active')) {
-        loginInput.focus();
-      } else if (passwordInput.parentElement.classList.contains('active')) {
+    <!-- Step 2: Password -->
+    <div class="terminal-row step-row" id="row-password">
+      <label class="terminal-label" for="password">passkey:</label>
+      <input class="terminal-input-element" type="password" id="password" name="password" required autocomplete="off" style="color: transparent; caret-color: transparent;">
+    </div>
+
+    <!-- Step 3: Quantum Key -->
+    <div class="terminal-row step-row" id="row-key">
+      <label class="terminal-label" for="quantum-key">code to enter the realm:</label>
+      <input class="terminal-input-element" type="text" id="quantum-key" name="quantum_key" required autocomplete="off" placeholder="[Paste RSA 256-bit token]">
+    </div>
+
+  </form>
+
+  <a class="back-link" href="../index.html">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Exit shell (Back to Home)
+  </a>
+
+</div>
+
+<!-- Terminal Input Controller -->
+<script>
+  const loginForm = document.getElementById('login-form');
+  const loginInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const keyInput = document.getElementById('quantum-key');
+
+  const rowPassword = document.getElementById('row-password');
+  const rowKey = document.getElementById('row-key');
+
+  // Keep terminal focused on click
+  document.addEventListener('click', () => {
+    if (loginInput.parentElement.classList.contains('active')) {
+      loginInput.focus();
+    } else if (passwordInput.parentElement.classList.contains('active')) {
+      passwordInput.focus();
+    } else if (keyInput.parentElement.classList.contains('active')) {
+      keyInput.focus();
+    }
+  });
+
+  // Handle enter key navigation & submit via fetch
+  loginInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (loginInput.value.trim() !== '') {
+        loginInput.disabled = true;
+        loginInput.parentElement.classList.remove('active');
+        rowPassword.classList.add('active');
         passwordInput.focus();
-      } else if (keyInput.parentElement.classList.contains('active')) {
+      }
+    }
+  });
+
+  passwordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (passwordInput.value !== '') {
+        passwordInput.disabled = true;
+        passwordInput.parentElement.classList.remove('active');
+        rowKey.classList.add('active');
         keyInput.focus();
       }
-    });
+    }
+  });
 
-    // Handle enter key navigation
-    loginInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (loginInput.value.trim() !== '') {
-          loginInput.disabled = true;
-          loginInput.parentElement.classList.remove('active');
-          rowPassword.classList.add('active');
-          passwordInput.focus();
-        }
-      }
-    });
+  keyInput.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (keyInput.value.trim() !== '') {
+        // Submit credentials asynchronously
+        const formData = new FormData();
+        formData.append('username', loginInput.value);
+        formData.append('password', passwordInput.value);
+        formData.append('quantum_key', keyInput.value);
 
-    passwordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (passwordInput.value !== '') {
-          passwordInput.disabled = true;
-          passwordInput.parentElement.classList.remove('active');
-          rowKey.classList.add('active');
-          keyInput.focus();
-        }
-      }
-    });
-
-    keyInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        if (keyInput.value.trim() === '') {
-          e.preventDefault();
-        } else {
-          // Submit the form
+        try {
+          const res = await fetch(loginForm.action, {
+            method: 'POST',
+            body: formData
+          });
+          const result = await res.json();
+          if (res.ok && result.redirect) {
+            window.location.href = result.redirect;
+          } else {
+            throw new Error(result.detail || 'Access Denied');
+          }
+        } catch (err) {
+          alert('ACCESS VIOLATION: ' + err.message);
+          // Reset console state
           loginInput.disabled = false;
           passwordInput.disabled = false;
+          loginInput.value = '';
+          passwordInput.value = '';
+          keyInput.value = '';
+          rowPassword.classList.remove('active');
+          rowKey.classList.remove('active');
+          loginInput.parentElement.classList.add('active');
+          loginInput.focus();
         }
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
-
 </html>
