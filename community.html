@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Hub — Mohd Azam · codexrelic.com</title>
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .placeholder-box {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-8);
+      text-align: center;
+      margin-top: var(--sp-8);
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+    <nav class="nav">
+      <span class="nav-group-label">Navigation</span>
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="resume.html">Resume</a>
+      <a class="nav-link" href="projects.html">Projects</a>
+      <a class="nav-link" href="blog.html">Blog</a>
+      <a class="nav-link" href="movies.html">Movies</a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+      <a class="nav-link active" href="community.html" aria-current="page">Community</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-status"><span class="status-dot"></span>Available · Hyderabad, IN</div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle"><span class="toggle-label">Light mode</span></button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content-wrap">
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">Hyderabad Hub</p>
+          <h1 class="page-title">Community</h1>
+          <p class="page-subtitle">Tech meetups, RSS ingestion feeds, and event guides.</p>
+        </div>
+      </header>
+      <div class="placeholder-box reveal">
+        <h2 style="font-family:var(--font-mono);font-size:1rem;color:var(--c-accent);margin-bottom:var(--sp-2)">[ WIP: Content Under Construction ]</h2>
+        <p style="font-size:0.86rem;color:var(--c-text-secondary)">This section will host the self-ingesting feed for Hyderabad Tech Events (DevOps, SRE, Cloud, FinOps). Coming soon.</p>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

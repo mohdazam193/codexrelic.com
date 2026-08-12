@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mohd Azam — Site Reliability Engineer, DevOps & Platform Engineering portfolio. Demonstrating production reliability, automation, and DevSecOps.">
+  <meta name="author" content="Mohd Azam">
+  <meta property="og:title" content="Mohd Azam · SRE &amp; Platform Engineer">
+  <meta property="og:description" content="Site Reliability Engineer with 6+ years in multi-tenant SaaS. Home of the DevFolio platform.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codexrelic.com">
+  <title>Mohd Azam · SRE &amp; Platform Engineer</title>
+
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ── Home-specific additions ── */
+    .hero-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-6);
+      margin-bottom: var(--sp-12);
+      padding: var(--sp-8) 0;
+    }
+
+    .hero-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-5);
+    }
+
+    .hero-sigil {
+      height: 60px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .hero-title-area {
+      flex: 1;
+    }
+
+    .hero-name {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--c-text);
+      margin-bottom: var(--sp-1);
+    }
+
+    .hero-rotator-wrap {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--c-accent);
+      height: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-role {
+      position: absolute;
+      top: 20px; left: 0;
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      white-space: nowrap;
+    }
+
+    .hero-role.active {
+      top: 0;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-role.exit {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+
+    .bio-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--c-text-secondary);
+      max-width: 680px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--sp-5);
+    }
+
+    .feature-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-6);
+      transition: border-color var(--t-fast), transform var(--t-fast);
+      text-decoration: none;
+    }
+
+    .feature-card:hover {
+      border-color: var(--c-accent);
+      transform: translateY(-2px);
+    }
+
+    .feature-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-3);
+    }
+
+    .feature-card-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    .feature-card-status {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px var(--sp-2);
+      border-radius: var(--r-full);
+    }
+
+    .status-active {
+      background: var(--c-accent-dim);
+      color: var(--c-accent);
+      border: 1px solid rgba(124,58,237,0.2);
+    }
+
+    .status-soon {
+      background: var(--c-surface);
+      color: var(--c-text-muted);
+      border: 1px solid var(--c-border);
+    }
+
+    .feature-card-desc {
+      font-size: 0.82rem;
+      color: var(--c-text-secondary);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .hero-brand-wrap { flex-direction: column; text-align: center; }
+      .quick-actions { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+
+      <a class="nav-link active" href="index.html" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="nav-link" href="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="nav-link" href="resume.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a class="nav-link" href="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="nav-link" href="blog.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="nav-link" href="movies.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+
+      <a class="nav-link" href="community.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a class="nav-link" href="contact.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com" title="Email">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div class="content-wrap">
+
+      <!-- Hero Header -->
+      <section class="hero-container reveal">
+        <div class="hero-brand-wrap">
+          <img class="hero-sigil" src="assets/images/logo.png" alt="Codex Relic Logo">
+          <div class="hero-title-area">
+            <h1 class="hero-name">Mohd Azam</h1>
+            <div class="hero-rotator-wrap" aria-live="polite">
+              <span class="hero-role active">DevOps Engineer II</span>
+              <span class="hero-role">Site Reliability Engineer (SRE)</span>
+              <span class="hero-role">Platform Engineering Architect</span>
+              <span class="hero-role">Philosophy &amp; Cinema Enthusiast</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="bio-text">
+          SRE and DevOps Practitioner with 6+ years maintaining high-availability production architectures for enterprise SaaS. Specialist in observability platform engineering, toil elimination, and DevSecOps integrations. Operating clusters by day; exploring ancient history, philosophy, and cinematography by night.
+        </p>
+
+        <div class="quick-actions">
+          <a class="btn btn-primary" href="resume.html">
+            View Live Resume
+          </a>
+          <a class="btn btn-outline" href="contact.html">
+            Send Message
+          </a>
+        </div>
+      </section>
+
+      <!-- Impact Stats Dashboard -->
+      <div class="impact-banner reveal" style="margin-bottom:var(--sp-12)">
+        <div class="impact-card">
+          <span class="impact-value">99.9%+</span>
+          <span class="impact-label">Uptime SLO Maintained</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">$4,300+</span>
+          <span class="impact-label">Annual FinOps Savings</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">50→10m</span>
+          <span class="impact-label">Deployment Optimization</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">4 OCPU</span>
+          <span class="impact-label">OCI Always Free Cluster</span>
+        </div>
+      </div>
+
+      <!-- Feature Deck Grid -->
+      <section class="reveal" aria-labelledby="section-explore">
+        <h2 id="section-explore" style="font-size:1.2rem;margin-bottom:var(--sp-6);font-family:var(--font-mono);text-transform:uppercase;color:var(--c-text-muted);letter-spacing:0.05em">Explore System</h2>
+        
+        <div class="features-grid">
+          
+          <!-- Resume Card -->
+          <a href="resume.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">Curriculum Vitae</span>
+              <span class="feature-card-status status-active">Live</span>
+            </div>
+            <p class="feature-card-desc">ATS-optimized, parsed layout generated directly from LaTeX source code. Includes secure PDF download.</p>
+          </a>
+
+          <!-- Blog Card -->
+          <a href="blog.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">Learning Journal</span>
+              <span class="feature-card-status status-active">Live</span>
+            </div>
+            <p class="feature-card-desc">Conference notes, technical SRE guides, and logs from DevOps meetups. Pure static markdown.</p>
+          </a>
+
+          <!-- Movies Card -->
+          <a href="movies.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">Cinema Logs</span>
+              <span class="feature-card-status status-active">Live</span>
+            </div>
+            <p class="feature-card-desc">My curated catalog of favorite cinema. Categorized thoughts on sci-fi, classics, and philosophical films.</p>
+          </a>
+
+          <!-- Ingress Form Card -->
+          <a href="contact.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">Stateless Contact</span>
+              <span class="feature-card-status status-active">Live</span>
+            </div>
+            <p class="feature-card-desc">Secure client-side validation routing queries to a serverless API endpoint. Zero db overhead.</p>
+          </a>
+
+          <!-- Projects Card -->
+          <a href="projects.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">SRE Projects</span>
+              <span class="feature-card-status status-soon">Soon</span>
+            </div>
+            <p class="feature-card-desc">Showcase case studies for platform engineering tasks, including Cloud Analyser and OCI modules.</p>
+          </a>
+
+          <!-- Community Card -->
+          <a href="community.html" class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-card-title">Hyderabad Hub</span>
+              <span class="feature-card-status status-soon">Soon</span>
+            </div>
+            <p class="feature-card-desc">Auto-ingested tech meetups (DevOps, SRE, Cloud) and local RSS feeds. Under construction.</p>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+          <span class="latex-badge">
+            <img src="assets/images/logo.png" style="height:10px;display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
+            codexrelic.com v1.0.0
+          </span>
+          <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+        </div>
+        <div class="footer-links">
+          <a href="resume.html">Resume</a>
+          <a href="blog.html">Blog</a>
+          <a href="movies.html">Movies</a>
+          <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-items">
+      <a class="mobile-nav-item active" href="index.html" aria-current="page">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="mobile-nav-item" href="resume.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+      <a class="mobile-nav-item" href="blog.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="mobile-nav-item" href="movies.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Movies
+      </a>
+    </div>
+  </nav>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mohd Azam's Learning Journal — SRE guides, DevOps walkthroughs, and logs from conferences and events.">
+  <meta name="author" content="Mohd Azam">
+  <meta property="og:title" content="Learning Journal — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="Technical SRE write-ups and logs from KubeCon, AWS and local DevOps meetups.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codexrelic.com/blog">
+  <title>Learning Journal — Mohd Azam · codexrelic.com</title>
+
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ── Blog-specific additions ── */
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+    }
+
+    .blog-item {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-6);
+      transition: border-color var(--t-fast), transform var(--t-fast);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+
+    .blog-item:hover {
+      border-color: var(--c-accent);
+      transform: translateX(3px);
+    }
+
+    .blog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--sp-3);
+    }
+
+    .blog-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--c-text);
+      line-height: 1.3;
+    }
+
+    .blog-meta {
+      font-size: 0.76rem;
+      color: var(--c-text-muted);
+      margin-top: var(--sp-1);
+    }
+
+    .blog-tag-row {
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+    }
+
+    .blog-tag {
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      background: var(--c-surface);
+      color: var(--c-text-secondary);
+      border: 1px solid var(--c-border);
+      padding: 1px var(--sp-2);
+      border-radius: var(--r-sm);
+    }
+
+    .blog-summary {
+      font-size: 0.86rem;
+      color: var(--c-text-secondary);
+      line-height: 1.7;
+    }
+
+    .read-time-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--c-accent);
+      background: var(--c-accent-dim);
+      padding: 2px var(--sp-2);
+      border-radius: var(--r-sm);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="nav-link" href="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="nav-link" href="resume.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a class="nav-link" href="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="nav-link active" href="blog.html" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="nav-link" href="movies.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+
+      <a class="nav-link" href="community.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a class="nav-link" href="contact.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com" title="Email">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div class="content-wrap">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">Engineering Logs</p>
+          <h1 class="page-title">Learning Journal</h1>
+          <p class="page-subtitle">Notes, briefings, and post-mortems from conferences and production experience.</p>
+        </div>
+      </header>
+
+      <!-- Blog List -->
+      <section class="blog-list reveal">
+
+        <!-- Post 1: KubeCon -->
+        <a href="blog/kubecon-india-learnings.html" class="blog-item">
+          <div class="blog-header">
+            <div>
+              <h2 class="blog-title">KubeCon India 2026: Key Telemetry and SRE Lessons</h2>
+              <div class="blog-meta">Posted: 11 Aug 2026 · Category: Conference Notes</div>
+            </div>
+            <span class="read-time-badge">6 min read</span>
+          </div>
+          <div class="blog-tag-row">
+            <span class="blog-tag">Kubernetes</span>
+            <span class="blog-tag">OpenTelemetry</span>
+            <span class="blog-tag">eBPF</span>
+            <span class="blog-tag">KubeCon</span>
+          </div>
+          <p class="blog-summary">
+            A comprehensive breakdown of key sessions at KubeCon India. Detailing the shift towards eBPF-based auto-instrumentation, advanced OpenTelemetry collector pipelines, and managing CPU throttle metrics in multi-tenant SaaS environments.
+          </p>
+        </a>
+
+        <!-- Post 2: Runbooks -->
+        <a href="blog/automating-toil-mitratech.html" class="blog-item">
+          <div class="blog-header">
+            <div>
+              <h2 class="blog-title">Lessons in Toil Elimination: Reducing Deployments from 50 to 10 Minutes</h2>
+              <div class="blog-meta">Posted: 24 Jul 2026 · Category: Case Studies</div>
+            </div>
+            <span class="read-time-badge">4 min read</span>
+          </div>
+          <div class="blog-tag-row">
+            <span class="blog-tag">Automation</span>
+            <span class="blog-tag">FinOps</span>
+            <span class="blog-tag">SQL</span>
+            <span class="blog-tag">IIS</span>
+          </div>
+          <p class="blog-summary">
+            Walkthrough of how I identified and removed redundant database loops and sync blockages in Mitratech's TAP deployment pipeline. Resulted in a 4x deployment speedup and $4,300+ in annual operational savings.
+          </p>
+        </a>
+
+        <!-- Post 3: Observability -->
+        <a href="blog/new-relic-dashboard-strategy.html" class="blog-item">
+          <div class="blog-header">
+            <div>
+              <h2 class="blog-title">Building Observability Platforms that Product Teams Actually Use</h2>
+              <div class="blog-meta">Posted: 03 Jun 2026 · Category: Reliability</div>
+            </div>
+            <span class="read-time-badge">8 min read</span>
+          </div>
+          <div class="blog-tag-row">
+            <span class="blog-tag">New Relic</span>
+            <span class="blog-tag">SLOs</span>
+            <span class="blog-tag">Alerting</span>
+            <span class="blog-tag">Dashboards</span>
+          </div>
+          <p class="blog-summary">
+            Why default dashboards fail. A guide on structuring telemetry boards around the Four Golden Signals, defining alerts on rate-of-change anomalies rather than static thresholds, and getting developers engaged with SLO metrics.
+          </p>
+        </a>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-items">
+      <a class="mobile-nav-item" href="index.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="mobile-nav-item" href="resume.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+      <a class="mobile-nav-item active" href="blog.html" aria-current="page">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="mobile-nav-item" href="movies.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Movies
+      </a>
+    </div>
+  </nav>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

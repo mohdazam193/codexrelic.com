@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Resume of Mohd Azam — DevOps Engineer, SRE & Platform Engineer with 6+ years in multi-tenant SaaS at Mitratech. Hyderabad, India.">
+  <meta name="author" content="Mohd Azam">
+  <meta property="og:title" content="Resume — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="DevOps Engineer · SRE · Platform Engineering — 6+ years in multi-tenant SaaS, observability, and cloud infrastructure.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codexrelic.com/resume">
+  <title>Resume — Mohd Azam · codexrelic.com</title>
+
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ── Resume-specific additions ── */
+
+    /* Headline strip */
+    .resume-headline {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--c-accent);
+      margin-top: 2px;
+      margin-bottom: var(--sp-3);
+      letter-spacing: 0.01em;
+    }
+
+    /* Sub-label inside a role (category heading) */
+    .sublabel {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--c-accent);
+      margin: var(--sp-4) 0 var(--sp-2);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+    .sublabel::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+
+    /* Metrics highlight inline */
+    .metric {
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    /* Skills table */
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .skills-table tr {
+      border-bottom: 1px solid var(--c-border);
+    }
+    .skills-table tr:last-child { border-bottom: none; }
+    .skills-table td {
+      padding: var(--sp-3) var(--sp-4);
+      font-size: 0.84rem;
+      vertical-align: top;
+    }
+    .skills-table td:first-child {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: var(--c-text);
+      white-space: nowrap;
+      width: 150px;
+    }
+    .skills-table td:last-child { color: var(--c-text-secondary); }
+    .skills-table tr:hover td { background: var(--c-card-hover); }
+
+    /* Cert item */
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-3);
+      padding: var(--sp-4) var(--sp-5);
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      transition: border-color var(--t-fast);
+    }
+    .cert-item:hover { border-color: var(--c-accent); }
+    .cert-icon {
+      width: 32px; height: 32px;
+      background: var(--c-accent-dim);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cert-name { font-weight: 600; font-size: 0.9rem; color: var(--c-text); margin-bottom: 2px; }
+    .cert-detail { font-size: 0.78rem; color: var(--c-text-muted); }
+
+    /* Project item */
+    .project-item {
+      padding: var(--sp-5);
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
+      transition: border-color var(--t-fast);
+    }
+    .project-item:hover { border-color: var(--c-accent); }
+    .project-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: var(--sp-3); margin-bottom: var(--sp-3);
+    }
+    .project-name {
+      font-family: var(--font-display); font-size: 0.95rem;
+      font-weight: 600; color: var(--c-text);
+    }
+    .project-link {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--c-accent); text-decoration: none;
+      transition: opacity var(--t-fast);
+    }
+    .project-link:hover { opacity: 0.8; }
+
+    /* Earlier experience compact list */
+    .compact-experience {
+      display: flex; flex-direction: column; gap: var(--sp-3);
+    }
+    .compact-item {
+      padding: var(--sp-3) var(--sp-4);
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: var(--r-sm); font-size: 0.84rem;
+    }
+    .compact-item-header {
+      font-weight: 600; color: var(--c-text); margin-bottom: 2px;
+    }
+    .compact-item-detail { color: var(--c-text-secondary); line-height: 1.6; }
+
+    /* Finops savings banner */
+    .impact-banner {
+      display: flex; gap: var(--sp-4); flex-wrap: wrap;
+      margin: var(--sp-5) 0;
+    }
+    .impact-card {
+      flex: 1; min-width: 140px;
+      padding: var(--sp-4) var(--sp-5);
+      background: var(--c-accent-dim);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: var(--r-md);
+      text-align: center;
+    }
+    .impact-value {
+      font-family: var(--font-display); font-size: 1.3rem;
+      font-weight: 700; color: var(--c-accent); display: block;
+      margin-bottom: 2px;
+    }
+    .impact-label { font-size: 0.72rem; color: var(--c-text-muted); }
+
+    @media (max-width: 600px) {
+      .skills-table td:first-child { width: 110px; }
+      .impact-card { min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <div class="brand-mark">CR</div>
+      <span class="brand-name">codex<span class="brand-tld">.relic</span></span>
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="nav-link" href="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="nav-link active" href="resume.html" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a class="nav-link" href="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="nav-link" href="blog.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+
+      <a class="nav-link" href="community.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a class="nav-link" href="contact.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com" title="Email">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div class="content-wrap">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">curriculum vitae</p>
+          <h1 class="page-title">Resume</h1>
+          <p class="page-subtitle">Source: <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--c-accent)">content/resume/resume.tex</code> · PDF via CI/CD</p>
+        </div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:flex-start">
+          <a class="btn btn-primary btn-sm" href="content/resume/resume.pdf" download>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+          <button class="btn btn-outline btn-sm" onclick="window.print()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print
+          </button>
+        </div>
+      </header>
+
+      <!-- ── Identity Card ── -->
+      <div class="resume-identity reveal">
+        <div class="resume-avatar" aria-hidden="true">MA</div>
+        <div class="resume-identity-info">
+          <h2 class="resume-name">Mohd Azam</h2>
+          <p class="resume-headline">DevOps Engineer · SRE · Platform Engineering — Observability, Reliability &amp; Multi-tenant SaaS · 6+ Years</p>
+          <div class="resume-contacts">
+            <a class="resume-contact-item" href="mailto:aazam.mohammad193@gmail.com">
+              <svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              aazam.mohammad193@gmail.com
+            </a>
+            <a class="resume-contact-item" href="tel:+918639293644">
+              <svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.21 12 19.79 19.79 0 0 1 1.14 3.29 2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +91-863-929-3644
+            </a>
+            <span class="resume-contact-item">
+              <svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Hyderabad, India · Open to Remote &amp; Hybrid
+            </span>
+            <a class="resume-contact-item" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener">
+              <svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              linkedin.com/in/mohdazam193
+            </a>
+            <a class="resume-contact-item" href="https://github.com/mohdazam193" target="_blank" rel="noopener">
+              <svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              github.com/mohdazam193
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Impact Numbers ── -->
+      <div class="impact-banner reveal">
+        <div class="impact-card">
+          <span class="impact-value">99.9%+</span>
+          <span class="impact-label">Uptime SLO maintained</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">$4,300+</span>
+          <span class="impact-label">Annual FinOps savings</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">50→10 min</span>
+          <span class="impact-label">Deployment time reduced</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-value">6+ Years</span>
+          <span class="impact-label">Multi-cloud SaaS operations</span>
+        </div>
+      </div>
+
+      <!-- ── Summary ── -->
+      <section class="resume-section reveal" aria-labelledby="section-summary">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-summary">Professional Summary</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <p class="resume-overview">
+          <strong style="color:var(--c-text)">DevOps / SRE engineer</strong> with 6+ years owning
+          <strong style="color:var(--c-text)">production reliability</strong> for multi-tenant Legal, GRC, and HRC SaaS products
+          at Mitratech — a product company with enterprise Fortune 500 clients. Deep hands-on experience in
+          <strong style="color:var(--c-text)">observability platform buildout</strong> (New Relic, AppDynamics, Azure Monitor),
+          <strong style="color:var(--c-text)">incident management</strong>, SLA/SLO delivery, cloud infrastructure across Azure, AWS,
+          Oracle Cloud, and Rackspace, and <strong style="color:var(--c-text)">toil-reduction automation</strong>.
+          Delivered <strong style="color:var(--c-text)">$4,300+/year in FinOps savings</strong> and maintained
+          <strong style="color:var(--c-text)">99.9%+ uptime</strong> across product lines. Currently driving
+          <strong style="color:var(--c-text)">DevSecOps adoption</strong> — shifting security left into CI/CD.
+          Comfortable with deep infrastructure ownership, on-call escalations, and platform work that helps product teams ship faster with confidence.
+        </p>
+      </section>
+
+      <!-- ── Experience ── -->
+      <section class="resume-section reveal" aria-labelledby="section-experience">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-experience">Experience</span>
+          <div class="resume-section-line"></div>
+        </div>
+
+        <div class="timeline">
+
+          <!-- DevOps Engineer II -->
+          <div class="timeline-item current">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <p class="timeline-role">DevOps Engineer II</p>
+                  <p class="timeline-company">Mitratech India LLP — Legal &amp; GRC SaaS <span class="timeline-company-loc">· Hyderabad, IN</span></p>
+                  <p style="font-size:0.76rem;color:var(--c-text-muted);margin-top:2px">Senior IC · promoted after 5+ years of full-stack infrastructure ownership</p>
+                </div>
+                <div style="text-align:right">
+                  <p class="timeline-period">Mar 2026 – Present</p>
+                  <span class="current-badge" style="margin-top:4px;display:inline-flex">Current</span>
+                </div>
+              </div>
+              <ul class="timeline-bullets">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Establishing <strong style="color:var(--c-text)">DevSecOps practices</strong> — embedding security gates into Azure DevOps pipelines and standardising IaC for reproducible, auditable infrastructure.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Owning <strong style="color:var(--c-text)">production platform reliability</strong> across multi-cloud environments; leading architecture reviews, defining SLO baselines, and approving emergency changes.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Application Administrator II -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <p class="timeline-role">Application Administrator II — Cloud Operations</p>
+                  <p class="timeline-company">Mitratech India LLP <span class="timeline-company-loc">· Hyderabad, IN</span></p>
+                  <p style="font-size:0.76rem;color:var(--c-text-muted);margin-top:2px">Products: TeamConnect · TAP · Policy Hub · CMO · Vendor Insights · INSZoom</p>
+                </div>
+                <p class="timeline-period">Mar 2023 – Mar 2026</p>
+              </div>
+
+              <div class="sublabel">Observability &amp; Reliability (SRE)</div>
+              <ul class="timeline-bullets" style="padding-top:0;border-top:none">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Built and owned <strong style="color:var(--c-text)">end-to-end observability platform</strong> using New Relic across TAP, Policy Hub, CMO, and Vendor Insights — custom dashboards, alerting, and anomaly detection.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Maintained <strong style="color:var(--c-text)">99.9%+ uptime SLO</strong> across all product lines; produced SLA reports for customers and internal stakeholders on a regular cadence.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Led <strong style="color:var(--c-text)">incident response</strong> for high-severity customer-impacting issues — triaged, mitigated, and drove post-incident review with root-cause documentation.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Investigated and resolved <strong style="color:var(--c-text)">production latency regressions</strong> using distributed tracing and log analysis (New Relic, AppDynamics, Azure Monitor).</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Approved <strong style="color:var(--c-text)">emergency change control requests</strong> and coordinated handoffs across time zones during major incidents.</li>
+              </ul>
+
+              <div class="sublabel">Platform Engineering &amp; Infrastructure</div>
+              <ul class="timeline-bullets" style="padding-top:0;border-top:none">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Owned multi-cloud platform deployments and upgrades across <strong style="color:var(--c-text)">Azure, AWS, Rackspace, and Oracle Cloud</strong> for enterprise SaaS product suite.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Led <strong style="color:var(--c-text)">Rackspace → Azure migration</strong> for TAP — improved platform stability, ~10% cost reduction, and unlocked native Azure integrations for the product team.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Managed end-to-end environment provisioning for new client onboarding: SSO integrations, SSL, load balancer config, and handover to product support.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Improved <strong style="color:var(--c-text)">CMO platform resilience</strong> via multi-node infrastructure upgrade, reducing blast radius for single-node failures.</li>
+              </ul>
+
+              <div class="sublabel">Toil Reduction &amp; Automation</div>
+              <ul class="timeline-bullets" style="padding-top:0;border-top:none">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Eliminated manual toil: built automated log cleanup and VM file sync scripts via Task Scheduler — freed engineering time for higher-leverage work.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Reduced deployment time <strong style="color:var(--c-text)">from 50 min → 10 min</strong> by removing redundant 1 TB SQL blobs ($1,500/yr saved); cleaned unused email licences ($2,800/yr). <strong style="color:var(--c-text)">Total: $4,300+/year.</strong></li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Standardised SOPs and runbooks; trained and mentored 6 contractors and junior engineers on production operations practices.</li>
+              </ul>
+
+              <div class="sublabel">Security &amp; Compliance</div>
+              <ul class="timeline-bullets" style="padding-top:0;border-top:none">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Coordinated <strong style="color:var(--c-text)">penetration testing</strong>; remediated findings via patching and service account hardening. Assisted SOC2 audit preparation and DR testing with RTO/RPO evidence.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Enforced <strong style="color:var(--c-text)">IAM policies</strong> and CIS compliance baselines across multi-tenant environments.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Application Administrator I -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div>
+                  <p class="timeline-role">Application Administrator I — Cloud Operations</p>
+                  <p class="timeline-company">Mitratech India LLP <span class="timeline-company-loc">· Hyderabad, IN</span></p>
+                  <p style="font-size:0.76rem;color:var(--c-text-muted);margin-top:2px">Products: TeamConnect · TAP · Policy Hub · CMO · LawTrack · OpRisk · Sisense · INSZoom · Tracker I-9</p>
+                </div>
+                <p class="timeline-period">Jul 2020 – Mar 2023</p>
+              </div>
+              <ul class="timeline-bullets">
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Built multi-cloud operations fundamentals across Azure, AWS, Oracle Cloud, and Rackspace; executed CI/CD deployments via Azure DevOps and PowerShell.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Assisted Rackspace → Azure migration; managed IIS/WebLogic server administration, patching, and infrastructure inventory audits.</li>
+                <li class="timeline-bullet"><span class="bullet-dot"></span>Monitored infrastructure health, triaged alerts, and executed runbooks to prevent client-impacting incidents.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Earlier Experience -->
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--c-border)"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <p class="timeline-role">Earlier Experience</p>
+                <p class="timeline-period">2013 – 2019</p>
+              </div>
+              <div class="compact-experience" style="margin-top:var(--sp-3)">
+                <div class="compact-item">
+                  <p class="compact-item-header">Tier 2 Support Engineer · Mitratech <span style="color:var(--c-text-muted);font-weight:400">Aug–Nov 2019</span></p>
+                  <p class="compact-item-detail">Enterprise eBilling (Collaborati); resolved LEDES format issues, authored SOPs that reduced team escalation time.</p>
+                </div>
+                <div class="compact-item">
+                  <p class="compact-item-header">Real-Time Analyst &amp; CS Associate · Amazon India <span style="color:var(--c-text-muted);font-weight:400">2016–2019</span></p>
+                  <p class="compact-item-detail">Global Command Center; monitored live KPIs across four international marketplaces during Prime Day; executed real-time incident remediation and authored GRASP process wiki.</p>
+                </div>
+                <div class="compact-item">
+                  <p class="compact-item-header">Technical Support · iEnergizer / Electronic Arts WWCE <span style="color:var(--c-text-muted);font-weight:400">2013–2014</span></p>
+                  <p class="compact-item-detail">Hardware/software/network escalations for EA's global player base (Battlefield 4, FIFA 14, Titanfall); mentored new agents as SME.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /timeline -->
+      </section>
+
+      <!-- ── Technical Skills ── -->
+      <section class="resume-section reveal" aria-labelledby="section-skills">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-skills">Technical Skills</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <div style="background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-md);overflow:hidden">
+          <table class="skills-table">
+            <tbody>
+              <tr>
+                <td>Observability</td>
+                <td>New Relic · AppDynamics · Azure Monitor · Oracle OMC · StatusCake</td>
+              </tr>
+              <tr>
+                <td>SRE / Reliability</td>
+                <td>Incident Management · SLO/SLA Ownership · Runbook Authoring · RCA · On-call Operations · DR Testing</td>
+              </tr>
+              <tr>
+                <td>Cloud Platforms</td>
+                <td>Azure · AWS · Oracle Cloud · Rackspace</td>
+              </tr>
+              <tr>
+                <td>CI/CD &amp; DevOps</td>
+                <td>Azure DevOps · Jenkins · PowerShell · Bash</td>
+              </tr>
+              <tr>
+                <td>Containers</td>
+                <td>Docker · Kubernetes <span style="color:var(--c-text-muted);font-size:0.8em">(Cloud Analyser project)</span></td>
+              </tr>
+              <tr>
+                <td>Security</td>
+                <td>IAM · CIS Compliance · Penetration Testing · SOC2 · DevSecOps</td>
+              </tr>
+              <tr>
+                <td>Infra / Servers</td>
+                <td>IIS 10/8 · WebLogic 12c · Oracle Linux 7.8 · Windows Server 2012/2016/2022</td>
+              </tr>
+              <tr>
+                <td>Other</td>
+                <td>Salesforce (ITSM) · Git · FinOps · Multi-tenant SaaS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ── Projects ── -->
+      <section class="resume-section reveal" aria-labelledby="section-projects">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-projects">Projects</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+          <div class="project-item">
+            <div class="project-header">
+              <p class="project-name">Cloud Analyser</p>
+              <a class="project-link" href="https://github.com/mohdazam193" target="_blank" rel="noopener">
+                github.com/mohdazam193 ↗
+              </a>
+            </div>
+            <ul class="timeline-bullets" style="border-top:none;padding-top:0">
+              <li class="timeline-bullet"><span class="bullet-dot"></span>Personal <strong style="color:var(--c-text)">Docker + Kubernetes</strong> project with AI-driven cloud cost optimisation recommendations — demonstrates container orchestration, cloud spend awareness, and applied FinOps thinking.</li>
+            </ul>
+          </div>
+          <div class="project-item" style="border-color:var(--c-accent);background:var(--c-accent-dim)">
+            <div class="project-header">
+              <p class="project-name">codexrelic.com — DevFolio Platform <span style="font-size:0.7rem;font-family:var(--font-mono);color:var(--c-accent);margin-left:8px">IN PROGRESS</span></p>
+              <a class="project-link" href="https://codexrelic.com" target="_blank" rel="noopener">codexrelic.com ↗</a>
+            </div>
+            <ul class="timeline-bullets" style="border-top:none;padding-top:0">
+              <li class="timeline-bullet"><span class="bullet-dot"></span>Building a <strong style="color:var(--c-text)">K8s-native, reproducible portfolio platform</strong> — full DevSecOps pipeline (SAST, DAST, Trivy, Cosign, Falco), Terraform IaC on Oracle Cloud Always Free, Helm chart for one-command deployment by any user.</li>
+              <li class="timeline-bullet"><span class="bullet-dot"></span>GitOps content pipeline: drop a <code style="font-family:var(--font-mono);font-size:0.85em">resume.tex</code> file → auto PR → UAT deploy via Azure DevOps.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Certifications ── -->
+      <section class="resume-section reveal" aria-labelledby="section-certs">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-certs">Certifications</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <p class="cert-name">AWS Certified Solutions Architect — Associate</p>
+            <p class="cert-detail">Storage Design · VPC · Compute Services · Identity &amp; Access Management</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Education ── -->
+      <section class="resume-section reveal" aria-labelledby="section-education">
+        <div class="resume-section-header">
+          <span class="resume-section-title" id="section-education">Education</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <div class="education-item">
+          <div>
+            <p class="education-degree">Bachelor of Technology — Computer Science &amp; Engineering</p>
+            <p class="education-institution">Dr. A.P.J. Abdul Kalam Technical University</p>
+            <p class="education-detail">Ghaziabad, Uttar Pradesh, India</p>
+          </div>
+          <div class="education-meta">
+            <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-text-muted)">2009 – 2014</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+          <span class="latex-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Rendered from resume.tex
+          </span>
+          <span style="color:var(--c-text-muted);font-size:0.75rem">PDF generated by xelatex in CI/CD pipeline</span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="projects.html">Projects</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-items">
+      <a class="mobile-nav-item" href="index.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="mobile-nav-item" href="about.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="mobile-nav-item active" href="resume.html" aria-current="page">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+      <a class="mobile-nav-item" href="projects.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="mobile-nav-item" href="blog.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+    </div>
+  </nav>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

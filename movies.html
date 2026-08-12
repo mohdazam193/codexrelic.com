@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mohd Azam's Cinema Logs — Curated movie catalog containing personal reviews and recommendations on sci-fi, classics, and philosophy.">
+  <meta name="author" content="Mohd Azam">
+  <meta property="og:title" content="Cinema Logs — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="Personal movie reviews and thoughts on science fiction, philosophy, and classic films.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codexrelic.com/movies">
+  <title>Cinema Logs — Mohd Azam · codexrelic.com</title>
+
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    .filter-bar {
+      display: flex;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-8);
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: var(--sp-2) var(--sp-4);
+      border-radius: var(--r-full);
+      font-size: 0.78rem;
+      font-weight: 500;
+      border: 1px solid var(--c-border);
+      color: var(--c-text-secondary);
+      transition: all var(--t-fast);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--c-accent);
+      color: var(--c-accent);
+      background: var(--c-accent-dim);
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="nav-link" href="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="nav-link" href="resume.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a class="nav-link" href="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="nav-link" href="blog.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="nav-link active" href="movies.html" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+
+      <a class="nav-link" href="community.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a class="nav-link" href="contact.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com" title="Email">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div class="content-wrap">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">Personal Journal</p>
+          <h1 class="page-title">Cinema Logs</h1>
+          <p class="page-subtitle">Curated catalog of cinema recommendations. Hover cards for reviews and SRE analogies.</p>
+        </div>
+      </header>
+
+      <!-- Category Filters -->
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All Genres</button>
+        <button class="filter-btn" data-filter="sci-fi">Sci-Fi</button>
+        <button class="filter-btn" data-filter="thriller">Thriller</button>
+        <button class="filter-btn" data-filter="philosophy">Philosophy</button>
+      </div>
+
+      <!-- Netflix Style Grid -->
+      <div class="netflix-grid reveal">
+
+        <!-- Interstellar -->
+        <div class="netflix-card" data-category="sci-fi">
+          <div class="netflix-poster-wrap">
+            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGUtNzI2My00NTQ1LWIwNDctYmQxODIwMDM3YmRlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Interstellar Poster">
+            <div class="netflix-overlay">
+              <h2 class="netflix-title">Interstellar (2014)</h2>
+              <div class="netflix-meta">
+                <span>Sci-Fi / Space</span>
+                <span class="netflix-rating">10/10</span>
+              </div>
+              <p class="netflix-desc">
+                Christopher Nolan's visual masterpiece. Hans Zimmer's organ score adds an almost gothic scale to the void of space.
+              </p>
+              <div class="netflix-sre-box">
+                <strong>SRE Analogy: Time Dilation</strong>
+                Latency regression: 1 hour on Miller's planet is 7 years in callers' thread. Model your API timeouts!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inception -->
+        <div class="netflix-card" data-category="thriller">
+          <div class="netflix-poster-wrap">
+            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg" alt="Inception Poster">
+            <div class="netflix-overlay">
+              <h2 class="netflix-title">Inception (2010)</h2>
+              <div class="netflix-meta">
+                <span>Thriller / Heist</span>
+                <span class="netflix-rating">9.5/10</span>
+              </div>
+              <p class="netflix-desc">
+                Architectural logic of dreams defined like code. City folding cinematography is stunning.
+              </p>
+              <div class="netflix-sre-box">
+                <strong>SRE Analogy: Virtualization</strong>
+                Nested VMs (dream layers). A crash in a lower layer propagates up. Monitor base resources closely.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blade Runner 2049 -->
+        <div class="netflix-card" data-category="sci-fi">
+          <div class="netflix-poster-wrap">
+            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYzg0NGM2NjAtN2VjNy00MjY0LWIyM2UtYzg4M2M1YjkyMGU2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Blade Runner 2049 Poster">
+            <div class="netflix-overlay">
+              <h2 class="netflix-title">Blade Runner 2049 (2017)</h2>
+              <div class="netflix-meta">
+                <span>Sci-Fi / Cyberpunk</span>
+                <span class="netflix-rating">9.8/10</span>
+              </div>
+              <p class="netflix-desc">
+                Denis Villeneuve visual masterpiece. Slow burn detailing memory relics and what makes a soul.
+              </p>
+              <div class="netflix-sre-box">
+                <strong>SRE Analogy: Containers</strong>
+                Replicants are containers instantiated from a base immutable image. Drift defines their separate lifecycles.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2001: A Space Odyssey -->
+        <div class="netflix-card" data-category="philosophy">
+          <div class="netflix-poster-wrap">
+            <img class="netflix-poster" src="https://m.media-amazon.com/images/M/MV5BYmQyNTA1ZGItNjZjMi00NzFlLWIyNDUtYjlhYjM0MWRmYTMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="2001: A Space Odyssey Poster">
+            <div class="netflix-overlay">
+              <h2 class="netflix-title">2001: A Space Odyssey (1968)</h2>
+              <div class="netflix-meta">
+                <span>Philosophy / Classic</span>
+                <span class="netflix-rating">10/10</span>
+              </div>
+              <p class="netflix-desc">
+                Kubrick's masterpiece. The monolith acts as a cosmic rulebook. HAL 9000 shows tragedy of system conflict.
+              </p>
+              <div class="netflix-sre-box">
+                <strong>SRE Analogy: Split-Brain</strong>
+                HAL 9000 conflicting rules nervous breakdown. Partitioned cluster nodes thinking they are both master.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /netflix-grid -->
+
+    </div>
+  </main>
+
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-items">
+      <a class="mobile-nav-item" href="index.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="mobile-nav-item" href="resume.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+      <a class="mobile-nav-item" href="blog.html">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="mobile-nav-item active" href="movies.html" aria-current="page">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Movies
+      </a>
+    </div>
+  </nav>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

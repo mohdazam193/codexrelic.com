@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Mohd Azam — Send a secure, stateless query for SRE or DevOps opportunities.">
+  <meta name="author" content="Mohd Azam">
+  <meta property="og:title" content="Contact — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="Send a message to Mohd Azam directly using this secure, serverless form.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://codexrelic.com/contact">
+  <title>Contact — Mohd Azam · codexrelic.com</title>
+
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ── Contact-specific additions ── */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-8);
+    }
+
+    .form-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-lg);
+      padding: var(--sp-8);
+      position: relative;
+    }
+
+    .form-group {
+      margin-bottom: var(--sp-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-secondary);
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-sm);
+      padding: var(--sp-3) var(--sp-4);
+      color: var(--c-text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: border-color var(--t-fast);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--c-accent);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Success state card replacement */
+    .form-success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--sp-4);
+      padding: var(--sp-8) 0;
+    }
+
+    .success-icon {
+      width: 48px; height: 48px;
+      background: var(--c-green-dim);
+      border-radius: 50%;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-green);
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a class="nav-link" href="about.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a class="nav-link" href="resume.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a class="nav-link" href="projects.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a class="nav-link" href="blog.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a class="nav-link" href="movies.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+
+      <a class="nav-link" href="community.html">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a class="nav-link active" href="contact.html" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="mailto:aazam.mohammad193@gmail.com" title="Email">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div class="content-wrap">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-header-text">
+          <p class="page-eyebrow">Communications Ingress</p>
+          <h1 class="page-title">Contact</h1>
+          <p class="page-subtitle">Submit a query. Routed via stateless POST API. No persistent cookies.</p>
+        </div>
+      </header>
+
+      <!-- Contact Container -->
+      <div class="contact-container reveal">
+        
+        <div class="form-card">
+          
+          <!-- Success State Display -->
+          <div class="form-success-overlay" id="success-overlay">
+            <div class="success-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 class="success-title">Message Transmitted</h2>
+            <p style="font-size:0.86rem;color:var(--c-text-secondary);max-width:320px">Your query has been posted to the serverless endpoint. I will respond to your provided coordinates shortly.</p>
+          </div>
+
+          <!-- The Form -->
+          <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            
+            <div class="form-group">
+              <label class="form-label" for="form-name">Name</label>
+              <input class="form-input" type="text" id="form-name" name="name" required placeholder="e.g. John Doe">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="form-email">Email Coordinate</label>
+              <input class="form-input" type="email" id="form-email" name="email" required placeholder="e.g. name@example.com">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="form-subject">Subject</label>
+              <input class="form-input" type="text" id="form-subject" name="subject" required placeholder="SRE Opportunity / Freelance Inquiry">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="form-message">Payload (Message)</label>
+              <textarea class="form-textarea" id="form-message" name="message" required placeholder="Write your message here..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center;margin-top:var(--sp-4)">
+              Transmit Message
+            </button>
+          </form>
+
+        </div><!-- /form-card -->
+
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script src="assets/js/main.js"></script>
+
+<!-- Stateless submit intercept script -->
+<script>
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('success-overlay');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const data = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Transmitting...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          success.style.display = 'flex';
+        } else {
+          throw new Error('Server returned non-200 status');
+        }
+      } catch (err) {
+        alert('Transmission failed. Please check your connectivity or reach out directly at aazam.mohammad193@gmail.com');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Transmit Message';
+      }
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+%% Mohd Azam — Resume  (SRE / DevOps / Platform Engineering — Product Companies)
+%% Compile with:  xelatex mohd_azam_resume.tex
+%% ─────────────────────────────────────────────────────────────────────────────
+%% HOW TO EDIT
+%%   • \role{Title}{Company}{Date}     — job header
+%%   • \rolesub{text}                  — location / product line
+%%   • \sublabel{text}                 — category heading inside a role
+%%   • \item lines inside itemize      — bullets
+%%   • \definecolor{accent}{HTML}{..}  — retheme in one line
+%%   • Target role toggle: edit Summary + headline string below
+%% ─────────────────────────────────────────────────────────────────────────────
+
+\documentclass[9pt, letterpaper]{article}
+
+\usepackage[margin=0.48in, top=0.36in, bottom=0.36in]{geometry}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{parskip}
+
+\setmainfont{Liberation Sans}[
+  BoldFont       = Liberation Sans Bold,
+  ItalicFont     = Liberation Sans Italic,
+  BoldItalicFont = Liberation Sans Bold Italic
+]
+
+\definecolor{navy}{HTML}{1B2A4A}
+\definecolor{accent}{HTML}{1D4ED8}
+\definecolor{midgray}{HTML}{3D3D3D}
+\definecolor{lightgray}{HTML}{777777}
+\definecolor{rulecolor}{HTML}{BFCFE8}
+%% Uppercase aliases (required — hyperref uppercases color names in headings)
+\colorlet{NAVY}{navy}
+\colorlet{ACCENT}{accent}
+\colorlet{MIDGRAY}{midgray}
+\colorlet{LIGHTGRAY}{lightgray}
+\colorlet{RULECOLOR}{rulecolor}
+
+\hypersetup{colorlinks=true, urlcolor=accent, linkcolor=accent, hidelinks}
+
+\titleformat{\section}
+  {\normalsize\bfseries\color{navy}}
+  {}{0em}{\MakeUppercase}
+  [\vspace{-5pt}\textcolor{rulecolor}{\rule{\linewidth}{1.2pt}}\vspace{1pt}]
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+
+\setlist[itemize]{
+  leftmargin=1.1em,
+  itemsep=0pt,
+  topsep=0pt,
+  parsep=0pt,
+  label={\textcolor{accent}{\small\textbullet}}
+}
+
+%% \role{Title}{Company}{Date}
+\newcommand{\role}[3]{%
+  \vspace{2pt}%
+  \noindent{\bfseries\color{navy}#1}%
+  \enspace{\color{lightgray}|}\enspace%
+  {\color{midgray}#2}%
+  \hfill{\small\itshape\color{lightgray}#3}%
+  \par\vspace{0pt}%
+}
+%% \rolesub{text}
+\newcommand{\rolesub}[1]{%
+  {\small\itshape\color{lightgray}#1}\par\vspace{2pt}%
+}
+%% \sublabel{Category}
+\newcommand{\sublabel}[1]{%
+  \vspace{2pt}{\small\bfseries\color{accent}#1}\par\vspace{0pt}%
+}
+%% \skillrow{Category}{Items}
+\newcommand{\skillrow}[2]{%
+  {\small\bfseries\color{navy}#1} & {\small\color{midgray}#2}\\[1.5pt]%
+}
+%% \kw{word}  — inline keyword emphasis (bold, no color change — ATS safe)
+\newcommand{\kw}[1]{\textbf{#1}}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+%% ============================================================================
+\begin{document}
+%% ============================================================================
+
+%% ── NAME & HEADLINE ──────────────────────────────────────────────────────────
+{\fontsize{26}{30}\selectfont\bfseries\color{navy}MOHD AZAM}\par
+\vspace{3pt}
+%% EDIT THIS LINE to match the role you are applying for:
+%%   Option A: DevOps Engineer | SRE | Platform Engineering --- Multi-tenant SaaS
+%%   Option B: Site Reliability Engineer | Observability & Reliability | 6+ Years
+%%   Option C: Platform Engineer | DevSecOps | Cloud Infrastructure --- SaaS Products
+{\fontsize{11}{14}\selectfont\color{accent}%
+  DevOps Engineer \textperiodcentered{} SRE \textperiodcentered{} Platform Engineering --- Observability, Reliability \& Multi-tenant SaaS \textperiodcentered{} 6+ Years}\par
+\vspace{5pt}
+\textcolor{rulecolor}{\rule{\linewidth}{1.5pt}}\par
+\vspace{4pt}
+{\small\color{midgray}%
+  +91-863-929-3644\quad|\quad
+  \href{mailto:aazam.mohammad193@gmail.com}{aazam.mohammad193@gmail.com}\quad|\quad
+  \href{https://linkedin.com/in/mohdazam193}{linkedin.com/in/mohdazam193}\quad|\quad
+  \href{https://github.com/mohdazam193}{github.com/mohdazam193}\quad|\quad
+  Hyderabad, India --- Open to Remote \& Hybrid%
+}\par
+
+%% ── SUMMARY ──────────────────────────────────────────────────────────────────
+%% Keyword targets: SRE, Platform Engineering, DevOps, observability, reliability,
+%% SLO, incident management, multi-tenant SaaS, toil reduction, production engineering
+\section*{Professional Summary}
+
+{\small\color{midgray}%
+\kw{DevOps / SRE engineer} with 6+ years owning \kw{production reliability} for \kw{multi-tenant Legal, GRC, and HRC SaaS products} at Mitratech --- a product company with enterprise Fortune 500 clients. Deep hands-on experience in \kw{observability platform buildout} (New Relic, AppDynamics, Azure Monitor), \kw{incident management}, \kw{SLA/SLO delivery}, \kw{cloud infrastructure} across Azure, AWS, Oracle Cloud, and Rackspace, and \kw{toil-reduction automation}. Delivered \textbf{\$4,300+/year in FinOps savings} and maintained \textbf{99.9\%+ uptime} across product lines. Currently driving \kw{DevSecOps adoption} --- shifting security left into CI/CD. Comfortable with deep infrastructure ownership, on-call escalations, and platform work that helps product teams ship faster with confidence.
+}
+
+%% ── EXPERIENCE ───────────────────────────────────────────────────────────────
+\section*{Experience}
+
+%%----- DevOps Engineer II ---------------------------------------------------
+\role{DevOps Engineer II}{Mitratech India LLP --- Legal \& GRC SaaS}{Mar 2026 -- Present}
+\rolesub{Hyderabad, India --- Senior IC, promoted after 5+ years of full-stack infrastructure ownership}
+\begin{itemize}
+  \item Establishing \kw{DevSecOps practices} --- embedding security gates into Azure DevOps pipelines and standardising IaC for reproducible, auditable infrastructure.
+  \item Owning \kw{production platform reliability} across multi-cloud environments; leading architecture reviews, defining \kw{SLO baselines}, and approving emergency changes.
+\end{itemize}
+
+%%----- App Admin II ---------------------------------------------------------
+\role{Application Administrator II --- Cloud Operations}{Mitratech India LLP}{Mar 2023 -- Mar 2026}
+\rolesub{Hyderabad, India --- Products: TeamConnect, TAP, Policy Hub, CMO, Vendor Insights, INSZoom (multi-tenant SaaS, Fortune 500 clients)}
+
+\sublabel{Observability \& Reliability (SRE)}
+\begin{itemize}
+  \item Built and owned \kw{end-to-end observability platform} using \kw{New Relic} across TAP, Policy Hub, CMO, and Vendor Insights --- custom dashboards, alerting, and anomaly detection.
+  \item Maintained \textbf{99.9\%+ uptime SLO} across all product lines; produced SLA reports for customers and internal stakeholders on a regular cadence.
+  \item Led \kw{incident response} for high-severity customer-impacting issues --- triaged, mitigated, and drove post-incident review with root-cause documentation.
+  \item Investigated and resolved \kw{production latency regressions} using distributed tracing and log analysis (New Relic, AppDynamics, Azure Monitor).
+  \item Approved \kw{emergency change control requests} and coordinated handoffs across time zones during major incidents.
+\end{itemize}
+
+\sublabel{Platform Engineering \& Infrastructure}
+\begin{itemize}
+  \item Owned multi-cloud platform deployments and upgrades across \kw{Azure, AWS, Rackspace, and Oracle Cloud} for enterprise SaaS product suite.
+  \item Led \kw{Rackspace to Azure migration} for TAP --- improved platform stability, \textasciitilde10\% cost reduction, and unlocked native Azure integrations for the product team.
+  \item Managed end-to-end environment provisioning for new client onboarding: SSO integrations, SSL, load balancer config, and handover to product support.
+  \item Improved \kw{CMO platform resilience} via multi-node infrastructure upgrade, reducing blast radius for single-node failures.
+\end{itemize}
+
+\sublabel{Toil Reduction \& Automation}
+\begin{itemize}
+  \item \kw{Eliminated manual toil}: built automated log cleanup and VM file sync scripts via Task Scheduler --- freed engineering time for higher-leverage work.
+  \item Reduced deployment time \textbf{from 50 min to 10 min} by removing redundant 1\,TB SQL blobs (\$1,500/yr saved); cleaned unused email licences (\$2,800/yr). \textbf{Total: \$4,300+/year.}
+  \item Standardised \kw{SOPs and runbooks}; trained and mentored 6 contractors and junior engineers on production operations practices.
+\end{itemize}
+
+\sublabel{Security \& Compliance}
+\begin{itemize}
+  \item Coordinated \kw{penetration testing}; remediated findings via patching and service account hardening. Assisted \kw{SOC2 audit} preparation and DR testing with RTO/RPO evidence.
+  \item Enforced \kw{IAM policies} and \kw{CIS compliance} baselines across multi-tenant environments.
+\end{itemize}
+
+%%----- App Admin I ----------------------------------------------------------
+\role{Application Administrator I --- Cloud Operations}{Mitratech India LLP}{Jul 2020 -- Mar 2023}
+\rolesub{Hyderabad, India --- Products: TeamConnect, TAP, Policy Hub, CMO, LawTrack, OpRisk, Sisense, INSZoom, Tracker I-9}
+\begin{itemize}
+  \item Built \kw{multi-cloud operations fundamentals} across Azure, AWS, Oracle Cloud, and Rackspace; executed \kw{CI/CD deployments} via Azure DevOps and PowerShell.
+  \item Assisted \kw{Rackspace to Azure migration}; managed IIS/WebLogic server administration, patching, and infrastructure inventory audits.
+  \item Monitored \kw{infrastructure health}, triaged alerts, and executed runbooks to prevent client-impacting incidents.
+\end{itemize}
+
+%%----- Earlier Experience (compact) ----------------------------------------
+\vspace{2pt}
+\noindent{\bfseries\color{navy}Earlier Experience}\hfill{\small\itshape\color{lightgray}2013 -- 2019}\par
+\vspace{2pt}
+\begin{itemize}
+  \item \textbf{Tier 2 Support Engineer, Mitratech} (Aug--Nov 2019) --- Enterprise eBilling (Collaborati); resolved LEDES format issues, authored SOPs that reduced team escalation time.
+  \item \textbf{Real-Time Analyst \& CS Associate, Amazon India} (2016--2019) --- Global Command Center; monitored live KPIs across four international marketplaces during Prime Day; executed real-time incident remediation and authored GRASP process wiki.
+  \item \textbf{Technical Support, iEnergizer / Electronic Arts WWCE} (2013--2014) --- Hardware/software/network escalations for EA's global player base (Battlefield 4, FIFA 14, Titanfall); mentored new agents as SME.
+\end{itemize}
+
+%% ── TECHNICAL SKILLS ─────────────────────────────────────────────────────────
+%% Keyword-dense for ATS on SRE / DevOps / Platform Engineering JDs
+\section*{Technical Skills}
+
+\vspace{3pt}
+\begin{tabular}{@{} >{\small\bfseries\color{navy}}p{2.7cm} @{\hskip 8pt} >{\small\color{midgray}}p{\dimexpr\linewidth-2.7cm-8pt\relax} @{}}
+  \skillrow{Observability}{New Relic \textperiodcentered{} AppDynamics \textperiodcentered{} Azure Monitor \textperiodcentered{} Oracle OMC \textperiodcentered{} StatusCake}
+  \skillrow{SRE / Reliability}{Incident Management \textperiodcentered{} SLO/SLA Ownership \textperiodcentered{} Runbook Authoring \textperiodcentered{} RCA \textperiodcentered{} On-call Operations \textperiodcentered{} DR Testing}
+  \skillrow{Cloud Platforms}{Azure \textperiodcentered{} AWS \textperiodcentered{} Oracle Cloud \textperiodcentered{} Rackspace}
+  \skillrow{CI/CD \& DevOps}{Azure DevOps \textperiodcentered{} Jenkins \textperiodcentered{} PowerShell \textperiodcentered{} Bash}
+  \skillrow{Containers}{Docker \textperiodcentered{} Kubernetes (Cloud Analyser project)}
+  \skillrow{Security}{IAM \textperiodcentered{} CIS Compliance \textperiodcentered{} Penetration Testing \textperiodcentered{} SOC2 \textperiodcentered{} DevSecOps}
+  \skillrow{Infra / Servers}{IIS 10/8 \textperiodcentered{} WebLogic 12c \textperiodcentered{} Oracle Linux 7.8 \textperiodcentered{} Windows Server 2012/2016/2022}
+  \skillrow{Other}{Salesforce (ITSM) \textperiodcentered{} Git \textperiodcentered{} FinOps \textperiodcentered{} Multi-tenant SaaS}
+\end{tabular}
+
+%% ── PROJECTS ─────────────────────────────────────────────────────────────────
+\section*{Projects}
+
+\role{Cloud Analyser}{\href{https://github.com/mohdazam193}{github.com/mohdazam193}}{Personal project}
+\begin{itemize}
+  \item Personal \kw{Docker + Kubernetes} project with \kw{AI-driven cloud cost optimisation} recommendations --- demonstrates container orchestration, cloud spend awareness, and applied FinOps thinking.
+\end{itemize}
+
+%% ── CERTIFICATIONS ───────────────────────────────────────────────────────────
+\section*{Certifications}
+
+\begin{itemize}
+  \item \textbf{AWS Certified Solutions Architect -- Associate} (Storage Design, VPC, Compute Services, Identity \& Access Management)
+\end{itemize}
+
+%% ── EDUCATION ────────────────────────────────────────────────────────────────
+\section*{Education}
+
+\role{Bachelor of Technology --- Computer Science}{Dr.\;A.P.J.\;Abdul Kalam Technical University}{2009 -- 2014}
+\rolesub{Ghaziabad, Uttar Pradesh}
+
+%% ============================================================================
+\end{document}
