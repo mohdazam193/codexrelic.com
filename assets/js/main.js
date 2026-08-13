@@ -47,6 +47,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setTheme(getTheme());
   }
 
+  /* Palette Selector */
+  const swatches = document.querySelectorAll('.palette-swatch');
+  const savedPalette = localStorage.getItem('cr-palette') || 'default';
+  
+  swatches.forEach(swatch => {
+    if (swatch.dataset.palette === savedPalette) {
+      swatch.classList.add('active');
+    } else {
+      swatch.classList.remove('active');
+    }
+    
+    swatch.addEventListener('click', () => {
+      const pal = swatch.dataset.palette;
+      document.documentElement.setAttribute('data-palette', pal);
+      localStorage.setItem('cr-palette', pal);
+      swatches.forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+    });
+  });
+
   /* Active Nav Link */
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link, .mobile-nav-item').forEach(link => {

@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects — Mohd Azam · codexrelic.com</title>
-  <script>
+    <script>
     (function(){
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
       document.documentElement.setAttribute('data-theme',t);
+      var p=localStorage.getItem('cr-palette')||'default';
+      document.documentElement.setAttribute('data-palette',p);
     })();
   </script>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -25,7 +27,7 @@
 </head>
 <body>
 <div class="layout">
-    <aside class="sidebar" aria-label="Main navigation">
+      <aside class="sidebar" aria-label="Main navigation">
     <a class="sidebar-brand" href="index.html">
       <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
     </a>
@@ -72,6 +74,15 @@
     </nav>
 
     <div class="sidebar-footer">
+      <span class="palette-selector-label">Theme Accent</span>
+      <div class="palette-selector" aria-label="Choose color palette">
+        <button class="palette-swatch" data-palette="default" style="background:#5dd1c5" title="Default Teal"></button>
+        <button class="palette-swatch" data-palette="cyber" style="background:#10b981" title="Cyber Emerald"></button>
+        <button class="palette-swatch" data-palette="cosmic" style="background:#8b5cf6" title="Cosmic Violet"></button>
+        <button class="palette-swatch" data-palette="codex" style="background:#f59e0b" title="Ancient Codex"></button>
+        <button class="palette-swatch" data-palette="steel" style="background:#3b82f6" title="Steel SRE"></button>
+      </div>
+
       <div class="sidebar-status">
         <span class="status-dot" aria-hidden="true"></span>
         Available · Hyderabad, IN
