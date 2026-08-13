@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (label) label.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
       if (icon)  icon.innerHTML    = theme === 'dark' ? sunIcon() : moonIcon();
     }
+    // Swap brand logo source dynamically
+    document.querySelectorAll('.sidebar-brand img, img.brand-logo').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src) {
+        const baseDir = src.substring(0, src.lastIndexOf('/') + 1);
+        img.setAttribute('src', baseDir + (theme === 'dark' ? 'logo-dark.png' : 'logo-light.png'));
+      }
+    });
   }
 
   if (toggle) {

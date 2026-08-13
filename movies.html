@@ -7,7 +7,7 @@
   <meta name="author" content="Mohd Azam">
   <meta property="og:title" content="Cinema Logs — Mohd Azam · codexrelic.com">
   <meta property="og:description" content="Personal movie reviews and thoughts on science fiction, philosophy, and classic films.">
-  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:image" content="assets/images/logo-dark.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://codexrelic.com/movies">
   <title>Cinema Logs — Mohd Azam · codexrelic.com</title>
@@ -54,7 +54,7 @@
   <!-- ═══ SIDEBAR ════════════════════════════════════ -->
   <aside class="sidebar" aria-label="Main navigation">
     <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo.png" style="height:24px;object-fit:contain" alt="Logo">
+      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
     </a>
 
     <nav class="nav" role="navigation">
@@ -195,7 +195,7 @@
           
           card.innerHTML = `
             <div class="netflix-poster-wrap">
-              <img class="netflix-poster" src="${movie.poster_url}" alt="${movie.title} Poster" onerror="this.src='../assets/images/logo.png'">
+              <img class="netflix-poster" src="${movie.poster_url}" alt="${movie.title} Poster" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='assets/images/logo-dark.png';">
               <div class="netflix-overlay">
                 <h2 class="netflix-title">${movie.title}</h2>
                 <div class="netflix-meta">

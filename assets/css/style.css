@@ -8,24 +8,24 @@
 /* 1. DESIGN TOKENS */
 
 :root {
-  --c-bg:            #09090e;
-  --c-surface:       #0f0f17;
-  --c-card:          #13131e;
-  --c-card-hover:    #1a1a28;
-  --c-border:        #1e1e30;
-  --c-border-accent: #7c3aed;
-  --c-text:          #e2e2f0;
-  --c-text-secondary:#8888a8;
-  --c-text-muted:    #50506a;
-  --c-accent:        #7c3aed;
-  --c-accent-hover:  #9747ff;
-  --c-accent-dim:    rgba(124, 58, 237, 0.10);
-  --c-accent-glow:   0 0 24px rgba(124, 58, 237, 0.20);
+  --c-bg:            #07151e;
+  --c-surface:       #0b2431;
+  --c-card:          #0e2e3f;
+  --c-card-hover:    #143d54;
+  --c-border:        #194a64;
+  --c-border-accent: #5dd1c5;
+  --c-text:          #e2f0f5;
+  --c-text-secondary:#8bb1c4;
+  --c-text-muted:    #557d91;
+  --c-accent:        #5dd1c5;
+  --c-accent-hover:  #7ce5db;
+  --c-accent-dim:    rgba(93, 209, 197, 0.10);
+  --c-accent-glow:   0 0 24px rgba(93, 209, 197, 0.20);
   --c-green:         #10b981;
   --c-green-dim:     rgba(16, 185, 129, 0.10);
   --c-red:           #ef4444;
   --c-amber:         #f59e0b;
-  --sidebar-w:       220px;
+  --sidebar-w:       240px;
   --content-max:     860px;
   --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
   --sp-5: 1.25rem; --sp-6: 1.5rem; --sp-8: 2rem; --sp-10: 2.5rem;
@@ -38,19 +38,19 @@
 }
 
 [data-theme="light"] {
-  --c-bg:            #f8f8fc;
-  --c-surface:       #efeff8;
+  --c-bg:            #ecf1f0;
+  --c-surface:       #f7faf9;
   --c-card:          #ffffff;
-  --c-card-hover:    #f4f4ff;
-  --c-border:        #e2e2ee;
-  --c-border-accent: #7c3aed;
-  --c-text:          #0d0d18;
-  --c-text-secondary:#4a4a62;
-  --c-text-muted:    #9090a8;
-  --c-accent:        #7c3aed;
-  --c-accent-hover:  #6d28d9;
-  --c-accent-dim:    rgba(124, 58, 237, 0.07);
-  --c-accent-glow:   0 0 24px rgba(124, 58, 237, 0.12);
+  --c-card-hover:    #f2f6f5;
+  --c-border:        #d2deda;
+  --c-border-accent: #087a6e;
+  --c-text:          #0a282b;
+  --c-text-secondary:#405f63;
+  --c-text-muted:    #829c9f;
+  --c-accent:        #087a6e;
+  --c-accent-hover:  #065e55;
+  --c-accent-dim:    rgba(8, 122, 110, 0.07);
+  --c-accent-glow:   0 0 24px rgba(8, 122, 110, 0.12);
 }
 
 /* 2. RESET */
@@ -111,6 +111,12 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 .sidebar-brand {
   display: flex; align-items: center; gap: var(--sp-3);
   margin-bottom: var(--sp-8); text-decoration: none; flex-shrink: 0;
+}
+.sidebar-brand img {
+  height: 82px !important;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .brand-mark {
