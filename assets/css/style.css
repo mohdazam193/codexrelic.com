@@ -27,6 +27,7 @@
   --c-amber:         #f59e0b;
   --sidebar-w:       240px;
   --content-max:     860px;
+  --logo-watermark:  url('../images/logo-dark.png');
   --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
   --sp-5: 1.25rem; --sp-6: 1.5rem; --sp-8: 2rem; --sp-10: 2.5rem;
   --sp-12: 3rem; --sp-16: 4rem;
@@ -51,6 +52,7 @@
   --c-accent-hover:  #065e55;
   --c-accent-dim:    rgba(8, 122, 110, 0.07);
   --c-accent-glow:   0 0 24px rgba(8, 122, 110, 0.12);
+  --logo-watermark:  url('../images/logo-light.png');
 }
 
 /* 2. RESET */
@@ -544,4 +546,24 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   color: var(--c-accent);
   display: block;
   margin-bottom: 2px;
+}
+
+/* ============================================================
+   17. SUBTLE WATERMARK BACKGROUND
+   ============================================================ */
+body::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 240px;
+  background-image: var(--logo-watermark);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.015; /* Extremely subtle watermark */
+  pointer-events: none;
+  z-index: -1;
 }
