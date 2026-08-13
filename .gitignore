@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.agents/
+.gemini/
+venv/
+.venv/
+env/
+.env/

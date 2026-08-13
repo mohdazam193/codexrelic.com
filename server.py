@@ -1,7 +1,10 @@
 import os
+import re
+import time
 import secrets
 import bcrypt
 from datetime import datetime
+from collections import defaultdict
 from fastapi import FastAPI, HTTPException, Request, Response, Form, UploadFile, File, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -12,20 +15,122 @@ load_dotenv()
 
 app = FastAPI(title="codexrelic API")
 
+# ── Dynamic Workspace Paths ──
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# ── HTTP Security Headers Middleware ──
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: https:; "
+        "connect-src 'self';"
+    )
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+# ── Cache Control for Development ──
+@app.middleware("http")
+async def disable_cache_for_development(request: Request, call_next):
+    response = await call_next(request)
+    path = request.url.path.lower()
+    if path.endswith((".html", ".css", ".js", ".png", ".jpg", ".svg")) or path == "/" or path == "/index.html":
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
+# ── Simple In-Memory Rate Limiter for Login ──
+class RateLimiter:
+    def __init__(self, requests_limit: int, window_seconds: int):
+        self.requests_limit = requests_limit
+        self.window_seconds = window_seconds
+        self.requests = defaultdict(list)
+
+    def is_allowed(self, key: str) -> bool:
+        now = time.time()
+        self.requests[key] = [t for t in self.requests[key] if now - t < self.window_seconds]
+        if len(self.requests[key]) >= self.requests_limit:
+            return False
+        self.requests[key].append(now)
+        return True
+
+login_limiter = RateLimiter(requests_limit=5, window_seconds=60)
+
 # Connect to MongoDB Atlas (fallback to local if URI not provided)
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-client = MongoClient(MONGO_URI)
-db = client.get_database("codexrelic")
 
-# Hardcoded session token in-memory check (reboot clears sessions)
+DB_CONNECTED = False
+db = None
+
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=2000)
+    client.admin.command('ping')
+    db = client.get_database("codexrelic")
+    DB_CONNECTED = True
+    print("[*] MongoDB Atlas connection verified.")
+except Exception as e:
+    redacted_uri = MONGO_URI
+    if "@" in MONGO_URI:
+        parts = MONGO_URI.split("@")
+        scheme = parts[0].split("://")
+        if len(scheme) == 2:
+            redacted_uri = f"{scheme[0]}://****:****@{parts[-1]}"
+    print(f"[!] Resiliency Warning: Failed to connect to MongoDB database at '{redacted_uri}'")
+    print(f"    Error detail: {e}")
+    print("    Server starting in resilient mode. Database-dependent endpoints will return default mocks.")
+
+# Fallback in-memory session token store (used only when database is offline)
 ACTIVE_SESSIONS = set()
 
-# ── Seed Admin User (Makes Setup Simple) ──
+# ── Session Persistence Utilities (12-Factor Stateless Processes) ──
+def add_session(token: str):
+    if DB_CONNECTED and db is not None:
+        try:
+            db.get_collection("sessions").insert_one({
+                "token": token,
+                "created_at": datetime.utcnow()
+            })
+            return
+        except Exception as e:
+            print(f"[!] Error persistent storing session: {e}")
+    # Local fallback
+    ACTIVE_SESSIONS.add(token)
+
+def verify_session(token: str) -> bool:
+    if DB_CONNECTED and db is not None:
+        try:
+            sess = db.get_collection("sessions").find_one({"token": token})
+            if sess:
+                return True
+        except Exception as e:
+            print(f"[!] Error verifying persistent session: {e}")
+        return False
+    # Local fallback
+    return token in ACTIVE_SESSIONS
+
+# ── Seed Admin User (Securely requiring env values) ──
 def seed_admin():
-    admin_user = os.getenv("ADMIN_USER", "admin")
-    admin_pass = os.getenv("ADMIN_PASS", "codexrelic")
-    admin_code = os.getenv("ADMIN_CODE", "123456")
+    if not DB_CONNECTED or db is None:
+        return
+        
+    admin_user = os.getenv("ADMIN_USER")
+    admin_pass = os.getenv("ADMIN_PASS")
+    admin_code = os.getenv("ADMIN_CODE")
     
+    if not admin_user or not admin_pass or not admin_code:
+        print("[!] Warning: ADMIN_USER, ADMIN_PASS, or ADMIN_CODE environment variables are missing.")
+        print("    Default seeds are skipped. Please configure your .env file to enable authentication.")
+        return
+        
     users_col = db.get_collection("users")
     if users_col.count_documents({}) == 0:
         salt = bcrypt.gensalt()
@@ -37,26 +142,29 @@ def seed_admin():
             "passkey_hash": hashed_pass.decode('utf-8'),
             "realm_code_hash": hashed_code.decode('utf-8')
         })
-        print(f"[*] Seeding default administrator user: username='{admin_user}'")
+        print(f"[*] Seeding administrator user: username='{admin_user}'")
 
 seed_admin()
 
 # ── Authentication Helper Dependency ──
 def get_current_user(request: Request):
     token = request.cookies.get("session_token")
-    if not token or token not in ACTIVE_SESSIONS:
+    if not token or not verify_session(token):
         raise HTTPException(status_code=401, detail="Unauthorized session")
     return token
 
 # ── Public APIs ──
 
-# Movies List API (with static fallbacks)
 @app.get("/api/movies")
 def get_movies():
-    movies_col = db.get_collection("movies")
-    movies = list(movies_col.find({}, {"_id": 0}))
-    
-    # Static fallbacks if DB is completely empty
+    movies = []
+    if DB_CONNECTED and db is not None:
+        try:
+            movies_col = db.get_collection("movies")
+            movies = list(movies_col.find({}, {"_id": 0}))
+        except Exception as e:
+            print(f"[!] Error querying movies collection: {e}")
+            
     if not movies:
         movies = [
             {
@@ -110,12 +218,16 @@ def get_movies():
         ]
     return movies
 
-# Blogs List API (with static fallbacks)
 @app.get("/api/blogs")
 def get_blogs():
-    blogs_col = db.get_collection("blogs")
-    blogs = list(blogs_col.find({}, {"_id": 0}))
-    
+    blogs = []
+    if DB_CONNECTED and db is not None:
+        try:
+            blogs_col = db.get_collection("blogs")
+            blogs = list(blogs_col.find({}, {"_id": 0}))
+        except Exception as e:
+            print(f"[!] Error querying blogs collection: {e}")
+            
     if not blogs:
         blogs = [
             {
@@ -141,12 +253,33 @@ def get_blogs():
 
 # ── Authentication API ──
 @app.post("/api/login")
-def login(response: Response, username: str = Form(...), password: str = Form(...), quantum_key: str = Form(...)):
+def login(request: Request, response: Response, username: str = Form(...), password: str = Form(...), quantum_key: str = Form(...)):
+    # Rate limit check by client IP
+    client_ip = request.client.host if request.client else "unknown"
+    if not login_limiter.is_allowed(client_ip):
+        raise HTTPException(status_code=429, detail="Too many login attempts. Please try again in a minute.")
+
+    dev_user = os.getenv("ADMIN_USER")
+    dev_pass = os.getenv("ADMIN_PASS")
+    dev_code = os.getenv("ADMIN_CODE")
+
+    if not dev_user or not dev_pass or not dev_code:
+        raise HTTPException(status_code=500, detail="Administrative credentials not configured in environment.")
+
+    if not DB_CONNECTED or db is None:
+        # Fallback local developer verification if MongoDB is unconfigured
+        if username == dev_user and password == dev_pass and quantum_key == dev_code:
+            session_token = secrets.token_hex(32)
+            add_session(session_token)
+            response.set_cookie(key="session_token", value=session_token, httponly=True, secure=True, samesite="lax", path="/")
+            return {"status": "authenticated", "redirect": "/admin/dashboard.html"}
+        raise HTTPException(status_code=503, detail="Database offline. Authentication attempt failed.")
+
     users_col = db.get_collection("users")
     user = users_col.find_one({"username": username})
     
     if not user:
-        raise HTTPException(status_code=401, detail="Authentication failed")
+        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
     
     # Validate passkey
     pass_valid = bcrypt.checkpw(password.encode('utf-8'), user["passkey_hash"].encode('utf-8'))
@@ -157,11 +290,12 @@ def login(response: Response, username: str = Form(...), password: str = Form(..
         raise HTTPException(status_code=401, detail="Authentication credentials invalid")
         
     session_token = secrets.token_hex(32)
-    ACTIVE_SESSIONS.add(session_token)
+    add_session(session_token)
     response.set_cookie(
         key="session_token",
         value=session_token,
         httponly=True,
+        secure=True,
         samesite="lax",
         path="/"
     )
@@ -169,7 +303,6 @@ def login(response: Response, username: str = Form(...), password: str = Form(..
 
 # ── Protected Admin CMS APIs ──
 
-# Add Movie Endpoint
 @app.post("/api/admin/movies", dependencies=[Depends(get_current_user)])
 def add_movie(
     title: str = Form(...),
@@ -181,6 +314,9 @@ def add_movie(
     sre_title: str = Form(...),
     sre_desc: str = Form(...)
 ):
+    if not DB_CONNECTED or db is None:
+        raise HTTPException(status_code=503, detail="Write actions failed: Database is offline. Please configure MONGO_URI in .env")
+        
     movies_col = db.get_collection("movies")
     movies_col.insert_one({
         "title": title,
@@ -195,9 +331,8 @@ def add_movie(
         },
         "created_at": datetime.utcnow()
     })
-    return {"status": "success", "message": "Movie inserted into MongoDB Atlas"}
+    return {"status": "success", "message": "Movie document inserted into MongoDB Atlas!"}
 
-# Add Blog Endpoint
 @app.post("/api/admin/blogs", dependencies=[Depends(get_current_user)])
 def add_blog(
     title: str = Form(...),
@@ -207,8 +342,20 @@ def add_blog(
     tags: str = Form(...),
     read_time: int = Form(...)
 ):
+    if not DB_CONNECTED or db is None:
+        raise HTTPException(status_code=503, detail="Write actions failed: Database is offline. Please configure MONGO_URI in .env")
+
     blogs_col = db.get_collection("blogs")
-    slug = title.lower().replace(" ", "-").replace(":", "").replace("?", "")
+    
+    # ── Collision-Safe Slug Generation ──
+    base_slug = re.sub(r'[^a-z0-9\s-]', '', title.lower())
+    base_slug = re.sub(r'[\s-]+', '-', base_slug).strip('-')
+    slug = base_slug
+    counter = 1
+    while blogs_col.count_documents({"slug": slug}) > 0:
+        slug = f"{base_slug}-{counter}"
+        counter += 1
+
     tag_list = [t.strip() for t in tags.split(",") if t.strip()]
     
     blogs_col.insert_one({
@@ -221,19 +368,24 @@ def add_blog(
         "read_time": read_time,
         "created_at": datetime.utcnow().strftime("%Y-%m-%d")
     })
-    return {"status": "success", "message": "Blog post inserted into MongoDB Atlas"}
+    return {"status": "success", "message": "Blog post document inserted into MongoDB Atlas!"}
 
-# Upload Resume Endpoint
 @app.post("/api/admin/resume", dependencies=[Depends(get_current_user)])
 async def upload_resume(file: UploadFile = File(...)):
     if not file.filename.endswith(".tex"):
         raise HTTPException(status_code=400, detail="Invalid file type. LaTeX (.tex) required.")
         
-    save_path = "/Users/azam.mohd/Desktop/codexrelic.com/codexrelic.com/content/resume/resume.tex"
+    # File size validation to prevent denial of service (DoS)
+    MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB limit
+    contents = await file.read(MAX_FILE_SIZE + 1)
+    if len(contents) > MAX_FILE_SIZE:
+        raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
+
+    save_path = os.path.join(BASE_DIR, "public", "content", "resume", "resume.tex")
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     
     with open(save_path, "wb") as f:
-        f.write(await file.read())
+        f.write(contents)
         
     return {"status": "success", "message": "LaTeX source file overwritten successfully"}
 
@@ -241,19 +393,20 @@ async def upload_resume(file: UploadFile = File(...)):
 @app.get("/admin/dashboard.html")
 def get_dashboard(request: Request):
     token = request.cookies.get("session_token")
-    if not token or token not in ACTIVE_SESSIONS:
+    if not token or not verify_session(token):
         return RedirectResponse(url="/admin/login.html")
-    # Serve the dashboard page from file
-    with open("/Users/azam.mohd/Desktop/codexrelic.com/codexrelic.com/admin/dashboard.html", "r") as f:
+    # Serve the dashboard page from secure templates folder
+    dashboard_path = os.path.join(BASE_DIR, "templates", "admin", "dashboard.html")
+    with open(dashboard_path, "r") as f:
         return HTMLResponse(content=f.read())
 
 # ── Serve Static Assets ──
-app.mount("/assets", StaticFiles(directory="/Users/azam.mohd/Desktop/codexrelic.com/codexrelic.com/assets"), name="assets")
+app.mount("/assets", StaticFiles(directory=os.path.join(BASE_DIR, "public", "assets")), name="assets")
 
 # Fallback to serve static root HTML files (must be defined LAST)
-app.mount("/", StaticFiles(directory="/Users/azam.mohd/Desktop/codexrelic.com/codexrelic.com", html=True), name="static")
+app.mount("/", StaticFiles(directory=os.path.join(BASE_DIR, "public"), html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
-    # Serves the app locally on port 8000
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    # Serves the app locally on port 8000 with hot-reloading
+    uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)

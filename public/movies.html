@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mohd Azam's Learning Journal — SRE guides, DevOps walkthroughs, and logs from conferences and events.">
+  <meta name="description" content="Mohd Azam's Cinema Logs — Curated movie catalog containing personal reviews and recommendations on sci-fi, classics, and philosophy.">
   <meta name="author" content="Mohd Azam">
-  <meta property="og:title" content="Learning Journal — Mohd Azam · codexrelic.com">
-  <meta property="og:description" content="Technical SRE write-ups and logs from KubeCon, AWS and local DevOps meetups.">
+  <meta property="og:title" content="Cinema Logs — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="Personal movie reviews and thoughts on science fiction, philosophy, and classic films.">
   <meta property="og:image" content="assets/images/logo-dark.png">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://codexrelic.com/blog">
-  <title>Learning Journal — Mohd Azam · codexrelic.com</title>
+  <meta property="og:url" content="https://codexrelic.com/movies">
+  <title>Cinema Logs — Mohd Azam · codexrelic.com</title>
 
     <script>
     (function(){
@@ -25,81 +25,27 @@
   <link rel="stylesheet" href="assets/css/style.css">
 
   <style>
-    /* ── Blog-specific additions ── */
-    .blog-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-8);
-    }
-
-    .blog-item {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-md);
-      padding: var(--sp-6);
-      transition: border-color var(--t-fast), transform var(--t-fast);
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-3);
-    }
-
-    .blog-item:hover {
-      border-color: var(--c-accent);
-      transform: translateX(3px);
-    }
-
-    .blog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--sp-3);
-    }
-
-    .blog-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--c-text);
-      line-height: 1.3;
-    }
-
-    .blog-meta {
-      font-size: 0.76rem;
-      color: var(--c-text-muted);
-      margin-top: var(--sp-1);
-    }
-
-    .blog-tag-row {
+    .filter-bar {
       display: flex;
       gap: var(--sp-2);
+      margin-bottom: var(--sp-8);
       flex-wrap: wrap;
     }
 
-    .blog-tag {
-      font-size: 0.68rem;
-      font-family: var(--font-mono);
-      background: var(--c-surface);
-      color: var(--c-text-secondary);
+    .filter-btn {
+      padding: var(--sp-2) var(--sp-4);
+      border-radius: var(--r-full);
+      font-size: 0.78rem;
+      font-weight: 500;
       border: 1px solid var(--c-border);
-      padding: 1px var(--sp-2);
-      border-radius: var(--r-sm);
-    }
-
-    .blog-summary {
-      font-size: 0.86rem;
       color: var(--c-text-secondary);
-      line-height: 1.7;
+      transition: all var(--t-fast);
     }
 
-    .read-time-badge {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--c-accent);
       color: var(--c-accent);
       background: var(--c-accent-dim);
-      padding: 2px var(--sp-2);
-      border-radius: var(--r-sm);
-      white-space: nowrap;
     }
   </style>
 </head>
@@ -132,11 +78,11 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         Projects
       </a>
-      <a href="blog.html" class="nav-link active" aria-current="page">
+      <a href="blog.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Blog
       </a>
-      <a href="movies.html" class="nav-link">
+      <a href="movies.html" class="nav-link active" aria-current="page">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
         Movies
       </a>
@@ -187,17 +133,25 @@
       <!-- Page Header -->
       <header class="page-header">
         <div class="page-header-text">
-          <p class="page-eyebrow">Engineering Logs</p>
-          <h1 class="page-title">Learning Journal</h1>
-          <p class="page-subtitle">Notes, briefings, and post-mortems from conferences and production experience.</p>
+          <p class="page-eyebrow">Personal Journal</p>
+          <h1 class="page-title">Cinema Logs</h1>
+          <p class="page-subtitle">Curated catalog of cinema recommendations. Hover cards for reviews and SRE analogies.</p>
         </div>
       </header>
 
-      <!-- Blog List -->
-      <section class="blog-list reveal" id="blogs-container">
+      <!-- Category Filters -->
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All Genres</button>
+        <button class="filter-btn" data-filter="sci-fi">Sci-Fi</button>
+        <button class="filter-btn" data-filter="thriller">Thriller</button>
+        <button class="filter-btn" data-filter="philosophy">Philosophy</button>
+      </div>
+
+      <!-- Netflix Style Grid (Constructed dynamically by JavaScript) -->
+      <div class="netflix-grid reveal" id="movies-container">
         <!-- Loader -->
-        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading journal coordinates from database...</p>
-      </section>
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading cinema coordinates from database...</p>
+      </div>
 
     </div>
   </main>
@@ -217,11 +171,11 @@
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         Resume
       </a>
-      <a href="blog.html" class="mobile-nav-item active" aria-current="page">
+      <a href="blog.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Blog
       </a>
-      <a href="movies.html" class="mobile-nav-item">
+      <a href="movies.html" class="mobile-nav-item active" aria-current="page">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
         Movies
       </a>
@@ -231,54 +185,95 @@
 </div>
 <script src="assets/js/main.js"></script>
 
-<!-- Dynamic Blog Loader Script -->
+<!-- Dynamic Movie Loader Script -->
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    const container = document.getElementById('blogs-container');
+    const container = document.getElementById('movies-container');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
-    async function loadBlogs() {
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+    }
+
+    async function loadMovies() {
       try {
-        const res = await fetch('/api/blogs');
-        const blogs = await res.json();
+        const res = await fetch('/api/movies');
+        const movies = await res.json();
         
         container.innerHTML = '';
         
-        if (blogs.length === 0) {
-          container.innerHTML = '<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">No blog posts found in database.</p>';
+        if (movies.length === 0) {
+          container.innerHTML = '<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">No movies found in database.</p>';
           return;
         }
 
-        blogs.forEach(post => {
-          const item = document.createElement('a');
-          item.href = `blog/${post.slug}.html`;
-          item.className = 'blog-item';
-
-          const tagsHTML = post.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('');
+        movies.forEach(movie => {
+          const card = document.createElement('div');
+          card.className = 'netflix-card';
+          card.dataset.category = escapeHTML(movie.genre);
           
-          item.innerHTML = `
-            <div class="blog-header">
-              <div>
-                <h2 class="blog-title">${post.title}</h2>
-                <div class="blog-meta">Posted: ${post.created_at} · Category: ${post.category}</div>
+          const title = escapeHTML(movie.title);
+          const posterUrl = escapeHTML(movie.poster_url);
+          const director = escapeHTML(movie.director);
+          const rating = escapeHTML(movie.rating);
+          const description = escapeHTML(movie.description);
+          const sreTitle = escapeHTML(movie.sre_analogy?.title || 'System');
+          const sreDesc = escapeHTML(movie.sre_analogy?.description || 'N/A');
+
+          card.innerHTML = `
+            <div class="netflix-poster-wrap">
+              <img class="netflix-poster" src="${posterUrl}" alt="${title} Poster" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='assets/images/logo-dark.png';">
+              <div class="netflix-overlay">
+                <h2 class="netflix-title">${title}</h2>
+                <div class="netflix-meta">
+                  <span>${director}</span>
+                  <span class="netflix-rating">${rating}/10</span>
+                </div>
+                <p class="netflix-desc">${description}</p>
+                <div class="netflix-sre-box">
+                  <strong>SRE Analogy: ${sreTitle}</strong>
+                  ${sreDesc}
+                </div>
               </div>
-              <span class="read-time-badge">${post.read_time} min read</span>
             </div>
-            <div class="blog-tag-row">
-              ${tagsHTML}
-            </div>
-            <p class="blog-summary">
-              ${post.summary}
-            </p>
           `;
-          container.appendChild(item);
+          container.appendChild(card);
         });
 
+        // Initialize filters after dynamic items are loaded
+        initFilters();
+
       } catch (err) {
-        container.innerHTML = `<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-red)">Failed to load data from server: ${err.message}</p>`;
+        container.innerHTML = `<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-red)">Failed to load data from server: ${escapeHTML(err.message)}</p>`;
       }
     }
 
-    loadBlogs();
+    function initFilters() {
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          document.querySelectorAll('.netflix-card').forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    loadMovies();
   });
 </script>
 </body>
