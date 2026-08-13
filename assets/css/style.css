@@ -687,14 +687,14 @@ body::after {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 240px;
+  width: 300vw;
+  height: 300vh;
+  transform: translate(-50%, -50%) rotate(-25deg);
   background-image: var(--logo-watermark);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.035; /* Subtle anti-copy watermark */
+  background-size: 280px 140px; /* Elegant tiled size */
+  background-repeat: repeat;
+  background-position: 0 0;
+  opacity: 0.022; /* Clean, subtle anti-copy watermark */
   pointer-events: none;
   z-index: -1;
 }
