@@ -16,7 +16,7 @@ pool:
 variables:
   imageName: 'yourusername/codexrelic-api'
   dockerRegistryServiceConnection: 'dockerhub-connection' # Replace with actual connection name
-  snykServiceConnection: 'snyk-connection' # Replace with actual connection name
+  snykServiceConnection: 'Synk' # Replace with actual connection name
 
 stages:
 - stage: BuildAndScan

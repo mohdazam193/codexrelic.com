@@ -13,7 +13,7 @@ pool:
 variables:
   - group: 'terraform' # Make sure this matches the exact name of your variable group!
   - name: snykServiceConnection
-    value: 'snyk-connection' # Replace with actual connection name
+    value: 'Synk' # Replace with actual connection name
 
 stages:
 - stage: ScanIaC
