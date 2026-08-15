@@ -11,7 +11,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  snykServiceConnection: 'snyk-connection' # Replace with actual connection name
+  - group: 'terraform Variables' # Make sure this matches the exact name of your variable group!
+  - name: snykServiceConnection
+    value: 'snyk-connection' # Replace with actual connection name
 
 stages:
 - stage: ScanIaC
