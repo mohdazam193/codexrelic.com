@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: yourusername/codexrelic-api
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: uat.codexrelic.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  MONGO_URI: ""
+  ADMIN_USER: ""
+  ADMIN_PASS: ""
+  ADMIN_CODE: ""

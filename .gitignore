@@ -9,3 +9,7 @@ venv/
 .venv/
 env/
 .env/
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
