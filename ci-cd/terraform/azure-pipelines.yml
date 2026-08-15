@@ -38,6 +38,9 @@ stages:
     steps:
     - checkout: self
     - script: |
+        wget https://releases.hashicorp.com/terraform/1.9.3/terraform_1.9.3_linux_amd64.zip
+        unzip terraform_1.9.3_linux_amd64.zip
+        sudo mv terraform /usr/local/bin/
         terraform init \
           -backend-config="address=$(TF_STATE_URL)" \
           -backend-config="update_method=PUT"
@@ -71,6 +74,9 @@ stages:
           - download: current
             artifact: tfplan
           - script: |
+              wget https://releases.hashicorp.com/terraform/1.9.3/terraform_1.9.3_linux_amd64.zip
+              unzip terraform_1.9.3_linux_amd64.zip
+              sudo mv terraform /usr/local/bin/
               cp $(Pipeline.Workspace)/tfplan/tfplan ./
               terraform init \
                 -backend-config="address=$(TF_STATE_URL)" \
