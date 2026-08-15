@@ -29,6 +29,7 @@ stages:
         serviceConnectionEndpoint: $(snykServiceConnection)
         testType: 'iac'
         targetFile: 'iac/terraform/main.tf'
+        additionalArguments: '-d'
         monitorWhen: 'always'
         failOnIssues: true # Strict mode
         severityThreshold: 'high'
