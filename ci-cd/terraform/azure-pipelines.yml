@@ -86,3 +86,4 @@ stages:
               TF_VAR_region: $(TF_VAR_region)
               TF_VAR_compartment_id: $(TF_VAR_compartment_id)
               TF_VAR_availability_domain: $(TF_VAR_availability_domain)
+# Trigger pipeline
