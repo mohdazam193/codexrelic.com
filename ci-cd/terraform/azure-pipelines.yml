@@ -28,7 +28,7 @@ stages:
       inputs:
         serviceConnectionEndpoint: $(snykServiceConnection)
         testType: 'iac'
-        targetFile: 'iac/'
+        testDirectory: 'iac'
         monitorWhen: 'always'
         failOnIssues: true # Strict mode
         severityThreshold: 'high'
