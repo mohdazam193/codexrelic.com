@@ -38,6 +38,7 @@ stages:
     steps:
     - checkout: self
     - script: |
+        echo "$(TF_VAR_private_key_base64)" | base64 -d > private_key.pem
         wget https://releases.hashicorp.com/terraform/1.9.3/terraform_1.9.3_linux_amd64.zip
         unzip terraform_1.9.3_linux_amd64.zip
         sudo mv terraform /usr/local/bin/
@@ -51,7 +52,7 @@ stages:
         TF_VAR_tenancy_ocid: $(TF_VAR_tenancy_ocid)
         TF_VAR_user_ocid: $(TF_VAR_user_ocid)
         TF_VAR_fingerprint: $(TF_VAR_fingerprint)
-        TF_VAR_private_key: $(TF_VAR_private_key)
+        TF_VAR_private_key_path: 'private_key.pem'
         TF_VAR_region: $(TF_VAR_region)
         TF_VAR_compartment_id: $(TF_VAR_compartment_id)
         TF_VAR_availability_domain: $(TF_VAR_availability_domain)
@@ -74,6 +75,7 @@ stages:
           - download: current
             artifact: tfplan
           - script: |
+              echo "$(TF_VAR_private_key_base64)" | base64 -d > private_key.pem
               wget https://releases.hashicorp.com/terraform/1.9.3/terraform_1.9.3_linux_amd64.zip
               unzip terraform_1.9.3_linux_amd64.zip
               sudo mv terraform /usr/local/bin/
@@ -88,7 +90,7 @@ stages:
               TF_VAR_tenancy_ocid: $(TF_VAR_tenancy_ocid)
               TF_VAR_user_ocid: $(TF_VAR_user_ocid)
               TF_VAR_fingerprint: $(TF_VAR_fingerprint)
-              TF_VAR_private_key: $(TF_VAR_private_key)
+              TF_VAR_private_key_path: 'private_key.pem'
               TF_VAR_region: $(TF_VAR_region)
               TF_VAR_compartment_id: $(TF_VAR_compartment_id)
               TF_VAR_availability_domain: $(TF_VAR_availability_domain)
