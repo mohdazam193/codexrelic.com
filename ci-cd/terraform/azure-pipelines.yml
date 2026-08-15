@@ -40,7 +40,9 @@ stages:
     steps:
     - checkout: self
     - script: |
-        terraform init
+        terraform init \
+          -backend-config="address=$(TF_STATE_URL)" \
+          -backend-config="update_method=PUT"
         terraform plan -out=tfplan
       workingDirectory: 'iac/terraform'
       displayName: 'Run Terraform Plan'
@@ -72,7 +74,9 @@ stages:
             artifact: tfplan
           - script: |
               cp $(Pipeline.Workspace)/tfplan/tfplan ./
-              terraform init
+              terraform init \
+                -backend-config="address=$(TF_STATE_URL)" \
+                -backend-config="update_method=PUT"
               terraform apply -auto-approve tfplan
             workingDirectory: 'iac/terraform'
             displayName: 'Run Terraform Apply'

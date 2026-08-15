@@ -1,4 +1,5 @@
 terraform {
+  backend "http" {}
   required_providers {
     oci = {
       source  = "oracle/oci"
