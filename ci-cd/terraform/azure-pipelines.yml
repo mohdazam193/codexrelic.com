@@ -23,16 +23,11 @@ stages:
     displayName: Snyk IaC Scan
     steps:
     - checkout: self
-    - task: SnykSecurityScan@1
-      displayName: Run Snyk IaC Vulnerability Scan
-      inputs:
-        serviceConnectionEndpoint: $(snykServiceConnection)
-        testType: 'iac'
-        targetFile: 'iac/terraform/main.tf'
-        additionalArguments: '-d'
-        monitorWhen: 'always'
-        failOnIssues: true # Strict mode
-        severityThreshold: 'high'
+    - script: |
+        npm install -g snyk
+        snyk auth $(SNYK_TOKEN)
+        snyk iac test iac/
+      displayName: 'Run Snyk IaC Vulnerability Scan'
 
 - stage: TerraformPlan
   displayName: Terraform Plan
