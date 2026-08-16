@@ -12,6 +12,7 @@
 [![Oracle Cloud](https://img.shields.io/badge/Hosting-Oracle%20Cloud%20Free-F80000?logo=oracle)](https://oracle.com/cloud/free)
 [![Cloudflare](https://img.shields.io/badge/CDN-Cloudflare-F38020?logo=cloudflare)](https://cloudflare.com)
 [![OWASP](https://img.shields.io/badge/Security-OWASP%20Top%2010%20Tested-brightgreen?logo=owasp)](https://owasp.org/www-project-top-ten/)
+[![12-Factor](https://img.shields.io/badge/Architecture-12--Factor%20App-0078D4)](https://12factor.net/)
 
 </div>
 

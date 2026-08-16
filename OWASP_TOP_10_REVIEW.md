@@ -1,8 +1,8 @@
 # OWASP Top 10 (2021) Security Review
-**Application:** codexrelic API (`server.py`)
+**Application:** codexrelic.com Full Stack (`server.py`, `public/`, `templates/`, `automation/`)
 **Date:** August 2026
 
-This document reviews the `server.py` and overall architecture of `codexrelic.com` against the industry-standard OWASP Top 10 - 2021 list.
+This document provides a comprehensive security review of the entire `codexrelic.com` full-stack architecture (frontend assets, backend API, authentication, and deployment pipelines) against the industry-standard OWASP Top 10 - 2021 list.
 
 ---
 
@@ -12,8 +12,6 @@ This document reviews the `server.py` and overall architecture of `codexrelic.co
   - All admin endpoints (`/api/admin/*`) are protected using FastAPI's `Depends(get_current_user)`.
   - The JWT is scoped to the `username` (subject) and strictly validates expiry (`exp`).
   - The `/admin/dashboard.html` route explicitly checks the session token before serving the static HTML file from a protected `templates` folder that cannot be accessed publicly.
-- **Finding:** A minor typo in `server.py` on line 431 calls `verify_session(token)` instead of `verify_jwt(token)`. *(Note: I will fix this in a moment).*
-
 ### A02:2021 – Cryptographic Failures 🟢 (Strong Pass)
 *Is sensitive data protected at rest and in transit?*
 - **Strengths:**
