@@ -170,11 +170,16 @@ codexrelic login console (ttyv0)
       <input class="terminal-input-element" type="password" id="password" name="password" required autocomplete="off" style="color: transparent; caret-color: transparent;">
     </div>
 
-    <!-- Step 3: Quantum Key -->
+    <!-- Step 3: Ed25519 Private Key -->
     <div class="terminal-row step-row" id="row-key">
-      <label class="terminal-label" for="quantum-key">code to enter the realm:</label>
-      <input class="terminal-input-element" type="password" id="quantum-key" name="quantum_key" required autocomplete="off" placeholder="[Paste RSA 256-bit token]">
+      <label class="terminal-label" for="ed25519-key">ed25519 private key:</label>
+      <input class="terminal-input-element" type="password" id="ed25519-key" autocomplete="off" placeholder="[Paste base64 private key]"
+             style="color: transparent; caret-color: #33ff33;">
     </div>
+
+    <!-- Hidden fields populated by JS -->
+    <input type="hidden" id="challenge" name="challenge">
+    <input type="hidden" id="signature" name="signature">
 
   </form>
 
@@ -187,13 +192,37 @@ codexrelic login console (ttyv0)
 
 <!-- Terminal Input Controller -->
 <script>
-  const loginForm = document.getElementById('login-form');
-  const loginInput = document.getElementById('username');
+  // ── Utility: base64 <-> ArrayBuffer ──
+  function b64ToBuffer(b64) {
+    const bin = atob(b64);
+    const buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    return buf.buffer;
+  }
+  function bufToB64(buf) {
+    return btoa(String.fromCharCode(...new Uint8Array(buf)));
+  }
+
+  const loginForm   = document.getElementById('login-form');
+  const loginInput  = document.getElementById('username');
   const passwordInput = document.getElementById('password');
-  const keyInput = document.getElementById('quantum-key');
+  const keyInput    = document.getElementById('ed25519-key');
+  const challengeField = document.getElementById('challenge');
+  const signatureField = document.getElementById('signature');
 
   const rowPassword = document.getElementById('row-password');
-  const rowKey = document.getElementById('row-key');
+  const rowKey      = document.getElementById('row-key');
+
+  // ── Fetch a fresh 30-second challenge from server on page load ──
+  (async () => {
+    try {
+      const res = await fetch('/api/auth/challenge');
+      const { challenge } = await res.json();
+      challengeField.value = challenge;
+    } catch (e) {
+      console.error('[auth] Failed to fetch challenge:', e);
+    }
+  })();
 
   // Keep terminal focused on click
   document.addEventListener('click', () => {
@@ -206,7 +235,7 @@ codexrelic login console (ttyv0)
     }
   });
 
-  // Handle enter key navigation & submit via fetch
+  // Step 1 → Step 2
   loginInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -219,6 +248,7 @@ codexrelic login console (ttyv0)
     }
   });
 
+  // Step 2 → Step 3
   passwordInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -231,40 +261,67 @@ codexrelic login console (ttyv0)
     }
   });
 
+  // Step 3 → Sign + Submit
   keyInput.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (keyInput.value.trim() !== '') {
-        // Submit credentials asynchronously
-        const formData = new FormData();
-        formData.append('username', loginInput.value);
-        formData.append('password', passwordInput.value);
-        formData.append('quantum_key', keyInput.value);
+      const rawKey = keyInput.value.trim();
+      if (!rawKey) return;
 
-        try {
-          const res = await fetch(loginForm.action, {
-            method: 'POST',
-            body: formData
-          });
-          const result = await res.json();
-          if (res.ok && result.redirect) {
-            window.location.href = result.redirect;
-          } else {
-            throw new Error(result.detail || 'Access Denied');
-          }
-        } catch (err) {
-          alert('ACCESS VIOLATION: ' + err.message);
-          // Reset console state
-          loginInput.disabled = false;
-          passwordInput.disabled = false;
-          loginInput.value = '';
-          passwordInput.value = '';
-          keyInput.value = '';
-          rowPassword.classList.remove('active');
-          rowKey.classList.remove('active');
-          loginInput.parentElement.classList.add('active');
-          loginInput.focus();
+      const challenge = challengeField.value;
+      if (!challenge) {
+        alert('ACCESS VIOLATION: Challenge token missing. Please reload the page.');
+        return;
+      }
+
+      try {
+        // ── Import Ed25519 private key via Web Crypto API ──
+        // Key never leaves the browser — only the signature is transmitted.
+        const keyBytes = b64ToBuffer(rawKey);
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw', keyBytes,
+          { name: 'Ed25519' },
+          false,
+          ['sign']
+        );
+
+        // ── Sign: challenge:username ──
+        const message = new TextEncoder().encode(`${challenge}:${loginInput.value}`);
+        const sigBuffer = await crypto.subtle.sign('Ed25519', cryptoKey, message);
+        signatureField.value = bufToB64(sigBuffer);
+
+        // ── Submit credentials + signature (private key NOT included) ──
+        const formData = new FormData();
+        formData.append('username',  loginInput.value);
+        formData.append('password',  passwordInput.value);
+        formData.append('challenge', challenge);
+        formData.append('signature', signatureField.value);
+
+        const res = await fetch(loginForm.action, { method: 'POST', body: formData });
+        const result = await res.json();
+        if (res.ok && result.redirect) {
+          window.location.href = result.redirect;
+        } else {
+          throw new Error(result.detail || 'Access Denied');
         }
+      } catch (err) {
+        alert('ACCESS VIOLATION: ' + err.message);
+        // Reset console state — also refresh challenge for next attempt
+        loginInput.disabled = false;
+        passwordInput.disabled = false;
+        loginInput.value = '';
+        passwordInput.value = '';
+        keyInput.value = '';
+        rowPassword.classList.remove('active');
+        rowKey.classList.remove('active');
+        loginInput.parentElement.classList.add('active');
+        loginInput.focus();
+        // Fetch a new challenge
+        try {
+          const r = await fetch('/api/auth/challenge');
+          const { challenge } = await r.json();
+          challengeField.value = challenge;
+        } catch (_) {}
       }
     }
   });

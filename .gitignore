@@ -13,3 +13,5 @@ env/
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
+AUTH_SETUP.md
+keys/

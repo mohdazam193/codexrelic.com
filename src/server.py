@@ -1,10 +1,13 @@
 import os
 import re
 import time
+import base64
 import secrets
 import bcrypt
-from datetime import datetime
+import jwt
+from datetime import datetime, timedelta
 from collections import defaultdict
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from fastapi import FastAPI, HTTPException, Request, Response, Form, UploadFile, File, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -48,6 +51,38 @@ async def disable_cache_for_development(request: Request, call_next):
         response.headers["Expires"] = "0"
     return response
 
+# ── JWT Configuration ──
+JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRE_HOURS = 24
+
+def create_jwt(username: str) -> str:
+    """Issue a signed JWT valid for JWT_EXPIRE_HOURS."""
+    if not JWT_SECRET:
+        raise RuntimeError("JWT_SECRET environment variable is not configured.")
+    payload = {
+        "sub": username,
+        "iat": datetime.utcnow(),
+        "exp": datetime.utcnow() + timedelta(hours=JWT_EXPIRE_HOURS),
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+def verify_jwt(token: str) -> bool:
+    """Verify a JWT signature and expiry. Returns True if valid."""
+    if not JWT_SECRET:
+        return False
+    try:
+        jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return True
+    except jwt.ExpiredSignatureError:
+        return False
+    except jwt.InvalidTokenError:
+        return False
+
+# ── Ed25519 Challenge Store (one-time use, 30-second TTL) ──
+# nonce (base64) -> issued_at (unix timestamp)
+_challenges: dict[str, float] = {}
+
 # ── Simple In-Memory Rate Limiter for Login ──
 class RateLimiter:
     def __init__(self, requests_limit: int, window_seconds: int):
@@ -88,34 +123,7 @@ except Exception as e:
     print(f"    Error detail: {e}")
     print("    Server starting in resilient mode. Database-dependent endpoints will return default mocks.")
 
-# Fallback in-memory session token store (used only when database is offline)
-ACTIVE_SESSIONS = set()
-
-# ── Session Persistence Utilities (12-Factor Stateless Processes) ──
-def add_session(token: str):
-    if DB_CONNECTED and db is not None:
-        try:
-            db.get_collection("sessions").insert_one({
-                "token": token,
-                "created_at": datetime.utcnow()
-            })
-            return
-        except Exception as e:
-            print(f"[!] Error persistent storing session: {e}")
-    # Local fallback
-    ACTIVE_SESSIONS.add(token)
-
-def verify_session(token: str) -> bool:
-    if DB_CONNECTED and db is not None:
-        try:
-            sess = db.get_collection("sessions").find_one({"token": token})
-            if sess:
-                return True
-        except Exception as e:
-            print(f"[!] Error verifying persistent session: {e}")
-        return False
-    # Local fallback
-    return token in ACTIVE_SESSIONS
+# ── Sessions are now stateless JWTs — no DB session store required ──
 
 # ── Seed Admin User (Securely requiring env values) ──
 def seed_admin():
@@ -146,12 +154,25 @@ def seed_admin():
 
 seed_admin()
 
-# ── Authentication Helper Dependency ──
+# ── Authentication Helper Dependency (JWT-based, stateless) ──
 def get_current_user(request: Request):
     token = request.cookies.get("session_token")
-    if not token or not verify_session(token):
+    if not token or not verify_jwt(token):
         raise HTTPException(status_code=401, detail="Unauthorized session")
     return token
+
+# ── Challenge Endpoint (Ed25519 login, Step 1) ──
+@app.get("/api/auth/challenge")
+def get_challenge():
+    """Issue a fresh one-time 32-byte nonce for Ed25519 challenge-response login."""
+    nonce = secrets.token_bytes(32)
+    nonce_b64 = base64.b64encode(nonce).decode()
+    _challenges[nonce_b64] = time.time()
+    # Evict expired challenges (> 30 seconds old)
+    expired = [k for k, t in list(_challenges.items()) if time.time() - t > 30]
+    for k in expired:
+        del _challenges[k]
+    return {"challenge": nonce_b64}
 
 # ── Public APIs ──
 
@@ -251,53 +272,67 @@ def get_blogs():
         ]
     return blogs
 
-# ── Authentication API ──
+# ── Authentication API (Ed25519 Challenge-Response + JWT) ──
 @app.post("/api/login")
-def login(request: Request, response: Response, username: str = Form(...), password: str = Form(...), quantum_key: str = Form(...)):
-    # Rate limit check by client IP
+def login(
+    request: Request,
+    response: Response,
+    username: str = Form(...),
+    password: str = Form(...),
+    challenge: str = Form(...),
+    signature: str = Form(...),
+):
+    # ── 1. Rate limit by client IP ──
     client_ip = request.client.host if request.client else "unknown"
     if not login_limiter.is_allowed(client_ip):
         raise HTTPException(status_code=429, detail="Too many login attempts. Please try again in a minute.")
 
+    # ── 2. Validate challenge is fresh and one-time ──
+    issued_at = _challenges.get(challenge)
+    if issued_at is None or (time.time() - issued_at) > 30:
+        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
+    del _challenges[challenge]  # One-time use — prevents replay attacks
+
+    # ── 3. Verify Ed25519 signature ──
+    pub_key_b64 = os.getenv("ADMIN_ED25519_PUBLIC_KEY")
+    if not pub_key_b64:
+        raise HTTPException(status_code=500, detail="Server authentication key not configured.")
+    try:
+        pub_key_bytes = base64.b64decode(pub_key_b64)
+        public_key = Ed25519PublicKey.from_public_bytes(pub_key_bytes)
+        message = f"{challenge}:{username}".encode()
+        public_key.verify(base64.b64decode(signature), message)
+    except Exception:
+        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
+
+    # ── 4. Verify bcrypt password against DB (or env fallback) ──
     dev_user = os.getenv("ADMIN_USER")
     dev_pass = os.getenv("ADMIN_PASS")
-    dev_code = os.getenv("ADMIN_CODE")
 
-    if not dev_user or not dev_pass or not dev_code:
-        raise HTTPException(status_code=500, detail="Administrative credentials not configured in environment.")
+    if DB_CONNECTED and db is not None:
+        users_col = db.get_collection("users")
+        user = users_col.find_one({"username": username})
+        if not user:
+            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
+        if not bcrypt.checkpw(password.encode('utf-8'), user["passkey_hash"].encode('utf-8')):
+            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
+    else:
+        # Resilient fallback: env-based verification when DB is offline
+        if not dev_user or not dev_pass:
+            raise HTTPException(status_code=500, detail="Administrative credentials not configured in environment.")
+        if username != dev_user or password != dev_pass:
+            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
 
-    if not DB_CONNECTED or db is None:
-        # Fallback local developer verification if MongoDB is unconfigured
-        if username == dev_user and password == dev_pass and quantum_key == dev_code:
-            session_token = secrets.token_hex(32)
-            add_session(session_token)
-            response.set_cookie(key="session_token", value=session_token, httponly=True, secure=True, samesite="lax", path="/")
-            return {"status": "authenticated", "redirect": "/admin/dashboard.html"}
-        raise HTTPException(status_code=503, detail="Database offline. Authentication attempt failed.")
-
-    users_col = db.get_collection("users")
-    user = users_col.find_one({"username": username})
-    
-    if not user:
-        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-    
-    # Validate passkey
-    pass_valid = bcrypt.checkpw(password.encode('utf-8'), user["passkey_hash"].encode('utf-8'))
-    # Validate realm code
-    code_valid = bcrypt.checkpw(quantum_key.encode('utf-8'), user["realm_code_hash"].encode('utf-8'))
-    
-    if not (pass_valid and code_valid):
-        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-        
-    session_token = secrets.token_hex(32)
-    add_session(session_token)
+    # ── 5. Issue stateless JWT — no DB write needed ──
+    token = create_jwt(username)
     response.set_cookie(
         key="session_token",
-        value=session_token,
+        value=token,
         httponly=True,
         secure=True,
         samesite="lax",
-        path="/"
+        path="/",
+        max_age=JWT_EXPIRE_HOURS * 3600,
     )
     return {"status": "authenticated", "redirect": "/admin/dashboard.html"}
 
