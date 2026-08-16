@@ -5,6 +5,9 @@ import base64
 import secrets
 import bcrypt
 import jwt
+import logging
+import json
+import sys
 from datetime import datetime, timedelta
 from collections import defaultdict
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
@@ -13,6 +16,25 @@ from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pymongo import MongoClient
 from dotenv import load_dotenv
+
+# ── Structured JSON Logger Setup ──
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "timestamp": self.formatTime(record, self.datefmt),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "module": record.module,
+        }
+        if record.exc_info:
+            log_record["exc_info"] = self.formatException(record.exc_info)
+        return json.dumps(log_record)
+
+logger = logging.getLogger("codexrelic_api")
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setFormatter(JSONFormatter())
+logger.addHandler(handler)
 
 load_dotenv()
 
@@ -111,7 +133,7 @@ try:
     client.admin.command('ping')
     db = client.get_database("codexrelic")
     DB_CONNECTED = True
-    print("[*] MongoDB Atlas connection verified.")
+    logger.info("MongoDB Atlas connection verified.")
 except Exception as e:
     redacted_uri = MONGO_URI
     if "@" in MONGO_URI:
@@ -119,9 +141,8 @@ except Exception as e:
         scheme = parts[0].split("://")
         if len(scheme) == 2:
             redacted_uri = f"{scheme[0]}://****:****@{parts[-1]}"
-    print(f"[!] Resiliency Warning: Failed to connect to MongoDB database at '{redacted_uri}'")
-    print(f"    Error detail: {e}")
-    print("    Server starting in resilient mode. Database-dependent endpoints will return default mocks.")
+    logger.error(f"Resiliency Warning: Failed to connect to MongoDB database at '{redacted_uri}'. Error detail: {e}")
+    logger.warning("Server starting in resilient mode. Database-dependent endpoints will return default mocks.")
 
 # ── Sessions are now stateless JWTs — no DB session store required ──
 
@@ -135,8 +156,7 @@ def seed_admin():
     admin_code = os.getenv("ADMIN_CODE")
     
     if not admin_user or not admin_pass or not admin_code:
-        print("[!] Warning: ADMIN_USER, ADMIN_PASS, or ADMIN_CODE environment variables are missing.")
-        print("    Default seeds are skipped. Please configure your .env file to enable authentication.")
+        logger.warning("ADMIN_USER, ADMIN_PASS, or ADMIN_CODE environment variables are missing. Default seeds are skipped.")
         return
         
     users_col = db.get_collection("users")
@@ -150,7 +170,7 @@ def seed_admin():
             "passkey_hash": hashed_pass.decode('utf-8'),
             "realm_code_hash": hashed_code.decode('utf-8')
         })
-        print(f"[*] Seeding administrator user: username='{admin_user}'")
+        logger.info(f"Seeding administrator user: username='{admin_user}'")
 
 seed_admin()
 
@@ -285,6 +305,7 @@ def login(
     # ── 1. Rate limit by client IP ──
     client_ip = request.client.host if request.client else "unknown"
     if not login_limiter.is_allowed(client_ip):
+        logger.warning(f"Login rate limit exceeded for IP: {client_ip}")
         raise HTTPException(status_code=429, detail="Too many login attempts. Please try again in a minute.")
 
     # ── 2. Validate challenge is fresh and one-time ──
@@ -319,11 +340,14 @@ def login(
     else:
         # Resilient fallback: env-based verification when DB is offline
         if not dev_user or not dev_pass:
+            logger.error("Administrative credentials not configured in environment.")
             raise HTTPException(status_code=500, detail="Administrative credentials not configured in environment.")
         if username != dev_user or password != dev_pass:
+            logger.warning(f"Failed login attempt for user: {username} from IP: {client_ip} (fallback mode)")
             raise HTTPException(status_code=401, detail="Authentication credentials invalid")
 
     # ── 5. Issue stateless JWT — no DB write needed ──
+    logger.info(f"Successful login for user: {username} from IP: {client_ip}")
     token = create_jwt(username)
     response.set_cookie(
         key="session_token",
@@ -428,7 +452,7 @@ async def upload_resume(file: UploadFile = File(...)):
 @app.get("/admin/dashboard.html")
 def get_dashboard(request: Request):
     token = request.cookies.get("session_token")
-    if not token or not verify_session(token):
+    if not token or not verify_jwt(token):
         return RedirectResponse(url="/admin/login.html")
     # Serve the dashboard page from secure templates folder
     dashboard_path = os.path.join(BASE_DIR, "templates", "admin", "dashboard.html")
