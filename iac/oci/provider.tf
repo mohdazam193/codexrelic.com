@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    # Backend configuration will be injected during terraform init by Azure Pipelines
-    # OCI Object Storage requires these specific flags to work with Terraform's S3 backend
+    # OCI Object Storage S3-compatible backend
+    # All config injected at runtime via terraform init -backend-config flags
     skip_region_validation      = true
     skip_credentials_validation = true
     skip_requesting_account_id  = true
@@ -20,9 +20,11 @@ terraform {
 }
 
 provider "oci" {
-  tenancy_ocid     = var.tenancy_ocid
-  user_ocid        = var.user_ocid
-  fingerprint      = var.fingerprint
+  tenancy_ocid = var.tenancy_ocid
+  user_ocid    = var.user_ocid
+  fingerprint  = var.fingerprint
+  # Key is written to a temp file by the pipeline from a base64-encoded secret.
+  # This avoids newline corruption when passing PEM content through env vars.
   private_key_path = var.private_key_path
   region           = var.region
 }

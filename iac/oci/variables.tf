@@ -10,17 +10,17 @@ variable "user_ocid" {
 
 variable "fingerprint" {
   type        = string
-  description = "The fingerprint of the API key"
+  description = "The fingerprint of the OCI API signing key"
 }
 
 variable "private_key_path" {
   type        = string
-  description = "Path to the OCI API signing private key PEM file"
+  description = "Path to the OCI API signing private key PEM file (written by pipeline)"
 }
 
 variable "region" {
   type        = string
-  description = "The OCI region (e.g. us-ashburn-1)"
+  description = "The OCI region (e.g. ap-hyderabad-1)"
 }
 
 variable "compartment_id" {
@@ -28,7 +28,12 @@ variable "compartment_id" {
   description = "The compartment OCID to deploy resources into"
 }
 
+variable "availability_domain" {
+  type        = string
+  description = "The availability domain (e.g. NjdN:AP-HYDERABAD-1-AD-1)"
+}
+
 variable "ssh_public_key" {
   type        = string
-  description = "The SSH public key to inject into the VM"
+  description = "The SSH public key to inject into the VM for login"
 }
