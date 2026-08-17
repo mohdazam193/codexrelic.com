@@ -142,9 +142,31 @@ stages:
           -backend-config="access_key=$TF_STATE_ACCESS_KEY" \
           -backend-config="secret_key=$TF_STATE_SECRET_KEY"
 
-        echo "Applying Terraform Plan..."
-        terraform apply -auto-approve -input=false tfplan
-      displayName: 'Terraform Apply'
+        # ──────────────────────────────────────────────────────────────
+        # OCI Always Free ARM (Ampere A1) instances are extremely popular
+        # and OCI frequently returns "Out of host capacity" (500 error).
+        # This is not a code bug — it means no free slots exist right now.
+        # We retry every 5 minutes for up to 100 minutes automatically.
+        # ──────────────────────────────────────────────────────────────
+        MAX_RETRIES=20
+        WAIT_SECONDS=300  # 5 minutes between retries
+        attempt=1
+
+        until terraform apply -auto-approve -input=false tfplan; do
+          EXIT_CODE=$?
+          if [ $attempt -ge $MAX_RETRIES ]; then
+            echo "##[error] Terraform apply failed after $MAX_RETRIES attempts. Giving up."
+            exit $EXIT_CODE
+          fi
+          echo "##[warning] Apply failed (attempt $attempt/$MAX_RETRIES). OCI may be out of capacity."
+          echo "Waiting ${WAIT_SECONDS}s before retrying..."
+          sleep $WAIT_SECONDS
+          attempt=$((attempt + 1))
+          echo "Retrying now (attempt $attempt/$MAX_RETRIES)..."
+        done
+
+        echo "[OK] Terraform Apply succeeded on attempt $attempt."
+      displayName: 'Terraform Apply (with OCI capacity retry)'
       env:
         TF_VAR_tenancy_ocid:        $(TF_VAR_tenancy_ocid)
         TF_VAR_user_ocid:           $(TF_VAR_user_ocid)

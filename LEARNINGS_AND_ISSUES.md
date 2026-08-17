@@ -65,3 +65,19 @@ This is a living document tracking the timeline of architectural decisions, issu
     -name "terraform-provider-*" -exec chmod +x {} \;
   ```
 - **Key Lesson:** Any time you pass compiled binaries between Azure DevOps pipeline stages via artifacts, you must explicitly restore their executable permissions. This applies to Terraform providers, Go binaries, compiled CLIs — anything that needs to be executed.
+
+#### Issue 8: OCI "Out of Host Capacity" for Always Free ARM Instances
+- **What Happened:** The Terraform Apply stage succeeded technically (auth, state, etc.) but failed when actually creating the VM.
+- **The Error:** `500-InternalError, Out of host capacity.` from OCI's `LaunchInstance` API.
+- **The Root Cause:** Oracle's Always Free Ampere A1 (ARM) VMs are extremely popular globally. OCI frequently runs out of free-tier capacity in a given region/availability domain. This is **not a code bug** — it is OCI telling you "there are no free ARM slots available right now, try again later."
+- **The Fix:** Added an automatic retry loop to the Apply stage. It retries `terraform apply` every 5 minutes for up to 100 minutes (20 attempts). OCI typically frees up capacity within 30–60 minutes.
+- **The Code:**
+  ```bash
+  MAX_RETRIES=20
+  WAIT_SECONDS=300
+  until terraform apply -auto-approve -input=false tfplan; do
+    sleep $WAIT_SECONDS
+    attempt=$((attempt + 1))
+  done
+  ```
+- **Alternative:** If retrying for too long, try changing `TF_VAR_availability_domain` to a different AD in the same region, or switch to a different OCI region entirely.
