@@ -287,6 +287,22 @@ cd src && uvicorn server:app --host 127.0.0.1 --port 8000 --reload
 
 ---
 
+## MongoDB Atlas Setup
+
+This project uses a **single free MongoDB Atlas M0 cluster** to serve all three environments, maintaining data isolation through logical database names while keeping costs at $0/month.
+
+1. Create an [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account and provision a **Shared M0 Free** cluster.
+2. Under **Database Access**, create a user (e.g., `codexrelic_db_admin`) with a strong, auto-generated password.
+3. Under **Network Access**, allow access from anywhere (`0.0.0.0/0`) or specifically your OCI VM's IP once provisioned.
+4. Get your connection string from the **Connect** button (Python driver).
+5. Format the connection string for each environment by injecting the password and appending the database name:
+   - `mongodb+srv://user:pass@cluster.net/codexrelic_uat?retryWrites=true&w=majority`
+   - `mongodb+srv://user:pass@cluster.net/codexrelic_stage?retryWrites=true&w=majority`
+   - `mongodb+srv://user:pass@cluster.net/codexrelic_prod?retryWrites=true&w=majority`
+6. Add these formatted strings to your Azure Key Vaults as the `MONGO-URI` secret.
+
+---
+
 ## Azure DevOps Service Connection Setup
 
 To allow the Azure DevOps pipeline to read secrets from Azure Key Vault, you must set up an **Azure Resource Manager** service connection.
@@ -330,7 +346,7 @@ If you prefer to add secrets manually via the Azure Portal instead of using the 
 5. Enter the **Name** and **Value** for each of the 5 required secrets:
    - `MONGO-URI`: Your MongoDB Atlas connection string (e.g., `mongodb+srv://.../codexrelic_uat`).
    - `ADMIN-USER`: The admin username (`azam`).
-   - `ADMIN-PASS`: Your bcrypt-hashed password (or plaintext if the server hashes it - in this app it's the raw password, which the server compares). *Actually, the server expects the raw password and checks it against bcrypt if DB is connected, or falls back to env comparison. Enter your strong raw password here.*
+   - `ADMIN-PASS`: Your bcrypt-hashed password (or plaintext if the server hashes it - in this app it's the raw password, which the server compares). *Actually, the server expects the raw password and checks it against bcrypt if DB is connected, or falls back to env comparison. Enter your strong raw password here.*. Plain text password you would be using to login
    - `JWT-SECRET`: The 64-character hex string generated from `AUTH_SETUP.md`.
    - `ADMIN-ED25519-PUBLIC-KEY`: Your base64 public key generated from `AUTH_SETUP.md`.
 6. Click **Create** for each secret.
@@ -348,9 +364,88 @@ bash automation/01-auth-setup/generate-keys.sh
 
 # Create Azure Key Vaults and populate all secrets
 bash automation/02-keyvault/create-and-populate-keyvaults.sh
+
+# Format MongoDB connection strings and push directly to Key Vaults
+bash automation/03-database/setup-mongo-strings.sh
+
+# Bootstrap all Azure DevOps pipeline variables for Terraform IaC (one command)
+bash automation/04-iac/bootstrap-pipeline-variables.sh
 ```
 
 ---
+
+## Infrastructure as Code (IaC)
+
+The infrastructure for this project is fully managed with **Terraform** and deployed via an **Azure DevOps** pipeline. All cloud resources run on **Oracle Cloud Infrastructure (OCI)** Always Free tier.
+
+### Architecture
+
+```
+Azure DevOps Pipeline
+  │
+  ├── Stage 1: Terraform Plan   ──► OCI S3 State (Object Storage bucket)
+  ├── Stage 2: Manual Approval  ──► You review & click Approve
+  └── Stage 3: Terraform Apply  ──► Provisions OCI Ampere A1 VM
+```
+
+### Quick Start for New Contributors
+
+If you have cloned this repo and want to spin up the infrastructure yourself, the entire pipeline variable setup is automated in a single command:
+
+```bash
+# Pre-requisites:
+#   1. OCI CLI installed and configured (oci setup config)
+#   2. Azure CLI installed and logged in (az login)
+#   3. Azure DevOps extension: az extension add --name azure-devops
+
+bash automation/04-iac/bootstrap-pipeline-variables.sh
+```
+
+This script will:
+1. Read your `~/.oci/config` to extract all OCI identifiers
+2. Generate a fresh **unencrypted** RSA key for Terraform (separate from your personal key)
+3. Register the key in OCI Console automatically
+4. Create the `codexrelic-tf-state` Object Storage bucket for Terraform state
+5. Create/update the Azure DevOps `terraform` Variable Group with all 12 variables
+
+Once it completes, trigger the pipeline in Azure DevOps. It will pause after `terraform plan` for your manual approval before applying anything.
+
+> **Full variable reference:** See [`automation/04-iac/VARIABLE_REFERENCE.md`](automation/04-iac/VARIABLE_REFERENCE.md)
+
+### Required Pipeline Variables (Summary)
+
+All variables live in the Azure DevOps `terraform` Library Variable Group.
+
+| Variable | Description | Secret |
+|---|---|---|
+| `TF_VAR_tenancy_ocid` | OCI Tenancy OCID | No |
+| `TF_VAR_user_ocid` | OCI User OCID | No |
+| `TF_VAR_fingerprint` | API signing key fingerprint | No |
+| `TF_VAR_region` | OCI region (e.g. `ap-hyderabad-1`) | No |
+| `TF_VAR_compartment_id` | Compartment OCID | No |
+| `TF_VAR_availability_domain` | Availability domain | No |
+| `TF_VAR_ssh_public_key` | SSH public key for VM access | No |
+| `OCI_PRIVATE_KEY_B64` | Base64-encoded unencrypted RSA private key | **Yes** |
+| `TF_STATE_BUCKET` | OCI Object Storage bucket name | No |
+| `TF_STATE_ENDPOINT` | OCI S3-compatible endpoint URL | No |
+| `TF_STATE_ACCESS_KEY` | OCI Customer Secret Key ID | No |
+| `TF_STATE_SECRET_KEY` | OCI Customer Secret Key value | **Yes** |
+
+### Key Design Decisions & Lessons Learned
+
+> Full details in [`LEARNINGS_AND_ISSUES.md`](LEARNINGS_AND_ISSUES.md)
+
+| # | Issue | Fix |
+|---|---|---|
+| 1 | Azure Service Principal cannot use `azurerm` backend via CLI auth | Migrated state storage to OCI Object Storage (S3-compatible) |
+| 2 | `${TF_VAR_region}` evaluates empty in Azure DevOps bash | Use Azure DevOps macros `$(TF_VAR_region)` in `env:` block instead |
+| 3 | OCI S3 SSL certificate mismatch | Added `force_path_style = true` to `backend "s3"` block |
+| 4 | Terraform hangs silently for 50+ minutes | Always add `-input=false` to all Terraform commands in CI/CD |
+| 5 | Variable Group vars not visible inside bash scripts | Must explicitly map every variable in the `env:` block of each step |
+| 6 | Encrypted OCI API key fails in Terraform provider | Generate a dedicated **unencrypted** RSA key; store it **base64-encoded** as `OCI_PRIVATE_KEY_B64` |
+
+---
+
 
 ## Author
 
