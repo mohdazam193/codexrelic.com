@@ -40,8 +40,8 @@ resource "oci_core_instance" "codexrelic_vm" {
   fault_domain = data.oci_identity_fault_domains.fds.fault_domains[var.fault_domain_index].name
 
   shape_config {
-    ocpus         = 2
-    memory_in_gbs = 12
+    ocpus         = 1
+    memory_in_gbs = 6
   }
 
   source_details {
