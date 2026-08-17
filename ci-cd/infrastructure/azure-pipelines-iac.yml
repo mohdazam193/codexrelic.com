@@ -28,12 +28,12 @@ stages:
         
         echo "Initializing Terraform..."
         terraform init \
-          -backend-config="bucket=${TF_STATE_BUCKET}" \
+          -backend-config="bucket=$(TF_STATE_BUCKET)" \
           -backend-config="key=prod.terraform.tfstate" \
-          -backend-config="region=${TF_VAR_region}" \
-          -backend-config="endpoint=${TF_STATE_ENDPOINT}" \
-          -backend-config="access_key=${TF_STATE_ACCESS_KEY}" \
-          -backend-config="secret_key=${TF_STATE_SECRET_KEY}"
+          -backend-config="region=$(TF_VAR_region)" \
+          -backend-config="endpoint=$(TF_STATE_ENDPOINT)" \
+          -backend-config="access_key=$(TF_STATE_ACCESS_KEY)" \
+          -backend-config="secret_key=$TF_STATE_SECRET_KEY"
         
         echo "Creating Terraform Plan..."
         terraform plan -out=tfplan
@@ -82,12 +82,12 @@ stages:
         # We must re-init on this new agent so it downloads the provider plugins
         echo "Re-initializing Terraform..."
         terraform init \
-          -backend-config="bucket=${TF_STATE_BUCKET}" \
+          -backend-config="bucket=$(TF_STATE_BUCKET)" \
           -backend-config="key=prod.terraform.tfstate" \
-          -backend-config="region=${TF_VAR_region}" \
-          -backend-config="endpoint=${TF_STATE_ENDPOINT}" \
-          -backend-config="access_key=${TF_STATE_ACCESS_KEY}" \
-          -backend-config="secret_key=${TF_STATE_SECRET_KEY}"
+          -backend-config="region=$(TF_VAR_region)" \
+          -backend-config="endpoint=$(TF_STATE_ENDPOINT)" \
+          -backend-config="access_key=$(TF_STATE_ACCESS_KEY)" \
+          -backend-config="secret_key=$TF_STATE_SECRET_KEY"
         
         echo "Applying Terraform Plan..."
         terraform apply -auto-approve tfplan
