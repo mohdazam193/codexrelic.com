@@ -54,3 +54,14 @@ This is a living document tracking the timeline of architectural decisions, issu
   1. Generated a **fresh, unencrypted RSA 2048 key** dedicated to Terraform/CI-CD use. Never use your personal OCI key (which may be encrypted) in a pipeline.
   2. Stored the private key as **base64-encoded** in Azure DevOps (`OCI_PRIVATE_KEY_B64`). In the pipeline, we decode it back to a file: `echo "$OCI_PRIVATE_KEY_B64" | base64 --decode > /tmp/oci_api_key.pem`. This sidesteps the newline corruption problem entirely.
 - **Key Lesson:** Never try to pass PEM/multiline secrets directly as environment variables. Always base64-encode them first.
+
+#### Issue 7: Terraform Provider Binary Permission Denied in Apply Stage
+- **What Happened:** The Plan stage succeeded and the Approval gate was passed, but the Apply stage failed immediately.
+- **The Error:** `fork/exec .terraform/providers/.../terraform-provider-oci_v5.47.0: permission denied`
+- **The Root Cause:** When Azure DevOps publishes an artifact (at the end of Plan stage), it **intentionally strips the executable (`+x`) permission bit** from all files for security reasons. When the Apply stage downloads the artifact, the Terraform provider binaries are present but no longer executable.
+- **The Fix:** Added a dedicated step immediately after the artifact download that restores the execute bit on all provider binaries:
+  ```bash
+  find $(Pipeline.Workspace)/TerraformPlan/.terraform -type f \
+    -name "terraform-provider-*" -exec chmod +x {} \;
+  ```
+- **Key Lesson:** Any time you pass compiled binaries between Azure DevOps pipeline stages via artifacts, you must explicitly restore their executable permissions. This applies to Terraform providers, Go binaries, compiled CLIs — anything that needs to be executed.
