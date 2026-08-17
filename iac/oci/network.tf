@@ -1,12 +1,12 @@
 resource "oci_core_vcn" "codexrelic_vcn" {
-  compartment_id = var.compartment_ocid
+  compartment_id = var.compartment_id
   cidr_blocks    = ["10.0.0.0/16"]
   display_name   = "codexrelic-vcn"
   dns_label      = "codexrelicvcn"
 }
 
 resource "oci_core_internet_gateway" "codexrelic_igw" {
-  compartment_id = var.compartment_ocid
+  compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.codexrelic_vcn.id
   display_name   = "codexrelic-igw"
   enabled        = true
@@ -61,7 +61,7 @@ resource "oci_core_default_security_list" "codexrelic_sl" {
 }
 
 resource "oci_core_subnet" "codexrelic_subnet" {
-  compartment_id             = var.compartment_ocid
+  compartment_id             = var.compartment_id
   vcn_id                     = oci_core_vcn.codexrelic_vcn.id
   cidr_block                 = "10.0.1.0/24"
   display_name               = "codexrelic-subnet"

@@ -1,9 +1,9 @@
 data "oci_identity_availability_domains" "ads" {
-  compartment_id = var.compartment_ocid
+  compartment_id = var.compartment_id
 }
 
 data "oci_core_images" "ubuntu" {
-  compartment_id           = var.compartment_ocid
+  compartment_id           = var.compartment_id
   operating_system         = "Canonical Ubuntu"
   operating_system_version = "22.04"
   shape                    = "VM.Standard.A1.Flex"
@@ -13,7 +13,7 @@ data "oci_core_images" "ubuntu" {
 
 resource "oci_core_instance" "codexrelic_vm" {
   availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
-  compartment_id      = var.compartment_ocid
+  compartment_id      = var.compartment_id
   shape               = "VM.Standard.A1.Flex"
   display_name        = "codexrelic-vm"
 

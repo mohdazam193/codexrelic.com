@@ -23,7 +23,7 @@ variable "region" {
   description = "The OCI region (e.g. us-ashburn-1)"
 }
 
-variable "compartment_ocid" {
+variable "compartment_id" {
   type        = string
   description = "The compartment OCID to deploy resources into"
 }
