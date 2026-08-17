@@ -14,6 +14,7 @@ Each script mirrors exactly one section of the manual setup guides.
 |---|--------|-------------------|--------|
 | 01 | `01-auth-setup/generate-keys.sh` | AUTH_SETUP.md Steps 1–3 | ✅ Ready |
 | 02 | `02-keyvault/create-and-populate-keyvaults.sh` | Implementation Plan Parts 2–3 | ✅ Ready |
+| 03 | `03-database/setup-mongo-strings.sh` | MONGO_SETUP.md Step 5 | ✅ Ready |
 
 ---
 
