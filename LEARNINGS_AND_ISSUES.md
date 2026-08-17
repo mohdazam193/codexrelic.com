@@ -81,3 +81,29 @@ This is a living document tracking the timeline of architectural decisions, issu
   done
   ```
 - **Alternative:** If retrying for too long, try changing `TF_VAR_availability_domain` to a different AD in the same region, or switch to a different OCI region entirely.
+
+#### Decision: Switch OCI Region for Always Free ARM Capacity
+
+- **The Problem:** `ap-hyderabad-1` is a smaller OCI region with very limited Always Free ARM (Ampere A1) capacity. Even after implementing fault domain cycling across all 3 fault domains, the `Out of host capacity` error persisted.
+- **The Learning:** OCI Always Free ARM capacity availability is **per-region** and **per-availability-domain**. Smaller regions like Hyderabad have far fewer ARM slots reserved for free-tier accounts compared to OCI's flagship regions.
+- **The Solution:** Subscribe to a larger OCI region with more available ARM capacity. The Always Free tier is **account-level** — it applies equally in every region. Switching regions does not incur any cost.
+
+**Recommended Regions (best ARM capacity for Always Free):**
+
+| Region | Code | Notes |
+|---|---|---|
+| 🇺🇸 US East (Ashburn) | `us-ashburn-1` | Most capacity globally |
+| 🇸🇬 Singapore | `ap-singapore-1` | Best option for India users (~60ms latency) |
+| 🇯🇵 Tokyo | `ap-tokyo-1` | Good capacity |
+| 🇩🇪 Frankfurt | `eu-frankfurt-1` | Good capacity |
+| 🇮🇳 Hyderabad | `ap-hyderabad-1` | ❌ Frequently exhausted |
+
+**How to Switch (no code changes needed):**
+1. OCI Console → Governance & Administration → **Regions → Manage Regions** → Subscribe to new region
+2. Update only 3 variables in the Azure DevOps `terraform` Variable Group:
+   - `TF_VAR_region` → e.g. `ap-singapore-1`
+   - `TF_VAR_availability_domain` → the AD name of the new region
+   - `TF_STATE_ENDPOINT` → `https://<namespace>.compat.objectstorage.<new-region>.oraclecloud.com`
+3. Trigger a new pipeline run — no Terraform code changes required.
+
+**Key Lesson:** When provisioning Always Free ARM instances on OCI, always provision in a large flagship region. If latency to your users matters, `ap-singapore-1` is the best balance for Asia/India-based projects.
