@@ -70,40 +70,9 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** The Terraform Apply stage succeeded technically (auth, state, etc.) but failed when actually creating the VM.
 - **The Error:** `500-InternalError, Out of host capacity.` from OCI's `LaunchInstance` API.
 - **The Root Cause:** Oracle's Always Free Ampere A1 (ARM) VMs are extremely popular globally. OCI frequently runs out of free-tier capacity in a given region/availability domain. This is **not a code bug** — it is OCI telling you "there are no free ARM slots available right now, try again later."
-- **The Fix:** Added an automatic retry loop to the Apply stage. It retries `terraform apply` every 5 minutes for up to 100 minutes (20 attempts). OCI typically frees up capacity within 30–60 minutes.
-- **The Code:**
-  ```bash
-  MAX_RETRIES=20
-  WAIT_SECONDS=300
-  until terraform apply -auto-approve -input=false tfplan; do
-    sleep $WAIT_SECONDS
-    attempt=$((attempt + 1))
-  done
-  ```
-- **Alternative:** If retrying for too long, try changing `TF_VAR_availability_domain` to a different AD in the same region, or switch to a different OCI region entirely.
+- **The Fix:** Added an automatic retry loop to the Apply stage. It retries `terraform apply` every 5 minutes for up to 100 minutes (20 attempts), cycling through all 3 fault domains.
 
-#### Decision: Switch OCI Region for Always Free ARM Capacity
-
-- **The Problem:** `ap-hyderabad-1` is a smaller OCI region with very limited Always Free ARM (Ampere A1) capacity. Even after implementing fault domain cycling across all 3 fault domains, the `Out of host capacity` error persisted.
-- **The Learning:** OCI Always Free ARM capacity availability is **per-region** and **per-availability-domain**. Smaller regions like Hyderabad have far fewer ARM slots reserved for free-tier accounts compared to OCI's flagship regions.
-- **The Solution:** Subscribe to a larger OCI region with more available ARM capacity. The Always Free tier is **account-level** — it applies equally in every region. Switching regions does not incur any cost.
-
-**Recommended Regions (best ARM capacity for Always Free):**
-
-| Region | Code | Notes |
-|---|---|---|
-| 🇺🇸 US East (Ashburn) | `us-ashburn-1` | Most capacity globally |
-| 🇸🇬 Singapore | `ap-singapore-1` | Best option for India users (~60ms latency) |
-| 🇯🇵 Tokyo | `ap-tokyo-1` | Good capacity |
-| 🇩🇪 Frankfurt | `eu-frankfurt-1` | Good capacity |
-| 🇮🇳 Hyderabad | `ap-hyderabad-1` | ❌ Frequently exhausted |
-
-**How to Switch (no code changes needed):**
-1. OCI Console → Governance & Administration → **Regions → Manage Regions** → Subscribe to new region
-2. Update only 3 variables in the Azure DevOps `terraform` Variable Group:
-   - `TF_VAR_region` → e.g. `ap-singapore-1`
-   - `TF_VAR_availability_domain` → the AD name of the new region
-   - `TF_STATE_ENDPOINT` → `https://<namespace>.compat.objectstorage.<new-region>.oraclecloud.com`
-3. Trigger a new pipeline run — no Terraform code changes required.
-
-**Key Lesson:** When provisioning Always Free ARM instances on OCI, always provision in a large flagship region. If latency to your users matters, `ap-singapore-1` is the best balance for Asia/India-based projects.
+#### Issue 9: OCI Free Tier Region Limitations
+- **What Happened:** We attempted to switch regions to find better Always Free capacity, but the OCI console blocked the region subscription.
+- **The Root Cause:** OCI strictly limits Free Tier accounts to their **home region**. You cannot subscribe to additional regions unless you upgrade to a Pay-As-You-Go (PAYG) account. Even if you upgrade to PAYG, the Always Free ARM limits (4 OCPUs, 24GB RAM) **only apply to your home region**. If you deploy them elsewhere, you will be billed.
+- **The Lesson:** When on the Free Tier, you must stay in your home region and rely on the automated Terraform retry loop to eventually acquire capacity. Alternatively, upgrading to PAYG gives your account priority access to capacity in your home region, while still remaining free (as long as you stay within the 4 OCPU / 24GB limit).
