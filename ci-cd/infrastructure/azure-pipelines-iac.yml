@@ -41,9 +41,9 @@ steps:
 
       echo "Initializing Terraform..."
       terraform init \
-        -backend-config="resource_group_name=$(TF_STATE_RG)" \
-        -backend-config="storage_account_name=$(TF_STATE_SA)" \
-        -backend-config="container_name=$(TF_STATE_CONTAINER)" \
+        -backend-config="resource_group_name=${TF_STATE_RG}" \
+        -backend-config="storage_account_name=${TF_STATE_SA}" \
+        -backend-config="container_name=${TF_STATE_CONTAINER}" \
         -backend-config="key=prod.terraform.tfstate"
       
       echo "Applying Terraform..."
