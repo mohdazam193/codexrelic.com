@@ -26,6 +26,12 @@ stages:
 
         cd iac/oci
 
+        # The OCI private key is a multiline PEM. Azure DevOps strips newlines when
+        # injecting it as an env var. We write it to a temp file to preserve formatting.
+        echo "$TF_VAR_private_key" > /tmp/oci_api_key.pem
+        chmod 600 /tmp/oci_api_key.pem
+        export TF_VAR_private_key_path="/tmp/oci_api_key.pem"
+
         echo "Initializing Terraform..."
         terraform init -input=false \
           -backend-config="bucket=$TF_STATE_BUCKET" \
@@ -39,23 +45,19 @@ stages:
         terraform plan -out=tfplan -input=false
       displayName: 'Run Terraform Plan'
       env:
-        # All TF_VAR_ variables must be explicitly mapped into the bash environment
-        # Azure DevOps does not automatically export variable group vars to the shell
-        TF_VAR_tenancy_ocid:    $(TF_VAR_tenancy_ocid)
-        TF_VAR_user_ocid:       $(TF_VAR_user_ocid)
-        TF_VAR_fingerprint:     $(TF_VAR_fingerprint)
-        TF_VAR_private_key:     $(TF_VAR_private_key)
-        TF_VAR_region:          $(TF_VAR_region)
-        TF_VAR_compartment_id:  $(TF_VAR_compartment_id)
-        TF_VAR_ssh_public_key:  $(TF_VAR_ssh_public_key)
-        TF_VAR_availability_domain: $(TF_VAR_availability_domain)
-        # S3 backend secrets
-        TF_STATE_BUCKET:      $(TF_STATE_BUCKET)
-        TF_STATE_ENDPOINT:    $(TF_STATE_ENDPOINT)
-        TF_STATE_ACCESS_KEY:  $(TF_STATE_ACCESS_KEY)
-        TF_STATE_SECRET_KEY:  $(TF_STATE_SECRET_KEY)
+        TF_VAR_tenancy_ocid:         $(TF_VAR_tenancy_ocid)
+        TF_VAR_user_ocid:            $(TF_VAR_user_ocid)
+        TF_VAR_fingerprint:          $(TF_VAR_fingerprint)
+        TF_VAR_private_key:          $(TF_VAR_private_key)
+        TF_VAR_region:               $(TF_VAR_region)
+        TF_VAR_compartment_id:       $(TF_VAR_compartment_id)
+        TF_VAR_ssh_public_key:       $(TF_VAR_ssh_public_key)
+        TF_VAR_availability_domain:  $(TF_VAR_availability_domain)
+        TF_STATE_BUCKET:             $(TF_STATE_BUCKET)
+        TF_STATE_ENDPOINT:           $(TF_STATE_ENDPOINT)
+        TF_STATE_ACCESS_KEY:         $(TF_STATE_ACCESS_KEY)
+        TF_STATE_SECRET_KEY:         $(TF_STATE_SECRET_KEY)
 
-    # Publish the plan and Terraform code for the Apply stage
     - publish: $(System.DefaultWorkingDirectory)/iac/oci
       artifact: TerraformPlan
       displayName: 'Publish Plan Artifact'
@@ -92,6 +94,11 @@ stages:
 
         cd $(Pipeline.Workspace)/TerraformPlan
 
+        # Restore the PEM key from the env variable to a temp file
+        echo "$TF_VAR_private_key" > /tmp/oci_api_key.pem
+        chmod 600 /tmp/oci_api_key.pem
+        export TF_VAR_private_key_path="/tmp/oci_api_key.pem"
+
         echo "Re-initializing Terraform..."
         terraform init -input=false \
           -backend-config="bucket=$TF_STATE_BUCKET" \
@@ -105,15 +112,15 @@ stages:
         terraform apply -auto-approve -input=false tfplan
       displayName: 'Run Terraform Apply'
       env:
-        TF_VAR_tenancy_ocid:    $(TF_VAR_tenancy_ocid)
-        TF_VAR_user_ocid:       $(TF_VAR_user_ocid)
-        TF_VAR_fingerprint:     $(TF_VAR_fingerprint)
-        TF_VAR_private_key:     $(TF_VAR_private_key)
-        TF_VAR_region:          $(TF_VAR_region)
-        TF_VAR_compartment_id:  $(TF_VAR_compartment_id)
-        TF_VAR_ssh_public_key:  $(TF_VAR_ssh_public_key)
-        TF_VAR_availability_domain: $(TF_VAR_availability_domain)
-        TF_STATE_BUCKET:      $(TF_STATE_BUCKET)
-        TF_STATE_ENDPOINT:    $(TF_STATE_ENDPOINT)
-        TF_STATE_ACCESS_KEY:  $(TF_STATE_ACCESS_KEY)
-        TF_STATE_SECRET_KEY:  $(TF_STATE_SECRET_KEY)
+        TF_VAR_tenancy_ocid:         $(TF_VAR_tenancy_ocid)
+        TF_VAR_user_ocid:            $(TF_VAR_user_ocid)
+        TF_VAR_fingerprint:          $(TF_VAR_fingerprint)
+        TF_VAR_private_key:          $(TF_VAR_private_key)
+        TF_VAR_region:               $(TF_VAR_region)
+        TF_VAR_compartment_id:       $(TF_VAR_compartment_id)
+        TF_VAR_ssh_public_key:       $(TF_VAR_ssh_public_key)
+        TF_VAR_availability_domain:  $(TF_VAR_availability_domain)
+        TF_STATE_BUCKET:             $(TF_STATE_BUCKET)
+        TF_STATE_ENDPOINT:           $(TF_STATE_ENDPOINT)
+        TF_STATE_ACCESS_KEY:         $(TF_STATE_ACCESS_KEY)
+        TF_STATE_SECRET_KEY:         $(TF_STATE_SECRET_KEY)
