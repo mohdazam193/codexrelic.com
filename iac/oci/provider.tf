@@ -13,6 +13,7 @@ terraform {
     skip_credentials_validation = true
     skip_requesting_account_id  = true
     use_path_style              = true
+    force_path_style            = true
     skip_sso_auth               = true
     skip_metadata_api_check     = true
   }
