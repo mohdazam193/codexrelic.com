@@ -37,3 +37,9 @@ variable "ssh_public_key" {
   type        = string
   description = "The SSH public key to inject into the VM for login"
 }
+
+variable "fault_domain_index" {
+  type        = number
+  description = "Index of the fault domain to try (0, 1, or 2). Cycle through all 3 if capacity fails."
+  default     = 0
+}

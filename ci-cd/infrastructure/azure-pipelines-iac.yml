@@ -143,30 +143,38 @@ stages:
           -backend-config="secret_key=$TF_STATE_SECRET_KEY"
 
         # ──────────────────────────────────────────────────────────────
-        # OCI Always Free ARM (Ampere A1) instances are extremely popular
-        # and OCI frequently returns "Out of host capacity" (500 error).
-        # This is not a code bug — it means no free slots exist right now.
-        # We retry every 5 minutes for up to 100 minutes automatically.
+        # OCI Always Free ARM capacity strategy:
+        #   1. Try Fault Domain 0, 1, 2 in a round-robin before sleeping.
+        #   2. If all 3 fail, wait 5 minutes and try again.
+        #   3. Give up after 20 full cycles (~100 minutes total).
         # ──────────────────────────────────────────────────────────────
-        MAX_RETRIES=20
-        WAIT_SECONDS=300  # 5 minutes between retries
-        attempt=1
+        MAX_CYCLES=20
+        WAIT_SECONDS=300
+        cycle=1
+        succeeded=false
 
-        until terraform apply -auto-approve -input=false tfplan; do
-          EXIT_CODE=$?
-          if [ $attempt -ge $MAX_RETRIES ]; then
-            echo "##[error] Terraform apply failed after $MAX_RETRIES attempts. Giving up."
-            exit $EXIT_CODE
-          fi
-          echo "##[warning] Apply failed (attempt $attempt/$MAX_RETRIES). OCI may be out of capacity."
-          echo "Waiting ${WAIT_SECONDS}s before retrying..."
+        while [ $cycle -le $MAX_CYCLES ]; do
+          for fd_index in 0 1 2; do
+            echo "─── Attempt: cycle $cycle, Fault Domain index $fd_index ───"
+            export TF_VAR_fault_domain_index=$fd_index
+            if terraform apply -auto-approve -input=false tfplan; then
+              succeeded=true
+              break 2
+            fi
+            echo "##[warning] FD index $fd_index failed. Trying next fault domain..."
+          done
+          echo "All 3 fault domains failed in cycle $cycle. Waiting ${WAIT_SECONDS}s..."
           sleep $WAIT_SECONDS
-          attempt=$((attempt + 1))
-          echo "Retrying now (attempt $attempt/$MAX_RETRIES)..."
+          cycle=$((cycle + 1))
         done
 
-        echo "[OK] Terraform Apply succeeded on attempt $attempt."
-      displayName: 'Terraform Apply (with OCI capacity retry)'
+        if [ "$succeeded" = false ]; then
+          echo "##[error] Terraform apply failed after $MAX_CYCLES cycles across all fault domains."
+          exit 1
+        fi
+
+        echo "[OK] Terraform Apply succeeded!"
+      displayName: 'Terraform Apply (with fault domain retry)'
       env:
         TF_VAR_tenancy_ocid:        $(TF_VAR_tenancy_ocid)
         TF_VAR_user_ocid:           $(TF_VAR_user_ocid)
