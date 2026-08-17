@@ -111,6 +111,14 @@ stages:
       artifact: TerraformPlan
       displayName: 'Download Plan Artifact'
 
+    # Azure DevOps strips executable permissions from artifact files during
+    # upload/download. Terraform provider binaries must be re-marked executable
+    # or the apply stage will fail with "permission denied".
+    - script: |
+        find $(Pipeline.Workspace)/TerraformPlan/.terraform -type f -name "terraform-provider-*" -exec chmod +x {} \;
+        echo "[OK] Provider binary permissions restored."
+      displayName: 'Restore Provider Permissions'
+
     - script: |
         set -e
 
