@@ -76,3 +76,14 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** We attempted to switch regions to find better Always Free capacity, but the OCI console blocked the region subscription.
 - **The Root Cause:** OCI strictly limits Free Tier accounts to their **home region**. You cannot subscribe to additional regions unless you upgrade to a Pay-As-You-Go (PAYG) account. Even if you upgrade to PAYG, the Always Free ARM limits (4 OCPUs, 24GB RAM) **only apply to your home region**. If you deploy them elsewhere, you will be billed.
 - **The Lesson:** When on the Free Tier, you must stay in your home region and rely on the automated Terraform retry loop to eventually acquire capacity. Alternatively, upgrading to PAYG gives your account priority access to capacity in your home region, while still remaining free (as long as you stay within the 4 OCPU / 24GB limit).
+
+### 2026-08-18: Server Access & Kubernetes Setup
+
+#### Learning 10: Accessing the Provisioned OCI VM
+- **The Context:** Once the Terraform apply finishes and the `codexrelic-vm` is created, you need to access it securely.
+- **The Connection:** The VM is provisioned with an Ubuntu image and assigned a Public IP. Authentication is strictly via the ED25519 SSH private key we generated earlier.
+- **The Command:** To connect locally from your machine:
+  ```bash
+  ssh -i ~/.ssh/codexrelic_ed25519 ubuntu@<PUBLIC_IP>
+  ```
+  *(In our case, the current Public IP is `129.225.82.233`)*
