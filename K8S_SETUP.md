@@ -1,52 +1,86 @@
-# Kubernetes (K3s) Setup Guide
+# Kubernetes (K3s) Step-by-Step Setup Guide
 
-This document outlines the entire process of how we transformed a bare Ubuntu Virtual Machine into a functioning Kubernetes node, and how the Azure DevOps pipeline was configured to deploy to it securely.
+This guide provides exact, step-by-step instructions for provisioning and deploying the Kubernetes cluster to the OCI Virtual Machine. It is designed so that any new developer can replicate the entire setup from scratch.
 
-## 1. Why K3s?
-We chose **K3s** (a lightweight Kubernetes distribution by Rancher) over full Kubernetes or standard Docker for several reasons:
-- **Efficiency:** It ships as a single binary and uses less than 500 MB of RAM, making it perfect for our 2 OCPU / 12 GB RAM ARM instance.
-- **Features:** It provides all the enterprise features of Kubernetes (zero-downtime rolling updates, self-healing, scaling) without the overhead of `etcd` or complex control planes.
-- **Built-in Ingress:** It comes pre-packaged with Traefik for easy HTTP/HTTPS routing.
+## Prerequisites
+1. You have successfully run the Terraform pipeline and your OCI VM is running.
+2. You have the **Public IP Address** of your VM (e.g., `129.225.82.233`).
+3. You have the `codexrelic_ed25519` private SSH key in your `~/.ssh/` directory.
 
-## 2. Server Installation
-The installation was performed directly on the newly provisioned OCI VM over SSH. 
+---
 
-The exact command run on the VM was:
+## Step 1: Install Kubernetes (K3s) on the VM
+
+We use **K3s** (a lightweight Kubernetes distribution by Rancher) because it runs perfectly on the Free Tier ARM instance without consuming too much memory.
+
+To automate this, we have provided a bash script that SSHs into your VM, installs K3s, and extracts the connection configuration for you.
+
+Run the automation script from the root of the repository, passing your VM's public IP:
+
 ```bash
-curl -sfL https://get.k3s.io | sh -
+cd codexrelic.com
+./automation/05-kubernetes/setup-k3s.sh <PUBLIC_IP>
 ```
 
-This single command:
-1. Downloads the K3s ARM64 binary.
-2. Configures a `systemd` service (`k3s.service`).
-3. Starts a combined Kubernetes Control Plane and Worker Node.
-4. Generates a `kubeconfig` file at `/etc/rancher/k3s/k3s.yaml`.
+**What this script does:**
+1. Tests SSH connectivity.
+2. Runs the K3s installation command (`curl -sfL https://get.k3s.io | sh -`).
+3. Downloads the cluster `kubeconfig` file from the VM.
+4. Modifies the config to point to the public IP instead of localhost.
+5. Saves it locally as `codexrelic-kubeconfig.yaml` (this file is `.gitignore`d for security).
 
-## 3. Remote Access Configuration
-By default, the `kubeconfig` on the VM points to `127.0.0.1` (localhost). To access the cluster remotely (e.g., from your local laptop):
-1. We fetched the config via SSH:
-   `ssh -i ~/.ssh/codexrelic_ed25519 ubuntu@129.225.82.233 "sudo cat /etc/rancher/k3s/k3s.yaml"`
-2. We replaced `127.0.0.1` with the VM's public IP `129.225.82.233`.
-3. We saved this file locally as `codexrelic-kubeconfig.yaml` and added it to `.gitignore` to prevent leaking the cluster certificates.
+---
 
-## 4. Azure DevOps Integration Strategy
-A standard Kubernetes deployment in Azure DevOps uses the `Kubernetes@1` task, which requires exposing the Kubernetes API (port 6443) to the public internet so Microsoft's build agents can connect to it.
+## Step 2: Configure Azure DevOps SSH Service Connection
 
-**We rejected this approach for security.** Oracle Cloud's security lists block port 6443 by default, and opening it to the entire internet is a risk.
+We intentionally **do not** open the Kubernetes API port (6443) to the public internet because OCI firewalls block it by default, and opening it is a security risk.
 
-### The SSH Pipeline Solution
-Instead of exposing the cluster, we updated the pipeline (`ci-cd/docker/azure-pipelines.yml`) to use **SSH deployments**. 
+Instead, Azure DevOps will deploy our application by securely SSHing into the VM and running `kubectl apply` locally. You must grant Azure DevOps this SSH access.
 
-The pipeline performs the following steps:
-1. **CopyFilesOverSSH:** Securely SCPs the Kubernetes manifests (`deployment.yaml`, `service.yaml`) and the rendered `.env` file directly to the `/home/ubuntu/` directory on the VM.
-2. **SSH:** Logs into the VM via SSH and runs `kubectl` commands locally.
-   - It creates isolated namespaces (`uat`, `stage`, `prod`).
-   - It injects the `.env` file securely into a Kubernetes Secret.
-   - It applies the manifests to spin up the Docker containers.
+1. Go to your Azure DevOps Project.
+2. Click **Project Settings** (bottom left corner) -> **Service Connections**.
+3. Click **New service connection** -> Select **SSH**.
+4. Fill out the form exactly as follows:
+   - **Host name:** `<YOUR_VM_PUBLIC_IP>` (e.g., `129.225.82.233`)
+   - **User name:** `ubuntu`
+   - **Private key:** *(Paste the entire contents of your `codexrelic_ed25519` private key here)*
+   - **Service connection name:** `oci-vm-ssh` *(Warning: This must be exact, as it is hardcoded in the pipeline!)*
+5. Click **Verify and Save**.
 
-Because the pipeline uses SSH, port 22 is the *only* management port that needs to be open on the server firewall.
+---
 
-## 5. Kubernetes Manifests
-We created two core files in the `kubernetes/` folder to manage the application:
-- **`deployment.yaml`:** Tells Kubernetes to run 2 replicas of the application, injecting the Key Vault secrets via `envFrom`. It acts as the source of truth for the desired state.
-- **`service.yaml`:** Exposes the application containers internally and binds them to a NodePort (30080) so external traffic hitting the VM can be routed to the pods.
+## Step 3: Understand the Kubernetes Manifests
+
+Before running the pipeline, review the two files we added to the `kubernetes/` folder:
+
+1. **`deployment.yaml`**: This tells Kubernetes to run 2 replicas of your Docker container. It pulls the image built by Azure DevOps and injects your Azure Key Vault secrets into the container as environment variables.
+2. **`service.yaml`**: This maps the internal container port (3000) to an external NodePort (`30080`), allowing traffic to reach your application.
+
+---
+
+## Step 4: Run the Application CI/CD Pipeline
+
+With the VM configured and the SSH Service Connection saved, you are ready to deploy!
+
+1. Go to Azure DevOps -> **Pipelines**.
+2. Run the Docker CI/CD pipeline (`ci-cd/docker/azure-pipelines.yml`).
+
+**How the Pipeline Works:**
+- **Build Stage:** Builds the Docker image and pushes it to DockerHub.
+- **Deploy Stages (UAT, Stage, Prod):**
+  1. Pulls environment secrets from Azure Key Vault.
+  2. Uses `CopyFilesOverSSH` to push the Kubernetes manifests and the `.env` file to the VM.
+  3. Uses `SSH` to log into the VM and execute `kubectl`:
+     - Creates the required namespace (e.g., `uat`).
+     - Converts the `.env` file into a secure Kubernetes Secret.
+     - Injects the new Docker Image Tag into `deployment.yaml`.
+     - Applies the manifests (`kubectl apply`).
+     - Waits for the pods to roll out successfully.
+
+---
+
+## Step 5: Map your DNS (Final Step)
+
+Once the pipeline succeeds, your application is running inside Kubernetes on the VM! The final step is to point your public domain name (`codexrelic.com`) to the VM.
+
+Please follow the instructions in the [**DNS_SETUP.md**](./DNS_SETUP.md) file to configure your DNS records and prepare the server for HTTPS.
