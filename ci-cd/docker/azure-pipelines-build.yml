@@ -33,6 +33,11 @@ stages:
         trufflehog filesystem . || echo "TruffleHog found secrets, but we are running in Audit Mode so the build will not fail."
       displayName: 'Run TruffleHog Secret Scan'
 
+    - script: |
+        echo "Installing Python dependencies so Snyk can build the dependency tree..."
+        python3 -m pip install -r src/requirements.txt
+      displayName: 'Install Dependencies for Snyk SCA'
+
     - task: SnykSecurityScan@1
       displayName: Run Snyk Vulnerability Scan (SAST/SCA)
       inputs:

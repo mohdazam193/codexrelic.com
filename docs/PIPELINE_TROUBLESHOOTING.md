@@ -35,3 +35,24 @@ We explicitly passed the `targetFile` input to the Snyk Azure DevOps task to poi
       inputs:
         targetFile: 'src/requirements.txt'
 ```
+
+---
+
+## 3. Snyk Fails with `ERROR Missing required packages (SNYK-OS-PYTHON-0013)`
+
+**Symptom:** Snyk crashes during the application dependency scan with:
+```
+ERROR Missing required packages (SNYK-OS-PYTHON-0013)
+Missing required packages
+Status: 422 Unprocessable Entity
+```
+
+**Root Cause:** Snyk uses the local environment's Python to analyze and build the dependency tree from `requirements.txt`. If the packages listed in `requirements.txt` are not actually installed in the pipeline runner's environment, Snyk cannot resolve them and fails the scan.
+
+**Fix:**
+We added a script step to install the Python dependencies *before* the Snyk task runs.
+```yaml
+    - script: |
+        python3 -m pip install -r src/requirements.txt
+      displayName: 'Install Dependencies for Snyk SCA'
+```
