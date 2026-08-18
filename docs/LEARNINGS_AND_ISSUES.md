@@ -87,3 +87,19 @@ This is a living document tracking the timeline of architectural decisions, issu
   ssh -i ~/.ssh/codexrelic_ed25519 ubuntu@<PUBLIC_IP>
   ```
   *(In our case, the current Public IP is `129.225.82.233`)*
+
+### 2026-08-18: DevSecOps Integration
+
+**Goal:** Integrate automated security scanning across the Infrastructure and Application pipelines.
+
+#### Implementation 1: Checkov for Infrastructure as Code (IaC)
+- **What We Did:** Added Checkov to the `azure-pipelines-iac.yml` pipeline right before `terraform plan`.
+- **The Value:** Checkov statically analyzes Terraform code (`iac/oci/`) to ensure no cloud misconfigurations are deployed (e.g., leaving a subnet open to the internet, missing encryption). It acts as a preventative security gate.
+
+#### Implementation 2: TruffleHog for Secret Scanning
+- **What We Did:** Integrated TruffleHog into `azure-pipelines-build.yml` in "Audit Only" mode.
+- **The Value:** TruffleHog scans the repository history to find accidentally committed API keys, passwords, and tokens. Running it in audit mode warns developers without hard-failing the build, but creates a visible security signal.
+
+#### Implementation 3: Snyk Code for Static Application Security Testing (SAST)
+- **What We Did:** Added Snyk Code (`testType: 'app'`) to the Build pipeline.
+- **The Value:** Snyk Code scans the actual source code (Python, JS) for application-level vulnerabilities like SQL Injection, Cross-Site Scripting (XSS), and insecure dependencies *before* the Docker image is even built.

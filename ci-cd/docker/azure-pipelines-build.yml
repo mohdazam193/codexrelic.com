@@ -26,6 +26,21 @@ stages:
   - job: BuildScanPush
     displayName: Build, Scan with Snyk, and Push
     steps:
+    - script: |
+        echo "Installing TruffleHog..."
+        curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+        echo "Running TruffleHog Secret Scan (Audit Mode)..."
+        trufflehog filesystem . --fail=false
+      displayName: 'Run TruffleHog Secret Scan'
+
+    - task: SnykSecurityScan@1
+      displayName: Run Snyk Code (SAST) Vulnerability Scan
+      inputs:
+        serviceConnectionEndpoint: $(snykServiceConnection)
+        testType: 'app'
+        monitorWhen: 'always'
+        failOnIssues: true # Fail the build if code vulnerabilities are found
+        severityThreshold: 'high'
     - task: Docker@2
       displayName: Build Docker Image
       inputs:

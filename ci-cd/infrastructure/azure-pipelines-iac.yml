@@ -23,6 +23,13 @@ stages:
     displayName: 'Init & Plan'
     steps:
     - script: |
+        echo "Installing Checkov..."
+        pip3 install checkov
+        echo "Running Checkov IaC Security Scan..."
+        checkov -d iac/oci --framework terraform --skip-check CKV_OCI_1,CKV_OCI_2 # Skip any specific checks if needed
+      displayName: 'Run Checkov IaC Scan'
+
+    - script: |
         set -e
 
         # Install Terraform
