@@ -137,10 +137,10 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** The Release pipeline connected to the VM via SSH, but all `kubectl` commands failed.
 - **The Error:** `error: error loading config file "/etc/rancher/k3s/k3s.yaml": open /etc/rancher/k3s/k3s.yaml: permission denied`
 - **The Root Cause:** By default, K3s provisions its config file (`/etc/rancher/k3s/k3s.yaml`) with root-only read permissions (`600`). The SSH task was connecting as the unprivileged `ubuntu` user.
-- **The Fix:** Updated the deployment pipeline script to securely copy the config file using `sudo` and change its ownership to the `ubuntu` user, before running any `kubectl` commands:
-  ```bash
-  mkdir -p ~/.kube
-  sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-  sudo chown $(id -u):$(id -g) ~/.kube/config
-  export KUBECONFIG=~/.kube/config
-  ```
+- **The Fix:** Updated the deployment pipeline script to prefix all `kubectl` commands with `sudo`. Since the `ubuntu` user has passwordless sudo access, this bypasses the permission issues securely without modifying K3s defaults.
+
+#### Issue 16: ImagePullBackOff in Kubernetes due to Release Pipeline Placeholder
+- **What Happened:** The Release pipeline finally succeeded in applying the manifests to K3s (bypassing the permission denied error), but the pod failed to start.
+- **The Error:** `Failed to pull image "yourusername/codexrelic-api:56": ... pull access denied`
+- **The Root Cause:** We previously updated the `imageName` variable with the real Docker Hub username (`aazammohammad193`) in the **Build pipeline**, but the **Release pipeline** (`azure-pipelines-release.yml`) had its own separate `variables` block that was still using the `yourusername/codexrelic-api` placeholder.
+- **The Fix:** Updated the `imageName` variable in `azure-pipelines-release.yml` to match the build pipeline (`aazammohammad193/codexrelic-api`).

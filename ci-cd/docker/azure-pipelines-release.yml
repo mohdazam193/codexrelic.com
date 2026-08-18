@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'yourusername/codexrelic-api'
+  imageName: 'aazammohammad193/codexrelic-api'
   # The Build Pipeline tags the image with its Run ID. We capture that here to deploy the exact same image.
   imageTag: '$(resources.pipeline.BuildPipeline.runID)'
 
