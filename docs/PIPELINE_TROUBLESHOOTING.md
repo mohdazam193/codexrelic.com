@@ -56,3 +56,23 @@ We added a script step to install the Python dependencies *before* the Snyk task
         python3 -m pip install -r src/requirements.txt
       displayName: 'Install Dependencies for Snyk SCA'
 ```
+
+---
+
+## 4. Snyk Fails with `ERROR Authentication error (SNYK-0005)`
+
+**Symptom:** The Snyk task fails with a `401 Unauthorized` status:
+```
+ERROR   Authentication error (SNYK-0005)
+Authentication credentials not recognized, or user access is not provisioned.
+Status:  401 Unauthorized
+```
+
+**Root Cause:** The pipeline is trying to authenticate with Snyk using a Service Connection, but the connection doesn't exist, is misspelled, or doesn't have a valid API token attached to it. (We also had a typo in the pipeline variable where it was spelled `Synk`).
+
+**Fix:**
+1. Log into your [Snyk Dashboard](https://app.snyk.io/) and generate an API Token (Account Settings -> General -> API Token).
+2. Go to **Azure DevOps -> Project Settings -> Service Connections**.
+3. Create a **New Service Connection**, search for **Snyk**, and paste your API token.
+4. Name the connection exactly **`Snyk`**.
+5. Re-run the pipeline. The `snykServiceConnection` variable in the pipeline is now correctly pointing to `Snyk` to match this connection.
