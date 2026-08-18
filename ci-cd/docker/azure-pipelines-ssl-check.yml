@@ -1,0 +1,33 @@
+trigger: none
+
+schedules:
+- cron: "0 0 * * 0" # Every Sunday at midnight
+  displayName: "Weekly SSL Certificate Check"
+  branches:
+    include:
+    - main
+  always: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: SSH@0
+  displayName: Check SSL Certificates in Kubernetes
+  inputs:
+    sshEndpoint: 'oci-vm-ssh'
+    runOptions: 'inline'
+    inline: |
+      echo "Checking status of all certificates in the cluster..."
+      sudo kubectl get certificates -A
+      
+      echo "Checking for expired or not ready certificates..."
+      FAILS=$(sudo kubectl get certificates -A -o jsonpath='{range .items[?(@.status.conditions[?(@.type=="Ready")].status=="False")]}{.metadata.namespace}/{.metadata.name}{"\n"}{end}')
+      
+      if [ -n "$FAILS" ]; then
+        echo "##[error] The following certificates are failing or expired:"
+        echo "$FAILS"
+        exit 1
+      else
+        echo "All certificates are healthy and ready!"
+      fi

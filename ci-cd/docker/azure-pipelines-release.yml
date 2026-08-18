@@ -72,23 +72,34 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/uat
                 
-                # 0. Ensure namespace exists
+                # 0. Install cert-manager if not installed
+                sudo kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+                
+                # Wait for cert-manager webhook to be ready (prevents error when creating ClusterIssuer immediately)
+                sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
+                
+                # Apply ClusterIssuer (creates cluster-wide if not exists)
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml
+                
+                # 1. Ensure namespace exists
                 sudo kubectl create namespace uat --dry-run=client -o yaml | sudo kubectl apply -f -
                 
-                # 1. Create/Update Kubernetes Secret from .env file
+                # 2. Create/Update Kubernetes Secret from .env file
                 sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=uat \
                   --from-env-file=.env.uat \
                   --dry-run=client -o yaml | sudo kubectl apply -f -
                   
-                # 2. Update deployment image tag
+                # 3. Update deployment image tag & Ingress domain
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
+                sed -i 's|DOMAIN_PLACEHOLDER|uat.codexrelic.com|g' k8s-manifests/ingress.yaml
                 
-                # 3. Apply manifests
+                # 4. Apply manifests
                 sudo kubectl apply -n uat -f k8s-manifests/deployment.yaml
                 sudo kubectl apply -n uat -f k8s-manifests/service.yaml
+                sudo kubectl apply -n uat -f k8s-manifests/ingress.yaml
                 
-                # 4. Wait for rollout
+                # 5. Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n uat
 
 
@@ -151,23 +162,32 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/stage
                 
-                # 0. Ensure namespace exists
+                # 0. Install cert-manager if not installed
+                sudo kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+                sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
+                
+                # Apply ClusterIssuer
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml
+                
+                # 1. Ensure namespace exists
                 sudo kubectl create namespace stage --dry-run=client -o yaml | sudo kubectl apply -f -
                 
-                # 1. Create/Update Kubernetes Secret from .env file
+                # 2. Create/Update Kubernetes Secret from .env file
                 sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=stage \
                   --from-env-file=.env.stage \
                   --dry-run=client -o yaml | sudo kubectl apply -f -
                   
-                # 2. Update deployment image tag
+                # 3. Update deployment image tag & Ingress domain
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
+                sed -i 's|DOMAIN_PLACEHOLDER|stage.codexrelic.com|g' k8s-manifests/ingress.yaml
                 
-                # 3. Apply manifests
+                # 4. Apply manifests
                 sudo kubectl apply -n stage -f k8s-manifests/deployment.yaml
                 sudo kubectl apply -n stage -f k8s-manifests/service.yaml
+                sudo kubectl apply -n stage -f k8s-manifests/ingress.yaml
                 
-                # 4. Wait for rollout
+                # 5. Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n stage
 
 
@@ -230,21 +250,30 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/prod
                 
-                # 0. Ensure namespace exists
+                # 0. Install cert-manager if not installed
+                sudo kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+                sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
+                
+                # Apply ClusterIssuer
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml
+                
+                # 1. Ensure namespace exists
                 sudo kubectl create namespace prod --dry-run=client -o yaml | sudo kubectl apply -f -
                 
-                # 1. Create/Update Kubernetes Secret from .env file
+                # 2. Create/Update Kubernetes Secret from .env file
                 sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=prod \
                   --from-env-file=.env.prod \
                   --dry-run=client -o yaml | sudo kubectl apply -f -
                   
-                # 2. Update deployment image tag
+                # 3. Update deployment image tag & Ingress domain
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
+                sed -i 's|DOMAIN_PLACEHOLDER|api.codexrelic.com|g' k8s-manifests/ingress.yaml
                 
-                # 3. Apply manifests
+                # 4. Apply manifests
                 sudo kubectl apply -n prod -f k8s-manifests/deployment.yaml
                 sudo kubectl apply -n prod -f k8s-manifests/service.yaml
+                sudo kubectl apply -n prod -f k8s-manifests/ingress.yaml
                 
-                # 4. Wait for rollout
+                # 5. Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n prod

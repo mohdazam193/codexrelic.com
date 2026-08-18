@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: codexrelic-api-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Renew 60 days before expiry (which means every 30 days)
+    cert-manager.io/renew-before: "1440h"
+    # Ensure traffic is properly routed to traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - DOMAIN_PLACEHOLDER
+    secretName: codexrelic-api-tls
+  rules:
+  - host: DOMAIN_PLACEHOLDER
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: codexrelic-api-service
+            port:
+              number: 80
