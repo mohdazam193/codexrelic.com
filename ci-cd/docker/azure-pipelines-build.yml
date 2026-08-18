@@ -17,7 +17,7 @@ pool:
 variables:
   imageName: 'yourusername/codexrelic-api'
   dockerRegistryServiceConnection: 'dockerhub-connection' # Replace with actual connection name
-  snykServiceConnection: 'Snyk' # Ensure you create a Snyk Service Connection named 'Snyk' in Azure DevOps
+  snykServiceConnection: 'Synk' # Matching the user's existing Service Connection name
 
 stages:
 - stage: BuildAndScan
