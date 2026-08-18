@@ -17,3 +17,4 @@ AUTH_SETUP.md
 keys/
 .codemap/
 .foglamp/
+codexrelic-kubeconfig.yaml
