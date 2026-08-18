@@ -17,3 +17,21 @@ To run TruffleHog in "Audit Only" mode without crashing the pipeline, we removed
 ```yaml
 trufflehog filesystem . || echo "Secrets found, but continuing build."
 ```
+
+## 2. Snyk Fails with `FATAL No supported files found (SNYK-CLI-0008)`
+
+**Symptom:** The Snyk Security Scan task fails with the following log:
+```
+FATAL No supported files found (SNYK-CLI-0008)
+Could not detect supported target files in /home/vsts/work/1/s.
+```
+
+**Root Cause:** Snyk is running an application scan (`testType: 'app'`) which looks for dependency manifest files like `package.json` or `requirements.txt`. Because our Python application source code is nested inside the `src/` folder, Snyk fails to find the manifest at the root of the repository.
+
+**Fix:** 
+We explicitly passed the `targetFile` input to the Snyk Azure DevOps task to point it directly to the manifest:
+```yaml
+    - task: SnykSecurityScan@1
+      inputs:
+        targetFile: 'src/requirements.txt'
+```

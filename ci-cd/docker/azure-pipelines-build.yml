@@ -34,10 +34,11 @@ stages:
       displayName: 'Run TruffleHog Secret Scan'
 
     - task: SnykSecurityScan@1
-      displayName: Run Snyk Code (SAST) Vulnerability Scan
+      displayName: Run Snyk Vulnerability Scan (SAST/SCA)
       inputs:
         serviceConnectionEndpoint: $(snykServiceConnection)
         testType: 'app'
+        targetFile: 'src/requirements.txt' # Tell Snyk where the manifest is
         monitorWhen: 'always'
         failOnIssues: true # Fail the build if code vulnerabilities are found
         severityThreshold: 'high'
