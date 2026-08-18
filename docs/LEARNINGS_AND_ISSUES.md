@@ -103,3 +103,44 @@ This is a living document tracking the timeline of architectural decisions, issu
 #### Implementation 3: Snyk Code for Static Application Security Testing (SAST)
 - **What We Did:** Added Snyk Code (`testType: 'app'`) to the Build pipeline.
 - **The Value:** Snyk Code scans the actual source code (Python, JS) for application-level vulnerabilities like SQL Injection, Cross-Site Scripting (XSS), and insecure dependencies *before* the Docker image is even built.
+
+#### Issue 11: Snyk Container Scan Failing on Base Image Vulnerabilities
+- **What Happened:** The Snyk Container scan step successfully ran but intentionally failed the build.
+- **The Error:** `✗ High severity vulnerability found in attr/libattr1 ... Image layer: Introduced by your base image (python:3.11-slim)`.
+- **The Root Cause:** We enforced `failOnIssues: true` with a `high` severity threshold. The underlying OS of the `python:3.11-slim` image (Debian) contained unpatched high-severity CVEs, so Snyk blocked the deployment to protect the environment.
+- **The Fix:** We updated the `docker/Dockerfile` to use a significantly smaller, more secure base image: `FROM python:3.11-alpine`.
+
+#### Issue 12: Docker Build Failing on Alpine (C Extensions)
+- **What Happened:** After switching to `python:3.11-alpine`, the Docker build task started failing on `pip install`.
+- **The Error:** Missing build dependencies like `gcc` or `Failed building wheel for cryptography / bcrypt`.
+- **The Root Cause:** Alpine Linux uses `musl` libc instead of `glibc`. Pre-compiled Python wheels for packages with C extensions (like `bcrypt` and `cryptography`) often don't work out-of-the-box on Alpine. They require source compilation, but Alpine lacks the build tools natively.
+- **The Fix:** Added the required Alpine build dependencies immediately before `pip install` in the `Dockerfile`:
+  ```dockerfile
+  RUN apk add --no-cache gcc musl-dev libffi-dev build-base
+  ```
+
+#### Issue 13: Pipeline Failing with "A task is missing" (Azure DevOps)
+- **What Happened:** The pipeline failed immediately upon triggering.
+- **The Error:** `A task is missing. The pipeline references a task called 'SynkSecurityScan'.`
+- **The Root Cause:** During a global Find & Replace inside the Azure DevOps web portal to correct a Service Connection name, the official task name `SnykSecurityScan@1` was accidentally misspelled as `SynkSecurityScan@1`. Also, this change was only on the remote repo and caused the remote and local branches to diverge.
+- **The Fix:** Pulled the remote changes using `git pull --rebase`, corrected the YAML task back to `SnykSecurityScan@1`, committed, and pushed to both Github and Azure DevOps remotes to re-sync everything.
+
+### 2026-08-18: Application Deployment Troubleshooting
+
+#### Issue 14: Docker Push "Denied" due to Placeholder Name
+- **What Happened:** The Build and Scan steps passed, but the pipeline failed on the `Push Docker Image to DockerHub` step.
+- **The Error:** `denied: requested access to the resource is denied`
+- **The Root Cause:** The pipeline variable `imageName` was still set to the default placeholder: `yourusername/codexrelic-api`. The pipeline tried to push to `docker.io/yourusername/...` using the developer's credentials. Docker Hub rejected it because the developer doesn't own the namespace `yourusername`.
+- **The Fix:** Updated the pipeline variable `imageName` to use the actual Docker Hub username (`aazammohammad193/codexrelic-api`).
+
+#### Issue 15: K3s Deployment Failing with "Permission Denied"
+- **What Happened:** The Release pipeline connected to the VM via SSH, but all `kubectl` commands failed.
+- **The Error:** `error: error loading config file "/etc/rancher/k3s/k3s.yaml": open /etc/rancher/k3s/k3s.yaml: permission denied`
+- **The Root Cause:** By default, K3s provisions its config file (`/etc/rancher/k3s/k3s.yaml`) with root-only read permissions (`600`). The SSH task was connecting as the unprivileged `ubuntu` user.
+- **The Fix:** Updated the deployment pipeline script to securely copy the config file using `sudo` and change its ownership to the `ubuntu` user, before running any `kubectl` commands:
+  ```bash
+  mkdir -p ~/.kube
+  sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+  sudo chown $(id -u):$(id -g) ~/.kube/config
+  export KUBECONFIG=~/.kube/config
+  ```
