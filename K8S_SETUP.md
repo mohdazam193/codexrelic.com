@@ -49,16 +49,43 @@ Instead, Azure DevOps will deploy our application by securely SSHing into the VM
 
 ---
 
-## Step 3: Understand the Kubernetes Manifests
+## Step 3: Configure Kubernetes Namespaces & Secrets (Manual or Automated)
 
-Before running the pipeline, review the two files we added to the `kubernetes/` folder:
+If you are deploying manually via the terminal, you must create an isolated namespace for your environment (e.g., `uat`, `stage`, `prod`) and securely load your `.env` variables into Kubernetes as a Secret.
 
-1. **`deployment.yaml`**: This tells Kubernetes to run 2 replicas of your Docker container. It pulls the image built by Azure DevOps and injects your Azure Key Vault secrets into the container as environment variables.
-2. **`service.yaml`**: This maps the internal container port (3000) to an external NodePort (`30080`), allowing traffic to reach your application.
+**1. Create a Namespace:**
+```bash
+kubectl create namespace uat
+```
+
+**2. Create the Secret:**
+Assuming you have a `.env` file locally containing your database URI and JWT secrets:
+```bash
+kubectl create secret generic codexrelic-secrets \
+  --namespace=uat \
+  --from-env-file=.env
+```
+
+*(Note: If you use the Azure DevOps pipeline in Step 5, it will run these commands automatically for you by pulling the secrets directly from Azure Key Vault.)*
 
 ---
 
-## Step 4: Run the Application CI/CD Pipeline
+## Step 4: Understand the Kubernetes Manifests
+
+Before deploying, review the two files we added to the `kubernetes/` folder:
+
+1. **`deployment.yaml`**: This tells Kubernetes to run 2 replicas of your Docker container. It pulls the image built by Azure DevOps and injects the `codexrelic-secrets` into the container as environment variables.
+2. **`service.yaml`**: This maps the internal container port (3000) to an external NodePort (`30080`), allowing traffic to reach your application.
+
+To apply these manifests manually:
+```bash
+kubectl apply -n uat -f kubernetes/deployment.yaml
+kubectl apply -n uat -f kubernetes/service.yaml
+```
+
+---
+
+## Step 5: Run the Application CI/CD Pipeline
 
 With the VM configured and the SSH Service Connection saved, you are ready to deploy!
 
@@ -79,7 +106,7 @@ With the VM configured and the SSH Service Connection saved, you are ready to de
 
 ---
 
-## Step 5: Map your DNS (Final Step)
+## Step 6: Map your DNS (Final Step)
 
 Once the pipeline succeeds, your application is running inside Kubernetes on the VM! The final step is to point your public domain name (`codexrelic.com`) to the VM.
 
