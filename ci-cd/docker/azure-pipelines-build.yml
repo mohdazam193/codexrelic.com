@@ -41,7 +41,7 @@ stages:
     - task: SnykSecurityScan@1
       displayName: Run Snyk Vulnerability Scan (SAST/SCA)
       inputs:
-        serviceConnectionEndpoint: $(snykServiceConnection)
+        serviceConnectionEndpoint: $(synkServiceConnection)
         testType: 'app'
         targetFile: 'src/requirements.txt' # Tell Snyk where the manifest is
         monitorWhen: 'always'
