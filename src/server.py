@@ -213,7 +213,7 @@ def get_movies():
                 "director": "Christopher Nolan",
                 "rating": 10.0,
                 "genre": "sci-fi",
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGUtNzI2My00NTQ1LWIwNDctYmQxODIwMDM3YmRlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                "poster_url": "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
                 "description": "Christopher Nolan's visual masterpiece. Hans Zimmer's organ score adds an almost gothic scale to the void of space.",
                 "sre_analogy": {
                     "title": "Time Dilation",
@@ -225,7 +225,7 @@ def get_movies():
                 "director": "Christopher Nolan",
                 "rating": 9.5,
                 "genre": "thriller",
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg",
+                "poster_url": "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
                 "description": "Architectural logic of dreams defined like code. City folding cinematography is stunning.",
                 "sre_analogy": {
                     "title": "Virtualization",
@@ -237,7 +237,7 @@ def get_movies():
                 "director": "Denis Villeneuve",
                 "rating": 9.8,
                 "genre": "sci-fi",
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BYzg0NGM2NjAtN2VjNy00MjY0LWIyM2UtYzg4M2M1YjkyMGU2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                "poster_url": "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
                 "description": "Denis Villeneuve visual masterpiece. Slow burn detailing memory relics and what makes a soul.",
                 "sre_analogy": {
                     "title": "Containers",
@@ -249,7 +249,7 @@ def get_movies():
                 "director": "Stanley Kubrick",
                 "rating": 10.0,
                 "genre": "philosophy",
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BYmQyNTA1ZGItNjZjMi00NzFlLWIyNDUtYjlhYjM0MWRmYTMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                "poster_url": "https://upload.wikimedia.org/wikipedia/en/1/1c/2001_A_Space_Odyssey_%281968_theatrical_movie_poster%29.jpg",
                 "description": "Kubrick's masterpiece. The monolith acts as a cosmic rulebook. HAL 9000 shows tragedy of system conflict.",
                 "sre_analogy": {
                     "title": "Split-Brain",
