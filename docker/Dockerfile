@@ -1,5 +1,5 @@
-# Use official lightweight Python image
-FROM python:3.11-slim
+# Use official lightweight Python Alpine image for fewer vulnerabilities
+FROM python:3.11-alpine
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \

@@ -76,3 +76,23 @@ Status:  401 Unauthorized
 3. Create a **New Service Connection**, search for **Snyk**, and paste your API token.
 4. Name the connection exactly **`Snyk`**.
 5. Re-run the pipeline. The `snykServiceConnection` variable in the pipeline is now correctly pointing to `Snyk` to match this connection.
+
+---
+
+## 5. Snyk Fails with `High severity vulnerability found in ...` (Container Scan)
+
+**Symptom:** The Snyk Container Vulnerability Scan fails the pipeline and outputs logs like:
+```
+✗ High severity vulnerability found in attr/libattr1
+Base Image python:3.11-slim 73 vulnerabilities (0 critical, 2 high, 2 medium, 69 low)
+##[error]failing task because `snyk test` found issues
+```
+
+**Root Cause:** Snyk scanned the compiled Docker image and found that the underlying operating system inside the base image (`python:3.11-slim` running Debian) has unpatched high-severity CVEs (like `libattr1`). Because our pipeline enforces a `severityThreshold: 'high'`, Snyk intentionally blocks the deployment to protect the environment.
+
+**Fix:**
+We updated `docker/Dockerfile` to use a significantly smaller, more secure base image (Alpine Linux) which contains fewer OS utilities and therefore far fewer vulnerabilities:
+```diff
+- FROM python:3.11-slim
++ FROM python:3.11-alpine
+```
