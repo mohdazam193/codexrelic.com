@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codexrelic-api
+  labels:
+    app: codexrelic-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: codexrelic-api
+  template:
+    metadata:
+      labels:
+        app: codexrelic-api
+    spec:
+      containers:
+      - name: codexrelic-api
+        image: DOCKER_IMAGE_PLACEHOLDER
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: codexrelic-secrets

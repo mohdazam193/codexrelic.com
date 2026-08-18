@@ -83,7 +83,44 @@ stages:
         EOF
       displayName: Render .env.uat from Key Vault secrets
 
-    # TODO: Add SSH deployment to OCI VM once provisioned
+    - task: CopyFilesOverSSH@0
+      displayName: Copy K8s manifests and .env to VM
+      inputs:
+        sshEndpoint: 'oci-vm-ssh' # You must create this SSH Service Connection in Azure DevOps
+        sourceFolder: '$(System.DefaultWorkingDirectory)'
+        contents: |
+          kubernetes/**
+          .env.uat
+        targetFolder: '/home/ubuntu/codexrelic-deploy/uat'
+        readyTimeout: '20000'
+
+    - task: SSH@0
+      displayName: Deploy to K3s via SSH
+      inputs:
+        sshEndpoint: 'oci-vm-ssh'
+        runOptions: 'inline'
+        inline: |
+          cd /home/ubuntu/codexrelic-deploy/uat
+          
+          # 0. Ensure namespace exists
+          kubectl create namespace uat --dry-run=client -o yaml | kubectl apply -f -
+          
+          # 1. Create/Update Kubernetes Secret from .env file
+          kubectl create secret generic codexrelic-secrets \
+            --namespace=uat \
+            --from-env-file=.env.uat \
+            --dry-run=client -o yaml | kubectl apply -f -
+            
+          # 2. Update deployment image tag
+          sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(Build.BuildId)|g' kubernetes/deployment.yaml
+          
+          # 3. Apply manifests
+          kubectl apply -n uat -f kubernetes/deployment.yaml
+          kubectl apply -n uat -f kubernetes/service.yaml
+          
+          # 4. Wait for rollout
+          kubectl rollout status deployment/codexrelic-api -n uat
+
 
 - stage: DeployToStage
   displayName: Deploy to Stage
@@ -110,7 +147,43 @@ stages:
         EOF
       displayName: Render .env.stage from Key Vault secrets
 
-    # TODO: Add SSH deployment to OCI VM once provisioned
+    - task: CopyFilesOverSSH@0
+      displayName: Copy K8s manifests and .env to VM
+      inputs:
+        sshEndpoint: 'oci-vm-ssh'
+        sourceFolder: '$(System.DefaultWorkingDirectory)'
+        contents: |
+          kubernetes/**
+          .env.stage
+        targetFolder: '/home/ubuntu/codexrelic-deploy/stage'
+        readyTimeout: '20000'
+
+    - task: SSH@0
+      displayName: Deploy to K3s via SSH
+      inputs:
+        sshEndpoint: 'oci-vm-ssh'
+        runOptions: 'inline'
+        inline: |
+          cd /home/ubuntu/codexrelic-deploy/stage
+          
+          # 0. Ensure namespace exists
+          kubectl create namespace stage --dry-run=client -o yaml | kubectl apply -f -
+          
+          # 1. Create/Update Kubernetes Secret from .env file
+          kubectl create secret generic codexrelic-secrets \
+            --namespace=stage \
+            --from-env-file=.env.stage \
+            --dry-run=client -o yaml | kubectl apply -f -
+            
+          # 2. Update deployment image tag
+          sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(Build.BuildId)|g' kubernetes/deployment.yaml
+          
+          # 3. Apply manifests
+          kubectl apply -n stage -f kubernetes/deployment.yaml
+          kubectl apply -n stage -f kubernetes/service.yaml
+          
+          # 4. Wait for rollout
+          kubectl rollout status deployment/codexrelic-api -n stage
 
 - stage: DeployToProd
   displayName: Deploy to Production
@@ -137,4 +210,40 @@ stages:
         EOF
       displayName: Render .env.prod from Key Vault secrets
 
-    # TODO: Add SSH deployment to OCI VM once provisioned
+    - task: CopyFilesOverSSH@0
+      displayName: Copy K8s manifests and .env to VM
+      inputs:
+        sshEndpoint: 'oci-vm-ssh'
+        sourceFolder: '$(System.DefaultWorkingDirectory)'
+        contents: |
+          kubernetes/**
+          .env.prod
+        targetFolder: '/home/ubuntu/codexrelic-deploy/prod'
+        readyTimeout: '20000'
+
+    - task: SSH@0
+      displayName: Deploy to K3s via SSH
+      inputs:
+        sshEndpoint: 'oci-vm-ssh'
+        runOptions: 'inline'
+        inline: |
+          cd /home/ubuntu/codexrelic-deploy/prod
+          
+          # 0. Ensure namespace exists
+          kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -
+          
+          # 1. Create/Update Kubernetes Secret from .env file
+          kubectl create secret generic codexrelic-secrets \
+            --namespace=prod \
+            --from-env-file=.env.prod \
+            --dry-run=client -o yaml | kubectl apply -f -
+            
+          # 2. Update deployment image tag
+          sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(Build.BuildId)|g' kubernetes/deployment.yaml
+          
+          # 3. Apply manifests
+          kubectl apply -n prod -f kubernetes/deployment.yaml
+          kubectl apply -n prod -f kubernetes/service.yaml
+          
+          # 4. Wait for rollout
+          kubectl rollout status deployment/codexrelic-api -n prod
