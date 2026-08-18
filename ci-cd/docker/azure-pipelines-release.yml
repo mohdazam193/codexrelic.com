@@ -3,7 +3,7 @@ trigger: none # Do not trigger on code push, only trigger via the Pipeline resou
 resources:
   pipelines:
   - pipeline: BuildPipeline
-    source: 'codexrelic-build-pipeline' # IMPORTANT: Change this to the exact name of your Build Pipeline in Azure DevOps
+    source: '\Build\Code Build Pipelines' # Matching the exact folder and name from Azure DevOps
     trigger: true
 
 pool:
