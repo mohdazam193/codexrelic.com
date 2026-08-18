@@ -72,6 +72,12 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/uat
                 
+                # Setup Kubeconfig for the ubuntu user
+                mkdir -p ~/.kube
+                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+                sudo chown $(id -u):$(id -g) ~/.kube/config
+                export KUBECONFIG=~/.kube/config
+                
                 # 0. Ensure namespace exists
                 kubectl create namespace uat --dry-run=client -o yaml | kubectl apply -f -
                 
@@ -151,6 +157,12 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/stage
                 
+                # Setup Kubeconfig for the ubuntu user
+                mkdir -p ~/.kube
+                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+                sudo chown $(id -u):$(id -g) ~/.kube/config
+                export KUBECONFIG=~/.kube/config
+                
                 # 0. Ensure namespace exists
                 kubectl create namespace stage --dry-run=client -o yaml | kubectl apply -f -
                 
@@ -229,6 +241,12 @@ stages:
               runOptions: 'inline'
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/prod
+                
+                # Setup Kubeconfig for the ubuntu user
+                mkdir -p ~/.kube
+                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+                sudo chown $(id -u):$(id -g) ~/.kube/config
+                export KUBECONFIG=~/.kube/config
                 
                 # 0. Ensure namespace exists
                 kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -
