@@ -72,30 +72,24 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/uat
                 
-                # Setup Kubeconfig for the ubuntu user
-                mkdir -p ~/.kube
-                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-                sudo chown $(id -u):$(id -g) ~/.kube/config
-                export KUBECONFIG=~/.kube/config
-                
                 # 0. Ensure namespace exists
-                kubectl create namespace uat --dry-run=client -o yaml | kubectl apply -f -
+                sudo kubectl create namespace uat --dry-run=client -o yaml | sudo kubectl apply -f -
                 
                 # 1. Create/Update Kubernetes Secret from .env file
-                kubectl create secret generic codexrelic-secrets \
+                sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=uat \
                   --from-env-file=.env.uat \
-                  --dry-run=client -o yaml | kubectl apply -f -
+                  --dry-run=client -o yaml | sudo kubectl apply -f -
                   
                 # 2. Update deployment image tag
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
                 
                 # 3. Apply manifests
-                kubectl apply -n uat -f k8s-manifests/deployment.yaml
-                kubectl apply -n uat -f k8s-manifests/service.yaml
+                sudo kubectl apply -n uat -f k8s-manifests/deployment.yaml
+                sudo kubectl apply -n uat -f k8s-manifests/service.yaml
                 
                 # 4. Wait for rollout
-                kubectl rollout status deployment/codexrelic-api -n uat
+                sudo kubectl rollout status deployment/codexrelic-api -n uat
 
 
 - stage: DeployToStage
@@ -157,30 +151,24 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/stage
                 
-                # Setup Kubeconfig for the ubuntu user
-                mkdir -p ~/.kube
-                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-                sudo chown $(id -u):$(id -g) ~/.kube/config
-                export KUBECONFIG=~/.kube/config
-                
                 # 0. Ensure namespace exists
-                kubectl create namespace stage --dry-run=client -o yaml | kubectl apply -f -
+                sudo kubectl create namespace stage --dry-run=client -o yaml | sudo kubectl apply -f -
                 
                 # 1. Create/Update Kubernetes Secret from .env file
-                kubectl create secret generic codexrelic-secrets \
+                sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=stage \
                   --from-env-file=.env.stage \
-                  --dry-run=client -o yaml | kubectl apply -f -
+                  --dry-run=client -o yaml | sudo kubectl apply -f -
                   
                 # 2. Update deployment image tag
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
                 
                 # 3. Apply manifests
-                kubectl apply -n stage -f k8s-manifests/deployment.yaml
-                kubectl apply -n stage -f k8s-manifests/service.yaml
+                sudo kubectl apply -n stage -f k8s-manifests/deployment.yaml
+                sudo kubectl apply -n stage -f k8s-manifests/service.yaml
                 
                 # 4. Wait for rollout
-                kubectl rollout status deployment/codexrelic-api -n stage
+                sudo kubectl rollout status deployment/codexrelic-api -n stage
 
 
 - stage: DeployToProd
@@ -242,27 +230,21 @@ stages:
               inline: |
                 cd /home/ubuntu/codexrelic-deploy/prod
                 
-                # Setup Kubeconfig for the ubuntu user
-                mkdir -p ~/.kube
-                sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-                sudo chown $(id -u):$(id -g) ~/.kube/config
-                export KUBECONFIG=~/.kube/config
-                
                 # 0. Ensure namespace exists
-                kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -
+                sudo kubectl create namespace prod --dry-run=client -o yaml | sudo kubectl apply -f -
                 
                 # 1. Create/Update Kubernetes Secret from .env file
-                kubectl create secret generic codexrelic-secrets \
+                sudo kubectl create secret generic codexrelic-secrets \
                   --namespace=prod \
                   --from-env-file=.env.prod \
-                  --dry-run=client -o yaml | kubectl apply -f -
+                  --dry-run=client -o yaml | sudo kubectl apply -f -
                   
                 # 2. Update deployment image tag
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
                 
                 # 3. Apply manifests
-                kubectl apply -n prod -f k8s-manifests/deployment.yaml
-                kubectl apply -n prod -f k8s-manifests/service.yaml
+                sudo kubectl apply -n prod -f k8s-manifests/deployment.yaml
+                sudo kubectl apply -n prod -f k8s-manifests/service.yaml
                 
                 # 4. Wait for rollout
-                kubectl rollout status deployment/codexrelic-api -n prod
+                sudo kubectl rollout status deployment/codexrelic-api -n prod
