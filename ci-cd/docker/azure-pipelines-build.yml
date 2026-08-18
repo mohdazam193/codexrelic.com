@@ -38,10 +38,10 @@ stages:
         python3 -m pip install -r src/requirements.txt
       displayName: 'Install Dependencies for Snyk SCA'
 
-    - task: SynkSecurityScan@1
-      displayName: Run Synk Vulnerability Scan (SAST/SCA)
+    - task: SnykSecurityScan@1
+      displayName: Run Snyk Vulnerability Scan (SAST/SCA)
       inputs:
-        serviceConnectionEndpoint: $(synkServiceConnection)
+        serviceConnectionEndpoint: $(snykServiceConnection)
         testType: 'app'
         targetFile: 'src/requirements.txt' # Tell Snyk where the manifest is
         monitorWhen: 'always'
