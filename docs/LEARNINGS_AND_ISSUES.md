@@ -152,3 +152,18 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **The Fix:** We updated the `azure-pipelines-build.yml` to explicitly build a cross-compiled ARM64 image using QEMU. 
   1. We added a script step before the Docker build to register QEMU: `docker run --rm --privileged multiarch/qemu-user-static --reset -p yes`.
   2. We passed `arguments: '--platform linux/arm64'` to the `Docker@2` build task to force it to build an ARM-native image that can run seamlessly on the OCI VM.
+
+### 2026-08-18: Zero-Downtime SSL Automation
+
+#### Learning 18: Automated SSL Certificates with cert-manager
+- **The Goal:** Automate the provisioning and 30-day rotation of Let's Encrypt SSL certificates for `uat.codexrelic.com`, `stage`, and `api` endpoints.
+- **The Implementation:** Instead of building a complex custom pipeline to rotate certificates, we leveraged **cert-manager**, the industry standard Kubernetes operator for TLS. 
+- **The Setup:** 
+  1. We added a step in the Release pipeline to automatically install `cert-manager` and deploy a Let's Encrypt `ClusterIssuer`.
+  2. We created a base `ingress.yaml` template with Traefik routing rules and `DOMAIN_PLACEHOLDER`.
+  3. During the release pipeline, we use `sed` to dynamically inject the correct domain (e.g., `uat.codexrelic.com`) into the Ingress manifest before applying it.
+  4. To enforce strict 30-day rotation, we added the annotation `cert-manager.io/renew-before: "1440h"` (60 days) to the Ingress. Since Let's Encrypt certificates are valid for 90 days, this forces cert-manager to negotiate a brand new certificate exactly every 30 days autonomously.
+
+#### Learning 19: Weekly SSL Health Monitoring
+- **The Goal:** Ensure visibility into the autonomous SSL rotation process.
+- **The Implementation:** We created a secondary Azure Pipeline (`azure-pipelines-ssl-check.yml`) configured with a weekly cron schedule (`cron: "0 0 * * 0"`). This pipeline connects to the cluster and executes a script to parse the `Ready` status of all certificates via `kubectl get certificates -A -o jsonpath=...`. If any certificate fails to renew, the pipeline fails and alerts the team.
