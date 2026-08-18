@@ -144,3 +144,11 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **The Error:** `Failed to pull image "yourusername/codexrelic-api:56": ... pull access denied`
 - **The Root Cause:** We previously updated the `imageName` variable with the real Docker Hub username (`aazammohammad193`) in the **Build pipeline**, but the **Release pipeline** (`azure-pipelines-release.yml`) had its own separate `variables` block that was still using the `yourusername/codexrelic-api` placeholder.
 - **The Fix:** Updated the `imageName` variable in `azure-pipelines-release.yml` to match the build pipeline (`aazammohammad193/codexrelic-api`).
+
+#### Issue 17: Pod CrashLoopBackOff due to CPU Architecture Mismatch (exec format error)
+- **What Happened:** The pod finally pulled the correct image (`:58`), created the container, and started it. However, the container immediately crashed on startup, triggering a `CrashLoopBackOff` loop.
+- **The Error:** While no explicit error logs were immediately visible, the container was instantly exiting.
+- **The Root Cause:** The Azure DevOps build agent (`ubuntu-latest`) runs on a standard **x86_64 (AMD64)** processor, so Docker natively builds an AMD64 image. However, the target Kubernetes cluster runs on an Oracle Cloud Always Free Ampere A1 VM, which is an **ARM64** processor. Running an AMD64 container on an ARM64 host without emulation causes an instant `exec format error` crash at the kernel level.
+- **The Fix:** We updated the `azure-pipelines-build.yml` to explicitly build a cross-compiled ARM64 image using QEMU. 
+  1. We added a script step before the Docker build to register QEMU: `docker run --rm --privileged multiarch/qemu-user-static --reset -p yes`.
+  2. We passed `arguments: '--platform linux/arm64'` to the `Docker@2` build task to force it to build an ARM-native image that can run seamlessly on the OCI VM.
