@@ -15,7 +15,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'yourusername/codexrelic-api'
+  imageName: 'aazammohammad193/codexrelic-api'
   dockerRegistryServiceConnection: 'dockerhub-connection' # Replace with actual connection name
   snykServiceConnection: 'Synk' # Matching the user's existing Service Connection name
 
