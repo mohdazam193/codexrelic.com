@@ -277,9 +277,25 @@ codexrelic login console (ttyv0)
       try {
         // ── Import Ed25519 private key via Web Crypto API ──
         // Key never leaves the browser — only the signature is transmitted.
-        const keyBytes = b64ToBuffer(rawKey);
+        let keyBytes = b64ToBuffer(rawKey);
+        let format = 'pkcs8';
+
+        // If the user provided a raw 32-byte seed, we must wrap it in a PKCS#8 ASN.1 header 
+        // because Web Crypto API only supports importing private Ed25519 keys via PKCS8.
+        if (keyBytes.byteLength === 32) {
+          const rawArray = new Uint8Array(keyBytes);
+          const pkcs8Header = new Uint8Array([
+            0x30, 0x2e, 0x02, 0x01, 0x00, 0x30, 0x05, 0x06,
+            0x03, 0x2b, 0x65, 0x70, 0x04, 0x22, 0x04, 0x20
+          ]);
+          const pkcs8Key = new Uint8Array(pkcs8Header.length + rawArray.length);
+          pkcs8Key.set(pkcs8Header);
+          pkcs8Key.set(rawArray, pkcs8Header.length);
+          keyBytes = pkcs8Key.buffer;
+        }
+
         const cryptoKey = await crypto.subtle.importKey(
-          'raw', keyBytes,
+          format, keyBytes,
           { name: 'Ed25519' },
           false,
           ['sign']
