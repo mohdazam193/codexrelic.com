@@ -23,6 +23,9 @@ RUN pip install --no-cache-dir --break-system-packages -r requirements.txt
 # Copy the rest of the application code
 COPY src/ .
 
+# Pre-compile the default resume PDF so it's available for download immediately
+RUN xelatex -output-directory=public/content/resume/ public/content/resume/resume.tex
+
 # Expose the port the app runs on
 EXPOSE 8000
 
