@@ -9,11 +9,14 @@ import logging
 import json
 import sys
 import subprocess
+import boto3
+from botocore.client import Config
+from botocore.exceptions import ClientError
 from datetime import datetime, timedelta
 from collections import defaultdict
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from fastapi import FastAPI, HTTPException, Request, Response, Form, UploadFile, File, Depends
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -125,6 +128,16 @@ login_limiter = RateLimiter(requests_limit=5, window_seconds=60)
 
 # Connect to MongoDB Atlas (fallback to local if URI not provided)
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+
+# ── Configure S3 Client (OCI Object Storage) ──
+s3_client = boto3.client(
+    's3',
+    endpoint_url=os.getenv("AWS_ENDPOINT_URL_S3"),
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_DEFAULT_REGION", "ap-hyderabad-1"),
+    config=Config(signature_version='s3v4')
+)
 
 DB_CONNECTED = False
 db = None
@@ -432,8 +445,8 @@ def add_blog(
 
 @app.post("/api/admin/resume", dependencies=[Depends(get_current_user)])
 async def upload_resume(file: UploadFile = File(...)):
-    if not file.filename.endswith(".tex"):
-        raise HTTPException(status_code=400, detail="Invalid file type. LaTeX (.tex) required.")
+    if not (file.filename.endswith(".tex") or file.filename.endswith(".pdf")):
+        raise HTTPException(status_code=400, detail="Invalid file type. Only .tex and .pdf are allowed.")
         
     # File size validation to prevent denial of service (DoS)
     MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB limit
@@ -441,33 +454,50 @@ async def upload_resume(file: UploadFile = File(...)):
     if len(contents) > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
 
-    resume_dir = os.path.join(BASE_DIR, "public", "content", "resume")
-    save_path = os.path.join(resume_dir, "resume.tex")
-    os.makedirs(resume_dir, exist_ok=True)
-    
-    with open(save_path, "wb") as f:
-        f.write(contents)
-
-    # Compile the uploaded .tex file to .pdf using xelatex via subprocess
-    try:
-        process = subprocess.run(
-            ["xelatex", f"-output-directory={resume_dir}", save_path],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=30  # Timeout in seconds to prevent hanging
-        )
-        if process.returncode != 0:
-            logger.error(f"LaTeX Compilation Failed:\n{process.stdout}\n{process.stderr}")
-            raise HTTPException(status_code=500, detail="Failed to compile LaTeX into PDF.")
-    except subprocess.TimeoutExpired:
-        logger.error("LaTeX Compilation Timed out.")
-        raise HTTPException(status_code=500, detail="LaTeX compilation timed out.")
-    except Exception as e:
-        logger.error(f"Error executing xelatex: {e}")
-        raise HTTPException(status_code=500, detail="Internal error during PDF compilation.")
+    bucket_name = os.getenv("AWS_S3_BUCKET")
+    if not bucket_name:
+        raise HTTPException(status_code=500, detail="S3 Bucket not configured in environment.")
         
-    return {"status": "success", "message": "LaTeX source file overwritten and PDF compiled successfully"}
+    try:
+        # Determine the key name based on extension (always save as resume.pdf or resume.tex)
+        ext = file.filename.split('.')[-1]
+        object_name = f"resume.{ext}"
+        
+        # Upload to OCI Object Storage via S3 API
+        s3_client.put_object(
+            Bucket=bucket_name,
+            Key=object_name,
+            Body=contents,
+            ContentType="application/pdf" if ext == "pdf" else "application/x-tex"
+        )
+    except ClientError as e:
+        logger.error(f"S3 Upload failed: {e}")
+        raise HTTPException(status_code=500, detail="Failed to upload file to Object Storage.")
+        
+    return {"status": "success", "message": f"Successfully uploaded {object_name} to OCI Object Storage!"}
+
+@app.get("/content/resume/{filename}")
+async def download_resume(filename: str):
+    if filename not in ["resume.pdf", "resume.tex"]:
+        raise HTTPException(status_code=403, detail="Forbidden")
+        
+    bucket_name = os.getenv("AWS_S3_BUCKET")
+    if not bucket_name:
+        raise HTTPException(status_code=500, detail="S3 Bucket not configured.")
+        
+    try:
+        response = s3_client.get_object(Bucket=bucket_name, Key=filename)
+        from fastapi.responses import StreamingResponse
+        return StreamingResponse(
+            response['Body'].iter_chunks(), 
+            media_type="application/pdf" if filename.endswith(".pdf") else "application/x-tex",
+            headers={"Content-Disposition": f"inline; filename={filename}"}
+        )
+    except ClientError as e:
+        if e.response['Error']['Code'] == "NoSuchKey":
+            raise HTTPException(status_code=404, detail="File not found")
+        logger.error(f"S3 Download failed: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching file from Object Storage.")
 
 # ── Dynamic Redirects for Protected HTML Pages ──
 @app.get("/admin/dashboard.html")

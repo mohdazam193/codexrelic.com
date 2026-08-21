@@ -231,14 +231,14 @@
       <div class="tab-content" id="tab-resume">
         <div class="dashboard-card">
           <div class="dashboard-card-title">
-            <span>Upload LaTeX Source File</span>
-            <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--c-accent)">fs.write('resume.tex')</span>
+            <span>Upload Resume File (PDF or LaTeX)</span>
+            <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--c-accent)">OCI Object Storage</span>
           </div>
 
           <form onsubmit="submitResume(event)">
             <div class="form-group">
-              <label class="form-label">Drop your resume.tex file here</label>
-              <input class="form-input" type="file" id="resume-file-input" accept=".tex" required style="background:var(--c-surface)">
+              <label class="form-label">Drop your resume.pdf or resume.tex file here</label>
+              <input class="form-input" type="file" id="resume-file-input" accept=".tex,.pdf" required style="background:var(--c-surface)">
             </div>
             <button class="btn btn-primary" type="submit" style="margin-top:var(--sp-5)">Overwrite Resume Source</button>
           </form>
