@@ -1,5 +1,5 @@
-# Use official lightweight Python Alpine image for fewer vulnerabilities
-FROM python:3.11-alpine
+# Use official lightweight Python slim image for faster builds (prebuilt wheels)
+FROM python:3.11-slim-bookworm
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
