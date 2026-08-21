@@ -268,7 +268,7 @@ stages:
                   
                 # 3. Update deployment image tag & Ingress domain
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
-                sed -i 's|DOMAIN_PLACEHOLDER|api.codexrelic.com|g' k8s-manifests/ingress.yaml
+                sed -i 's|DOMAIN_PLACEHOLDER|codexrelic.com|g' k8s-manifests/ingress.yaml
                 
                 # 4. Apply manifests
                 sudo kubectl apply -n prod -f k8s-manifests/deployment.yaml
