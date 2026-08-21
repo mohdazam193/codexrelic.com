@@ -9,8 +9,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR $APP_HOME
 
-# Install build dependencies for packages with C extensions (like bcrypt, cryptography)
-RUN apk add --no-cache gcc musl-dev libffi-dev build-base
+# Install build dependencies for packages with C extensions and LaTeX compilation
+RUN apk add --no-cache gcc musl-dev libffi-dev build-base texlive-xetex
 
 # Install python dependencies (leverage Docker cache)
 COPY src/requirements.txt .

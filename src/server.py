@@ -8,6 +8,7 @@ import jwt
 import logging
 import json
 import sys
+import subprocess
 from datetime import datetime, timedelta
 from collections import defaultdict
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
@@ -440,13 +441,33 @@ async def upload_resume(file: UploadFile = File(...)):
     if len(contents) > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
 
-    save_path = os.path.join(BASE_DIR, "public", "content", "resume", "resume.tex")
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    resume_dir = os.path.join(BASE_DIR, "public", "content", "resume")
+    save_path = os.path.join(resume_dir, "resume.tex")
+    os.makedirs(resume_dir, exist_ok=True)
     
     with open(save_path, "wb") as f:
         f.write(contents)
+
+    # Compile the uploaded .tex file to .pdf using xelatex via subprocess
+    try:
+        process = subprocess.run(
+            ["xelatex", f"-output-directory={resume_dir}", save_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=30  # Timeout in seconds to prevent hanging
+        )
+        if process.returncode != 0:
+            logger.error(f"LaTeX Compilation Failed:\n{process.stdout}\n{process.stderr}")
+            raise HTTPException(status_code=500, detail="Failed to compile LaTeX into PDF.")
+    except subprocess.TimeoutExpired:
+        logger.error("LaTeX Compilation Timed out.")
+        raise HTTPException(status_code=500, detail="LaTeX compilation timed out.")
+    except Exception as e:
+        logger.error(f"Error executing xelatex: {e}")
+        raise HTTPException(status_code=500, detail="Internal error during PDF compilation.")
         
-    return {"status": "success", "message": "LaTeX source file overwritten successfully"}
+    return {"status": "success", "message": "LaTeX source file overwritten and PDF compiled successfully"}
 
 # ── Dynamic Redirects for Protected HTML Pages ──
 @app.get("/admin/dashboard.html")
