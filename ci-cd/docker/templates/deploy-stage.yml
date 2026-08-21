@@ -1,0 +1,127 @@
+parameters:
+  - name: stageName
+    type: string
+  - name: displayName
+    type: string
+  - name: environmentName
+    type: string
+  - name: dependsOn
+    type: string
+    default: ''
+  - name: keyVaultName
+    type: string
+  - name: namespace
+    type: string
+  - name: ingressDomain
+    type: string
+  - name: deployFolder
+    type: string
+
+stages:
+- stage: ${{ parameters.stageName }}
+  displayName: ${{ parameters.displayName }}
+  ${{ if ne(parameters.dependsOn, '') }}:
+    dependsOn: ${{ parameters.dependsOn }}
+    condition: succeeded()
+  jobs:
+  - deployment: Deploy
+    environment: ${{ parameters.environmentName }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          # 1. Download the Kubernetes manifests created in the Build Pipeline
+          - task: DownloadPipelineArtifact@2
+            displayName: Download Kubernetes Manifests
+            inputs:
+              buildType: 'specific'
+              project: '$(System.TeamProject)'
+              definition: '$(resources.pipeline.BuildPipeline.pipelineID)'
+              buildVersionToDownload: 'specific'
+              pipelineId: '$(resources.pipeline.BuildPipeline.runID)'
+              artifactName: 'k8s-manifests'
+              targetPath: '$(Pipeline.Workspace)/k8s-manifests'
+
+          # 2. Fetch Environment-Specific Secrets (MongoDB, Passwords)
+          - task: AzureKeyVault@2
+            displayName: Load ${{ parameters.environmentName }} secrets from Key Vault
+            inputs:
+              azureSubscription: 'keyvalute-codex'
+              KeyVaultName: ${{ parameters.keyVaultName }}
+              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY'
+              RunAsPreJob: true
+
+          # 3. Fetch Common Secrets (S3 Credentials)
+          - task: AzureKeyVault@2
+            displayName: Load common S3 secrets from Key Vault
+            inputs:
+              azureSubscription: 'keyvalute-codex'
+              KeyVaultName: 'kv-aws-s3'
+              SecretsFilter: 'AWS-ACCESS-KEY-ID,AWS-SECRET-ACCESS-KEY,AWS-ENDPOINT-URL-S3,AWS-DEFAULT-REGION,AWS-S3-BUCKET'
+              RunAsPreJob: true
+
+          # 4. Generate the .env file dynamically
+          - script: |
+              cat > $(Pipeline.Workspace)/.env.${{ parameters.namespace }} <<EOF
+              MONGO_URI=$(MONGO-URI)
+              ADMIN_USER=$(ADMIN-USER)
+              ADMIN_PASS=$(ADMIN-PASS)
+              JWT_SECRET=$(JWT-SECRET)
+              ADMIN_ED25519_PUBLIC_KEY=$(ADMIN-ED25519-PUBLIC-KEY)
+              AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
+              AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
+              AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
+              AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
+              AWS_S3_BUCKET=$(AWS-S3-BUCKET)
+              APP_ENV=${{ parameters.namespace }}
+              EOF
+            displayName: Render .env.${{ parameters.namespace }} from Key Vault secrets
+
+          # 5. Copy Manifests and .env file to the target K3s Server via SSH
+          - task: CopyFilesOverSSH@0
+            displayName: Copy K8s manifests and .env to VM
+            inputs:
+              sshEndpoint: 'oci-vm-ssh'
+              sourceFolder: '$(Pipeline.Workspace)'
+              contents: |
+                k8s-manifests/**
+                .env.${{ parameters.namespace }}
+              targetFolder: ${{ parameters.deployFolder }}
+              readyTimeout: '20000'
+
+          # 6. Execute Kubernetes Commands on the K3s Server
+          - task: SSH@0
+            displayName: Deploy to K3s via SSH
+            inputs:
+              sshEndpoint: 'oci-vm-ssh'
+              runOptions: 'inline'
+              inline: |
+                cd ${{ parameters.deployFolder }}
+                
+                # Install cert-manager if not installed
+                sudo kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+                sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
+                
+                # Apply ClusterIssuer
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml
+                
+                # Ensure namespace exists
+                sudo kubectl create namespace ${{ parameters.namespace }} --dry-run=client -o yaml | sudo kubectl apply -f -
+                
+                # Create/Update Kubernetes Secret from .env file
+                sudo kubectl create secret generic codexrelic-secrets \
+                  --namespace=${{ parameters.namespace }} \
+                  --from-env-file=.env.${{ parameters.namespace }} \
+                  --dry-run=client -o yaml | sudo kubectl apply -f -
+                  
+                # Update deployment image tag & Ingress domain
+                sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
+                sed -i 's|DOMAIN_PLACEHOLDER|${{ parameters.ingressDomain }}|g' k8s-manifests/ingress.yaml
+                
+                # Apply manifests
+                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/deployment.yaml
+                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/service.yaml
+                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/ingress.yaml
+                
+                # Wait for rollout
+                sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
