@@ -14,7 +14,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
     python3 py3-pip \
     gcc musl-dev libffi-dev build-base \
     py3-cryptography py3-bcrypt \
-    texlive-xetex
+    texlive-xetex texlive-luatex fontconfig
 
 # Install python dependencies (leverage Docker cache)
 COPY src/requirements.txt .
