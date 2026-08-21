@@ -1,5 +1,5 @@
-# Use official lightweight Python slim image for faster builds (prebuilt wheels)
-FROM python:3.11-slim-bookworm
+# Use official lightweight Python Alpine 3.20 image for minimal vulnerabilities
+FROM python:3.11-alpine3.20
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -9,14 +9,15 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR $APP_HOME
 
-# Install LaTeX compilation tools (slim-bookworm uses apt-get, not apk)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    texlive-xetex \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (including precompiled cryptography/bcrypt to avoid slow rust compilation) and LaTeX
+RUN apk update && apk upgrade && apk add --no-cache \
+    gcc musl-dev libffi-dev build-base \
+    py3-cryptography py3-bcrypt \
+    texlive-xetex
 
 # Install python dependencies (leverage Docker cache)
 COPY src/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --break-system-packages -r requirements.txt
 
 # Copy the rest of the application code
 COPY src/ .
