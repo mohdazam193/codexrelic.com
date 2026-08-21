@@ -459,9 +459,10 @@ async def upload_resume(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="S3 Bucket not configured in environment.")
         
     try:
+        app_env = os.getenv("APP_ENV", "dev")
         # Determine the key name based on extension (always save as resume.pdf or resume.tex)
         ext = file.filename.split('.')[-1]
-        object_name = f"resume.{ext}"
+        object_name = f"{app_env}/resume/resume.{ext}"
         
         # Upload to OCI Object Storage via S3 API
         s3_client.put_object(
@@ -486,7 +487,10 @@ async def download_resume(filename: str):
         raise HTTPException(status_code=500, detail="S3 Bucket not configured.")
         
     try:
-        response = s3_client.get_object(Bucket=bucket_name, Key=filename)
+        app_env = os.getenv("APP_ENV", "dev")
+        object_key = f"{app_env}/resume/{filename}"
+        
+        response = s3_client.get_object(Bucket=bucket_name, Key=object_key)
         from fastapi.responses import StreamingResponse
         return StreamingResponse(
             response['Body'].iter_chunks(), 

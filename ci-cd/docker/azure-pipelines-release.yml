@@ -55,6 +55,7 @@ stages:
               AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
               AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
               AWS_S3_BUCKET=$(AWS-S3-BUCKET)
+              APP_ENV=uat
               EOF
             displayName: Render .env.uat from Key Vault secrets
 
@@ -150,6 +151,7 @@ stages:
               AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
               AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
               AWS_S3_BUCKET=$(AWS-S3-BUCKET)
+              APP_ENV=stage
               EOF
             displayName: Render .env.stage from Key Vault secrets
 
@@ -243,6 +245,7 @@ stages:
               AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
               AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
               AWS_S3_BUCKET=$(AWS-S3-BUCKET)
+              APP_ENV=prod
               EOF
             displayName: Render .env.prod from Key Vault secrets
 
