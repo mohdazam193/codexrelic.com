@@ -9,8 +9,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR $APP_HOME
 
-# Install build dependencies for packages with C extensions and LaTeX compilation
-RUN apk add --no-cache gcc musl-dev libffi-dev build-base texlive-xetex
+# Install LaTeX compilation tools (slim-bookworm uses apt-get, not apk)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    texlive-xetex \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies (leverage Docker cache)
 COPY src/requirements.txt .
