@@ -40,7 +40,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: 'kv-uat-codexrelic'
-              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY'
+              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY,AWS-ACCESS-KEY-ID,AWS-SECRET-ACCESS-KEY,AWS-ENDPOINT-URL-S3,AWS-DEFAULT-REGION,AWS-S3-BUCKET'
               RunAsPreJob: true
 
           - script: |
@@ -50,6 +50,11 @@ stages:
               ADMIN_PASS=$(ADMIN-PASS)
               JWT_SECRET=$(JWT-SECRET)
               ADMIN_ED25519_PUBLIC_KEY=$(ADMIN-ED25519-PUBLIC-KEY)
+              AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
+              AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
+              AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
+              AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
+              AWS_S3_BUCKET=$(AWS-S3-BUCKET)
               EOF
             displayName: Render .env.uat from Key Vault secrets
 
@@ -130,7 +135,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: 'kv-stage-codexrelic'
-              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY'
+              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY,AWS-ACCESS-KEY-ID,AWS-SECRET-ACCESS-KEY,AWS-ENDPOINT-URL-S3,AWS-DEFAULT-REGION,AWS-S3-BUCKET'
               RunAsPreJob: true
 
           - script: |
@@ -140,6 +145,11 @@ stages:
               ADMIN_PASS=$(ADMIN-PASS)
               JWT_SECRET=$(JWT-SECRET)
               ADMIN_ED25519_PUBLIC_KEY=$(ADMIN-ED25519-PUBLIC-KEY)
+              AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
+              AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
+              AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
+              AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
+              AWS_S3_BUCKET=$(AWS-S3-BUCKET)
               EOF
             displayName: Render .env.stage from Key Vault secrets
 
@@ -218,7 +228,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: 'kv-prod-codexrelic'
-              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY'
+              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY,AWS-ACCESS-KEY-ID,AWS-SECRET-ACCESS-KEY,AWS-ENDPOINT-URL-S3,AWS-DEFAULT-REGION,AWS-S3-BUCKET'
               RunAsPreJob: true
 
           - script: |
@@ -228,6 +238,11 @@ stages:
               ADMIN_PASS=$(ADMIN-PASS)
               JWT_SECRET=$(JWT-SECRET)
               ADMIN_ED25519_PUBLIC_KEY=$(ADMIN-ED25519-PUBLIC-KEY)
+              AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
+              AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
+              AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)
+              AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
+              AWS_S3_BUCKET=$(AWS-S3-BUCKET)
               EOF
             displayName: Render .env.prod from Key Vault secrets
 
