@@ -15,8 +15,8 @@ This document provides a comprehensive security review of the entire `codexrelic
 ### A02:2021 – Cryptographic Failures 🟢 (Strong Pass)
 *Is sensitive data protected at rest and in transit?*
 - **Strengths:**
-  - Passwords are hashed using `bcrypt` (adaptive hashing).
-  - Web Crypto API and `Ed25519` are used for asymmetric challenge-response authentication. The private key never leaves the browser.
+  - Passwords and Unique Private Keys are hashed using `bcrypt` (adaptive hashing).
+  - 3-Factor Authentication is enforced by the backend against secure hashes stored in MongoDB.
   - JWTs are signed with a strong 256-bit `HS256` secret and stored in `httponly`, `secure`, and `samesite="lax"` cookies to prevent theft over unencrypted connections.
   - HTTP Strict Transport Security (HSTS) is enforced via middleware to guarantee HTTPS.
 
