@@ -144,6 +144,8 @@ stages:
                   --namespace observability \
                   --set postgres.enabled=false \
                   --set prometheus.serviceMonitor.enabled=false \
+                  --set prometheus.podMonitor.enabled=false \
+                  --set nats.metrics.enabled=false \
                   --set nats.metrics.prometheus.podMonitor.enabled=false \
                   --set config.ZO_LOCAL_MODE="true" \
                   --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
@@ -170,6 +172,10 @@ stages:
                 echo "    enabled: true" >> /tmp/otel-values.yaml
                 echo "  kubernetesAttributes:" >> /tmp/otel-values.yaml
                 echo "    enabled: true" >> /tmp/otel-values.yaml
+                echo "image:" >> /tmp/otel-values.yaml
+                echo "  repository: \"ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib\"" >> /tmp/otel-values.yaml
+                echo "command:" >> /tmp/otel-values.yaml
+                echo "  name: \"otelcol-contrib\"" >> /tmp/otel-values.yaml
                 echo "config:" >> /tmp/otel-values.yaml
                 echo "  exporters:" >> /tmp/otel-values.yaml
                 echo "    otlphttp:" >> /tmp/otel-values.yaml
