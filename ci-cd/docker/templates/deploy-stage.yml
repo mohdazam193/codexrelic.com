@@ -16,6 +16,8 @@ parameters:
     type: string
   - name: deployFolder
     type: string
+  - name: maxReplicas
+    type: string
 
 stages:
 - stage: ${{ parameters.stageName }}
@@ -111,14 +113,16 @@ stages:
                   --from-env-file=.env.${{ parameters.namespace }} \
                   --dry-run=client -o yaml | sudo kubectl apply -f -
                   
-                # Update deployment image tag & Ingress domain
+                # Update deployment image tag, Ingress domain, and HPA maxReplicas
                 sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
                 sed -i 's|DOMAIN_PLACEHOLDER|${{ parameters.ingressDomain }}|g' k8s-manifests/ingress.yaml
+                sed -i 's|MAX_REPLICAS_PLACEHOLDER|${{ parameters.maxReplicas }}|g' k8s-manifests/hpa.yaml
                 
                 # Apply manifests
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/deployment.yaml
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/service.yaml
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/ingress.yaml
+                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/hpa.yaml
                 
                 # Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}

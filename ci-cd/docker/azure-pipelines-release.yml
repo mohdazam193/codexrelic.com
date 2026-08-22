@@ -24,6 +24,7 @@ stages:
     namespace: 'uat'
     ingressDomain: 'uat.codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/uat'
+    maxReplicas: '2'
 
 - template: templates/deploy-stage.yml
   parameters:
@@ -35,6 +36,7 @@ stages:
     namespace: 'stage'
     ingressDomain: 'stage.codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/stage'
+    maxReplicas: '2'
 
 - template: templates/deploy-stage.yml
   parameters:
@@ -46,3 +48,4 @@ stages:
     namespace: 'prod'
     ingressDomain: 'codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/prod'
+    maxReplicas: '5'
