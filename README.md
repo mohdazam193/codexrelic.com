@@ -63,7 +63,8 @@ The site serves as both a public portfolio and a working proof of concept for:
                         │   namespaces:                   │
                         │   ├── uat   (FastAPI Pod)       │
                         │   ├── stage (FastAPI Pod)       │
-                        │   └── prod  (FastAPI Pod)       │
+                        │   ├── prod  (FastAPI Pod + HPA) │
+                        │   └── observability (OpenObserve)│
                         └────────────────┬────────────────┘
                                          │ pymongo SRV
                         ┌────────────────▼────────────────┐
@@ -100,9 +101,10 @@ The site serves as both a public portfolio and a working proof of concept for:
 | Layer | Technology |
 |-------|-----------|
 | Compute | Oracle Cloud Always Free ARM (Ampere A1) |
-| Orchestration | K3s (Lightweight Kubernetes) |
+| Orchestration | K3s (Lightweight Kubernetes) + HPA Auto-Scaling |
 | Ingress & Routing | Traefik |
 | SSL / TLS | cert-manager + Let's Encrypt |
+| Observability | OpenObserve (Logs & Metrics collection via Helm) |
 | DNS | Cloudflare DNS (DNS-only) |
 | Database | MongoDB Atlas M0 Free |
 | Secrets | Azure DevOps Library Variable Groups |

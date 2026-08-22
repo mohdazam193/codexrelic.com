@@ -54,7 +54,7 @@ This document reviews the `codexrelic.com` application against the industry-stan
 
 ### 11. Logs 🟢 (Pass)
 *Treat logs as event streams.*
-- **Implementation:** The application does not attempt to write or manage log files on disk. Instead, it uses a structured `JSONFormatter` to stream all access, error, and audit logs directly to `stdout`. The container runtime (Docker) captures this stream, allowing it to be forwarded to external log aggregators.
+- **Implementation:** The application does not attempt to write or manage log files on disk. Instead, it uses a structured `JSONFormatter` to stream all access, error, and audit logs directly to `stdout`. The OpenObserve Collector (running as a DaemonSet) captures this stream and automatically forwards it to the OpenObserve Backend for long-term retention and visualization.
 
 ### 12. Admin Processes 🟢 (Pass)
 *Run admin/management tasks as one-off processes.*
