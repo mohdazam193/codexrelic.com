@@ -140,29 +140,34 @@ stages:
                 # Install/Update OpenObserve Backend via Helm
                 helm repo add openobserve https://charts.openobserve.ai
                 helm repo update
-                helm upgrade --install o2 openobserve/openobserve \
-                  --namespace observability \
-                  --set postgres.enabled=false \
-                  --set prometheus.serviceMonitor.enabled=false \
-                  --set prometheus.podMonitor.enabled=false \
-                  --set nats.promExporter.podMonitor.enabled=false \
-                  --set config.ZO_LOCAL_MODE="true" \
-                  --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
-                  --set config.ZO_ROOT_USER_EMAIL=$(O2-ROOT-USER) \
-                  --set config.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD) \
-                  --set s3.enabled=true \
-                  --set s3.bucket=$(AWS-S3-BUCKET) \
-                  --set s3.region=$(AWS-DEFAULT-REGION) \
-                  --set s3.endpoint=$(AWS-ENDPOINT-URL-S3) \
-                  --set s3.accessKey=$(AWS-ACCESS-KEY-ID) \
-                  --set s3.secretKey=$(AWS-SECRET-ACCESS-KEY) \
-                  --set ingress.enabled=true \
-                  --set ingress.hosts[0].host=${{ parameters.observDomain }} \
-                  --set ingress.hosts[0].paths[0].path="/" \
-                  --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
-                  --set ingress.tls[0].secretName="openobserve-tls" \
-                  --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
-                  --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod"
+                
+                for i in 1 2 3; do
+                  helm upgrade --install o2 openobserve/openobserve \
+                    --namespace observability \
+                    --set postgres.enabled=false \
+                    --set prometheus.serviceMonitor.enabled=false \
+                    --set prometheus.podMonitor.enabled=false \
+                    --set nats.metrics.enabled=false \
+                    --set nats.promExporter.podMonitor.enabled=false \
+                    --set config.ZO_LOCAL_MODE="true" \
+                    --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
+                    --set config.ZO_ROOT_USER_EMAIL=$(O2-ROOT-USER) \
+                    --set config.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD) \
+                    --set s3.enabled=true \
+                    --set s3.bucket=$(AWS-S3-BUCKET) \
+                    --set s3.region=$(AWS-DEFAULT-REGION) \
+                    --set s3.endpoint=$(AWS-ENDPOINT-URL-S3) \
+                    --set s3.accessKey=$(AWS-ACCESS-KEY-ID) \
+                    --set s3.secretKey=$(AWS-SECRET-ACCESS-KEY) \
+                    --set ingress.enabled=true \
+                    --set ingress.hosts[0].host=${{ parameters.observDomain }} \
+                    --set ingress.hosts[0].paths[0].path="/" \
+                    --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
+                    --set ingress.tls[0].secretName="openobserve-tls" \
+                    --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
+                    --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
+                    --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
+                done
                   
                 # Install/Update OpenTelemetry Collector (DaemonSet)
                 AUTH_BASE64=$(echo -n "$(O2-ROOT-USER):$(O2-ROOT-PASSWORD)" | base64 | tr -d '\n')
@@ -189,9 +194,13 @@ stages:
                 
                 helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
                 helm repo update
-                helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
-                  --namespace observability \
-                  -f /tmp/otel-values.yaml
+                
+                for i in 1 2 3 4 5; do
+                  helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
+                    --namespace observability \
+                    -f /tmp/otel-values.yaml \
+                    --timeout 10m && break || echo "Helm upgrade collector failed, retrying in 15s..." && sleep 15
+                done
                 
                 # Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
