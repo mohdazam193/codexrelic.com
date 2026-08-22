@@ -120,21 +120,20 @@ The site serves as both a public portfolio and a working proof of concept for:
 
 ## Security Model
 
-The admin interface uses **3-factor cryptographic authentication**:
+The admin interface uses **3-factor database-backed authentication**:
 
 ```
-Factor 1 → Username            (identity claim)
-Factor 2 → Password            (bcrypt, cost 12)
-Factor 3 → Ed25519 Private Key (asymmetric challenge-response)
+Factor 1 → Username
+Factor 2 → Password (bcrypt, cost 12)
+Factor 3 → Unique Private Key per user (bcrypt, cost 12)
 ```
 
 ### How it works
-1. Browser fetches a fresh 32-byte random **challenge** from the server (`GET /api/auth/challenge`)
-2. The challenge expires in **30 seconds** and is **one-time use** (replay-proof)
-3. Browser automatically wraps the raw Ed25519 seed in a PKCS#8 ASN.1 header and signs `challenge:username` locally using the **Web Crypto API** — the private key never leaves the device
-4. Server verifies the **Ed25519 signature** against the stored public key
-5. Server verifies the **bcrypt password** against the stored hash
-6. On success, issues a **JWT cookie** (HS256, 24h expiry, `httponly` + `secure`)
+1. The user creates an admin JSON payload locally using `automation/01-auth-setup/generate_admin_json.py` and inserts it into the MongoDB `users` collection.
+2. The browser submits the `username`, `password`, and `private_key` directly to the `/api/login` endpoint over HTTPS.
+3. The server looks up the user in MongoDB.
+4. The server verifies both the password and the private key using `bcrypt`.
+5. On success, the server issues a **stateless JWT cookie** (HS256, 24h expiry, `httponly` + `secure`).
 
 ### Secrets management
 Secrets are stored in **Azure DevOps Library Variable Groups** (one per environment).
@@ -245,8 +244,7 @@ git push → main
 |--------|----------|------|-------------|
 | `GET` | `/api/movies` | Public | List movies with SRE analogies |
 | `GET` | `/api/blogs` | Public | List blog posts |
-| `GET` | `/api/auth/challenge` | Public | Get Ed25519 login challenge |
-| `POST` | `/api/login` | — | Authenticate (Ed25519 + bcrypt → JWT) |
+| `POST` | `/api/login` | — | Authenticate (3-Factor DB Auth → JWT) |
 | `POST` | `/api/admin/movies` | JWT | Add movie to CMS |
 | `POST` | `/api/admin/blogs` | JWT | Add blog post to CMS |
 | `POST` | `/api/admin/resume` | JWT | Upload LaTeX resume |

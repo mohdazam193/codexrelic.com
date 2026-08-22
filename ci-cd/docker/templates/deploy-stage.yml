@@ -48,7 +48,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: ${{ parameters.keyVaultName }}
-              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET,ADMIN-ED25519-PUBLIC-KEY'
+              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET'
               RunAsPreJob: true
 
           # 3. Fetch Common Secrets (S3 Credentials)
@@ -67,7 +67,6 @@ stages:
               ADMIN_USER=$(ADMIN-USER)
               ADMIN_PASS=$(ADMIN-PASS)
               JWT_SECRET=$(JWT-SECRET)
-              ADMIN_ED25519_PUBLIC_KEY=$(ADMIN-ED25519-PUBLIC-KEY)
               AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
               AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
               AWS_ENDPOINT_URL_S3=$(AWS-ENDPOINT-URL-S3)

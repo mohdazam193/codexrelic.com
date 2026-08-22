@@ -177,9 +177,7 @@ codexrelic login console (ttyv0)
              style="color: transparent; caret-color: #33ff33;">
     </div>
 
-    <!-- Hidden fields populated by JS -->
-    <input type="hidden" id="challenge" name="challenge">
-    <input type="hidden" id="signature" name="signature">
+    <!-- Hidden fields removed. Credentials sent directly. -->
 
   </form>
 
@@ -207,8 +205,6 @@ codexrelic login console (ttyv0)
   const loginInput  = document.getElementById('username');
   const passwordInput = document.getElementById('password');
   const keyInput    = document.getElementById('ed25519-key');
-  const challengeField = document.getElementById('challenge');
-  const signatureField = document.getElementById('signature');
 
   const rowPassword = document.getElementById('row-password');
   const rowKey      = document.getElementById('row-key');
@@ -252,7 +248,7 @@ codexrelic login console (ttyv0)
     }
   });
 
-  // Step 3 → Sign + Submit
+  // Step 3 → Submit
   keyInput.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -260,49 +256,11 @@ codexrelic login console (ttyv0)
       if (!rawKey) return;
 
       try {
-        // ── Fetch fresh challenge just-in-time ──
-        const cRes = await fetch('/api/auth/challenge');
-        if (!cRes.ok) throw new Error('Failed to fetch authentication challenge from server.');
-        const cData = await cRes.json();
-        const challenge = cData.challenge;
-        challengeField.value = challenge;
-        // ── Import Ed25519 private key via Web Crypto API ──
-        // Key never leaves the browser — only the signature is transmitted.
-        let keyBytes = b64ToBuffer(rawKey);
-        let format = 'pkcs8';
-
-        // If the user provided a raw 32-byte seed, we must wrap it in a PKCS#8 ASN.1 header 
-        // because Web Crypto API only supports importing private Ed25519 keys via PKCS8.
-        if (keyBytes.byteLength === 32) {
-          const rawArray = new Uint8Array(keyBytes);
-          const pkcs8Header = new Uint8Array([
-            0x30, 0x2e, 0x02, 0x01, 0x00, 0x30, 0x05, 0x06,
-            0x03, 0x2b, 0x65, 0x70, 0x04, 0x22, 0x04, 0x20
-          ]);
-          const pkcs8Key = new Uint8Array(pkcs8Header.length + rawArray.length);
-          pkcs8Key.set(pkcs8Header);
-          pkcs8Key.set(rawArray, pkcs8Header.length);
-          keyBytes = pkcs8Key.buffer;
-        }
-
-        const cryptoKey = await crypto.subtle.importKey(
-          format, keyBytes,
-          { name: 'Ed25519' },
-          false,
-          ['sign']
-        );
-
-        // ── Sign: challenge:username ──
-        const message = new TextEncoder().encode(`${challenge}:${loginInput.value}`);
-        const sigBuffer = await crypto.subtle.sign('Ed25519', cryptoKey, message);
-        signatureField.value = bufToB64(sigBuffer);
-
-        // ── Submit credentials + signature (private key NOT included) ──
+        // ── Submit credentials (3-Factor) ──
         const formData = new FormData();
         formData.append('username',  loginInput.value);
         formData.append('password',  passwordInput.value);
-        formData.append('challenge', challenge);
-        formData.append('signature', signatureField.value);
+        formData.append('private_key', rawKey);
 
         const res = await fetch(loginForm.action, { method: 'POST', body: formData });
         const result = await res.json();
@@ -313,7 +271,7 @@ codexrelic login console (ttyv0)
         }
       } catch (err) {
         alert('ACCESS VIOLATION: ' + err.message);
-        // Reset console state — also refresh challenge for next attempt
+        // Reset console state
         loginInput.disabled = false;
         passwordInput.disabled = false;
         loginInput.value = '';
@@ -323,7 +281,6 @@ codexrelic login console (ttyv0)
         rowKey.classList.remove('active');
         loginInput.parentElement.classList.add('active');
         loginInput.focus();
-        // Challenge will be fetched just-in-time on next attempt
       }
     }
   });

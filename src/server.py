@@ -14,7 +14,6 @@ from botocore.client import Config
 from botocore.exceptions import ClientError
 from datetime import datetime, timedelta
 from collections import defaultdict
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from fastapi import FastAPI, HTTPException, Request, Response, Form, UploadFile, File, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -195,18 +194,7 @@ def get_current_user(request: Request):
         raise HTTPException(status_code=401, detail="Unauthorized session")
     return token
 
-# ── Challenge Endpoint (Ed25519 login, Step 1) ──
-@app.get("/api/auth/challenge")
-def get_challenge():
-    """Issue a fresh one-time 32-byte nonce for Ed25519 challenge-response login."""
-    nonce = secrets.token_bytes(32)
-    nonce_b64 = base64.b64encode(nonce).decode()
-    _challenges[nonce_b64] = time.time()
-    # Evict expired challenges (> 30 seconds old)
-    expired = [k for k, t in list(_challenges.items()) if time.time() - t > 30]
-    for k in expired:
-        del _challenges[k]
-    return {"challenge": nonce_b64}
+# ── Authentication APIs ──
 
 # ── Public APIs ──
 
@@ -306,15 +294,14 @@ def get_blogs():
         ]
     return blogs
 
-# ── Authentication API (Ed25519 Challenge-Response + JWT) ──
+# ── Authentication API (3-Factor DB Login) ──
 @app.post("/api/login")
 def login(
     request: Request,
     response: Response,
     username: str = Form(...),
     password: str = Form(...),
-    challenge: str = Form(...),
-    signature: str = Form(...),
+    private_key: str = Form(...)
 ):
     # ── 1. Rate limit by client IP ──
     client_ip = request.client.host if request.client else "unknown"
@@ -322,45 +309,25 @@ def login(
         logger.warning(f"Login rate limit exceeded for IP: {client_ip}")
         raise HTTPException(status_code=429, detail="Too many login attempts. Please try again in a minute.")
 
-    # ── 2. Validate challenge is fresh and one-time ──
-    issued_at = _challenges.get(challenge)
-    if issued_at is None or (time.time() - issued_at) > 30:
+    # ── 2. Verify Credentials against MongoDB ──
+    if not DB_CONNECTED or db is None:
+        raise HTTPException(status_code=500, detail="Database is unreachable. Cannot authenticate.")
+    
+    users_col = db.get_collection("users")
+    user = users_col.find_one({"username": username})
+    
+    if not user:
         raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-    del _challenges[challenge]  # One-time use — prevents replay attacks
-
-    # ── 3. Verify Ed25519 signature ──
-    pub_key_b64 = os.getenv("ADMIN_ED25519_PUBLIC_KEY")
-    if not pub_key_b64:
-        raise HTTPException(status_code=500, detail="Server authentication key not configured.")
-    try:
-        pub_key_bytes = base64.b64decode(pub_key_b64)
-        public_key = Ed25519PublicKey.from_public_bytes(pub_key_bytes)
-        message = f"{challenge}:{username}".encode()
-        public_key.verify(base64.b64decode(signature), message)
-    except Exception:
+        
+    # Verify Password
+    if not bcrypt.checkpw(password.encode('utf-8'), user["passkey_hash"].encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Authentication credentials invalid")
+        
+    # Verify Unique Private Key
+    if not bcrypt.checkpw(private_key.encode('utf-8'), user["private_key_hash"].encode('utf-8')):
         raise HTTPException(status_code=401, detail="Authentication credentials invalid")
 
-    # ── 4. Verify bcrypt password against DB (or env fallback) ──
-    dev_user = os.getenv("ADMIN_USER")
-    dev_pass = os.getenv("ADMIN_PASS")
-
-    if DB_CONNECTED and db is not None:
-        users_col = db.get_collection("users")
-        user = users_col.find_one({"username": username})
-        if not user:
-            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-        if not bcrypt.checkpw(password.encode('utf-8'), user["passkey_hash"].encode('utf-8')):
-            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-    else:
-        # Resilient fallback: env-based verification when DB is offline
-        if not dev_user or not dev_pass:
-            logger.error("Administrative credentials not configured in environment.")
-            raise HTTPException(status_code=500, detail="Administrative credentials not configured in environment.")
-        if username != dev_user or password != dev_pass:
-            logger.warning(f"Failed login attempt for user: {username} from IP: {client_ip} (fallback mode)")
-            raise HTTPException(status_code=401, detail="Authentication credentials invalid")
-
-    # ── 5. Issue stateless JWT — no DB write needed ──
+    # ── 3. Issue stateless JWT ──
     logger.info(f"Successful login for user: {username} from IP: {client_ip}")
     token = create_jwt(username)
     response.set_cookie(

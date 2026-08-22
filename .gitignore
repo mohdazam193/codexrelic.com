@@ -19,3 +19,4 @@ keys/
 .foglamp/
 codexrelic-kubeconfig.yaml
 .foglamp/
+.env.s3

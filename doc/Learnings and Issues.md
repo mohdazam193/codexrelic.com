@@ -19,3 +19,11 @@ We refactored our Azure DevOps release pipeline from a massive, repetitive ~280-
 - We kept environment-specific variables (like MongoDB credentials) in environment-specific Key Vaults (`kv-uat-codexrelic`, `kv-stage-codexrelic`, etc.).
 - We consolidated shared variables (like AWS S3 credentials) into a single, global Key Vault (`kv-aws-s3`). 
 - **Benefit**: The pipeline seamlessly merges secrets from multiple Key Vaults just before creating the Kubernetes `.env` file, meaning we don't have to duplicate the same AWS credentials across 3 separate vaults.
+
+## 5. Simplifying Auth: Database-Backed 3-Factor over WebCrypto Ed25519
+We initially implemented a highly complex 3-factor authentication system using `Ed25519` cryptographic signatures via the browser's `Web Crypto API`, relying on a server-side memory challenge.
+- **The Issue**: 
+  - The in-memory challenge `_challenges = {}` failed when deployed to multiple Kubernetes pods (Pod A issued the challenge, Pod B failed to verify it).
+  - The 30-second expiry was too tight for humans typing passwords and pasting keys.
+  - Relying on `ADMIN_USER` and `ADMIN_PASS` as `.env` variables fails elegantly when a database connection is active but the `users` table is empty.
+- **The Solution**: We removed the `Ed25519` signature math and migrated to a **Database-Backed 3-Factor Authentication**. The user now submits `username`, `password`, and a `private_key` string over HTTPS. The backend securely checks all three using `bcrypt` hashes stored in MongoDB, ensuring multi-pod scalability, easier admin provisioning, and eliminating cryptographic timing bugs.
