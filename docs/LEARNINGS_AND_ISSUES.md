@@ -167,3 +167,15 @@ This is a living document tracking the timeline of architectural decisions, issu
 #### Learning 19: Weekly SSL Health Monitoring
 - **The Goal:** Ensure visibility into the autonomous SSL rotation process.
 - **The Implementation:** We created a secondary Azure Pipeline (`azure-pipelines-ssl-check.yml`) configured with a weekly cron schedule (`cron: "0 0 * * 0"`). This pipeline connects to the cluster and executes a script to parse the `Ready` status of all certificates via `kubectl get certificates -A -o jsonpath=...`. If any certificate fails to renew, the pipeline fails and alerts the team.
+
+### 2026-08-22: Observability & Auto-Scaling
+
+#### Learning 20: Lightweight OpenObserve Integration
+- **The Goal:** Add comprehensive observability (Logs and Metrics) to the Kubernetes cluster using OpenObserve, without overwhelming the limited resources of the Oracle Cloud Free Tier VM.
+- **The Issue:** The official OpenObserve Helm chart is designed for massive enterprise clusters. Out of the box, it attempts to install heavy Kubernetes Operators (like CloudNativePG for PostgreSQL and Prometheus Operators for metrics) which failed to deploy because the CRDs were missing, and more importantly, would have consumed too much RAM/CPU on our small VM.
+- **The Design Choice (Fix):** We customized the Helm deployment values to forcefully disable these heavy dependencies and run OpenObserve in its most lightweight configuration:
+  1. `postgres.enabled=false` and `config.ZO_LOCAL_MODE="true"`: Bypasses the need for a complex PostgreSQL operator, instructing OpenObserve to use its lightweight embedded metadata store (Sled/SQLite) while still pushing long-term logs to our S3 bucket.
+  2. `opentelemetry-operator.enabled=false`: Instructs the OpenObserve Collector to run as a simple, lightweight DaemonSet rather than attempting to inject OpenTelemetry CRDs across the entire cluster.
+  3. `config.ZO_COMPACT_DATA_RETENTION_DAYS="5"`: Enforced a strict 5-day retention policy to ensure we don't rack up infinite S3 storage costs.
+- **The Result:** We achieved a fully functional, highly efficient observability stack that fits perfectly within the constraints of a Free Tier VM.
+
