@@ -144,6 +144,7 @@ stages:
                   --namespace observability \
                   --set postgres.enabled=false \
                   --set prometheus.serviceMonitor.enabled=false \
+                  --set nats.metrics.prometheus.podMonitor.enabled=false \
                   --set config.ZO_LOCAL_MODE="true" \
                   --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
                   --set config.ZO_ROOT_USER_EMAIL=$(O2-ROOT-USER) \
@@ -161,14 +162,30 @@ stages:
                   --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
                   --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod"
                   
-                # Install/Update OpenObserve Collector via Helm
-                helm upgrade --install o2-collector openobserve/openobserve-collector \
+                # Install/Update OpenTelemetry Collector (DaemonSet)
+                AUTH_BASE64=$(echo -n "$(O2-ROOT-USER):$(O2-ROOT-PASSWORD)" | base64 | tr -d '\n')
+                echo "mode: daemonset" > /tmp/otel-values.yaml
+                echo "presets:" >> /tmp/otel-values.yaml
+                echo "  logsCollection:" >> /tmp/otel-values.yaml
+                echo "    enabled: true" >> /tmp/otel-values.yaml
+                echo "  kubernetesAttributes:" >> /tmp/otel-values.yaml
+                echo "    enabled: true" >> /tmp/otel-values.yaml
+                echo "config:" >> /tmp/otel-values.yaml
+                echo "  exporters:" >> /tmp/otel-values.yaml
+                echo "    otlphttp:" >> /tmp/otel-values.yaml
+                echo "      endpoint: \"http://o2-openobserve.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
+                echo "      headers:" >> /tmp/otel-values.yaml
+                echo "        Authorization: \"Basic \${AUTH_BASE64}\"" >> /tmp/otel-values.yaml
+                echo "  service:" >> /tmp/otel-values.yaml
+                echo "    pipelines:" >> /tmp/otel-values.yaml
+                echo "      logs:" >> /tmp/otel-values.yaml
+                echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
+                
+                helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+                helm repo update
+                helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
                   --namespace observability \
-                  --set opentelemetry-operator.enabled=false \
-                  --set opentelemetry-operator.autoinstrumentation.enabled=false \
-                  --set openobserve.endpoint="http://o2-openobserve.observability.svc.cluster.local:5080/api/default" \
-                  --set openobserve.username=$(O2-ROOT-USER) \
-                  --set openobserve.password=$(O2-ROOT-PASSWORD)
+                  -f /tmp/otel-values.yaml
                 
                 # Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
