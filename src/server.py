@@ -159,34 +159,6 @@ except Exception as e:
 
 # ── Sessions are now stateless JWTs — no DB session store required ──
 
-# ── Seed Admin User (Securely requiring env values) ──
-def seed_admin():
-    if not DB_CONNECTED or db is None:
-        return
-        
-    admin_user = os.getenv("ADMIN_USER")
-    admin_pass = os.getenv("ADMIN_PASS")
-    admin_code = os.getenv("ADMIN_CODE")
-    
-    if not admin_user or not admin_pass or not admin_code:
-        logger.warning("ADMIN_USER, ADMIN_PASS, or ADMIN_CODE environment variables are missing. Default seeds are skipped.")
-        return
-        
-    users_col = db.get_collection("users")
-    if users_col.count_documents({}) == 0:
-        salt = bcrypt.gensalt()
-        hashed_pass = bcrypt.hashpw(admin_pass.encode('utf-8'), salt)
-        hashed_code = bcrypt.hashpw(admin_code.encode('utf-8'), salt)
-        
-        users_col.insert_one({
-            "username": admin_user,
-            "passkey_hash": hashed_pass.decode('utf-8'),
-            "realm_code_hash": hashed_code.decode('utf-8')
-        })
-        logger.info(f"Seeding administrator user: username='{admin_user}'")
-
-seed_admin()
-
 # ── Authentication Helper Dependency (JWT-based, stateless) ──
 def get_current_user(request: Request):
     token = request.cookies.get("session_token")
