@@ -23,6 +23,7 @@ stages:
     keyVaultName: 'kv-uat-codexrelic'
     namespace: 'uat'
     ingressDomain: 'uat.codexrelic.com'
+    observDomain: 'uat-observ.codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/uat'
     maxReplicas: '2'
 
@@ -35,6 +36,7 @@ stages:
     keyVaultName: 'kv-stage-codexrelic'
     namespace: 'stage'
     ingressDomain: 'stage.codexrelic.com'
+    observDomain: 'stage-observ.codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/stage'
     maxReplicas: '2'
 
@@ -47,5 +49,6 @@ stages:
     keyVaultName: 'kv-prod-codexrelic'
     namespace: 'prod'
     ingressDomain: 'codexrelic.com'
+    observDomain: 'prod-observ.codexrelic.com'
     deployFolder: '/home/ubuntu/codexrelic-deploy/prod'
     maxReplicas: '5'

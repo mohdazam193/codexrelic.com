@@ -14,6 +14,8 @@ parameters:
     type: string
   - name: ingressDomain
     type: string
+  - name: observDomain
+    type: string
   - name: deployFolder
     type: string
   - name: maxReplicas
@@ -50,7 +52,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: ${{ parameters.keyVaultName }}
-              SecretsFilter: 'MONGO-URI,JWT-SECRET'
+              SecretsFilter: 'MONGO-URI,JWT-SECRET,O2-ROOT-USER,O2-ROOT-PASSWORD'
               RunAsPreJob: true
 
           # 3. Fetch Common Secrets (S3 Credentials)
@@ -73,6 +75,8 @@ stages:
               AWS_DEFAULT_REGION=$(AWS-DEFAULT-REGION)
               AWS_S3_BUCKET=$(AWS-S3-BUCKET)
               APP_ENV=${{ parameters.namespace }}
+              O2_ROOT_USER=$(O2-ROOT-USER)
+              O2_ROOT_PASSWORD=$(O2-ROOT-PASSWORD)
               EOF
             displayName: Render .env.${{ parameters.namespace }} from Key Vault secrets
 
@@ -106,6 +110,7 @@ stages:
                 
                 # Ensure namespace exists
                 sudo kubectl create namespace ${{ parameters.namespace }} --dry-run=client -o yaml | sudo kubectl apply -f -
+                sudo kubectl create namespace observability --dry-run=client -o yaml | sudo kubectl apply -f -
                 
                 # Create/Update Kubernetes Secret from .env file
                 sudo kubectl create secret generic codexrelic-secrets \
@@ -123,6 +128,34 @@ stages:
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/service.yaml
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/ingress.yaml
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/hpa.yaml
+                
+                # Install/Update OpenObserve Backend via Helm
+                helm repo add openobserve https://charts.openobserve.ai
+                helm repo update
+                helm upgrade --install o2 openobserve/openobserve \
+                  --namespace observability \
+                  --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
+                  --set config.ZO_ROOT_USER_EMAIL=$(O2-ROOT-USER) \
+                  --set config.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD) \
+                  --set s3.enabled=true \
+                  --set s3.bucket=$(AWS-S3-BUCKET) \
+                  --set s3.region=$(AWS-DEFAULT-REGION) \
+                  --set s3.endpoint=$(AWS-ENDPOINT-URL-S3) \
+                  --set s3.accessKey=$(AWS-ACCESS-KEY-ID) \
+                  --set s3.secretKey=$(AWS-SECRET-ACCESS-KEY) \
+                  --set ingress.enabled=true \
+                  --set ingress.hosts[0].host=${{ parameters.observDomain }} \
+                  --set ingress.hosts[0].paths[0].path="/" \
+                  --set ingress.tls[0].secretName="openobserve-tls" \
+                  --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
+                  --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod"
+                  
+                # Install/Update OpenObserve Collector via Helm
+                helm upgrade --install o2-collector openobserve/openobserve-collector \
+                  --namespace observability \
+                  --set openobserve.endpoint="http://o2-openobserve.observability.svc.cluster.local:5080/api/default" \
+                  --set openobserve.username=$(O2-ROOT-USER) \
+                  --set openobserve.password=$(O2-ROOT-PASSWORD)
                 
                 # Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
