@@ -129,28 +129,15 @@ for ENTRY in "${VAULTS[@]}"; do
   echo -en "${YELLOW}  MONGO_URI for ${ENV} (e.g. mongodb+srv://user:pass@cluster.mongodb.net/codexrelic_${ENV}): ${NC}"
   read -r MONGO_URI
 
-  # Admin credentials
-  echo -en "${YELLOW}  ADMIN_USER: ${NC}"
-  read -r ADMIN_USER
-
-  echo -en "${YELLOW}  ADMIN_PASS: ${NC}"
-  read -rs ADMIN_PASS; echo ""
-
-  # Ed25519 public key
-  PUB_KEY=$(read_secret "${KEYS_DIR}/${ENV}-public-key.txt" "ADMIN_ED25519_PUBLIC_KEY (base64 public key)")
-
   # JWT secret
   JWT_SECRET=$(read_secret "${KEYS_DIR}/${ENV}-jwt-secret.txt" "JWT_SECRET (64-char hex)")
 
   echo -e "  Setting secrets in ${YELLOW}${VAULT_NAME}${NC}..."
 
   az keyvault secret set --vault-name "$VAULT_NAME" --name "MONGO-URI"                 --value "$MONGO_URI"   --output none
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "ADMIN-USER"                --value "$ADMIN_USER"  --output none
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "ADMIN-PASS"                --value "$ADMIN_PASS"  --output none
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "JWT-SECRET"                --value "$JWT_SECRET"  --output none
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "ADMIN-ED25519-PUBLIC-KEY"  --value "$PUB_KEY"     --output none
+  az keyvault secret set --vault-name "$VAULT_NAME" --name "JWT-SECRET"                  --value "$JWT_SECRET"  --output none
 
-  echo -e "  ${GREEN}✓ 5 secrets set in ${VAULT_NAME}${NC}"
+  echo -e "  ${GREEN}✓ 2 secrets set in ${VAULT_NAME}${NC}"
   echo ""
 done
 

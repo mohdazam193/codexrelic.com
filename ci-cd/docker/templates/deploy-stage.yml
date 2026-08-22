@@ -48,7 +48,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: ${{ parameters.keyVaultName }}
-              SecretsFilter: 'MONGO-URI,ADMIN-USER,ADMIN-PASS,JWT-SECRET'
+              SecretsFilter: 'MONGO-URI,JWT-SECRET'
               RunAsPreJob: true
 
           # 3. Fetch Common Secrets (S3 Credentials)
@@ -64,8 +64,6 @@ stages:
           - script: |
               cat > $(Pipeline.Workspace)/.env.${{ parameters.namespace }} <<EOF
               MONGO_URI=$(MONGO-URI)
-              ADMIN_USER=$(ADMIN-USER)
-              ADMIN_PASS=$(ADMIN-PASS)
               JWT_SECRET=$(JWT-SECRET)
               AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
               AWS_SECRET_ACCESS_KEY=$(AWS-SECRET-ACCESS-KEY)
