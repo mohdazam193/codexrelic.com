@@ -213,16 +213,7 @@ codexrelic login console (ttyv0)
   const rowPassword = document.getElementById('row-password');
   const rowKey      = document.getElementById('row-key');
 
-  // ── Fetch a fresh 30-second challenge from server on page load ──
-  (async () => {
-    try {
-      const res = await fetch('/api/auth/challenge');
-      const { challenge } = await res.json();
-      challengeField.value = challenge;
-    } catch (e) {
-      console.error('[auth] Failed to fetch challenge:', e);
-    }
-  })();
+  // ── Challenge is fetched just-in-time before submission ──
 
   // Keep terminal focused on click
   document.addEventListener('click', () => {
@@ -268,13 +259,13 @@ codexrelic login console (ttyv0)
       const rawKey = keyInput.value.trim();
       if (!rawKey) return;
 
-      const challenge = challengeField.value;
-      if (!challenge) {
-        alert('ACCESS VIOLATION: Challenge token missing. Please reload the page.');
-        return;
-      }
-
       try {
+        // ── Fetch fresh challenge just-in-time ──
+        const cRes = await fetch('/api/auth/challenge');
+        if (!cRes.ok) throw new Error('Failed to fetch authentication challenge from server.');
+        const cData = await cRes.json();
+        const challenge = cData.challenge;
+        challengeField.value = challenge;
         // ── Import Ed25519 private key via Web Crypto API ──
         // Key never leaves the browser — only the signature is transmitted.
         let keyBytes = b64ToBuffer(rawKey);
@@ -332,12 +323,7 @@ codexrelic login console (ttyv0)
         rowKey.classList.remove('active');
         loginInput.parentElement.classList.add('active');
         loginInput.focus();
-        // Fetch a new challenge
-        try {
-          const r = await fetch('/api/auth/challenge');
-          const { challenge } = await r.json();
-          challengeField.value = challenge;
-        } catch (_) {}
+        // Challenge will be fetched just-in-time on next attempt
       }
     }
   });
