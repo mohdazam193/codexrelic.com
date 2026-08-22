@@ -25,5 +25,5 @@ We initially implemented a highly complex 3-factor authentication system using `
 - **The Issue**: 
   - The in-memory challenge `_challenges = {}` failed when deployed to multiple Kubernetes pods (Pod A issued the challenge, Pod B failed to verify it).
   - The 30-second expiry was too tight for humans typing passwords and pasting keys.
-  - Relying on `ADMIN_USER` and `ADMIN_PASS` as `.env` variables fails elegantly when a database connection is active but the `users` table is empty.
+  - Relying on `ADMIN_USER` and `ADMIN_PASS` as `.env` variables fails elegantly when a database connection is active but the `admin_users` table is empty.
 - **The Solution**: We removed the `Ed25519` signature math and migrated to a **Database-Backed 3-Factor Authentication**. The user now submits `username`, `password`, and a `private_key` string over HTTPS. The backend securely checks all three using `bcrypt` hashes stored in MongoDB, ensuring multi-pod scalability, easier admin provisioning, and eliminating cryptographic timing bugs.

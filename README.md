@@ -129,7 +129,7 @@ Factor 3 → Unique Private Key per user (bcrypt, cost 12)
 ```
 
 ### How it works
-1. The user creates an admin JSON payload locally using `automation/01-auth-setup/generate_admin_json.py` and inserts it into the MongoDB `users` collection.
+1. The user creates an admin JSON payload locally using `automation/01-auth-setup/generate_admin_json.py` and inserts it into the MongoDB `admin_users` collection.
 2. The browser submits the `username`, `password`, and `private_key` directly to the `/api/login` endpoint over HTTPS.
 3. The server looks up the user in MongoDB.
 4. The server verifies both the password and the private key using `bcrypt`.

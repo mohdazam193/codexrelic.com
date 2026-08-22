@@ -35,11 +35,13 @@ def main():
         "role": "admin"
     }
     
-    print("\n=========================================")
-    print(" 🎉 SUCCESS! Here is your MongoDB Entry 🎉")
-    print("=========================================\n")
-    print("Copy and paste the following JSON directly into MongoDB Compass")
-    print("to insert the document into the 'users' collection:\n")
+    print("Copy the JSON block below and follow these steps:")
+    print("1. Open MongoDB Compass and connect to your Atlas cluster.")
+    print("2. Expand your database (e.g., 'codexrelic').")
+    print("3. Click on the '+' next to the database name to create a new collection.")
+    print("4. Name the collection: admin_users")
+    print("5. Open the 'admin_users' collection and click 'ADD DATA' -> 'Insert Document'.")
+    print("6. Change the view to '{}' (JSON format) and paste the block below, then click 'Insert':\n")
     
     print(json.dumps(mongo_doc, indent=4))
     print("\n=========================================\n")

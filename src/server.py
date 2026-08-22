@@ -313,7 +313,7 @@ def login(
     if not DB_CONNECTED or db is None:
         raise HTTPException(status_code=500, detail="Database is unreachable. Cannot authenticate.")
     
-    users_col = db.get_collection("users")
+    users_col = db.get_collection("admin_users")
     user = users_col.find_one({"username": username})
     
     if not user:
