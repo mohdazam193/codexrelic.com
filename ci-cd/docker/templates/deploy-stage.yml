@@ -166,9 +166,9 @@ stages:
                     --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
                     --set ingress.tls[0].secretName="openobserve-tls" \
                     --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
-                    --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
-                    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
-                    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
+                    --set-string ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
+                    --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
+                    --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
                     --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
                 done
                   
