@@ -179,3 +179,17 @@ This is a living document tracking the timeline of architectural decisions, issu
   3. `config.ZO_COMPACT_DATA_RETENTION_DAYS="5"`: Enforced a strict 5-day retention policy to ensure we don't rack up infinite S3 storage costs.
 - **The Result:** We achieved a fully functional, highly efficient observability stack that fits perfectly within the constraints of a Free Tier VM.
 
+
+#### Issue 22: Helm CLI Missing on Deployment VM
+- **What Happened:** When deploying OpenObserve, the pipeline failed with `helm: command not found`.
+- **The Root Cause:** The Oracle Cloud VM was running K3s, which comes with `kubectl`, but it did not have the `helm` CLI installed natively. Because the deployment pipeline connects to the VM via SSH to execute commands locally, it could not execute the Helm charts.
+- **The Fix:** Added a robust `if ! command -v helm &> /dev/null` check inside the deployment script (`azure-pipelines-release.yml`) that automatically downloads and installs the Helm CLI binary prior to attempting any `helm upgrade` commands.
+
+#### Issue 23: cert-manager Ignoring OpenObserve Ingress (Red Certificate)
+- **What Happened:** OpenObserve successfully deployed, but the HTTPS certificate for the `observDomain` (e.g., `stage-observ.codexrelic.com`) was invalid (showing a red warning in the browser).
+- **The Root Cause:** The OpenObserve Helm chart defaults to using `className: "nginx"` for its Ingress. However, the K3s cluster uses **Traefik** as its ingress controller. Because the Ingress class didn't match `traefik`, `cert-manager` failed to spin up the HTTP01 ACME challenge solver pod, preventing Let's Encrypt from verifying the domain and issuing the certificate.
+- **The Fix:** Explicitly set the ingress class to Traefik and added the required Traefik TLS annotations during the Helm installation:
+  - `--set ingress.className="traefik"`
+  - `--set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure"`
+  - `--set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true"`
+
