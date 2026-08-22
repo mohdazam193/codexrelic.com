@@ -142,7 +142,7 @@ stages:
                 helm repo update
                 
                 for i in 1 2 3; do
-                  helm upgrade --install o2 openobserve/openobserve \
+                  helm upgrade --install o2 openobserve/openobserve-standalone \
                     --namespace observability \
                     --set postgres.enabled=false \
                     --set prometheus.serviceMonitor.enabled=false \
