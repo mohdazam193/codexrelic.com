@@ -193,3 +193,7 @@ This is a living document tracking the timeline of architectural decisions, issu
   - `--set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure"`
   - `--set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true"`
 
+#### Issue 24: Helm Boolean Type Casting Breaking Kubernetes Annotations
+- **What Happened:** After adding the Traefik TLS annotations via Helm (`--set ingress.annotations...="true"`), the pipeline failed with `json: cannot unmarshal bool into Go struct field ObjectMeta.metadata.annotations of type string`.
+- **The Root Cause:** Kubernetes strictly requires all `metadata.annotations` values to be **strings**. When we passed `="true"` using Helm's standard `--set` flag, Helm's type-inference engine intelligently parsed `"true"` as a boolean type and injected it into the manifest as a raw boolean (`true` instead of `"true"`), causing the Kubernetes API to reject the object.
+- **The Fix:** Changed the flag from `--set` to `--set-string` for all annotations. `--set-string` explicitly instructs Helm to bypass type inference and treat the provided value strictly as a string, satisfying the Kubernetes API requirements.
