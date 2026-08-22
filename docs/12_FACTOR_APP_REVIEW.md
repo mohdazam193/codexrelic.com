@@ -22,27 +22,27 @@ This document reviews the `codexrelic.com` application against the industry-stan
 
 ### 4. Backing Services 🟢 (Pass)
 *Treat backing services as attached resources.*
-- **Implementation:** MongoDB Atlas is treated strictly as an attached resource. The application connects via a standard connection string URI. If the database needs to be migrated or scaled, only the `MONGO_URI` environment variable changes — no code changes are required.
+- **Implementation:** MongoDB Atlas and AWS S3-compatible Object Storage are treated strictly as attached resources. The application connects via standard connection URIs and credentials. If the database or object storage needs to be migrated or scaled, only the environment variables change — no code changes are required.
 
 ### 5. Build, Release, Run 🟢 (Pass)
 *Strictly separate build and run stages.*
 - **Implementation:** The Azure DevOps pipeline strictly enforces this:
   - **Build:** The Docker image is built and scanned by Snyk, then pushed to DockerHub with a unique immutable tag (`BuildId`).
   - **Release:** The deployment stages (UAT/Stage/Prod) combine the immutable Docker image with the environment-specific Key Vault secrets (creating a `.env` file).
-  - **Run:** The OCI VM pulls the image and runs it with the release configuration via `docker compose`.
+  - **Run:** The OCI VM pulls the image and runs it with the release configuration via Kubernetes (`kubectl apply`).
 
 ### 6. Processes 🟢 (Pass)
 *Execute the app as one or more stateless processes.*
 - **Implementation:** The FastAPI application is entirely stateless. 
-- **State isolation:** By moving to Ed25519 cryptographic challenge-response and signed JWT cookies, the application requires absolutely no "sticky sessions" or server-side memory state for authentication. Any container instance can handle any request.
+- **State isolation:** By moving to Database-Backed 3-Factor authentication and signed JWT cookies, the application requires absolutely no "sticky sessions" or server-side memory state for authentication. Any container instance can handle any request.
 
 ### 7. Port Binding 🟢 (Pass)
 *Export services via port binding.*
-- **Implementation:** The application is self-contained. The ASGI server Uvicorn binds to port `8000` (`uvicorn server:app --port 8000`), serving both the FastAPI backend and the static frontend assets (`public/`). Nginx acts purely as a reverse proxy to route external traffic to this bound port.
+- **Implementation:** The application is self-contained. The ASGI server Uvicorn binds to port `8000` (`uvicorn server:app --port 8000`), serving both the FastAPI backend and the static frontend assets (`public/`). Traefik Ingress acts purely as a reverse proxy to route external traffic to this bound port on the Kubernetes pods.
 
 ### 8. Concurrency 🟢 (Pass)
 *Scale out via the process model.*
-- **Implementation:** Because the app is completely stateless (Factor 6), concurrency can be achieved horizontally by simply spinning up more Docker containers behind Nginx, or vertically by adding Uvicorn worker processes (`--workers`).
+- **Implementation:** Because the app is completely stateless (Factor 6), concurrency can be achieved horizontally by simply spinning up more Kubernetes Pods behind Traefik (modifying the `replicas` count), or vertically by adding Uvicorn worker processes (`--workers`).
 
 ### 9. Disposability 🟢 (Pass)
 *Maximize robustness with fast startup and graceful shutdown.*
@@ -58,7 +58,7 @@ This document reviews the `codexrelic.com` application against the industry-stan
 
 ### 12. Admin Processes 🟢 (Pass)
 *Run admin/management tasks as one-off processes.*
-- **Implementation:** The repository includes an `automation/` directory containing bash scripts for one-off administrative tasks (e.g., Key Vault provisioning, Ed25519 key generation) which run in identical environments to the main application setup.
+- **Implementation:** The repository includes an `automation/` directory containing scripts for one-off administrative tasks (e.g., Key Vault provisioning, Admin User DB JSON generation) which run in identical environments to the main application setup.
 
 ---
 
