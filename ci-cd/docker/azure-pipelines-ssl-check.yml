@@ -1,8 +1,8 @@
 trigger: none
 
 schedules:
-- cron: "0 0 * * 0" # Every Sunday at midnight
-  displayName: "Weekly SSL Certificate Check"
+- cron: "0 0 * * *" # Every day at midnight
+  displayName: "Daily SSL Certificate Check"
   branches:
     include:
     - main
