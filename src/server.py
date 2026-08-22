@@ -144,7 +144,9 @@ db = None
 try:
     client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=2000)
     client.admin.command('ping')
-    db = client.get_database("codexrelic")
+    app_env = os.getenv("APP_ENV", "")
+    db_name = f"codexrelic_{app_env}" if app_env else "codexrelic"
+    db = client.get_database(db_name)
     DB_CONNECTED = True
     logger.info("MongoDB Atlas connection verified.")
 except Exception as e:
