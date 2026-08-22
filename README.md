@@ -129,11 +129,16 @@ Factor 3 → Unique Private Key per user (bcrypt, cost 12)
 ```
 
 ### How it works
-1. The user creates an admin JSON payload locally using `automation/01-auth-setup/generate_admin_json.py` and inserts it into the MongoDB `admin_users` collection.
-2. The browser submits the `username`, `password`, and `private_key` directly to the `/api/login` endpoint over HTTPS.
-3. The server looks up the user in MongoDB.
-4. The server verifies both the password and the private key using `bcrypt`.
-5. On success, the server issues a **stateless JWT cookie** (HS256, 24h expiry, `httponly` + `secure`).
+1. **Generate Credentials:** The user creates an admin JSON payload locally by running `python3 automation/01-auth-setup/generate_admin_json.py` in their terminal.
+2. **Add to Database:** The user adds this payload to their database:
+   - Open MongoDB Compass and connect to the Atlas cluster.
+   - Expand the specific environment database (e.g., `codexrelic_uat` or `codexrelic_prod`).
+   - Click the **`+`** icon to create a new collection and name it precisely **`admin_users`**.
+   - Open the new `admin_users` collection, click **ADD DATA** → **Insert Document**.
+   - Switch to the `{}` (JSON) view and paste the generated JSON payload.
+3. **Login:** The browser submits the `username`, `password`, and `private_key` directly to the `/api/login` endpoint over HTTPS.
+4. **Verification:** The server looks up the user in MongoDB and verifies both the password and the private key using `bcrypt`.
+5. **Success:** On success, the server issues a **stateless JWT cookie** (HS256, 24h expiry, `httponly` + `secure`).
 
 ### Secrets management
 Secrets are stored in **Azure DevOps Library Variable Groups** (one per environment).
