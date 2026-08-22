@@ -160,12 +160,15 @@ stages:
                     --set s3.accessKey=$(AWS-ACCESS-KEY-ID) \
                     --set s3.secretKey=$(AWS-SECRET-ACCESS-KEY) \
                     --set ingress.enabled=true \
+                    --set ingress.className="traefik" \
                     --set ingress.hosts[0].host=${{ parameters.observDomain }} \
                     --set ingress.hosts[0].paths[0].path="/" \
                     --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
                     --set ingress.tls[0].secretName="openobserve-tls" \
                     --set ingress.tls[0].hosts[0]=${{ parameters.observDomain }} \
                     --set ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
+                    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
+                    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
                     --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
                 done
                   
