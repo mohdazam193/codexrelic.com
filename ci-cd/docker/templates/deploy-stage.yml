@@ -129,6 +129,14 @@ stages:
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/ingress.yaml
                 sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/hpa.yaml
                 
+                # Install Helm if not present
+                if ! command -v helm &> /dev/null
+                then
+                    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+                    chmod 700 get_helm.sh
+                    sudo ./get_helm.sh
+                fi
+                
                 # Install/Update OpenObserve Backend via Helm
                 helm repo add openobserve https://charts.openobserve.ai
                 helm repo update
