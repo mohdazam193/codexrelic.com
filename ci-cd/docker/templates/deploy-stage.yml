@@ -189,6 +189,14 @@ stages:
                   echo "presets:" >> /tmp/otel-values.yaml
                   echo "  logsCollection:" >> /tmp/otel-values.yaml
                   echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "  hostMetrics:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "  kubeletMetrics:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "  kubernetesEvents:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "  kubernetesObjects:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "  kubernetesAttributes:" >> /tmp/otel-values.yaml
                   echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "image:" >> /tmp/otel-values.yaml
@@ -205,6 +213,8 @@ stages:
                   echo "  service:" >> /tmp/otel-values.yaml
                   echo "    pipelines:" >> /tmp/otel-values.yaml
                   echo "      logs:" >> /tmp/otel-values.yaml
+                  echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
+                  echo "      metrics:" >> /tmp/otel-values.yaml
                   echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
                   
                   helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
