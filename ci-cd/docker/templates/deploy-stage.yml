@@ -146,75 +146,79 @@ stages:
                     sudo ./get_helm.sh
                 fi
                 
-                # Install/Update OpenObserve Backend via Helm
-                helm repo add openobserve https://charts.openobserve.ai
-                helm repo update
-                
-                for i in 1 2 3; do
-                  helm upgrade --install o2 openobserve/openobserve-standalone \
-                    --namespace observability \
-                    --set postgres.enabled=false \
-                    --set prometheus.serviceMonitor.enabled=false \
-                    --set prometheus.podMonitor.enabled=false \
-                    --set nats.metrics.enabled=false \
-                    --set nats.promExporter.podMonitor.enabled=false \
-                    --set config.ZO_LOCAL_MODE="true" \
-                    --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
-                    -f o2-values.yaml \
-                    --set config.ZO_S3_SERVER_URL="$(AWS-ENDPOINT-URL-S3)" \
-                    --set config.ZO_S3_REGION_NAME="$(AWS-DEFAULT-REGION)" \
-                    --set config.ZO_S3_BUCKET_NAME="$(AWS-S3-BUCKET)" \
-                    --set config.ZO_S3_PROVIDER="s3" \
-                    --set ingress.enabled=true \
-                    --set ingress.className="traefik" \
-                    --set ingress.hosts[0].host=prod-observ.codexrelic.com \
-                    --set ingress.hosts[0].paths[0].path="/" \
-                    --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
-                    --set ingress.tls[0].secretName="openobserve-tls" \
-                    --set ingress.tls[0].hosts[0]=prod-observ.codexrelic.com \
-                    --set-string ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
-                    --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
-                    --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
-                    --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
-                done
+                if [ "${{ parameters.environmentName }}" == "Prod" ]; then
+                  # Install/Update OpenObserve Backend via Helm
+                  helm repo add openobserve https://charts.openobserve.ai
+                  helm repo update
                   
-                # Install/Update OpenTelemetry Collector (DaemonSet)
-                # Safely read credentials from the .env file to avoid inline bash interpolation breaking on special characters
-                O2_USER=$(grep -Po '^O2_ROOT_USER=\K.*' .env.${{ parameters.namespace }})
-                O2_PASS=$(grep -Po '^O2_ROOT_PASSWORD=\K.*' .env.${{ parameters.namespace }})
-                AUTH_BASE64=$(echo -n "$O2_USER:$O2_PASS" | base64 | tr -d '\n')
-                
-                echo "mode: daemonset" > /tmp/otel-values.yaml
-                echo "presets:" >> /tmp/otel-values.yaml
-                echo "  logsCollection:" >> /tmp/otel-values.yaml
-                echo "    enabled: true" >> /tmp/otel-values.yaml
-                echo "  kubernetesAttributes:" >> /tmp/otel-values.yaml
-                echo "    enabled: true" >> /tmp/otel-values.yaml
-                echo "image:" >> /tmp/otel-values.yaml
-                echo "  repository: \"ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib\"" >> /tmp/otel-values.yaml
-                echo "command:" >> /tmp/otel-values.yaml
-                echo "  name: \"otelcol-contrib\"" >> /tmp/otel-values.yaml
-                echo "config:" >> /tmp/otel-values.yaml
-                echo "  exporters:" >> /tmp/otel-values.yaml
-                echo "    otlphttp:" >> /tmp/otel-values.yaml
-                echo "      endpoint: \"http://o2-openobserve-standalone.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
-                echo "      headers:" >> /tmp/otel-values.yaml
-                echo "        Authorization: \"Basic \${AUTH_BASE64}\"" >> /tmp/otel-values.yaml
-                echo "        stream-name: \"default\"" >> /tmp/otel-values.yaml
-                echo "  service:" >> /tmp/otel-values.yaml
-                echo "    pipelines:" >> /tmp/otel-values.yaml
-                echo "      logs:" >> /tmp/otel-values.yaml
-                echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
-                
-                helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
-                helm repo update
-                
-                for i in 1 2 3 4 5; do
-                  helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
-                    --namespace observability \
-                    -f /tmp/otel-values.yaml \
-                    --timeout 10m && break || echo "Helm upgrade collector failed, retrying in 15s..." && sleep 15
-                done
+                  for i in 1 2 3; do
+                    helm upgrade --install o2 openobserve/openobserve-standalone \
+                      --namespace observability \
+                      --set postgres.enabled=false \
+                      --set prometheus.serviceMonitor.enabled=false \
+                      --set prometheus.podMonitor.enabled=false \
+                      --set nats.metrics.enabled=false \
+                      --set nats.promExporter.podMonitor.enabled=false \
+                      --set config.ZO_LOCAL_MODE="true" \
+                      --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
+                      -f o2-values.yaml \
+                      --set config.ZO_S3_SERVER_URL="$(AWS-ENDPOINT-URL-S3)" \
+                      --set config.ZO_S3_REGION_NAME="$(AWS-DEFAULT-REGION)" \
+                      --set config.ZO_S3_BUCKET_NAME="$(AWS-S3-BUCKET)" \
+                      --set config.ZO_S3_PROVIDER="s3" \
+                      --set ingress.enabled=true \
+                      --set ingress.className="traefik" \
+                      --set ingress.hosts[0].host=prod-observ.codexrelic.com \
+                      --set ingress.hosts[0].paths[0].path="/" \
+                      --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
+                      --set ingress.tls[0].secretName="openobserve-tls" \
+                      --set ingress.tls[0].hosts[0]=prod-observ.codexrelic.com \
+                      --set-string ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
+                      --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
+                      --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
+                      --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
+                  done
+                    
+                  # Install/Update OpenTelemetry Collector (DaemonSet)
+                  # Safely read credentials from the .env file to avoid inline bash interpolation breaking on special characters
+                  O2_USER=$(grep -Po '^O2_ROOT_USER=\K.*' .env.${{ parameters.namespace }})
+                  O2_PASS=$(grep -Po '^O2_ROOT_PASSWORD=\K.*' .env.${{ parameters.namespace }})
+                  AUTH_BASE64=$(echo -n "$O2_USER:$O2_PASS" | base64 | tr -d '\n')
+                  
+                  echo "mode: daemonset" > /tmp/otel-values.yaml
+                  echo "presets:" >> /tmp/otel-values.yaml
+                  echo "  logsCollection:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "  kubernetesAttributes:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
+                  echo "image:" >> /tmp/otel-values.yaml
+                  echo "  repository: \"ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib\"" >> /tmp/otel-values.yaml
+                  echo "command:" >> /tmp/otel-values.yaml
+                  echo "  name: \"otelcol-contrib\"" >> /tmp/otel-values.yaml
+                  echo "config:" >> /tmp/otel-values.yaml
+                  echo "  exporters:" >> /tmp/otel-values.yaml
+                  echo "    otlphttp:" >> /tmp/otel-values.yaml
+                  echo "      endpoint: \"http://o2-openobserve-standalone.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
+                  echo "      headers:" >> /tmp/otel-values.yaml
+                  echo "        Authorization: \"Basic \${AUTH_BASE64}\"" >> /tmp/otel-values.yaml
+                  echo "        stream-name: \"default\"" >> /tmp/otel-values.yaml
+                  echo "  service:" >> /tmp/otel-values.yaml
+                  echo "    pipelines:" >> /tmp/otel-values.yaml
+                  echo "      logs:" >> /tmp/otel-values.yaml
+                  echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
+                  
+                  helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+                  helm repo update
+                  
+                  for i in 1 2 3 4 5; do
+                    helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
+                      --namespace observability \
+                      -f /tmp/otel-values.yaml \
+                      --timeout 10m && break || echo "Helm upgrade collector failed, retrying in 15s..." && sleep 15
+                  done
+                else
+                  echo "Skipping observability deployment. Only deployed during Prod stage."
+                fi
                 
                 # Wait for rollout
                 sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
