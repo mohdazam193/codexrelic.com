@@ -78,7 +78,15 @@ stages:
               O2_ROOT_USER=$(O2-ROOT-USER)
               O2_ROOT_PASSWORD=$(O2-ROOT-PASSWORD)
               EOF
-            displayName: Render .env.${{ parameters.namespace }} from Key Vault secrets
+              
+              cat > $(Pipeline.Workspace)/o2-values.yaml <<EOF
+              auth:
+                ZO_ROOT_USER_EMAIL: '$(O2-ROOT-USER)'
+                ZO_ROOT_USER_PASSWORD: '$(O2-ROOT-PASSWORD)'
+                ZO_S3_ACCESS_KEY: '$(AWS-ACCESS-KEY-ID)'
+                ZO_S3_SECRET_KEY: '$(AWS-SECRET-ACCESS-KEY)'
+              EOF
+            displayName: Render .env and values from Key Vault secrets
 
           # 5. Copy Manifests and .env file to the target K3s Server via SSH
           - task: CopyFilesOverSSH@0
@@ -89,6 +97,7 @@ stages:
               contents: |
                 k8s-manifests/**
                 .env.${{ parameters.namespace }}
+                o2-values.yaml
               targetFolder: ${{ parameters.deployFolder }}
               readyTimeout: '20000'
 
@@ -151,13 +160,10 @@ stages:
                     --set nats.promExporter.podMonitor.enabled=false \
                     --set config.ZO_LOCAL_MODE="true" \
                     --set config.ZO_COMPACT_DATA_RETENTION_DAYS="5" \
-                    --set auth.ZO_ROOT_USER_EMAIL=$(O2-ROOT-USER) \
-                    --set auth.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD) \
-                    --set auth.ZO_S3_ACCESS_KEY=$(AWS-ACCESS-KEY-ID) \
-                    --set auth.ZO_S3_SECRET_KEY=$(AWS-SECRET-ACCESS-KEY) \
-                    --set config.ZO_S3_SERVER_URL=$(AWS-ENDPOINT-URL-S3) \
-                    --set config.ZO_S3_REGION_NAME=$(AWS-DEFAULT-REGION) \
-                    --set config.ZO_S3_BUCKET_NAME=$(AWS-S3-BUCKET) \
+                    -f o2-values.yaml \
+                    --set config.ZO_S3_SERVER_URL="$(AWS-ENDPOINT-URL-S3)" \
+                    --set config.ZO_S3_REGION_NAME="$(AWS-DEFAULT-REGION)" \
+                    --set config.ZO_S3_BUCKET_NAME="$(AWS-S3-BUCKET)" \
                     --set config.ZO_S3_PROVIDER="s3" \
                     --set ingress.enabled=true \
                     --set ingress.className="traefik" \
