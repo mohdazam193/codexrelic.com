@@ -66,7 +66,7 @@ stages:
 
           # 4. Generate the .env file dynamically
           - script: |
-              cat > $(Pipeline.Workspace)/.env.${{ parameters.namespace }} <<EOF
+              cat > $(Pipeline.Workspace)/.env.${{ parameters.namespace }} << 'EOF'
               MONGO_URI=$(MONGO-URI)
               JWT_SECRET=$(JWT-SECRET)
               AWS_ACCESS_KEY_ID=$(AWS-ACCESS-KEY-ID)
@@ -79,7 +79,7 @@ stages:
               O2_ROOT_PASSWORD=$(O2-ROOT-PASSWORD)
               EOF
               
-              cat > $(Pipeline.Workspace)/o2-values.yaml <<EOF
+              cat > $(Pipeline.Workspace)/o2-values.yaml << 'EOF'
               auth:
                 ZO_ROOT_USER_EMAIL: '$(O2-ROOT-USER)'
                 ZO_ROOT_USER_PASSWORD: '$(O2-ROOT-PASSWORD)'
@@ -187,7 +187,11 @@ stages:
                 done
                   
                 # Install/Update OpenTelemetry Collector (DaemonSet)
-                AUTH_BASE64=$(echo -n "$(O2-ROOT-USER):$(O2-ROOT-PASSWORD)" | base64 | tr -d '\n')
+                # Safely read credentials from the .env file to avoid inline bash interpolation breaking on special characters
+                O2_USER=$(grep -Po '^O2_ROOT_USER=\K.*' .env.${{ parameters.namespace }})
+                O2_PASS=$(grep -Po '^O2_ROOT_PASSWORD=\K.*' .env.${{ parameters.namespace }})
+                AUTH_BASE64=$(echo -n "$O2_USER:$O2_PASS" | base64 | tr -d '\n')
+                
                 echo "mode: daemonset" > /tmp/otel-values.yaml
                 echo "presets:" >> /tmp/otel-values.yaml
                 echo "  logsCollection:" >> /tmp/otel-values.yaml
