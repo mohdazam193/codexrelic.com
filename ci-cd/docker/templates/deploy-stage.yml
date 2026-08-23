@@ -167,19 +167,11 @@ stages:
                     --set config.ZO_S3_PROVIDER="s3" \
                     --set ingress.enabled=true \
                     --set ingress.className="traefik" \
-                    --set ingress.hosts[0].host=uat-observ.codexrelic.com \
+                    --set ingress.hosts[0].host=prod-observ.codexrelic.com \
                     --set ingress.hosts[0].paths[0].path="/" \
                     --set ingress.hosts[0].paths[0].pathType="ImplementationSpecific" \
-                    --set ingress.hosts[1].host=stage-observ.codexrelic.com \
-                    --set ingress.hosts[1].paths[0].path="/" \
-                    --set ingress.hosts[1].paths[0].pathType="ImplementationSpecific" \
-                    --set ingress.hosts[2].host=prod-observ.codexrelic.com \
-                    --set ingress.hosts[2].paths[0].path="/" \
-                    --set ingress.hosts[2].paths[0].pathType="ImplementationSpecific" \
                     --set ingress.tls[0].secretName="openobserve-tls" \
-                    --set ingress.tls[0].hosts[0]=uat-observ.codexrelic.com \
-                    --set ingress.tls[0].hosts[1]=stage-observ.codexrelic.com \
-                    --set ingress.tls[0].hosts[2]=prod-observ.codexrelic.com \
+                    --set ingress.tls[0].hosts[0]=prod-observ.codexrelic.com \
                     --set-string ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
                     --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
                     --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
@@ -205,9 +197,10 @@ stages:
                 echo "config:" >> /tmp/otel-values.yaml
                 echo "  exporters:" >> /tmp/otel-values.yaml
                 echo "    otlphttp:" >> /tmp/otel-values.yaml
-                echo "      endpoint: \"http://o2-openobserve.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
+                echo "      endpoint: \"http://o2-openobserve-standalone.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
                 echo "      headers:" >> /tmp/otel-values.yaml
                 echo "        Authorization: \"Basic \${AUTH_BASE64}\"" >> /tmp/otel-values.yaml
+                echo "        stream-name: \"default\"" >> /tmp/otel-values.yaml
                 echo "  service:" >> /tmp/otel-values.yaml
                 echo "    pipelines:" >> /tmp/otel-values.yaml
                 echo "      logs:" >> /tmp/otel-values.yaml

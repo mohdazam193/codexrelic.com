@@ -202,7 +202,7 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** When visiting `uat-observ.codexrelic.com`, the browser showed an invalid certificate warning (`NET::ERR_CERT_AUTHORITY_INVALID`) displaying the default Traefik self-signed certificate, even though `prod-observ.codexrelic.com` had a valid Let's Encrypt certificate.
 - **The Root Cause:** The Azure DevOps pipeline deploys environments consecutively (UAT -> Stage -> Prod). Because the OpenObserve deployment is inside the reusable `deploy-stage.yml` template using a hardcoded release name (`o2`) and namespace (`observability`), each stage was completely overwriting the Ingress configuration of the previous stage. By the time the pipeline finished, the OpenObserve Ingress was exclusively listening on `prod-observ.codexrelic.com`. 
 - **The Fix / Design Choice:** Since there is only one physical Kubernetes cluster (the Oracle VM), we don't need three separate instances of OpenObserve. We opted for a **Single Pane of Glass** approach:
-  1. We modified the `helm upgrade` command in `deploy-stage.yml` to explicitly bind **all three domains** (`uat-observ`, `stage-observ`, `prod-observ`) to the single OpenObserve Ingress simultaneously.
+  1. We modified the `helm upgrade` command in `deploy-stage.yml` to explicitly bind **only the production domain** (`prod-observ.codexrelic.com`) to the OpenObserve Ingress.
   2. The single OpenTelemetry Collector DaemonSet automatically tags all incoming logs with `k8s.namespace.name`, meaning developers can simply filter by namespace (e.g., `namespace="uat"`) in the central dashboard to differentiate logs from different environments.
 
 #### Issue 26: OpenObserve Pods in CrashLoopBackOff (Database Connection Error)
