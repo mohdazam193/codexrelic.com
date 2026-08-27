@@ -15,7 +15,7 @@ variables:
 steps:
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: 'codexrelic-service-connection'
+    azureSubscription: 'keyvalute-codex'
     KeyVaultName: 'kv-prod-codexrelic' # Or the vault where your root password is saved
     SecretsFilter: 'O2-ROOT-PASSWORD'
     RunAsPreJob: false
@@ -23,7 +23,7 @@ steps:
 
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: 'codexrelic-service-connection'
+    azureSubscription: 'keyvalute-codex'
     KeyVaultName: 'kv-github'
     SecretsFilter: 'GITHUB-PAT,GITHUB-USERNAME'
     RunAsPreJob: false
