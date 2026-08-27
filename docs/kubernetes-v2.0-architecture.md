@@ -43,3 +43,14 @@ Running containers as the `root` user and shipping build utilities (like `gcc`, 
 ### What it achieves:
 - **Reduced Attack Surface:** Multi-stage builds compile all dependencies in an intermediate layer and only copy the compiled binaries to the final image. Build tools are never shipped to production.
 - **Principle of Least Privilege:** The application runs as an unprivileged, restricted user (`appuser`). Even if a vulnerability is exploited, the attacker cannot modify system files, install packages, or easily break out of the container context.
+
+## 4. ArgoCD & Secure Secret Injection (Key Vault)
+Our GitOps deployment strategy requires ArgoCD to securely pull manifests from a private GitHub repository.
+
+### Why it was done:
+Storing Personal Access Tokens (PATs) in plain text or checking them into source control is a major security violation. Similarly, manually running `kubectl` commands to apply passwords introduces human error and untracked changes.
+
+### What it achieves:
+- **Dedicated Key Vault:** A dedicated Azure Key Vault (`kv-github`) stores the `GITHUB-PAT` and `GITHUB-USERNAME`.
+- **Pipeline Injection:** We utilize an automated Azure DevOps pipeline (`azure-pipelines-argocd-setup.yml`) to orchestrate the injection. The pipeline safely pulls the PAT from the Key Vault using the native `AzureKeyVault@2` task and creates the `argocd-repo-secret` directly on the Kubernetes cluster via SSH.
+- **No Extra Operators:** This pipeline-driven approach securely bridges Azure Key Vault to Kubernetes without requiring complex components like External Secrets Operator (ESO) on the cluster itself.

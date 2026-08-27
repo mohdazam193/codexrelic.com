@@ -1,0 +1,88 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - ci-cd/argo/**
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: terraform # Or whichever variable group has the SSH key (OCI_PRIVATE_KEY_B64)
+
+steps:
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'codexrelic-service-connection'
+    KeyVaultName: 'kv-prod-codexrelic' # Or the vault where your root password is saved
+    SecretsFilter: 'O2-ROOT-PASSWORD'
+    RunAsPreJob: false
+  displayName: 'Get Admin Password from Prod Key Vault'
+
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'codexrelic-service-connection'
+    KeyVaultName: 'kv-github'
+    SecretsFilter: 'GITHUB-PAT,GITHUB-USERNAME'
+    RunAsPreJob: false
+  displayName: 'Get GitHub Credentials from Key Vault'
+
+- script: |
+    set -e
+    # Decode SSH Key
+    echo "$OCI_PRIVATE_KEY_B64" | base64 --decode > /tmp/oci_api_key.pem
+    chmod 600 /tmp/oci_api_key.pem
+
+    # Hash the password on the runner
+    sudo apt-get update && sudo apt-get install -y apache2-utils
+    HASHED_PASSWORD=$(htpasswd -bnBC 10 "" $O2_ROOT_PASSWORD | tr -d ':\n')
+
+    # Copy Argo configurations to the VM
+    scp -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem -r $(System.DefaultWorkingDirectory)/ci-cd/argo ubuntu@$(PUBLIC_IP):~/argo_setup
+    
+    # Run setup commands on the VM
+    ssh -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem ubuntu@$(PUBLIC_IP) "bash -s" <<EOF
+      set -e
+      echo "1. Creating Namespace..."
+      kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+      
+      echo "2. Applying Argo CD Core..."
+      kubectl apply -k ~/argo_setup/
+      
+      echo "3. Patching Admin Password..."
+      kubectl -n argocd patch secret argocd-secret \
+        -p '{"stringData": {
+          "admin.password": "$HASHED_PASSWORD",
+          "admin.passwordMtime": "'\$(date +%FT%T%Z)'"
+        }}'
+        
+      echo "4. Injecting GitHub Repo Secret..."
+      cat <<INNER_EOF | kubectl apply -f -
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: github-repo-secret
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      type: Opaque
+      stringData:
+        url: https://github.com/mohdazam193/codexrelic.com.git
+        password: $GITHUB_PAT
+        username: $GITHUB_USERNAME
+      INNER_EOF
+      
+      echo "5. Deploying Multi-Environment Apps..."
+      kubectl apply -f ~/argo_setup/apps/
+    EOF
+
+    echo "[OK] ArgoCD fully deployed and configured!"
+  displayName: 'Deploy and Configure ArgoCD via SSH to OCI VM'
+  env:
+    PUBLIC_IP: $(PUBLIC_IP)
+    OCI_PRIVATE_KEY_B64: $(OCI_PRIVATE_KEY_B64)
+    O2_ROOT_PASSWORD: $(O2-ROOT-PASSWORD)
+    GITHUB_PAT: $(GITHUB-PAT)
+    GITHUB_USERNAME: $(GITHUB-USERNAME)

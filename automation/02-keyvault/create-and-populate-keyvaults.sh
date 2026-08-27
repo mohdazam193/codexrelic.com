@@ -51,6 +51,7 @@ VAULTS=(
   "kv-uat-codexrelic:uat"
   "kv-stage-codexrelic:stage"
   "kv-prod-codexrelic:prod"
+  "kv-github:github"
 )
 
 # ── Helper: read from file or prompt ──
@@ -125,19 +126,32 @@ for ENTRY in "${VAULTS[@]}"; do
 
   echo -e "${CYAN}── ${VAULT_NAME} (${ENV}) ──${NC}"
 
-  # MongoDB URI
-  echo -en "${YELLOW}  MONGO_URI for ${ENV} (e.g. mongodb+srv://user:pass@cluster.mongodb.net/codexrelic_${ENV}): ${NC}"
-  read -r MONGO_URI
+  if [[ "$ENV" == "github" ]]; then
+    # GitHub PAT
+    echo -en "${YELLOW}  GITHUB_PAT (Fine-grained PAT): ${NC}"
+    read -r GITHUB_PAT
+    echo -en "${YELLOW}  GITHUB_USERNAME: ${NC}"
+    read -r GITHUB_USERNAME
 
-  # JWT secret
-  JWT_SECRET=$(read_secret "${KEYS_DIR}/${ENV}-jwt-secret.txt" "JWT_SECRET (64-char hex)")
+    echo -e "  Setting secrets in ${YELLOW}${VAULT_NAME}${NC}..."
+    az keyvault secret set --vault-name "$VAULT_NAME" --name "GITHUB-PAT"      --value "$GITHUB_PAT"      --output none
+    az keyvault secret set --vault-name "$VAULT_NAME" --name "GITHUB-USERNAME" --value "$GITHUB_USERNAME" --output none
+    echo -e "  ${GREEN}✓ 2 secrets set in ${VAULT_NAME}${NC}"
+  else
+    # MongoDB URI
+    echo -en "${YELLOW}  MONGO_URI for ${ENV} (e.g. mongodb+srv://user:pass@cluster.mongodb.net/codexrelic_${ENV}): ${NC}"
+    read -r MONGO_URI
 
-  echo -e "  Setting secrets in ${YELLOW}${VAULT_NAME}${NC}..."
+    # JWT secret
+    JWT_SECRET=$(read_secret "${KEYS_DIR}/${ENV}-jwt-secret.txt" "JWT_SECRET (64-char hex)")
 
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "MONGO-URI"                 --value "$MONGO_URI"   --output none
-  az keyvault secret set --vault-name "$VAULT_NAME" --name "JWT-SECRET"                  --value "$JWT_SECRET"  --output none
+    echo -e "  Setting secrets in ${YELLOW}${VAULT_NAME}${NC}..."
 
-  echo -e "  ${GREEN}✓ 2 secrets set in ${VAULT_NAME}${NC}"
+    az keyvault secret set --vault-name "$VAULT_NAME" --name "MONGO-URI"                 --value "$MONGO_URI"   --output none
+    az keyvault secret set --vault-name "$VAULT_NAME" --name "JWT-SECRET"                  --value "$JWT_SECRET"  --output none
+
+    echo -e "  ${GREEN}✓ 2 secrets set in ${VAULT_NAME}${NC}"
+  fi
   echo ""
 done
 
