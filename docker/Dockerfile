@@ -1,29 +1,49 @@
-# Use pure Alpine 3.20 image for minimal vulnerabilities and consistent system Python
-FROM alpine:3.20
+# Build stage
+FROM alpine:3.20 AS builder
 
-# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    APP_HOME=/app
+    PYTHONUNBUFFERED=1
 
-# Set the working directory
-WORKDIR $APP_HOME
-
-# Install system dependencies (including Python, pip, and precompiled C-extensions)
 RUN apk update && apk upgrade && apk add --no-cache \
     python3 py3-pip \
     gcc musl-dev libffi-dev build-base \
     py3-cryptography py3-bcrypt
 
-# Install python dependencies (leverage Docker cache)
+WORKDIR /build
 COPY src/requirements.txt .
-RUN pip install --no-cache-dir --break-system-packages -r requirements.txt
 
-# Copy the rest of the application code
+# Create a virtual environment and install dependencies
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Final stage
+FROM alpine:3.20
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    APP_HOME=/app \
+    PATH="/opt/venv/bin:$PATH"
+
+# Install only runtime dependencies and create non-root user
+RUN apk update && apk upgrade && apk add --no-cache \
+    python3 py3-cryptography py3-bcrypt && \
+    addgroup -S appgroup && adduser -S appuser -G appgroup
+
+WORKDIR $APP_HOME
+
+# Copy the virtual environment from the builder stage
+COPY --from=builder /opt/venv /opt/venv
+
+# Copy the application code
 COPY src/ .
 
-# Expose the port the app runs on
+# Change ownership to the non-root user
+RUN chown -R appuser:appgroup $APP_HOME
+
+# Switch to the non-root user
+USER appuser
+
 EXPOSE 8000
 
-# Run the FastAPI application using Uvicorn via python3
 CMD ["python3", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]

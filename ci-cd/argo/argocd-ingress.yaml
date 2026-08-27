@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  namespace: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Ensure traefik routes correctly and forces SSL
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # Argo CD requires grpc for the CLI to work through the ingress
+    # If you use the CLI, Traefik needs to be configured for gRPC, but for the UI standard HTTP is fine.
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - argo.codexrelic.com
+      secretName: argocd-server-tls
+  rules:
+    - host: argo.codexrelic.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80

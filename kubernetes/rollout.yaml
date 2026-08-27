@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: codexrelic-api
   labels:
@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: codexrelic-api
+  strategy:
+    blueGreen:
+      activeService: codexrelic-api-service
+      previewService: codexrelic-api-preview-service
+      autoPromotionEnabled: false
   template:
     metadata:
       labels:
