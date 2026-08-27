@@ -40,10 +40,10 @@ steps:
     HASHED_PASSWORD=$(htpasswd -bnBC 10 "" $O2_ROOT_PASSWORD | tr -d ':\n')
 
     # Copy Argo configurations to the VM
-    scp -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem -r $(System.DefaultWorkingDirectory)/ci-cd/argo ubuntu@$(PUBLIC_IP):~/argo_setup
+    scp -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem -r $(System.DefaultWorkingDirectory)/ci-cd/argo ubuntu@$PUBLIC_IP:~/argo_setup
     
     # Run setup commands on the VM
-    ssh -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem ubuntu@$(PUBLIC_IP) "bash -s" <<EOF
+    ssh -o StrictHostKeyChecking=no -i /tmp/oci_api_key.pem ubuntu@$PUBLIC_IP "bash -s" <<EOF
       set -e
       echo "1. Creating Namespace..."
       kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
