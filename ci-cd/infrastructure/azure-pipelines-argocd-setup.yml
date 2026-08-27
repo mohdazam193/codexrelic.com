@@ -52,7 +52,7 @@ steps:
       sudo kubectl create namespace argocd --dry-run=client -o yaml | sudo kubectl apply -f -
       
       echo "2. Applying Argo CD Core..."
-      sudo kubectl apply -k ~/argo_setup/
+      sudo kubectl apply --server-side -k ~/argo_setup/
       
       echo "3. Patching Admin Password..."
       sudo kubectl -n argocd patch secret argocd-secret \
