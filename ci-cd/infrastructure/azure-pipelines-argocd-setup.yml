@@ -49,20 +49,20 @@ steps:
       HASHED_PASSWORD=$(htpasswd -bnBC 10 "" '$(O2-ROOT-PASSWORD)' | tr -d ':\n')
       
       echo "1. Creating Namespace..."
-      kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+      sudo kubectl create namespace argocd --dry-run=client -o yaml | sudo kubectl apply -f -
       
       echo "2. Applying Argo CD Core..."
-      kubectl apply -k ~/argo_setup/
+      sudo kubectl apply -k ~/argo_setup/
       
       echo "3. Patching Admin Password..."
-      kubectl -n argocd patch secret argocd-secret \
+      sudo kubectl -n argocd patch secret argocd-secret \
         -p '{"stringData": {
           "admin.password": "'$HASHED_PASSWORD'",
           "admin.passwordMtime": "'$(date +%FT%T%Z)'"
         }}'
         
       echo "4. Injecting GitHub Repo Secret..."
-      cat <<INNER_EOF | kubectl apply -f -
+      cat <<INNER_EOF | sudo kubectl apply -f -
       apiVersion: v1
       kind: Secret
       metadata:
@@ -78,6 +78,6 @@ steps:
       INNER_EOF
       
       echo "5. Deploying Multi-Environment Apps..."
-      kubectl apply -f ~/argo_setup/apps/
+      sudo kubectl apply -f ~/argo_setup/apps/
       
       echo "[OK] ArgoCD fully deployed and configured!"
