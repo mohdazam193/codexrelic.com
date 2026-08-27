@@ -24,7 +24,7 @@ steps:
 - task: AzureKeyVault@2
   inputs:
     azureSubscription: 'keyvalute-codex'
-    KeyVaultName: 'kv-github'
+    KeyVaultName: 'kv-github-codexrelic'
     SecretsFilter: 'GITHUB-PAT,GITHUB-USERNAME'
     RunAsPreJob: false
   displayName: 'Get GitHub Credentials from Key Vault'
