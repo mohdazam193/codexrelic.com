@@ -214,3 +214,25 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** OpenObserve successfully deployed, but it refused to accept the Key Vault-provided root username and password.
 - **The Root Cause:** We were initially passing credentials to Helm via inline variables: `--set auth.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD)`. Because Azure DevOps macros (`$(...)`) inject the literal string into the bash command before execution, passwords containing special characters (spaces, semicolons) caused bash word-splitting errors. More importantly, if the password contained a comma, Helm's `--set` engine interpreted it as a list delimiter, completely mangling the password configuration.
 - **The Fix:** We completely removed the `--set` credential injection. Instead, we added a pipeline step to dynamically generate an `o2-values.yaml` file where the Azure DevOps macros are safely encapsulated inside YAML single-quotes (`'$(O2-ROOT-PASSWORD)'`). This file is then transferred to the VM over SSH and passed to Helm natively via `-f o2-values.yaml`, fully bypassing all bash-escaping and Helm comma-parsing problems.
+
+### 2026-08-27: ArgoCD Pipeline Automation & Secrets Injection
+
+#### Issue 28: Azure Key Vault Cryptic "Invalid Issuer" Error
+- **What Happened:** The AzureKeyVault task failed with `AKV10032: Invalid issuer. Expected one of https://sts.windows.net/...` when trying to pull GitHub credentials.
+- **The Root Cause:** We mistakenly configured the task to look for a Key Vault named `kv-github` instead of the actual name `kv-github-codexrelic`. When Azure DevOps tries to authenticate to a vault name that doesn't exist (or isn't accessible by the service principal), the Azure AD token exchange fails, resulting in a cryptic tenant/issuer mismatch error instead of a clear "Vault not found" error.
+- **The Fix:** Corrected the `KeyVaultName` to match the exact name of the provisioned vault.
+
+#### Issue 29: Bash Macro Execution vs Variable Substitution
+- **What Happened:** The inline SSH script failed with `PUBLIC_IP: command not found` and subsequently `ssh: Could not resolve hostname : Name or service not known`.
+- **The Root Cause:** We used the Azure DevOps macro syntax `$(PUBLIC_IP)` directly inside a bash script. Because Azure DevOps attempts to interpolate macros textually, if a variable isn't explicitly defined in the pipeline UI, it leaves the literal text `$(PUBLIC_IP)`. Bash then attempts to evaluate `$(...)` as a subshell command, fails to find a command named `PUBLIC_IP`, and evaluates to an empty string, breaking the `ssh` command.
+- **The Fix / Design Choice:** Instead of wrestling with manual `scp`, `ssh`, and IP variable injection, we refactored the pipeline to use the native Azure DevOps `CopyFilesOverSSH@0` and `SSH@0` tasks leveraging the existing `oci-vm-ssh` service connection. This completely eliminated the need to manage IP addresses and SSH keys manually in the script.
+
+#### Issue 30: K3s Kubeconfig Permission Denied in CI/CD
+- **What Happened:** The `SSH@0` task successfully connected to the VM, but all `kubectl` commands failed with `error loading config file "/etc/rancher/k3s/k3s.yaml": permission denied`.
+- **The Root Cause:** K3s securely generates its cluster configuration file with `600` permissions, meaning only the `root` user can read it. The Azure DevOps SSH service connection authenticates as the unprivileged `ubuntu` user, which lacks read access to the kubeconfig.
+- **The Fix:** Prepended `sudo` to all `kubectl` commands (e.g., `sudo kubectl apply -k`). Since the `ubuntu` user has passwordless sudo privileges, this securely runs the commands as root without altering the K3s file permissions.
+
+#### Issue 31: ArgoCD CRD Annotation Size Limit
+- **What Happened:** The deployment failed while applying the ArgoCD manifests with the error: `The CustomResourceDefinition "applicationsets.argoproj.io" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes`.
+- **The Root Cause:** A standard `kubectl apply` adds a `kubectl.kubernetes.io/last-applied-configuration` annotation containing the entire JSON representation of the resource. Some of ArgoCD's CRDs (like `applicationsets`) are massive and exceed Kubernetes' hard limit of 256KB for annotations, causing the API server to reject them.
+- **The Fix:** We updated the apply command to use the server-side apply flag: `sudo kubectl apply --server-side -k ~/argo_setup/`. This instructs Kubernetes to manage field management directly on the server API, bypassing the client-side annotation size limits entirely.
