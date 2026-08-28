@@ -10,7 +10,7 @@
 [![Kubernetes](https://img.shields.io/badge/Orchestration-K3s-326CE5?logo=kubernetes)](https://k3s.io)
 [![MongoDB Atlas](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?logo=mongodb)](https://mongodb.com/atlas)
 [![Oracle Cloud](https://img.shields.io/badge/Hosting-Oracle%20Cloud%20Free-F80000?logo=oracle)](https://oracle.com/cloud/free)
-[![Cloudflare](https://img.shields.io/badge/DNS-Cloudflare-F38020?logo=cloudflare)](https://cloudflare.com)
+[![GoDaddy](https://img.shields.io/badge/DNS-GoDaddy-00A4A6?logo=godaddy)](https://godaddy.com)
 [![Let's Encrypt](https://img.shields.io/badge/SSL-Let's%20Encrypt-003A70?logo=letsencrypt)](https://letsencrypt.org/)
 [![12-Factor](https://img.shields.io/badge/Architecture-12--Factor%20App-0078D4)](https://12factor.net/)
 
@@ -47,8 +47,8 @@ This repository serves as a blueprint for learning DevOps and building a product
 
 ```
                         ┌─────────────────────────────────┐
-                        │   Cloudflare (Free Tier)        │
-                        │   DNS (DNS-Only Mode)           │
+                        │   GoDaddy                       │
+                        │   DNS Management                │
                         └────────────────┬────────────────┘
                                          │
                         ┌────────────────▼────────────────┐
@@ -106,7 +106,7 @@ This repository serves as a blueprint for learning DevOps and building a product
 | Ingress & Routing | Traefik |
 | SSL / TLS | cert-manager + Let's Encrypt |
 | Observability | OpenObserve (Logs & Metrics collection via Helm) |
-| DNS | Cloudflare DNS (DNS-only) |
+| DNS | GoDaddy |
 | Database | MongoDB Atlas M0 Free |
 | Secrets | Azure Key Vault (`kv-prod-codexrelic`, `kv-github-codexrelic`) |
 
@@ -121,9 +121,15 @@ This repository serves as a blueprint for learning DevOps and building a product
 
 ---
 
-## Security Model
+## Security Considerations in the Modern World
 
-The admin interface uses **3-factor database-backed authentication**:
+In a modern threat landscape, relying on network perimeters is insufficient. This project adopts a **Zero Trust** mindset and modern security practices:
+
+- **Stateless Authentication:** Prevents session hijacking and eliminates the need for shared session stores.
+- **Secrets Management:** No secrets are stored in Git or environment variables. Azure Key Vault serves as the central source of truth.
+- **Minimal Attack Surface:** Only ports 80/443 are exposed. Traefik acts as the single entry point, terminating TLS.
+
+The admin interface itself uses **3-factor database-backed authentication**:
 
 ```
 Factor 1 → Username
@@ -158,6 +164,7 @@ The setup pipelines dynamically fetch secrets from the vaults (`kv-prod-codexrel
 | Prod | Oracle Cloud Free | Atlas M0 Free | **$0/month** |
 | **Total** | | | **$0/month** |
 
+> **Note:** The entire infrastructure is 100% free. The *only* potential cost is purchasing a custom domain name (via GoDaddy or any registrar) if you want a custom URL.
 > Sessions are stateless JWTs — no MongoDB session collection needed, so all environments
 > remain on the Atlas M0 free tier indefinitely.
 
