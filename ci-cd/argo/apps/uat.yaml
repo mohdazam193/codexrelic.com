@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/mohdazam193/codexrelic.com.git'
     targetRevision: HEAD
-    path: kubernetes
+    path: kubernetes/overlays/uat
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: uat

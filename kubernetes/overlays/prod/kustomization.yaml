@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namespace: prod
+
+patches:
+  - target:
+      kind: Ingress
+      name: codexrelic-api-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: codexrelic.com
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: codexrelic.com
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: codexrelic-api-hpa
+    patch: |-
+      - op: replace
+        path: /spec/maxReplicas
+        value: 5
+
+images:
+  - name: DOCKER_IMAGE_PLACEHOLDER
+    newName: aazammohammad193/codexrelic-api
+    newTag: latest
