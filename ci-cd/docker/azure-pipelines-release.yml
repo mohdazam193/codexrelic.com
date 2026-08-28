@@ -2,53 +2,53 @@ trigger: none # Do not trigger on code push, only trigger via the Pipeline resou
 
 resources:
   pipelines:
-  - pipeline: BuildPipeline
-    source: '\Build\Code Build Pipelines' # Matching the exact folder and name from Azure DevOps
-    trigger: true
+    - pipeline: BuildPipeline
+      source: '\Build\Code Build Pipelines' # Matching the exact folder and name from Azure DevOps
+      trigger: Manual
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 variables:
-  imageName: 'aazammohammad193/codexrelic-api'
+  imageName: "aazammohammad193/codexrelic-api"
   # The Build Pipeline tags the image with its Run ID. We capture that here to deploy the exact same image.
-  imageTag: '$(resources.pipeline.BuildPipeline.runID)'
+  imageTag: "$(resources.pipeline.BuildPipeline.runID)"
 
 stages:
-- template: templates/deploy-stage.yml
-  parameters:
-    stageName: 'DeployToUAT'
-    displayName: 'Deploy to UAT'
-    environmentName: 'UAT'
-    keyVaultName: 'kv-uat-codexrelic'
-    namespace: 'uat'
-    ingressDomain: 'uat.codexrelic.com'
-    observDomain: 'uat-observ.codexrelic.com'
-    deployFolder: '/home/ubuntu/codexrelic-deploy/uat'
-    maxReplicas: '2'
+  - template: templates/deploy-stage.yml
+    parameters:
+      stageName: "DeployToUAT"
+      displayName: "Deploy to UAT"
+      environmentName: "UAT"
+      keyVaultName: "kv-uat-codexrelic"
+      namespace: "uat"
+      ingressDomain: "uat.codexrelic.com"
+      observDomain: "uat-observ.codexrelic.com"
+      deployFolder: "/home/ubuntu/codexrelic-deploy/uat"
+      maxReplicas: "2"
 
-- template: templates/deploy-stage.yml
-  parameters:
-    stageName: 'DeployToStage'
-    displayName: 'Deploy to Stage'
-    environmentName: 'Stage'
-    dependsOn: 'DeployToUAT'
-    keyVaultName: 'kv-stage-codexrelic'
-    namespace: 'stage'
-    ingressDomain: 'stage.codexrelic.com'
-    observDomain: 'stage-observ.codexrelic.com'
-    deployFolder: '/home/ubuntu/codexrelic-deploy/stage'
-    maxReplicas: '2'
+  - template: templates/deploy-stage.yml
+    parameters:
+      stageName: "DeployToStage"
+      displayName: "Deploy to Stage"
+      environmentName: "Stage"
+      dependsOn: "DeployToUAT"
+      keyVaultName: "kv-stage-codexrelic"
+      namespace: "stage"
+      ingressDomain: "stage.codexrelic.com"
+      observDomain: "stage-observ.codexrelic.com"
+      deployFolder: "/home/ubuntu/codexrelic-deploy/stage"
+      maxReplicas: "2"
 
-- template: templates/deploy-stage.yml
-  parameters:
-    stageName: 'DeployToProd'
-    displayName: 'Deploy to Production'
-    environmentName: 'Prod'
-    dependsOn: 'DeployToStage'
-    keyVaultName: 'kv-prod-codexrelic'
-    namespace: 'prod'
-    ingressDomain: 'codexrelic.com'
-    observDomain: 'prod-observ.codexrelic.com'
-    deployFolder: '/home/ubuntu/codexrelic-deploy/prod'
-    maxReplicas: '5'
+  - template: templates/deploy-stage.yml
+    parameters:
+      stageName: "DeployToProd"
+      displayName: "Deploy to Production"
+      environmentName: "Prod"
+      dependsOn: "DeployToStage"
+      keyVaultName: "kv-prod-codexrelic"
+      namespace: "prod"
+      ingressDomain: "codexrelic.com"
+      observDomain: "prod-observ.codexrelic.com"
+      deployFolder: "/home/ubuntu/codexrelic-deploy/prod"
+      maxReplicas: "5"
