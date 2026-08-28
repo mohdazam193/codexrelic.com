@@ -53,7 +53,7 @@ This repository serves as a blueprint for learning DevOps and building a product
                                          │
                         ┌────────────────▼────────────────┐
                         │   Oracle Cloud ARM VM           │
-                        │   Always Free · 4 OCPU · 24 GB │
+                        │   Always Free · 2 OCPU · 12 GB │
                         │                                 │
                         │   K3s Kubernetes Cluster        │
                         │                                 │
