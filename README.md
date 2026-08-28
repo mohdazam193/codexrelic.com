@@ -13,79 +13,156 @@
 [![GoDaddy](https://img.shields.io/badge/DNS-GoDaddy-00A4A6?logo=godaddy)](https://godaddy.com)
 [![Let's Encrypt](https://img.shields.io/badge/SSL-Let's%20Encrypt-003A70?logo=letsencrypt)](https://letsencrypt.org/)
 [![12-Factor](https://img.shields.io/badge/Architecture-12--Factor%20App-0078D4)](https://12factor.net/)
+<br>
+[![GitOps](https://img.shields.io/badge/GitOps-Argo%20CD-EF7B4D?logo=argo)](https://argoproj.github.io/cd/)
+[![OpenObserve](https://img.shields.io/badge/Observability-OpenObserve-FF4E00?logo=databricks)](https://openobserve.ai/)
+[![Gemini](https://img.shields.io/badge/AI_Co--Pilot-Google%20Gemini-8E75B2?logo=google-gemini)](https://gemini.google.com/)
+[![Antigravity](https://img.shields.io/badge/IDE-Antigravity-000000?logo=google)](https://github.com/google/antigravity)
 
 </div>
 
 ---
 
-## 1. The Challenge (Or: Why I Built This)
+## 1. The Challenge & The AI Co-Pilot
 
+*Why free? Because I am broke and don't have money to burn on personal projects like other professionals. Just keeping it real! Beyond the code, I'm a real human who loves tech as much as watching movies, history, and philosophy.*
+
+*Full disclosure: the code here was primarily written by my AI co-pilot, Gemini (via Antigravity). Working with Gemini was a wild ride. Sometimes it showcased sheer technical code-writing prowess, pinpointing complex troubleshooting issues with surgical precision. Other times... it hallucinated wildly and just unnecessarily added things to the recipe that I never asked for. But I loved every minute of it! I served as the 'human intelligence' salt and pepper to make this chaotic AI curry actually taste good and function in production.*
+
+### The Technical Execution
 `codexrelic.com` is a **100% free, end-to-end DevOps & SRE project** demonstrating real-time implementation of enterprise-grade infrastructure. 
-
-Why free? Because I am broke and don't have money to spend on personal projects like any other student or professional. Just keeping it real! But honestly, building a production-grade, 12-Factor app on a $0 budget using the Oracle Cloud Always Free tier forces you to be creative.
-
-Beyond the code, I'm a real human who loves tech as much as watching movies, history, and philosophy. Also, full disclosure: the code here was primarily written by AI, while I added the "human intelligence" as salt and pepper to make the curry—which is, theoretically, this project!
+Every architectural decision is intentional and documented. This repository serves as a blueprint for learning DevOps and building a production-ready application without spending a dime. It acts as a working proof of concept for:
+- GitOps continuous deployment via Argo CD
+- Kubernetes orchestration (K3s) with automated Let's Encrypt SSL provisioning
+- ARM64 cross-compilation CI/CD pipelines
+- Cryptographic 3-factor authentication (Ed25519 WebCrypto)
+- Modern SEO/SMO architecture
+- Infrastructure-as-code and Azure Key Vault secrets management
+- **12-Factor App Compliant:** Fully stateless application design.
+- **OWASP Compliant:** Secured against common web vulnerabilities via strict CSP headers, stateless JWTs, and cryptographic auth.
 
 ---
 
-## 2. Infrastructure & GitOps (The Foundation)
+## 2. Architecture & Tech Stack
 
-**The Thought Process:** Working full-time means I don't have time to manually manage configurations. Necessity is the mother of invention! I needed a system that deploys itself while I'm busy.
+*A massive shoutout to the heroes of the free-tier world: Oracle Cloud, Argo CD, MongoDB, and OpenObserve. Without you, this project would just be a local Docker container melting my laptop. And regarding the Oracle VM: ARM processors are running everything today anyway, so deploying on Ampere isn't just taking free compute—it's me being 'visionary'.*
 
-**The Execution:**
+### The Technical Execution
+
+```text
+                        ┌─────────────────────────────────┐
+                        │   GoDaddy                       │
+                        │   DNS Management                │
+                        └────────────────┬────────────────┘
+                                         │
+                        ┌────────────────▼────────────────┐
+                        │   Oracle Cloud ARM VM           │
+                        │   Always Free · 2 OCPU · 12 GB │
+                        │                                 │
+                        │   K3s Kubernetes Cluster        │
+                        │                                 │
+                        │   Traefik (Ingress Controller)  │
+                        │   cert-manager (Let's Encrypt)  │
+                        │                                 │
+                        │   namespaces:                   │
+                        │   ├── uat   (FastAPI Pod)       │
+                        │   ├── stage (FastAPI Pod)       │
+                        │   ├── prod  (FastAPI Pod + HPA) │
+                        │   └── observability (OpenObserve)│
+                        └────────────────┬────────────────┘
+                                         │ pymongo SRV
+                        ┌────────────────▼────────────────┐
+                        │   MongoDB Atlas (Managed)       │
+                        │   M0 Free Cluster               │
+                        │   ├── codexrelic_uat            │
+                        │   ├── codexrelic_stage          │
+                        │   └── codexrelic_prod           │
+                        └─────────────────────────────────┘
+
+  CI/CD                 Secrets
+  ──────                ───────
+  Azure DevOps    ───►  Azure Key Vault
+  Pipeline              (kv-prod-codexrelic)
+  (Build→Scan→Deploy)   
+```
+
+### Application
+| Layer | Technology |
+|-------|-----------|
+| Runtime | Python 3.11 |
+| Framework | FastAPI + Uvicorn |
+| Database | MongoDB Atlas (pymongo) |
+| Auth | Ed25519 challenge-response + bcrypt + JWT |
+| Frontend | Vanilla HTML/CSS/JS (no framework) |
+
+### Infrastructure
+| Layer | Technology |
+|-------|-----------|
+| Compute | Oracle Cloud Always Free ARM (Ampere A1) |
+| Orchestration | K3s (Lightweight Kubernetes) + HPA Auto-Scaling |
+| GitOps | Argo CD |
+| Ingress & Routing | Traefik |
+| SSL / TLS | cert-manager + Let's Encrypt |
+| Observability | OpenObserve (Logs & Metrics collection via Helm) |
+| DNS | GoDaddy |
+| Database | MongoDB Atlas M0 Free |
+| Secrets | Azure Key Vault (`kv-prod-codexrelic`, `kv-github-codexrelic`) |
+
+### CI/CD & DevSecOps
+| Layer | Technology |
+|-------|-----------|
+| Pipeline | Azure DevOps Pipelines |
+| Container Build | Docker + QEMU (Cross-compiling linux/arm64 on x86 agents) |
+| Container Registry | DockerHub |
+| IaC | Terraform (OCI provider) |
+| Automated Checks | Scheduled pipelines for SSL expiry monitoring |
+
+---
+
+## 3. Infrastructure & GitOps
+
+*Working full-time means I don't have the energy to manually run `kubectl apply` at 2 AM while half-asleep. Necessity is the mother of invention! A glorious shoutout to GitOps—thank you for making it possible to push code, go to bed, and let the machines do the heavy lifting while I dream.*
+
+### The Technical Execution
 - **GitOps via Argo CD:** Ensures the cluster state always matches Git. No manual `kubectl apply` drift.
 - **K3s (Lightweight Kubernetes):** Perfect for our lightweight VM.
-- **Oracle Cloud ARM VM:** Always Free (2 OCPU / 12 GB RAM). Shout out to Oracle for considering and thinking about people like us who need free compute!
-- **GoDaddy DNS & Traefik:** Handles routing gracefully.
 - **cert-manager:** Automated Let's Encrypt SSL provisioning so I don't have to remember to renew certs.
 
 *War Story (Debugging ArgoCD):* When setting up ArgoCD behind Traefik, I hit an endless redirect loop because Argo expects HTTPS but Traefik proxies via HTTP. The fix? A sneaky `configMapGenerator` patch (`server.insecure="true"`) to disable Argo's internal TLS so it plays nicely with the ingress.
 
 ---
 
-## 3. CI/CD & Cross-Compilation (The Delivery)
+## 4. Docker Hardening & Security
 
-**The Thought Process:** The free Oracle VM is ARM64 (Ampere A1). Again, humor for cost: Ampere is the only free VM available! But Azure DevOps agents are standard x86. How do we build images without paying for expensive ARM runners?
+*Security conscious humor: I want to sleep good post-work. If this gets hacked and starts mining crypto, my glorious $0 budget goes out the window!*
 
-**The Execution:**
-- Leveraging **QEMU & Docker Buildx** in Azure DevOps pipelines to natively cross-compile `linux/arm64` images on `x86` agents.
-- Pushing to DockerHub, and letting Argo CD handle the sync.
-- Automated Checks for SSL expiry monitoring via a scheduled weekly cron pipeline.
-
----
-
-## 4. Docker Hardening & Security (The Defense)
-
-**The Thought Process:** Security conscious humor: I want to sleep good post-work. If this thing gets hacked and starts mining crypto, my $0 budget goes out the window!
-
-**The Execution:** 
-- **OWASP Compliant:** Secured against common web vulnerabilities via strict CSP headers, stateless JWTs, and cryptographic auth.
+### The Technical Execution
 - **Docker Hardening:**
   - Multi-stage builds using `alpine:3.20` to reduce image bloat and attack surface.
   - Dropped root privileges immediately: running as a dedicated non-root `appuser`.
   - Minimal dependencies via virtual environments (`venv`).
-  - Zero secrets in images or Git. **Azure Key Vault** (`kv-prod-codexrelic`, `kv-github-codexrelic`) handles all secrets dynamically.
+  - Zero secrets in images or Git. **Azure Key Vault** handles all secrets dynamically.
 
 *War Story (Annotation Limits):* When applying massive ArgoCD CRDs through the pipeline, Kubernetes rejected them with a `Too long: may not be more than 262144 bytes` annotation error. I had to bypass client-side limits entirely by forcing `kubectl apply --server-side`.
 
 ---
 
-## 5. Authentication & Statelessness (The Application)
+## 5. Authentication & Statelessness
 
-**The Thought Process:** I don't wish to maintain a lot of passwords. (Insert old person analogy: "Back in my day, we had one password, and it was written on a sticky note under the keyboard!"). 
+*I refuse to maintain a massive database of passwords. Back in my day, we had one password, and it was written on a sticky note under the keyboard! Now we use Ed25519 WebCrypto.*
 
-**The Execution:** 
+### The Technical Execution
 - **12-Factor App Compliant:** Fully stateless application design with externalized configuration.
 - **Cryptographic 3-Factor Auth:** Uses Ed25519 WebCrypto + bcrypt + JWT for the admin panel.
 - **Stateless JWTs:** Prevents session hijacking and keeps our MongoDB Atlas M0 Free cluster highly performant because there's absolutely no session lookup overhead.
 
 ---
 
-## 6. Modern SEO & Observability (The Polish)
+## 6. Modern SEO & Observability
 
-**The Thought Process:** SEO is just a buzzword, but for visibility (like in an organization, you need to voice out your opinion to be heard and recognized), you need it. If Google can't find it, does it even exist?
+*SEO is a buzzword, but much like working in a large corporate organization—if you don't voice your opinion loudly in meetings, you don't exist. If Google doesn't see my site, does it even exist? I had to yell at the search engine so I could be recognized.*
 
-**The Execution:**
+### The Technical Execution
 - **Modern SEO/SMO Architecture:** Canonical links, Open Graph, Twitter Cards, `robots.txt`, and XML Sitemaps injected across all public pages.
 - **Observability:** OpenObserve (Logs & Metrics collection via Helm), tuned down to fit our tiny ARM VM without crashing it.
 
