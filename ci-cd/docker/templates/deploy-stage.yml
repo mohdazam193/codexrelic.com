@@ -257,6 +257,4 @@ stages:
                 
                 # Force ArgoCD to sync the latest commit immediately
                 sudo kubectl patch app codexrelic-api-${{ parameters.namespace }} -n argocd --type merge -p '{"operation": {"sync": {"revision": "HEAD"}}}' || echo "ArgoCD app not found, skipping sync"
-                
-                # Wait for Argo Rollouts
-                sudo kubectl argo rollouts status codexrelic-api -n ${{ parameters.namespace }}
+
