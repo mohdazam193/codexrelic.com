@@ -84,4 +84,8 @@ steps:
       echo "5. Deploying Multi-Environment Apps..."
       sudo kubectl apply -f ~/argo_setup/apps/
       
+      echo "6. Restarting ArgoCD Server to pick up ConfigMap changes (like server.insecure)..."
+      sudo kubectl rollout restart deployment argocd-server -n argocd
+      sudo kubectl rollout status deployment argocd-server -n argocd
+      
       echo "[OK] ArgoCD fully deployed and configured!"
