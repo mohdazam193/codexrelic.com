@@ -28,4 +28,4 @@ patches:
 images:
 - name: DOCKER_IMAGE_PLACEHOLDER
   newName: aazammohammad193/codexrelic-api
-  newTag: "185"
+  newTag: "189"
