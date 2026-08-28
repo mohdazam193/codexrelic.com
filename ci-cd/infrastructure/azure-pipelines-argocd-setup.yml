@@ -6,6 +6,10 @@ trigger:
     include:
       - ci-cd/argo/**
 
+# NOTE: This pipeline is exclusively for installing and configuring the core ArgoCD infrastructure.
+# If you modify `ci-cd/argo/kustomization.yaml`, you must run this pipeline.
+# For standard application deployments, use `azure-pipelines-release.yml` instead.
+
 pool:
   vmImage: 'ubuntu-latest'
 

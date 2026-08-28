@@ -1,6 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# NOTE: If you modify this file or any core Argo CD configurations, 
+# you MUST re-run the `azure-pipelines-argocd-setup.yml` pipeline in Azure DevOps 
+# to apply the changes to the cluster. The standard application release pipeline will not apply this.
+
 namespace: argocd
 
 # Pull the official Argo CD manifests from the upstream repository
