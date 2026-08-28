@@ -236,3 +236,8 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** The deployment failed while applying the ArgoCD manifests with the error: `The CustomResourceDefinition "applicationsets.argoproj.io" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes`.
 - **The Root Cause:** A standard `kubectl apply` adds a `kubectl.kubernetes.io/last-applied-configuration` annotation containing the entire JSON representation of the resource. Some of ArgoCD's CRDs (like `applicationsets`) are massive and exceed Kubernetes' hard limit of 256KB for annotations, causing the API server to reject them.
 - **The Fix:** We updated the apply command to use the server-side apply flag: `sudo kubectl apply --server-side -k ~/argo_setup/`. This instructs Kubernetes to manage field management directly on the server API, bypassing the client-side annotation size limits entirely.
+
+#### Issue 32: Apply Conflict with "kubectl-client-side-apply"
+- **What Happened:** After switching to `--server-side`, the pipeline failed with `Apply failed with 1 conflict: conflict with "kubectl-client-side-apply"`.
+- **The Root Cause:** Because the previous pipeline attempt partially applied resources using client-side apply (the default), Kubernetes marked the fields as "owned" by `kubectl-client-side-apply`. When the new server-side apply attempted to modify those same fields, Kubernetes blocked it to prevent a different field manager from overwriting changes.
+- **The Fix:** Appended the `--force-conflicts` flag (`sudo kubectl apply --server-side --force-conflicts -k ~/argo_setup/`). This instructs the API server to forcefully take ownership of the conflicting fields and overwrite them with the new configuration.
