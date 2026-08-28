@@ -25,11 +25,12 @@ Every infrastructure decision is intentional and documented — from zero-cost h
 cryptographic admin authentication — demonstrating the same practices applied in enterprise environments.
 
 The site serves as both a public portfolio and a working proof of concept for:
-- Multi-environment deployment pipelines (UAT → Stage → Prod)
+- GitOps continuous deployment via Argo CD
 - Kubernetes orchestration (K3s) with automated Let's Encrypt SSL provisioning
 - ARM64 cross-compilation CI/CD pipelines
 - Cryptographic 3-factor authentication (Ed25519 WebCrypto)
-- Infrastructure-as-code and automation-first operations
+- Modern SEO/SMO architecture (Canonical, Open Graph, Twitter Cards, Sitemaps)
+- Infrastructure-as-code and Azure Key Vault secrets management
 
 ---
 
@@ -102,12 +103,13 @@ The site serves as both a public portfolio and a working proof of concept for:
 |-------|-----------|
 | Compute | Oracle Cloud Always Free ARM (Ampere A1) |
 | Orchestration | K3s (Lightweight Kubernetes) + HPA Auto-Scaling |
+| GitOps | Argo CD |
 | Ingress & Routing | Traefik |
 | SSL / TLS | cert-manager + Let's Encrypt |
 | Observability | OpenObserve (Logs & Metrics collection via Helm) |
 | DNS | Cloudflare DNS (DNS-only) |
 | Database | MongoDB Atlas M0 Free |
-| Secrets | Azure DevOps Library Variable Groups |
+| Secrets | Azure Key Vault (`kv-prod-codexrelic`, `kv-github-codexrelic`) |
 
 ### CI/CD & DevSecOps
 | Layer | Technology |
@@ -143,9 +145,8 @@ Factor 3 → Unique Private Key per user (bcrypt, cost 12)
 5. **Success:** On success, the server issues a **stateless JWT cookie** (HS256, 24h expiry, `httponly` + `secure`).
 
 ### Secrets management
-Secrets are stored in **Azure DevOps Library Variable Groups** (one per environment).
-The deployment pipeline reads secrets at deploy time and injects them securely as Kubernetes Secrets into the respective namespace.
-No secrets are stored in git, Docker images, or plain text files on the server.
+Secrets are managed externally in **Azure Key Vault**. 
+The setup pipelines dynamically fetch secrets from the vaults (`kv-prod-codexrelic`, `kv-github-codexrelic`) and inject them securely into the Kubernetes cluster. No secrets are stored in git, Azure DevOps variables, Docker images, or plain text files on the server.
 
 ---
 
@@ -174,9 +175,12 @@ codexrelic.com/
 │   └── templates/                # Protected CMS dashboard
 │
 ├── ci-cd/                        # Pipeline definitions
+│   ├── argo/                     # Argo CD manifests and kustomizations
+│   ├── infrastructure/
+│   │   └── azure-pipelines-argocd-setup.yml # ArgoCD setup and secrets injection pipeline
 │   └── docker/
 │       ├── azure-pipelines-build.yml     # QEMU setup, Docker build (ARM64), publish manifests
-│       ├── azure-pipelines-release.yml   # SSH to VM, kubectl apply with env injection
+│       ├── azure-pipelines-release.yml   # Application release triggers (if applicable)
 │       └── azure-pipelines-ssl-check.yml # Scheduled cron pipeline for SSL verification
 │
 ├── kubernetes/                   # Kubernetes manifest templates
@@ -204,9 +208,9 @@ codexrelic.com/
 
 ---
 
-## CI/CD Pipeline Architecture
+## CI/CD Pipeline Architecture & GitOps
 
-The deployment pipeline is split into build and release phases, accommodating cross-architecture compilation and dynamic environment injection:
+The deployment pipeline is split into build and continuous deployment (GitOps) phases, accommodating cross-architecture compilation and automated syncing via Argo CD:
 
 ```
 git push → main
@@ -217,30 +221,19 @@ git push → main
 │  ├── Register QEMU binfmt for ARM64 cross-compilation    │
 │  ├── Docker buildx build --platform linux/arm64          │
 │  ├── Push to DockerHub (tagged + latest)                 │
-│  └── Publish `kubernetes/` folder as pipeline artifact   │
+│  └── Update Kubernetes manifests / triggers              │
 └────────────────────────┬─────────────────────────────────┘
                          │
                          ▼
 ┌──────────────────────────────────────────────────────────┐
-│  Stage: Deploy to UAT (azure-pipelines-release.yml)      │
-│  ├── Download Kubernetes artifact                        │
-│  ├── Inject `uat.codexrelic.com` into ingress.yaml       │
-│  ├── Create K8s namespace `uat`                          │
-│  ├── Inject Azure DevOps variables as K8s Secrets        │
-│  └── `kubectl apply` over SSH to OCI VM                  │
-└────────────────────────┬─────────────────────────────────┘
-                         │ (manual approval gate)
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│  Stage: Deploy to Stage                                  │
-│  └── Same pattern → namespace `stage`                    │
-└────────────────────────┬─────────────────────────────────┘
-                         │ (manual approval gate)
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│  Stage: Deploy to Prod                                   │
-│  └── Same pattern → namespace `prod`                     │
+│  GitOps: Continuous Deployment (Argo CD)                 │
+│  ├── Argo CD detects changes in the Git repository       │
+│  ├── Automatically syncs cluster state with Git          │
+│  ├── Deploys to `uat`, `stage`, and `prod` namespaces    │
+│  └── Applies ConfigMaps, Secrets, and Deployments        │
 └──────────────────────────────────────────────────────────┘
+
+*Note: Core infrastructure like Argo CD itself and OpenObserve are deployed via dedicated setup pipelines (`azure-pipelines-argocd-setup.yml`) that fetch secrets directly from Azure Key Vault and deploy over SSH via server-side apply.*
 ```
 
 ---
