@@ -1,10 +1,10 @@
 <div align="center">
 
-# codexrelic.com
+# Free End-to-End DevOps Project
 
-**Personal SRE & Platform Engineering Portfolio**
+**Real-Time Implementation & SRE Portfolio Showcase**
 
-*Mohd Azam · Site Reliability Engineer · 6+ years in multi-tenant SaaS*
+*Built by Mohd Azam · 100% Free Tier Enterprise-Grade Infrastructure*
 
 [![Azure DevOps](https://img.shields.io/badge/CI/CD-Azure%20DevOps-0078D4?logo=azure-devops)](https://dev.azure.com)
 [![Kubernetes](https://img.shields.io/badge/Orchestration-K3s-326CE5?logo=kubernetes)](https://k3s.io)
@@ -20,11 +20,10 @@
 
 ## Overview
 
-`codexrelic.com` is a production-grade personal portfolio and blog built as a live SRE showcase.
-Every infrastructure decision is intentional and documented — from zero-cost hosting to
-cryptographic admin authentication — demonstrating the same practices applied in enterprise environments.
+`codexrelic.com` is a **100% free, end-to-end DevOps & SRE project** demonstrating real-time implementation of enterprise-grade infrastructure. 
+Every architectural decision is intentional and documented — from zero-cost cloud hosting to continuous GitOps deployments and cryptographic admin authentication. 
 
-The site serves as both a public portfolio and a working proof of concept for:
+This repository serves as a blueprint for learning DevOps and building a production-ready application without spending a dime. It acts as a working proof of concept for:
 - GitOps continuous deployment via Argo CD
 - Kubernetes orchestration (K3s) with automated Let's Encrypt SSL provisioning
 - ARM64 cross-compilation CI/CD pipelines
