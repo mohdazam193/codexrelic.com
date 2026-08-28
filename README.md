@@ -30,6 +30,8 @@ This repository serves as a blueprint for learning DevOps and building a product
 - Cryptographic 3-factor authentication (Ed25519 WebCrypto)
 - Modern SEO/SMO architecture (Canonical, Open Graph, Twitter Cards, Sitemaps)
 - Infrastructure-as-code and Azure Key Vault secrets management
+- **12-Factor App Compliant:** Fully stateless application design with externalized configuration and dependencies.
+- **OWASP Compliant:** Secured against common web vulnerabilities via strict CSP headers, stateless JWTs, and cryptographic auth.
 
 ---
 
