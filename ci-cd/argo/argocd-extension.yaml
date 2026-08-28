@@ -13,7 +13,7 @@ spec:
         image: alpine:3.18
         command: [sh, -c]
         args:
-          - wget -qO- https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.5/extension.tar.gz | tar -xz -C /custom-tools
+          - wget -qO- https://github.com/argoproj-labs/rollout-extension/releases/download/v0.4.0/extension.tar | tar -xf - -C /custom-tools
         volumeMounts:
           - mountPath: /custom-tools
             name: custom-tools
