@@ -241,3 +241,9 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **What Happened:** After switching to `--server-side`, the pipeline failed with `Apply failed with 1 conflict: conflict with "kubectl-client-side-apply"`.
 - **The Root Cause:** Because the previous pipeline attempt partially applied resources using client-side apply (the default), Kubernetes marked the fields as "owned" by `kubectl-client-side-apply`. When the new server-side apply attempted to modify those same fields, Kubernetes blocked it to prevent a different field manager from overwriting changes.
 - **The Fix:** Appended the `--force-conflicts` flag (`sudo kubectl apply --server-side --force-conflicts -k ~/argo_setup/`). This instructs the API server to forcefully take ownership of the conflicting fields and overwrite them with the new configuration.
+
+#### Issue 33: ArgoCD UI Not Loading Behind Traefik (HTTP vs HTTPS)
+- **What Happened:** The pipeline succeeded and DNS resolved, but visiting `http://argo.codexrelic.com/` failed to load the UI.
+- **The Root Cause (Part 1 - HTTP Restriction):** In the `argocd-ingress.yaml`, we restricted traffic to the `websecure` (HTTPS) entrypoint. Traefik will intentionally ignore plain `http://` traffic for this route.
+- **The Root Cause (Part 2 - Internal TLS):** Even if we visit `https://`, ArgoCD by default runs its own internal TLS server. When Traefik terminates the external SSL certificate and proxies plain HTTP traffic to the ArgoCD backend pod, ArgoCD either rejects it or creates an endless redirect loop because it expects HTTPS.
+- **The Fix:** We added a `configMapGenerator` in `ci-cd/argo/kustomization.yaml` to patch the `argocd-cmd-params-cm` ConfigMap with `server.insecure="true"`. This safely disables ArgoCD's internal TLS, allowing it to seamlessly receive proxy traffic from the Traefik Ingress controller.

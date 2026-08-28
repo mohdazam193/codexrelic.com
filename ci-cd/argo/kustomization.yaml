@@ -17,3 +17,10 @@ patches:
       - op: replace
         path: /spec/type
         value: ClusterIP
+
+# Configure Argo CD to run without internal TLS since Traefik handles TLS termination
+configMapGenerator:
+  - name: argocd-cmd-params-cm
+    behavior: merge
+    literals:
+      - server.insecure="true"
