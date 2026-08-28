@@ -103,9 +103,15 @@ stages:
               git config --global user.email "azure-pipelines@codexrelic.com"
               git config --global user.name "Azure Pipelines"
               
-              # Clone repo using PAT
-              git clone https://$(GITHUB-USERNAME):$(GITHUB-PAT)@github.com/mohdazam193/codexrelic.com.git repo
+              # Clone repo using PAT from environment variables mapped below
+              git clone https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/mohdazam193/codexrelic.com.git repo
               cd repo/kubernetes/overlays/${{ parameters.namespace }}
+              
+              # Install kustomize if not present on agent
+              if ! command -v kustomize &> /dev/null; then
+                  curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+                  sudo mv kustomize /usr/local/bin/
+              fi
               
               # Update image tag via kustomize
               kustomize edit set image DOCKER_IMAGE_PLACEHOLDER=$(imageName):$(imageTag)
@@ -115,6 +121,9 @@ stages:
               git commit -m "chore(${{ parameters.namespace }}): update image to $(imageTag) [skip ci]" || echo "No changes to commit"
               git push origin main
             displayName: Update Git repository (GitOps push)
+            env:
+              GITHUB_USERNAME: $(GITHUB-USERNAME)
+              GITHUB_PAT: $(GITHUB-PAT)
 
           # 7. Copy Manifests and .env file to the target K3s Server via SSH
           - task: CopyFilesOverSSH@0
