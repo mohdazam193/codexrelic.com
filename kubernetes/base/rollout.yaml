@@ -12,7 +12,7 @@ spec:
     blueGreen:
       activeService: codexrelic-api-service
       previewService: codexrelic-api-preview-service
-      autoPromotionEnabled: true
+      autoPromotionEnabled: false
   template:
     metadata:
       labels:
