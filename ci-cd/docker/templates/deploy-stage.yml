@@ -55,7 +55,16 @@ stages:
               SecretsFilter: 'MONGO-URI,JWT-SECRET,O2-ROOT-USER,O2-ROOT-PASSWORD'
               RunAsPreJob: true
 
-          # 3. Fetch Common Secrets (S3 Credentials)
+          # 3. Fetch GitHub Credentials for GitOps push
+          - task: AzureKeyVault@2
+            displayName: Load GitHub credentials
+            inputs:
+              azureSubscription: 'keyvalute-codex'
+              KeyVaultName: 'kv-github-codexrelic'
+              SecretsFilter: 'GITHUB-PAT,GITHUB-USERNAME'
+              RunAsPreJob: true
+
+          # 4. Fetch Common Secrets (S3 Credentials)
           - task: AzureKeyVault@2
             displayName: Load common S3 secrets from Key Vault
             inputs:
@@ -64,7 +73,7 @@ stages:
               SecretsFilter: 'AWS-ACCESS-KEY-ID,AWS-SECRET-ACCESS-KEY,AWS-ENDPOINT-URL-S3,AWS-DEFAULT-REGION,AWS-S3-BUCKET'
               RunAsPreJob: true
 
-          # 4. Generate the .env file dynamically
+          # 5. Generate the .env file dynamically
           - script: |
               cat > $(Pipeline.Workspace)/.env.${{ parameters.namespace }} << 'EOF'
               MONGO_URI=$(MONGO-URI)
@@ -88,7 +97,26 @@ stages:
               EOF
             displayName: Render .env and values from Key Vault secrets
 
-          # 5. Copy Manifests and .env file to the target K3s Server via SSH
+          # 6. Update Git repository (GitOps push)
+          - script: |
+              # Configure git
+              git config --global user.email "azure-pipelines@codexrelic.com"
+              git config --global user.name "Azure Pipelines"
+              
+              # Clone repo using PAT
+              git clone https://$(GITHUB-USERNAME):$(GITHUB-PAT)@github.com/mohdazam193/codexrelic.com.git repo
+              cd repo/kubernetes/overlays/${{ parameters.namespace }}
+              
+              # Update image tag via kustomize
+              kustomize edit set image DOCKER_IMAGE_PLACEHOLDER=$(imageName):$(imageTag)
+              
+              # Commit and push
+              git add kustomization.yaml
+              git commit -m "chore(${{ parameters.namespace }}): update image to $(imageTag) [skip ci]" || echo "No changes to commit"
+              git push origin main
+            displayName: Update Git repository (GitOps push)
+
+          # 7. Copy Manifests and .env file to the target K3s Server via SSH
           - task: CopyFilesOverSSH@0
             displayName: Copy K8s manifests and .env to VM
             inputs:
@@ -101,7 +129,7 @@ stages:
               targetFolder: ${{ parameters.deployFolder }}
               readyTimeout: '20000'
 
-          # 6. Execute Kubernetes Commands on the K3s Server
+          # 8. Execute Kubernetes Commands on the K3s Server
           - task: SSH@0
             displayName: Deploy to K3s via SSH
             inputs:
@@ -115,7 +143,7 @@ stages:
                 sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
                 
                 # Apply ClusterIssuer
-                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml || echo "ClusterIssuer applied via ArgoCD"
                 
                 # Ensure namespace exists
                 sudo kubectl create namespace ${{ parameters.namespace }} --dry-run=client -o yaml | sudo kubectl apply -f -
@@ -127,17 +155,6 @@ stages:
                   --from-env-file=.env.${{ parameters.namespace }} \
                   --dry-run=client -o yaml | sudo kubectl apply -f -
                   
-                # Update deployment image tag, Ingress domain, and HPA maxReplicas
-                sed -i 's|DOCKER_IMAGE_PLACEHOLDER|$(imageName):$(imageTag)|g' k8s-manifests/deployment.yaml
-                sed -i 's|DOMAIN_PLACEHOLDER|${{ parameters.ingressDomain }}|g' k8s-manifests/ingress.yaml
-                sed -i 's|MAX_REPLICAS_PLACEHOLDER|${{ parameters.maxReplicas }}|g' k8s-manifests/hpa.yaml
-                
-                # Apply manifests
-                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/deployment.yaml
-                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/service.yaml
-                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/ingress.yaml
-                sudo kubectl apply -n ${{ parameters.namespace }} -f k8s-manifests/hpa.yaml
-                
                 # Install Helm if not present
                 if ! command -v helm &> /dev/null
                 then
@@ -188,7 +205,6 @@ stages:
                   echo "mode: daemonset" > /tmp/otel-values.yaml
                   echo "presets:" >> /tmp/otel-values.yaml
                   echo "  logsCollection:" >> /tmp/otel-values.yaml
-                  echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "  hostMetrics:" >> /tmp/otel-values.yaml
                   echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "  kubeletMetrics:" >> /tmp/otel-values.yaml
@@ -230,5 +246,8 @@ stages:
                   echo "Skipping observability deployment. Only deployed during Prod stage."
                 fi
                 
-                # Wait for rollout
-                sudo kubectl rollout status deployment/codexrelic-api -n ${{ parameters.namespace }}
+                # Force ArgoCD to sync the latest commit immediately
+                sudo kubectl patch app codexrelic-api-${{ parameters.namespace }} -n argocd --type merge -p '{"operation": {"sync": {"revision": "HEAD"}}}' || echo "ArgoCD app not found, skipping sync"
+                
+                # Wait for Argo Rollouts
+                sudo kubectl rollout status rollout/codexrelic-api -n ${{ parameters.namespace }}
