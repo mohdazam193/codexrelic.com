@@ -4,8 +4,8 @@ metadata:
   name: codexrelic-api-hpa
 spec:
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout
+    apiVersion: apps/v1
+    kind: Deployment
     name: codexrelic-api
   minReplicas: 2
   maxReplicas: 10
