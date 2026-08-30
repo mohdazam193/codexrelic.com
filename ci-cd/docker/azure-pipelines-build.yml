@@ -52,6 +52,11 @@ stages:
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       displayName: 'Setup QEMU for ARM64 builds'
 
+    - script: |
+        echo "Injecting dynamic build version into HTML files..."
+        find src/public -type f -name "*.html" -exec sed -i "s/codexrelic.com v1.0.0/codexrelic.com v1.0.$(Build.BuildId)/g" {} +
+      displayName: 'Inject Build Version'
+
     - task: Docker@2
       displayName: Login to DockerHub for Buildx Caching
       inputs:
