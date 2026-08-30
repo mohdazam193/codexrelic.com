@@ -5,20 +5,23 @@ metadata:
 spec:
   template:
     spec:
-      volumes:
-      - name: custom-tools
-        emptyDir: {}
       initContainers:
-      - name: download-tools
-        image: alpine:3.18
-        command: [sh, -c]
-        args:
-          - wget -qO- https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.5/extension.tar.gz | tar -xz -C /custom-tools
-        volumeMounts:
-          - mountPath: /custom-tools
-            name: custom-tools
+        - name: rollout-extension
+          image: quay.io/argoprojlabs/argocd-extension-installer:v0.0.8
+          env:
+          - name: EXTENSION_URL
+            value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
+          volumeMounts:
+            - name: extensions
+              mountPath: /tmp/extensions/
+          securityContext:
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
       containers:
-      - name: argocd-server
-        volumeMounts:
-        - mountPath: /tmp/extensions/
-          name: custom-tools
+        - name: argocd-server
+          volumeMounts:
+            - name: extensions
+              mountPath: /tmp/extensions/
+      volumes:
+        - name: extensions
+          emptyDir: {}
