@@ -9,15 +9,3 @@ spec:
   ports:
     - port: 80
       targetPort: 8000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: codexrelic-api-preview-service
-spec:
-  type: ClusterIP
-  selector:
-    app: codexrelic-api
-  ports:
-    - port: 80
-      targetPort: 8000

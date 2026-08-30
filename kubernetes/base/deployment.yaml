@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codexrelic-api
+  labels:
+    app: codexrelic-api
+spec:
+  selector:
+    matchLabels:
+      app: codexrelic-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: codexrelic-api
+    spec:
+      containers:
+      - name: codexrelic-api
+        image: DOCKER_IMAGE_PLACEHOLDER
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "150m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        envFrom:
+        - secretRef:
+            name: codexrelic-secrets

@@ -97,30 +97,22 @@ stages:
               EOF
             displayName: Render .env and values from Key Vault secrets
 
-          # 6. Update Git repository (GitOps push)
+          # 6. Prepare Kubernetes Manifests
           - script: |
-              # Configure git
-              git config --global user.email "azure-pipelines@codexrelic.com"
-              git config --global user.name "Azure Pipelines"
-              
-              # Clone repo using PAT from environment variables mapped below
-              git clone https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/mohdazam193/codexrelic.com.git repo
-              cd repo/kubernetes/overlays/${{ parameters.namespace }}
-              
               # Install kustomize if not present on agent
               if ! command -v kustomize &> /dev/null; then
                   curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
                   sudo mv kustomize /usr/local/bin/
               fi
               
+              cd $(Pipeline.Workspace)/k8s-manifests/overlays/${{ parameters.namespace }}
+              
               # Update image tag via kustomize
               kustomize edit set image DOCKER_IMAGE_PLACEHOLDER=$(imageName):$(imageTag)
               
-              # Commit and push
-              git add kustomization.yaml
-              git commit -m "chore(${{ parameters.namespace }}): update image to $(imageTag) [skip ci]" || echo "No changes to commit"
-              git push origin main
-            displayName: Update Git repository (GitOps push)
+              # Build the final manifests
+              kustomize build . > $(Pipeline.Workspace)/final-manifests.yaml
+            displayName: Prepare Kubernetes manifests
             env:
               GITHUB_USERNAME: $(GITHUB-USERNAME)
               GITHUB_PAT: $(GITHUB-PAT)
@@ -133,6 +125,7 @@ stages:
               sourceFolder: '$(Pipeline.Workspace)'
               contents: |
                 k8s-manifests/**
+                final-manifests.yaml
                 .env.${{ parameters.namespace }}
                 o2-values.yaml
               targetFolder: ${{ parameters.deployFolder }}
@@ -255,6 +248,6 @@ stages:
                   echo "Skipping observability deployment. Only deployed during Prod stage."
                 fi
                 
-                # Force ArgoCD to sync the latest commit immediately
-                sudo kubectl patch app codexrelic-api-${{ parameters.namespace }} -n argocd --type merge -p '{"operation": {"sync": {"revision": "HEAD"}}}' || echo "ArgoCD app not found, skipping sync"
+                # Deploy the application using standard Kubernetes manifests
+                sudo kubectl apply -f final-manifests.yaml
 
