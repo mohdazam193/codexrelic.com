@@ -197,6 +197,7 @@ stages:
                   echo "mode: daemonset" > /tmp/otel-values.yaml
                   echo "presets:" >> /tmp/otel-values.yaml
                   echo "  logsCollection:" >> /tmp/otel-values.yaml
+                  echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "  hostMetrics:" >> /tmp/otel-values.yaml
                   echo "    enabled: true" >> /tmp/otel-values.yaml
                   echo "  kubeletMetrics:" >> /tmp/otel-values.yaml
