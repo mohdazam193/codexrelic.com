@@ -5,18 +5,6 @@ metadata:
 spec:
   template:
     spec:
-      initContainers:
-        - name: rollout-extension
-          image: quay.io/argoprojlabs/argocd-extension-installer:v0.0.8
-          env:
-          - name: EXTENSION_URL
-            value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
-          volumeMounts:
-            - name: extensions
-              mountPath: /tmp/extensions/
-          securityContext:
-            runAsUser: 1000
-            allowPrivilegeEscalation: false
       containers:
         - name: argocd-server
           volumeMounts:
@@ -24,4 +12,6 @@ spec:
               mountPath: /tmp/extensions/
       volumes:
         - name: extensions
-          emptyDir: {}
+          hostPath:
+            path: /home/ubuntu/argo-extensions/
+            type: Directory
