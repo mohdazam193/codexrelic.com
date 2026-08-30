@@ -55,14 +55,7 @@ stages:
               SecretsFilter: 'MONGO-URI,JWT-SECRET,O2-ROOT-USER,O2-ROOT-PASSWORD'
               RunAsPreJob: true
 
-          # 3. Fetch GitHub Credentials for GitOps push
-          - task: AzureKeyVault@2
-            displayName: Load GitHub credentials
-            inputs:
-              azureSubscription: 'keyvalute-codex'
-              KeyVaultName: 'kv-github-codexrelic'
-              SecretsFilter: 'GITHUB-PAT,GITHUB-USERNAME'
-              RunAsPreJob: true
+
 
           # 4. Fetch Common Secrets (S3 Credentials)
           - task: AzureKeyVault@2
@@ -113,9 +106,6 @@ stages:
               # Build the final manifests
               kustomize build . > $(Pipeline.Workspace)/final-manifests.yaml
             displayName: Prepare Kubernetes manifests
-            env:
-              GITHUB_USERNAME: $(GITHUB-USERNAME)
-              GITHUB_PAT: $(GITHUB-PAT)
 
           # 7. Copy Manifests and .env file to the target K3s Server via SSH
           - task: CopyFilesOverSSH@0
