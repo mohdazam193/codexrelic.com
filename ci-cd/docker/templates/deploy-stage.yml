@@ -161,7 +161,7 @@ stages:
                   helm repo update
                   
                   for i in 1 2 3; do
-                    helm upgrade --install o2 openobserve/openobserve-standalone \
+                    if helm upgrade --install o2 openobserve/openobserve-standalone \
                       --namespace observability \
                       --set postgres.enabled=false \
                       --set prometheus.serviceMonitor.enabled=false \
@@ -185,7 +185,12 @@ stages:
                       --set-string ingress.annotations."cert-manager\.io/cluster-issuer"="letsencrypt-prod" \
                       --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"="websecure" \
                       --set-string ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls"="true" \
-                      --timeout 10m && break || echo "Helm upgrade o2 failed, retrying in 15s..." && sleep 15
+                      --timeout 10m 2>&1; then
+                      break
+                    else
+                      echo "Helm upgrade o2 failed, retrying in 15s..."
+                      sleep 15
+                    fi
                   done
                     
                   # Install/Update OpenTelemetry Collector (DaemonSet)
@@ -214,7 +219,7 @@ stages:
                   echo "  name: \"otelcol-contrib\"" >> /tmp/otel-values.yaml
                   echo "config:" >> /tmp/otel-values.yaml
                   echo "  exporters:" >> /tmp/otel-values.yaml
-                  echo "    otlphttp:" >> /tmp/otel-values.yaml
+                  echo "    otlp_http:" >> /tmp/otel-values.yaml
                   echo "      endpoint: \"http://o2-openobserve-standalone.observability.svc.cluster.local:5080/api/default\"" >> /tmp/otel-values.yaml
                   echo "      headers:" >> /tmp/otel-values.yaml
                   echo "        Authorization: \"Basic ${AUTH_BASE64}\"" >> /tmp/otel-values.yaml
@@ -222,18 +227,23 @@ stages:
                   echo "  service:" >> /tmp/otel-values.yaml
                   echo "    pipelines:" >> /tmp/otel-values.yaml
                   echo "      logs:" >> /tmp/otel-values.yaml
-                  echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
+                  echo "        exporters: [otlp_http]" >> /tmp/otel-values.yaml
                   echo "      metrics:" >> /tmp/otel-values.yaml
-                  echo "        exporters: [otlphttp]" >> /tmp/otel-values.yaml
+                  echo "        exporters: [otlp_http]" >> /tmp/otel-values.yaml
                   
                   helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
                   helm repo update
                   
                   for i in 1 2 3 4 5; do
-                    helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
+                    if helm upgrade --install o2-collector open-telemetry/opentelemetry-collector \
                       --namespace observability \
                       -f /tmp/otel-values.yaml \
-                      --timeout 10m && break || echo "Helm upgrade collector failed, retrying in 15s..." && sleep 15
+                      --timeout 10m 2>&1; then
+                      break
+                    else
+                      echo "Helm upgrade collector failed, retrying in 15s..."
+                      sleep 15
+                    fi
                   done
                 else
                   echo "Skipping observability deployment. Only deployed during Prod stage."
