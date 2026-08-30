@@ -239,6 +239,10 @@ stages:
                   echo "Skipping observability deployment. Only deployed during Prod stage."
                 fi
                 
+                # Clean up orphaned Argo Rollout resources from the previous architecture to prevent selector conflicts
+                sudo kubectl delete rollout codexrelic-api -n ${{ parameters.namespace }} --ignore-not-found=true || true
+                sudo kubectl delete service codexrelic-api-service -n ${{ parameters.namespace }} --ignore-not-found=true || true
+                
                 # Deploy the application using standard Kubernetes manifests
                 sudo kubectl apply -f final-manifests.yaml
 
