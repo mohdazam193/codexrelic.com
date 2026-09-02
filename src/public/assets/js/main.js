@@ -115,39 +115,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2600);
   }
 
-  /* CVE Security News Marquee */
+  /* CVE Security News Ticker */
   fetch('/api/cve-news')
     .then(response => response.json())
     .then(data => {
       if (data && data.length > 0) {
-        const marqueeContainer = document.createElement('div');
-        marqueeContainer.className = 'cve-marquee';
+        const tickerContainer = document.createElement('div');
+        tickerContainer.className = 'cve-ticker';
         
-        const header = document.createElement('div');
-        header.className = 'cve-header';
-        header.innerHTML = '<span>SECURITY NEWS FEED</span>';
-        marqueeContainer.appendChild(header);
+        const label = document.createElement('div');
+        label.className = 'cve-ticker-label';
+        label.innerHTML = '<span class="pulse-dot"></span> SEC-FEED';
+        tickerContainer.appendChild(label);
+
+        const contentWrap = document.createElement('div');
+        contentWrap.className = 'cve-ticker-wrap';
 
         const content = document.createElement('div');
-        content.className = 'cve-content';
+        content.className = 'cve-ticker-content';
 
         data.forEach(item => {
-          const alertBox = document.createElement('a');
-          alertBox.href = item.link;
-          alertBox.target = '_blank';
-          alertBox.className = 'cve-alert';
-          
-          alertBox.innerHTML = `
-            <div class="cve-icon">⚠️</div>
-            <div class="cve-info">
-              <div class="cve-title">${item.title}</div>
-            </div>
-          `;
-          content.appendChild(alertBox);
+          const alertLink = document.createElement('a');
+          alertLink.href = item.link;
+          alertLink.target = '_blank';
+          alertLink.className = 'cve-ticker-item';
+          alertLink.innerHTML = `<span class="cve-ticker-icon">⚠️</span> <span class="cve-ticker-title">${item.title}</span>`;
+          content.appendChild(alertLink);
         });
 
-        marqueeContainer.appendChild(content);
-        document.body.appendChild(marqueeContainer);
+        // Clone for infinite scroll effect
+        contentWrap.appendChild(content);
+        const clone = content.cloneNode(true);
+        contentWrap.appendChild(clone);
+
+        tickerContainer.appendChild(contentWrap);
+        
+        // Append to layout or body
+        const mainEl = document.querySelector('.main') || document.body;
+        mainEl.appendChild(tickerContainer);
       }
     })
     .catch(err => console.error('Error loading CVE news:', err));
