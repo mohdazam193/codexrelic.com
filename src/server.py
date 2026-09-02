@@ -9,6 +9,7 @@ import logging
 import json
 import sys
 import subprocess
+import feedparser
 import boto3
 from botocore.client import Config
 from botocore.exceptions import ClientError
@@ -267,6 +268,41 @@ def get_blogs():
             }
         ]
     return blogs
+
+# ── CVE Security News API (RSS Feed) ──
+cve_cache = {"data": [], "last_updated": 0}
+CVE_FEED_URL = "https://www.cisa.gov/uscert/ncas/alerts.xml"
+CACHE_TTL = 3600  # 1 hour
+
+@app.get("/api/cve-news")
+def get_cve_news():
+    current_time = time.time()
+    
+    # Return cached data if valid
+    if cve_cache["data"] and (current_time - cve_cache["last_updated"] < CACHE_TTL):
+        return cve_cache["data"]
+
+    try:
+        feed = feedparser.parse(CVE_FEED_URL)
+        news_items = []
+        # Parse top 10 entries
+        for entry in feed.entries[:10]:
+            news_items.append({
+                "title": entry.title,
+                "link": entry.link,
+                "published": entry.get("published", ""),
+                "summary": entry.get("summary", "")
+            })
+        
+        if news_items:
+            cve_cache["data"] = news_items
+            cve_cache["last_updated"] = current_time
+            return news_items
+    except Exception as e:
+        logger.error(f"Error fetching CVE RSS feed: {e}")
+        
+    # Return cache even if stale, or empty list if no cache
+    return cve_cache["data"]
 
 # ── Authentication API (3-Factor DB Login) ──
 @app.post("/api/login")

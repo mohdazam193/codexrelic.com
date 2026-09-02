@@ -115,6 +115,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2600);
   }
 
+  /* CVE Security News Marquee */
+  fetch('/api/cve-news')
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.length > 0) {
+        const marqueeContainer = document.createElement('div');
+        marqueeContainer.className = 'cve-marquee';
+        
+        const header = document.createElement('div');
+        header.className = 'cve-header';
+        header.innerHTML = '<span>SECURITY NEWS FEED</span>';
+        marqueeContainer.appendChild(header);
+
+        const content = document.createElement('div');
+        content.className = 'cve-content';
+
+        data.forEach(item => {
+          const alertBox = document.createElement('a');
+          alertBox.href = item.link;
+          alertBox.target = '_blank';
+          alertBox.className = 'cve-alert';
+          
+          alertBox.innerHTML = `
+            <div class="cve-icon">⚠️</div>
+            <div class="cve-info">
+              <div class="cve-title">${item.title}</div>
+            </div>
+          `;
+          content.appendChild(alertBox);
+        });
+
+        marqueeContainer.appendChild(content);
+        document.body.appendChild(marqueeContainer);
+      }
+    })
+    .catch(err => console.error('Error loading CVE news:', err));
+
 });
 
 /* ── SVG helpers ── */
