@@ -271,7 +271,7 @@ def get_blogs():
 
 # ── CVE Security News API (RSS Feed) ──
 cve_cache = {"data": [], "last_updated": 0}
-CVE_FEED_URL = "https://www.cisa.gov/uscert/ncas/alerts.xml"
+CVE_FEED_URL = "https://cve.report/cve.rss"
 CACHE_TTL = 3600  # 1 hour
 
 @app.get("/api/cve-news")
@@ -285,14 +285,35 @@ def get_cve_news():
     try:
         feed = feedparser.parse(CVE_FEED_URL)
         news_items = []
-        # Parse top 10 entries
-        for entry in feed.entries[:10]:
+        # Parse and heuristically score entries based on severity keywords
+        for entry in feed.entries:
+            desc = entry.get("description", entry.get("summary", "")).lower()
+            score = 0
+            
+            # Highest severity keywords
+            if any(k in desc for k in ["remote code execution", "rce", "buffer overflow", "sql injection"]):
+                score += 3
+            # High severity keywords
+            elif any(k in desc for k in ["critical", "authentication bypass", "privilege escalation"]):
+                score += 2
+            # Medium/Other
+            elif any(k in desc for k in ["high", "denial of service", "dos", "cross-site scripting", "xss"]):
+                score += 1
+                
+            # Truncate description to provide some context alongside the CVE ID
+            snippet = entry.get("description", entry.get("summary", ""))
+            first_sentence = snippet.split(". ")[0][:70]
+            display_title = f"{entry.title}: {first_sentence}..." if snippet else entry.title
+                
             news_items.append({
-                "title": entry.title,
+                "title": display_title,
                 "link": entry.link,
-                "published": entry.get("published", ""),
-                "summary": entry.get("summary", "")
+                "score": score
             })
+            
+        # Sort by most vulnerable (highest score) and take top 15
+        news_items.sort(key=lambda x: x.get("score", 0), reverse=True)
+        news_items = news_items[:15]
         
         if news_items:
             cve_cache["data"] = news_items

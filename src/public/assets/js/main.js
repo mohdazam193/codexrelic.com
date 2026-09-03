@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const label = document.createElement('div');
         label.className = 'cve-ticker-label';
-        label.innerHTML = '<span class="pulse-dot"></span> SEC-FEED';
+        label.innerHTML = '<span class="pulse-dot"></span> CVE FEED';
         tickerContainer.appendChild(label);
 
         const contentWrap = document.createElement('div');
