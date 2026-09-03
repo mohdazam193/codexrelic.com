@@ -27,7 +27,7 @@
   --c-amber:         #f59e0b;
   --sidebar-w:       350px;
   --content-max:     860px;
-  --logo-watermark:  url('../images/logo-dark.png');
+  --logo-watermark:  url('../images/logo-dark-default.png');
   --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
   --sp-5: 1.25rem; --sp-6: 1.5rem; --sp-8: 2rem; --sp-10: 2.5rem;
   --sp-12: 3rem; --sp-16: 4rem;
@@ -52,7 +52,7 @@
   --c-accent-hover:  #065e55;
   --c-accent-dim:    rgba(8, 122, 110, 0.07);
   --c-accent-glow:   0 0 24px rgba(8, 122, 110, 0.12);
-  --logo-watermark:  url('../images/logo-light.png');
+  --logo-watermark:  url('../images/logo-light-default.png');
 }
 
 /* ── Theme Palettes Overrides ── */
@@ -64,6 +64,7 @@ html[data-palette="cyber"] {
   --c-accent-hover:  #34d399;
   --c-accent-dim:    rgba(16, 185, 129, 0.08);
   --c-accent-glow:   0 0 24px rgba(16, 185, 129, 0.15);
+  --logo-watermark:  url('../images/logo-dark-cyber.png');
 }
 html[data-theme="light"][data-palette="cyber"] {
   --c-border-accent: #059669;
@@ -71,6 +72,7 @@ html[data-theme="light"][data-palette="cyber"] {
   --c-accent-hover:  #047857;
   --c-accent-dim:    rgba(5, 150, 105, 0.07);
   --c-accent-glow:   0 0 24px rgba(5, 150, 105, 0.12);
+  --logo-watermark:  url('../images/logo-light-cyber.png');
 }
 
 /* 2. Cosmic Violet */
@@ -85,6 +87,7 @@ html[data-palette="cosmic"] {
   --c-accent-hover:  #a78bfa;
   --c-accent-dim:    rgba(139, 92, 246, 0.08);
   --c-accent-glow:   0 0 24px rgba(139, 92, 246, 0.15);
+  --logo-watermark:  url('../images/logo-dark-cosmic.png');
 }
 html[data-theme="light"][data-palette="cosmic"] {
   --c-bg:            #f7f6f9;
@@ -97,6 +100,7 @@ html[data-theme="light"][data-palette="cosmic"] {
   --c-accent-hover:  #5b21b6;
   --c-accent-dim:    rgba(109, 40, 217, 0.07);
   --c-accent-glow:   0 0 24px rgba(109, 40, 217, 0.12);
+  --logo-watermark:  url('../images/logo-light-cosmic.png');
 }
 
 /* 3. Ancient Codex */
@@ -111,6 +115,7 @@ html[data-palette="codex"] {
   --c-accent-hover:  #fbbf24;
   --c-accent-dim:    rgba(245, 158, 11, 0.08);
   --c-accent-glow:   0 0 24px rgba(245, 158, 11, 0.15);
+  --logo-watermark:  url('../images/logo-dark-codex.png');
 }
 html[data-theme="light"][data-palette="codex"] {
   --c-bg:            #fafaf9;
@@ -123,6 +128,7 @@ html[data-theme="light"][data-palette="codex"] {
   --c-accent-hover:  #92400e;
   --c-accent-dim:    rgba(180, 83, 9, 0.07);
   --c-accent-glow:   0 0 24px rgba(180, 83, 9, 0.12);
+  --logo-watermark:  url('../images/logo-light-codex.png');
 }
 
 /* 4. Steel SRE */
@@ -137,6 +143,7 @@ html[data-palette="steel"] {
   --c-accent-hover:  #60a5fa;
   --c-accent-dim:    rgba(59, 130, 246, 0.08);
   --c-accent-glow:   0 0 24px rgba(59, 130, 246, 0.15);
+  --logo-watermark:  url('../images/logo-dark-steel.png');
 }
 html[data-theme="light"][data-palette="steel"] {
   --c-bg:            #f8fafc;
@@ -149,6 +156,7 @@ html[data-theme="light"][data-palette="steel"] {
   --c-accent-hover:  #1e40af;
   --c-accent-dim:    rgba(29, 78, 216, 0.07);
   --c-accent-glow:   0 0 24px rgba(29, 78, 216, 0.12);
+  --logo-watermark:  url('../images/logo-light-steel.png');
 }
 
 /* 2. RESET */

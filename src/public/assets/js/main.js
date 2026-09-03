@@ -30,11 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (icon)  icon.innerHTML    = theme === 'dark' ? sunIcon() : moonIcon();
     }
     // Swap brand logo source dynamically
+    const currentPalette = document.documentElement.getAttribute('data-palette') || 'default';
     document.querySelectorAll('.sidebar-brand img, img.brand-logo').forEach(img => {
       const src = img.getAttribute('src');
       if (src) {
         const baseDir = src.substring(0, src.lastIndexOf('/') + 1);
-        img.setAttribute('src', baseDir + (theme === 'dark' ? 'logo-dark.png' : 'logo-light.png'));
+        img.setAttribute('src', `${baseDir}logo-${theme === 'dark' ? 'dark' : 'light'}-${currentPalette}.png`);
       }
     });
   }
@@ -64,6 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('cr-palette', pal);
       swatches.forEach(s => s.classList.remove('active'));
       swatch.classList.add('active');
+      
+      // Update logo on palette change
+      const currentTheme = getTheme();
+      document.querySelectorAll('.sidebar-brand img, img.brand-logo').forEach(img => {
+        const src = img.getAttribute('src');
+        if (src) {
+          const baseDir = src.substring(0, src.lastIndexOf('/') + 1);
+          img.setAttribute('src', `${baseDir}logo-${currentTheme === 'dark' ? 'dark' : 'light'}-${pal}.png`);
+        }
+      });
     });
   });
 
