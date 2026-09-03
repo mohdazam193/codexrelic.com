@@ -779,7 +779,7 @@ body::after {
   animation: ticker-scroll 90s linear infinite;
 }
 
-.cve-ticker-wrap:hover .cve-ticker-content {
+.cve-ticker:hover .cve-ticker-content {
   animation-play-state: paused;
 }
 
