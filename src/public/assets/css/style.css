@@ -776,7 +776,7 @@ body::after {
   align-items: center;
   gap: 32px;
   padding-left: 32px;
-  animation: ticker-scroll 45s linear infinite;
+  animation: ticker-scroll 90s linear infinite;
 }
 
 .cve-ticker-wrap:hover .cve-ticker-content {
