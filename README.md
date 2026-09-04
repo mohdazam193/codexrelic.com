@@ -239,6 +239,14 @@ and use a lightweight embedded database.
 
 ---
 
+### 🛡️ Live Security Feed
+
+The frontend features a sleek, dynamically themed **CVE Security News Ticker** that fetches the latest security vulnerabilities directly from an RSS feed (`cve.report`). 
+
+Instead of just displaying raw feeds, the FastAPI backend applies a **heuristic severity scoring algorithm**. It parses the incoming CVE descriptions in real-time and sorts them based on high-severity keywords (like `RCE`, `buffer overflow`, and `privilege escalation`), ensuring the most critical vulnerabilities are immediately surfaced to the UI.
+
+---
+
 ## 🧪 Three Environments
 
 | Environment | URL | Purpose |
