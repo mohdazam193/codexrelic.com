@@ -116,113 +116,84 @@
   <main class="main" id="main-content">
     <div class="content-wrap">
 
-      <!-- System Architecture Blueprint -->
-      <section class="system-blueprint reveal" aria-label="System Architecture Diagram">
+      <!-- Premium Bento Dashboard -->
+      <section class="bento-grid reveal" aria-label="Command Center Dashboard">
         
-        <div class="blueprint-canvas">
-          <!-- Connections (SVG) -->
-          <svg class="blueprint-connections" viewBox="0 0 860 600" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="var(--c-accent)" stop-opacity="0.2" />
-                <stop offset="50%" stop-color="var(--c-accent)" stop-opacity="1" />
-                <stop offset="100%" stop-color="var(--c-accent)" stop-opacity="0.2" />
-              </linearGradient>
-            </defs>
-            <!-- Ingress to Blog -->
-            <path class="bp-line" d="M 260 300 C 290 300, 290 150, 320 150" />
-            <path class="bp-flow" d="M 260 300 C 290 300, 290 150, 320 150" />
-            
-            <!-- Ingress to Projects -->
-            <path class="bp-line" d="M 260 300 L 320 300" />
-            <path class="bp-flow" d="M 260 300 L 320 300" />
-
-            <!-- Ingress to Cinema -->
-            <path class="bp-line" d="M 260 300 C 290 300, 290 450, 320 450" />
-            <path class="bp-flow" d="M 260 300 C 290 300, 290 450, 320 450" />
-
-            <!-- Projects to Terminal -->
-            <path class="bp-line" d="M 560 300 L 620 300" />
-            <path class="bp-flow" style="animation-duration: 8s;" d="M 560 300 L 620 300" />
-          </svg>
-
-          <!-- Node: Ingress / Identity -->
-          <div class="bp-node" id="node-ingress">
-            <div class="bp-node-header">
-              <span class="bp-node-title">Ingress_Gateway</span>
-              <span class="bp-status-dot"></span>
+        <!-- Panel 1: Identity (2x2) -->
+        <div class="bento-panel bento-identity">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">SYSTEM.IDENTITY</span>
+              <span class="bento-status status-green">ONLINE</span>
             </div>
-            <div class="bp-node-content">
-              <strong>Mohd Azam</strong><br>
-              <span style="color: var(--c-text-muted); font-size: 0.85rem;">Platform Engineer / SRE</span><br><br>
-              Routing traffic to systems, artifacts, and knowledge bases.
-            </div>
-            <div class="bp-node-meta">
-              UPTIME: 99.99%<br>
-              LATENCY: 12ms
+            <h1 class="bento-title">Mohd Azam</h1>
+            <h2 class="bento-subtitle">Platform Engineer &amp; SRE</h2>
+            <p class="bento-desc">
+              Maintaining high-availability production architectures for enterprise SaaS. Specialist in observability platform engineering, toil elimination, and DevSecOps integrations.
+            </p>
+            <div class="bento-actions">
+              <a href="resume.html" class="btn btn-primary">View Resume</a>
+              <a href="contact.html" class="btn btn-outline">Initialize Contact</a>
             </div>
           </div>
-
-          <!-- Node: Blog -->
-          <a href="blog.html" class="bp-node" id="node-blog">
-            <div class="bp-node-header">
-              <span class="bp-node-title">Svc_Blog</span>
-              <span class="bp-status-dot"></span>
-            </div>
-            <div class="bp-node-content">
-              <strong>Latest Log Entry:</strong><br>
-              "Designing highly available distributed systems in Kubernetes."
-            </div>
-            <div class="bp-node-meta">
-              REPLICAS: 3/3
-            </div>
-          </a>
-
-          <!-- Node: Projects -->
-          <a href="projects.html" class="bp-node" id="node-projects">
-            <div class="bp-node-header">
-              <span class="bp-node-title">Svc_Projects</span>
-              <span class="bp-status-dot" style="background:var(--c-amber); box-shadow: 0 0 8px var(--c-amber);"></span>
-            </div>
-            <div class="bp-node-content">
-              <strong>Active Deployment:</strong><br>
-              CodexRelic Architecture v2<br>
-              (K8s, ArgoCD, Terraform)
-            </div>
-            <div class="bp-node-meta" style="color:var(--c-amber);">
-              STATUS: DEPLOYING...
-            </div>
-          </a>
-
-          <!-- Node: Cinema -->
-          <a href="movies.html" class="bp-node" id="node-cinema">
-            <div class="bp-node-header">
-              <span class="bp-node-title">Db_Cinema</span>
-              <span class="bp-status-dot"></span>
-            </div>
-            <div class="bp-node-content">
-              <strong>Recent Query:</strong><br>
-              SELECT * FROM movies WHERE genre = 'Sci-Fi' ORDER BY rating DESC;
-            </div>
-            <div class="bp-node-meta">
-              QPS: 42
-            </div>
-          </a>
-
-          <!-- Node: Terminal -->
-          <div class="bp-node" id="node-terminal">
-            <div class="bp-node-header" style="border-bottom-color: #333;">
-              <span class="bp-node-title" style="color: var(--c-text-muted);">System_Logs</span>
-            </div>
-            <div class="bp-terminal-text">
-              [INFO] Traffic routed to Svc_Projects...<br>
-              [INFO] Compiling artifacts...<br>
-              [WARN] High CPU load detected on Db_Cinema.<br>
-              <span class="bp-cursor"></span>
-            </div>
-          </div>
-
         </div>
+
+        <!-- Panel 2: Projects (2x1) -->
+        <a href="projects.html" class="bento-panel bento-projects">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">ACTIVE.DEPLOYMENTS</span>
+              <span class="bento-status status-amber">SYNCING</span>
+            </div>
+            <h3 class="bento-card-title">CodexRelic Architecture v2</h3>
+            <p class="bento-card-desc">
+              Migrating core services to a Kubernetes cluster managed by ArgoCD and provisioned via Terraform.
+            </p>
+            <div class="bento-tags">
+              <span class="bento-tag">Kubernetes</span>
+              <span class="bento-tag">ArgoCD</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Panel 3: Blog (1x1) -->
+        <a href="blog.html" class="bento-panel bento-blog">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">KNOWLEDGE.BASE</span>
+            </div>
+            <h3 class="bento-card-title">Distributed Systems</h3>
+            <p class="bento-card-desc">Latest notes on highly available architecture design.</p>
+          </div>
+        </a>
+
+        <!-- Panel 4: Cinema (1x1) -->
+        <a href="movies.html" class="bento-panel bento-cinema">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">DB.CINEMA</span>
+            </div>
+            <h3 class="bento-card-title">Sci-Fi &amp; Philosophy</h3>
+            <p class="bento-card-desc">Curated catalog of favorite cinematic experiences.</p>
+          </div>
+        </a>
+
+        <!-- Panel 5: Terminal (4x1) -->
+        <div class="bento-panel bento-terminal">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">SYSTEM.OBSERVABILITY</span>
+              <span class="bento-status status-green">HEALTHY</span>
+            </div>
+            <div class="terminal-output">
+              <div class="term-line"><span class="term-time">[14:02:45]</span> <span class="term-info">INFO</span> core-router: Traffic successfully routed to Ingress Gateway.</div>
+              <div class="term-line"><span class="term-time">[14:02:46]</span> <span class="term-info">INFO</span> telemetry-agent: SLO tracking active. Current uptime: 99.998%.</div>
+              <div class="term-line"><span class="term-time">[14:02:48]</span> <span class="term-warn">WARN</span> db-cinema: High read replica latency detected. Scaling up nodes...</div>
+              <div class="term-line"><span class="term-time">[14:03:01]</span> <span class="term-info">INFO</span> db-cinema: Scaling complete. Latency normalized.<span class="term-cursor"></span></div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <!-- Footer -->
