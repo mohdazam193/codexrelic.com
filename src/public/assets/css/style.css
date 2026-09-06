@@ -687,7 +687,173 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 }
 
 /* ============================================================
-   17. SUBTLE WATERMARK BACKGROUND
+   17. SYSTEM BLUEPRINT (HOME PAGE)
+   ============================================================ */
+
+.system-blueprint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--sp-12);
+}
+
+[data-theme="light"] .system-blueprint {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+.blueprint-canvas {
+  position: relative;
+  width: 1000px;
+  height: 600px;
+  max-width: 100%;
+}
+
+/* Connections (SVG) */
+.blueprint-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bp-line {
+  fill: none;
+  stroke: var(--c-border);
+  stroke-width: 2;
+}
+
+.bp-flow {
+  fill: none;
+  stroke: var(--c-accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 12;
+  animation: bp-dashFlow 20s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes bp-dashFlow {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Nodes */
+.bp-node {
+  position: absolute;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 10;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.bp-node:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--c-accent);
+  box-shadow: 0 4px 20px var(--c-accent-glow);
+}
+
+.bp-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: var(--sp-2);
+}
+
+.bp-node-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--c-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bp-status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--c-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--c-green);
+}
+
+.bp-node-content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--c-text);
+}
+
+.bp-node-meta {
+  margin-top: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--c-text-muted);
+}
+
+/* Specific Node Positions */
+#node-ingress { top: 50%; left: 0; transform: translateY(-50%); width: 260px; }
+#node-blog { top: 70px; left: 450px; }
+#node-projects { top: 250px; left: 450px; }
+#node-cinema { top: 430px; left: 450px; }
+#node-terminal { top: 250px; left: 750px; width: 250px; background: #000; border-color: #333; cursor: default; }
+
+#node-terminal:hover { transform: none !important; border-color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+
+/* Terminal typing effect */
+.bp-terminal-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--c-green);
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.bp-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 12px;
+  background: var(--c-green);
+  animation: bp-blink 1s step-end infinite;
+}
+
+@keyframes bp-blink { 50% { opacity: 0; } }
+
+/* Responsive adjustments for blueprint */
+@media (max-width: 1024px) {
+  .system-blueprint {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .blueprint-canvas {
+    min-width: 1000px;
+  }
+}
+
+/* ============================================================
+   18. SUBTLE WATERMARK BACKGROUND
    ============================================================ */
 body::after {
   content: "";

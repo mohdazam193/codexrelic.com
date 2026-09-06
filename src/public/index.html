@@ -259,113 +259,111 @@
   <main class="main" id="main-content">
     <div class="content-wrap">
 
-      <!-- Hero Header -->
-      <section class="hero-container reveal">
-        <div class="hero-brand-wrap">
-          <div class="hero-title-area">
-            <h1 class="hero-name">Mohd Azam</h1>
-            <div class="hero-rotator-wrap" aria-live="polite">
-              <span class="hero-role active">DevOps Engineer II</span>
-              <span class="hero-role">Site Reliability Engineer (SRE)</span>
-              <span class="hero-role">Platform Engineering Architect</span>
-              <span class="hero-role">Philosophy &amp; Cinema Enthusiast</span>
+      <!-- System Architecture Blueprint -->
+      <section class="system-blueprint reveal" aria-label="System Architecture Diagram">
+        
+        <div class="blueprint-canvas">
+          <!-- Connections (SVG) -->
+          <svg class="blueprint-connections" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="var(--c-accent)" stop-opacity="0.2" />
+                <stop offset="50%" stop-color="var(--c-accent)" stop-opacity="1" />
+                <stop offset="100%" stop-color="var(--c-accent)" stop-opacity="0.2" />
+              </linearGradient>
+            </defs>
+            <!-- Ingress to Blog -->
+            <path class="bp-line" d="M 260 300 C 350 300, 350 150, 450 150" />
+            <path class="bp-flow" d="M 260 300 C 350 300, 350 150, 450 150" />
+            
+            <!-- Ingress to Projects -->
+            <path class="bp-line" d="M 260 300 L 450 300" />
+            <path class="bp-flow" d="M 260 300 L 450 300" />
+
+            <!-- Ingress to Cinema -->
+            <path class="bp-line" d="M 260 300 C 350 300, 350 450, 450 450" />
+            <path class="bp-flow" d="M 260 300 C 350 300, 350 450, 450 450" />
+
+            <!-- Projects to Terminal -->
+            <path class="bp-line" d="M 700 300 L 750 300" />
+            <path class="bp-flow" style="animation-duration: 8s;" d="M 700 300 L 750 300" />
+          </svg>
+
+          <!-- Node: Ingress / Identity -->
+          <div class="bp-node" id="node-ingress">
+            <div class="bp-node-header">
+              <span class="bp-node-title">Ingress_Gateway</span>
+              <span class="bp-status-dot"></span>
+            </div>
+            <div class="bp-node-content">
+              <strong>Mohd Azam</strong><br>
+              <span style="color: var(--c-text-muted); font-size: 0.85rem;">Platform Engineer / SRE</span><br><br>
+              Routing traffic to systems, artifacts, and knowledge bases.
+            </div>
+            <div class="bp-node-meta">
+              UPTIME: 99.99%<br>
+              LATENCY: 12ms
             </div>
           </div>
-        </div>
 
-        <p class="bio-text">
-          SRE and DevOps Practitioner with 6+ years maintaining high-availability production architectures for enterprise SaaS. Specialist in observability platform engineering, toil elimination, and DevSecOps integrations. Operating clusters by day; exploring ancient history, philosophy, and cinematography by night.
-        </p>
-
-        <div class="quick-actions">
-          <a class="btn btn-primary" href="resume.html">
-            View Live Resume
-          </a>
-          <a class="btn btn-outline" href="contact.html">
-            Send Message
-          </a>
-        </div>
-      </section>
-
-      <!-- Impact Stats Dashboard -->
-      <div class="impact-banner reveal" style="margin-bottom:var(--sp-12)">
-        <div class="impact-card">
-          <span class="impact-value">99.9%+</span>
-          <span class="impact-label">Uptime SLO Maintained</span>
-        </div>
-        <div class="impact-card">
-          <span class="impact-value">$4,300+</span>
-          <span class="impact-label">Annual FinOps Savings</span>
-        </div>
-        <div class="impact-card">
-          <span class="impact-value">50→10m</span>
-          <span class="impact-label">Deployment Optimization</span>
-        </div>
-        <div class="impact-card">
-          <span class="impact-value">4 OCPU</span>
-          <span class="impact-label">OCI Always Free Cluster</span>
-        </div>
-      </div>
-
-      <!-- Feature Deck Grid -->
-      <section class="reveal" aria-labelledby="section-explore">
-        <h2 id="section-explore" style="font-size:1.2rem;margin-bottom:var(--sp-6);font-family:var(--font-mono);text-transform:uppercase;color:var(--c-text-muted);letter-spacing:0.05em">Explore System</h2>
-        
-        <div class="features-grid">
-          
-          <!-- Resume Card -->
-          <a href="resume.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">Curriculum Vitae</span>
-              <span class="feature-card-status status-active">Live</span>
+          <!-- Node: Blog -->
+          <a href="blog.html" class="bp-node" id="node-blog">
+            <div class="bp-node-header">
+              <span class="bp-node-title">Svc_Blog</span>
+              <span class="bp-status-dot"></span>
             </div>
-            <p class="feature-card-desc">ATS-optimized, parsed layout generated directly from LaTeX source code. Includes secure PDF download.</p>
+            <div class="bp-node-content">
+              <strong>Latest Log Entry:</strong><br>
+              "Designing highly available distributed systems in Kubernetes."
+            </div>
+            <div class="bp-node-meta">
+              REPLICAS: 3/3
+            </div>
           </a>
 
-          <!-- Blog Card -->
-          <a href="blog.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">Learning Journal</span>
-              <span class="feature-card-status status-active">Live</span>
+          <!-- Node: Projects -->
+          <a href="projects.html" class="bp-node" id="node-projects">
+            <div class="bp-node-header">
+              <span class="bp-node-title">Svc_Projects</span>
+              <span class="bp-status-dot" style="background:var(--c-amber); box-shadow: 0 0 8px var(--c-amber);"></span>
             </div>
-            <p class="feature-card-desc">Conference notes, technical SRE guides, and logs from DevOps meetups. Pure static markdown.</p>
+            <div class="bp-node-content">
+              <strong>Active Deployment:</strong><br>
+              CodexRelic Architecture v2<br>
+              (K8s, ArgoCD, Terraform)
+            </div>
+            <div class="bp-node-meta" style="color:var(--c-amber);">
+              STATUS: DEPLOYING...
+            </div>
           </a>
 
-          <!-- Movies Card -->
-          <a href="movies.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">Cinema Logs</span>
-              <span class="feature-card-status status-active">Live</span>
+          <!-- Node: Cinema -->
+          <a href="movies.html" class="bp-node" id="node-cinema">
+            <div class="bp-node-header">
+              <span class="bp-node-title">Db_Cinema</span>
+              <span class="bp-status-dot"></span>
             </div>
-            <p class="feature-card-desc">My curated catalog of favorite cinema. Categorized thoughts on sci-fi, classics, and philosophical films.</p>
+            <div class="bp-node-content">
+              <strong>Recent Query:</strong><br>
+              SELECT * FROM movies WHERE genre = 'Sci-Fi' ORDER BY rating DESC;
+            </div>
+            <div class="bp-node-meta">
+              QPS: 42
+            </div>
           </a>
 
-          <!-- Ingress Form Card -->
-          <a href="contact.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">Stateless Contact</span>
-              <span class="feature-card-status status-active">Live</span>
+          <!-- Node: Terminal -->
+          <div class="bp-node" id="node-terminal">
+            <div class="bp-node-header" style="border-bottom-color: #333;">
+              <span class="bp-node-title" style="color: var(--c-text-muted);">System_Logs</span>
             </div>
-            <p class="feature-card-desc">Secure client-side validation routing queries to a serverless API endpoint. Zero db overhead.</p>
-          </a>
-
-          <!-- Projects Card -->
-          <a href="projects.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">SRE Projects</span>
-              <span class="feature-card-status status-soon">Soon</span>
+            <div class="bp-terminal-text">
+              [INFO] Traffic routed to Svc_Projects...<br>
+              [INFO] Compiling artifacts...<br>
+              [WARN] High CPU load detected on Db_Cinema.<br>
+              <span class="bp-cursor"></span>
             </div>
-            <p class="feature-card-desc">Showcase case studies for platform engineering tasks, including Cloud Analyser and OCI modules.</p>
-          </a>
-
-          <!-- Community Card -->
-          <a href="community.html" class="feature-card">
-            <div class="feature-card-header">
-              <span class="feature-card-title">Hyderabad Hub</span>
-              <span class="feature-card-status status-soon">Soon</span>
-            </div>
-            <p class="feature-card-desc">Auto-ingested tech meetups (DevOps, SRE, Cloud) and local RSS feeds. Under construction.</p>
-          </a>
+          </div>
 
         </div>
       </section>
