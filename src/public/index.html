@@ -34,149 +34,6 @@
 
   <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
 
-  <style>
-    /* ── Home-specific additions ── */
-    .hero-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-6);
-      margin-bottom: var(--sp-12);
-      padding: var(--sp-8) 0;
-    }
-
-    .hero-brand-wrap {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-5);
-    }
-
-    .hero-sigil {
-      height: 60px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .hero-title-area {
-      flex: 1;
-    }
-
-    .hero-name {
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--c-text);
-      margin-bottom: var(--sp-1);
-    }
-
-    .hero-rotator-wrap {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--c-accent);
-      height: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-role {
-      position: absolute;
-      top: 20px; left: 0;
-      opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-      white-space: nowrap;
-    }
-
-    .hero-role.active {
-      top: 0;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .hero-role.exit {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-
-    .bio-text {
-      font-size: 1rem;
-      line-height: 1.85;
-      color: var(--c-text-secondary);
-      max-width: 680px;
-    }
-
-    .quick-actions {
-      display: flex;
-      gap: var(--sp-4);
-      flex-wrap: wrap;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--sp-5);
-    }
-
-    .feature-card {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-md);
-      padding: var(--sp-6);
-      transition: border-color var(--t-fast), transform var(--t-fast);
-      text-decoration: none;
-    }
-
-    .feature-card:hover {
-      border-color: var(--c-accent);
-      transform: translateY(-2px);
-    }
-
-    .feature-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: var(--sp-3);
-    }
-
-    .feature-card-title {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--c-text);
-    }
-
-    .feature-card-status {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 2px var(--sp-2);
-      border-radius: var(--r-full);
-    }
-
-    .status-active {
-      background: var(--c-accent-dim);
-      color: var(--c-accent);
-      border: 1px solid rgba(124,58,237,0.2);
-    }
-
-    .status-soon {
-      background: var(--c-surface);
-      color: var(--c-text-muted);
-      border: 1px solid var(--c-border);
-    }
-
-    .feature-card-desc {
-      font-size: 0.82rem;
-      color: var(--c-text-secondary);
-      line-height: 1.6;
-    }
-
-    @media (max-width: 600px) {
-      .hero-brand-wrap { flex-direction: column; text-align: center; }
-      .quick-actions { justify-content: center; }
-    }
-  </style>
 </head>
 
 <body>
@@ -264,7 +121,7 @@
         
         <div class="blueprint-canvas">
           <!-- Connections (SVG) -->
-          <svg class="blueprint-connections" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+          <svg class="blueprint-connections" viewBox="0 0 860 600" preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="var(--c-accent)" stop-opacity="0.2" />
@@ -273,20 +130,20 @@
               </linearGradient>
             </defs>
             <!-- Ingress to Blog -->
-            <path class="bp-line" d="M 260 300 C 350 300, 350 150, 450 150" />
-            <path class="bp-flow" d="M 260 300 C 350 300, 350 150, 450 150" />
+            <path class="bp-line" d="M 260 300 C 290 300, 290 150, 320 150" />
+            <path class="bp-flow" d="M 260 300 C 290 300, 290 150, 320 150" />
             
             <!-- Ingress to Projects -->
-            <path class="bp-line" d="M 260 300 L 450 300" />
-            <path class="bp-flow" d="M 260 300 L 450 300" />
+            <path class="bp-line" d="M 260 300 L 320 300" />
+            <path class="bp-flow" d="M 260 300 L 320 300" />
 
             <!-- Ingress to Cinema -->
-            <path class="bp-line" d="M 260 300 C 350 300, 350 450, 450 450" />
-            <path class="bp-flow" d="M 260 300 C 350 300, 350 450, 450 450" />
+            <path class="bp-line" d="M 260 300 C 290 300, 290 450, 320 450" />
+            <path class="bp-flow" d="M 260 300 C 290 300, 290 450, 320 450" />
 
             <!-- Projects to Terminal -->
-            <path class="bp-line" d="M 700 300 L 750 300" />
-            <path class="bp-flow" style="animation-duration: 8s;" d="M 700 300 L 750 300" />
+            <path class="bp-line" d="M 560 300 L 620 300" />
+            <path class="bp-flow" style="animation-duration: 8s;" d="M 560 300 L 620 300" />
           </svg>
 
           <!-- Node: Ingress / Identity -->

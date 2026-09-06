@@ -715,9 +715,9 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 
 .blueprint-canvas {
   position: relative;
-  width: 1000px;
+  width: 100%;
+  max-width: 860px;
   height: 600px;
-  max-width: 100%;
 }
 
 /* Connections (SVG) */
@@ -815,10 +815,10 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 
 /* Specific Node Positions */
 #node-ingress { top: 50%; left: 0; transform: translateY(-50%); width: 260px; }
-#node-blog { top: 70px; left: 450px; }
-#node-projects { top: 250px; left: 450px; }
-#node-cinema { top: 430px; left: 450px; }
-#node-terminal { top: 250px; left: 750px; width: 250px; background: #000; border-color: #333; cursor: default; }
+#node-blog { top: 90px; left: 320px; }
+#node-projects { top: 240px; left: 320px; }
+#node-cinema { top: 390px; left: 320px; }
+#node-terminal { top: 240px; left: 620px; width: 240px; background: #000; border-color: #333; cursor: default; }
 
 #node-terminal:hover { transform: none !important; border-color: #333; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
 
