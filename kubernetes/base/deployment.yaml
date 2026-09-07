@@ -17,6 +17,8 @@ spec:
     metadata:
       labels:
         app: codexrelic-api
+      annotations:
+        rollout.force: "bento-update"
     spec:
       containers:
       - name: codexrelic-api
