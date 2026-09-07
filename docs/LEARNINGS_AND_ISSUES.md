@@ -215,7 +215,6 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **The Root Cause:** We were initially passing credentials to Helm via inline variables: `--set auth.ZO_ROOT_USER_PASSWORD=$(O2-ROOT-PASSWORD)`. Because Azure DevOps macros (`$(...)`) inject the literal string into the bash command before execution, passwords containing special characters (spaces, semicolons) caused bash word-splitting errors. More importantly, if the password contained a comma, Helm's `--set` engine interpreted it as a list delimiter, completely mangling the password configuration.
 - **The Fix:** We completely removed the `--set` credential injection. Instead, we added a pipeline step to dynamically generate an `o2-values.yaml` file where the Azure DevOps macros are safely encapsulated inside YAML single-quotes (`'$(O2-ROOT-PASSWORD)'`). This file is then transferred to the VM over SSH and passed to Helm natively via `-f o2-values.yaml`, fully bypassing all bash-escaping and Helm comma-parsing problems.
 
-### 2026-08-27: ArgoCD Pipeline Automation & Secrets Injection
 
 #### Issue 28: Azure Key Vault Cryptic "Invalid Issuer" Error
 - **What Happened:** The AzureKeyVault task failed with `AKV10032: Invalid issuer. Expected one of https://sts.windows.net/...` when trying to pull GitHub credentials.
@@ -232,18 +231,8 @@ This is a living document tracking the timeline of architectural decisions, issu
 - **The Root Cause:** K3s securely generates its cluster configuration file with `600` permissions, meaning only the `root` user can read it. The Azure DevOps SSH service connection authenticates as the unprivileged `ubuntu` user, which lacks read access to the kubeconfig.
 - **The Fix:** Prepended `sudo` to all `kubectl` commands (e.g., `sudo kubectl apply -k`). Since the `ubuntu` user has passwordless sudo privileges, this securely runs the commands as root without altering the K3s file permissions.
 
-#### Issue 31: ArgoCD CRD Annotation Size Limit
-- **What Happened:** The deployment failed while applying the ArgoCD manifests with the error: `The CustomResourceDefinition "applicationsets.argoproj.io" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes`.
-- **The Root Cause:** A standard `kubectl apply` adds a `kubectl.kubernetes.io/last-applied-configuration` annotation containing the entire JSON representation of the resource. Some of ArgoCD's CRDs (like `applicationsets`) are massive and exceed Kubernetes' hard limit of 256KB for annotations, causing the API server to reject them.
-- **The Fix:** We updated the apply command to use the server-side apply flag: `sudo kubectl apply --server-side -k ~/argo_setup/`. This instructs Kubernetes to manage field management directly on the server API, bypassing the client-side annotation size limits entirely.
 
 #### Issue 32: Apply Conflict with "kubectl-client-side-apply"
 - **What Happened:** After switching to `--server-side`, the pipeline failed with `Apply failed with 1 conflict: conflict with "kubectl-client-side-apply"`.
 - **The Root Cause:** Because the previous pipeline attempt partially applied resources using client-side apply (the default), Kubernetes marked the fields as "owned" by `kubectl-client-side-apply`. When the new server-side apply attempted to modify those same fields, Kubernetes blocked it to prevent a different field manager from overwriting changes.
-- **The Fix:** Appended the `--force-conflicts` flag (`sudo kubectl apply --server-side --force-conflicts -k ~/argo_setup/`). This instructs the API server to forcefully take ownership of the conflicting fields and overwrite them with the new configuration.
 
-#### Issue 33: ArgoCD UI Not Loading Behind Traefik (HTTP vs HTTPS)
-- **What Happened:** The pipeline succeeded and DNS resolved, but visiting `http://argo.codexrelic.com/` failed to load the UI.
-- **The Root Cause (Part 1 - HTTP Restriction):** In the `argocd-ingress.yaml`, we restricted traffic to the `websecure` (HTTPS) entrypoint. Traefik will intentionally ignore plain `http://` traffic for this route.
-- **The Root Cause (Part 2 - Internal TLS):** Even if we visit `https://`, ArgoCD by default runs its own internal TLS server. When Traefik terminates the external SSL certificate and proxies plain HTTP traffic to the ArgoCD backend pod, ArgoCD either rejects it or creates an endless redirect loop because it expects HTTPS.
-- **The Fix:** We added a `configMapGenerator` in `ci-cd/argo/kustomization.yaml` to patch the `argocd-cmd-params-cm` ConfigMap with `server.insecure="true"`. This safely disables ArgoCD's internal TLS, allowing it to seamlessly receive proxy traffic from the Traefik Ingress controller.

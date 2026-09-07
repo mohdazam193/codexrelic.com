@@ -6,14 +6,12 @@ This document outlines the architecture and deployment strategy for the new gene
 Our previous deployment strategy relied on standard Kubernetes `Deployment` resources, which inherently execute Rolling Updates. While standard, this lacked advanced traffic shaping and safety mechanisms required for high-availability production environments.
 
 Version 2.0 introduces three major pillars of improvement:
-1. **Zero-Downtime Blue/Green Deployments (Argo Rollouts)**
 2. **Gradual and Stabilized Autoscaling (HPA Behavior)**
 3. **Hardened Security Posture (Docker Multi-stage & Non-root)**
 
 ---
 
 ## 1. Blue/Green Deployment Strategy
-We have transitioned from standard Kubernetes `Deployment` objects to **Argo Rollouts** (`Rollout` custom resource).
 
 ### Why it was done:
 Previously, our Azure DevOps pipeline triggered automatically upon a new image push to Docker Hub, immediately updating the live cluster. This "Rolling Update" approach meant that if a buggy image was deployed, production users would instantly experience errors until a rollback could be issued.
@@ -44,13 +42,10 @@ Running containers as the `root` user and shipping build utilities (like `gcc`, 
 - **Reduced Attack Surface:** Multi-stage builds compile all dependencies in an intermediate layer and only copy the compiled binaries to the final image. Build tools are never shipped to production.
 - **Principle of Least Privilege:** The application runs as an unprivileged, restricted user (`appuser`). Even if a vulnerability is exploited, the attacker cannot modify system files, install packages, or easily break out of the container context.
 
-## 4. ArgoCD & Secure Secret Injection (Key Vault)
-Our GitOps deployment strategy requires ArgoCD to securely pull manifests from a private GitHub repository.
 
 ### Why it was done:
 Storing Personal Access Tokens (PATs) in plain text or checking them into source control is a major security violation. Similarly, manually running `kubectl` commands to apply passwords introduces human error and untracked changes.
 
 ### What it achieves:
 - **Dedicated Key Vault:** A dedicated Azure Key Vault (`kv-github`) stores the `GITHUB-PAT` and `GITHUB-USERNAME`.
-- **Pipeline Injection:** We utilize an automated Azure DevOps pipeline (`azure-pipelines-argocd-setup.yml`) to orchestrate the injection. The pipeline safely pulls the PAT from the Key Vault using the native `AzureKeyVault@2` task and creates the `argocd-repo-secret` directly on the Kubernetes cluster via SSH.
 - **No Extra Operators:** This pipeline-driven approach securely bridges Azure Key Vault to Kubernetes without requiring complex components like External Secrets Operator (ESO) on the cluster itself.

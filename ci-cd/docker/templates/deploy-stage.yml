@@ -135,7 +135,7 @@ stages:
                 sudo kubectl wait --for=condition=Available deployment/cert-manager-webhook -n cert-manager --timeout=120s || true
                 
                 # Apply ClusterIssuer
-                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml || echo "ClusterIssuer applied via ArgoCD"
+                sudo kubectl apply -f k8s-manifests/clusterissuer.yaml || echo "ClusterIssuer applied"
                 
                 # Ensure namespace exists
                 sudo kubectl create namespace ${{ parameters.namespace }} --dry-run=client -o yaml | sudo kubectl apply -f -
@@ -249,7 +249,7 @@ stages:
                   echo "Skipping observability deployment. Only deployed during Prod stage."
                 fi
                 
-                # Clean up orphaned Argo Rollout resources from the previous architecture to prevent selector conflicts
+                # Clean up orphaned Rollout resources from the previous architecture to prevent selector conflicts
                 sudo kubectl delete service codexrelic-api-service -n ${{ parameters.namespace }} --ignore-not-found=true 2>/dev/null || true
                 
                 # Deploy the application using standard Kubernetes manifests

@@ -14,7 +14,6 @@
 [![Let's Encrypt](https://img.shields.io/badge/SSL-Let's%20Encrypt-003A70?logo=letsencrypt)](https://letsencrypt.org/)
 [![12-Factor](https://img.shields.io/badge/Architecture-12--Factor%20App-0078D4)](https://12factor.net/)
 <br>
-[![GitOps](https://img.shields.io/badge/GitOps-Argo%20CD-EF7B4D?logo=argo)](https://argoproj.github.io/cd/)
 [![OpenObserve](https://img.shields.io/badge/Observability-OpenObserve-FF4E00?logo=databricks)](https://openobserve.ai/)
 [![Gemini](https://img.shields.io/badge/AI_Co--Pilot-Google%20Gemini-8E75B2?logo=google-gemini)](https://gemini.google.com/)
 [![Antigravity](https://img.shields.io/badge/IDE-Antigravity-000000?logo=google)](https://github.com/google/antigravity)
@@ -32,7 +31,6 @@
 ### The Technical Execution
 `codexrelic.com` is a **100% free, end-to-end DevOps & SRE project** demonstrating real-time implementation of enterprise-grade infrastructure. 
 Every architectural decision is intentional and documented. This repository serves as a blueprint for learning DevOps and building a production-ready application without spending a dime. It acts as a working proof of concept for:
-- GitOps continuous deployment via Argo CD
 - Kubernetes orchestration (K3s) with automated Let's Encrypt SSL provisioning
 - ARM64 cross-compilation CI/CD pipelines
 - Cryptographic 3-factor authentication (Ed25519 WebCrypto)
@@ -45,7 +43,6 @@ Every architectural decision is intentional and documented. This repository serv
 
 ## 2. Architecture & Tech Stack
 
-*A massive shoutout to the heroes of the free-tier world: Oracle Cloud, Argo CD, MongoDB, and OpenObserve. Without you, this project would just be a local Docker container melting my laptop. And regarding the Oracle VM: ARM processors are running everything today anyway, so deploying on Ampere isn't just taking free compute—it's me being 'visionary'.*
 
 ### The Technical Execution
 
@@ -100,7 +97,6 @@ Every architectural decision is intentional and documented. This repository serv
 |-------|-----------|
 | Compute | Oracle Cloud Always Free ARM (Ampere A1) |
 | Orchestration | K3s (Lightweight Kubernetes) + HPA Auto-Scaling |
-| GitOps | Argo CD |
 | Ingress & Routing | Traefik |
 | SSL / TLS | cert-manager + Let's Encrypt |
 | Observability | OpenObserve (Logs & Metrics collection via Helm) |
@@ -124,11 +120,9 @@ Every architectural decision is intentional and documented. This repository serv
 *Working full-time means I don't have the energy to manually run `kubectl apply` at 2 AM while half-asleep. Necessity is the mother of invention! A glorious shoutout to GitOps—thank you for making it possible to push code, go to bed, and let the machines do the heavy lifting while I dream.*
 
 ### The Technical Execution
-- **GitOps via Argo CD:** Ensures the cluster state always matches Git. No manual `kubectl apply` drift.
 - **K3s (Lightweight Kubernetes):** Perfect for our lightweight VM.
 - **cert-manager:** Automated Let's Encrypt SSL provisioning so I don't have to remember to renew certs.
 
-*War Story (Debugging ArgoCD):* When setting up ArgoCD behind Traefik, I hit an endless redirect loop because Argo expects HTTPS but Traefik proxies via HTTP. The fix? A sneaky `configMapGenerator` patch (`server.insecure="true"`) to disable Argo's internal TLS so it plays nicely with the ingress.
 
 ---
 
@@ -143,7 +137,6 @@ Every architectural decision is intentional and documented. This repository serv
   - Minimal dependencies via virtual environments (`venv`).
   - Zero secrets in images or Git. **Azure Key Vault** handles all secrets dynamically.
 
-*War Story (Annotation Limits):* When applying massive ArgoCD CRDs through the pipeline, Kubernetes rejected them with a `Too long: may not be more than 262144 bytes` annotation error. I had to bypass client-side limits entirely by forcing `kubectl apply --server-side`.
 
 ---
 

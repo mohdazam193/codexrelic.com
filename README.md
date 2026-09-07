@@ -17,8 +17,7 @@
 <p>
   <img src="https://img.shields.io/badge/CI%2FCD-Azure%20DevOps-0078D4?logo=azure-devops" alt="Azure DevOps">
   <img src="https://img.shields.io/badge/Kubernetes-K3s-326CE5?logo=kubernetes" alt="K3s">
-  <img src="https://img.shields.io/badge/GitOps-Argo%20CD-EF7B4D?logo=argo" alt="Argo CD">
-  <img src="https://img.shields.io/badge/Observability-OpenObserve-FF4E00" alt="OpenObserve">
+    <img src="https://img.shields.io/badge/Observability-OpenObserve-FF4E00" alt="OpenObserve">
   <img src="https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?logo=mongodb" alt="MongoDB Atlas">
   <img src="https://img.shields.io/badge/Cloud-Oracle%20Always%20Free-F80000?logo=oracle" alt="Oracle Cloud">
 </p>
@@ -64,7 +63,6 @@ It is not a collection of disconnected demos.
 | ☸️ Kubernetes | K3s + HPA |
 | 🚦 Ingress | Traefik |
 | 🔐 TLS | cert-manager + Let's Encrypt |
-| 🔄 GitOps | Argo CD |
 | 🚀 CI/CD | Azure DevOps Pipelines |
 | 🐳 Containers | Docker + QEMU |
 | 📦 Registry | DockerHub |
@@ -81,7 +79,7 @@ It is not a collection of disconnected demos.
 
 ## 🏗️ End-to-End Architecture
 
-One `git push` kicks off the complete delivery chain: the code is sent to **Azure DevOps and the private GitHub repository**, Azure Pipelines handles **CI/CD + Infrastructure as Code**, DockerHub stores the ARM64 image, Terraform provisions the Oracle Cloud infrastructure, and Argo CD reconciles the Kubernetes application state.
+One `git push` kicks off the complete delivery chain: the code is sent to **Azure DevOps and the private GitHub repository**, Azure Pipelines handles **CI/CD + Infrastructure as Code**, DockerHub stores the ARM64 image, Terraform provisions the Oracle Cloud infrastructure, and Kubernetes manages the application state.
 
 <p align="center">
   <img src="./codexrelic-architecture-animated.gif" alt="Animated CodexRelic end-to-end DevOps and SRE architecture diagram" width="100%">
@@ -151,9 +149,9 @@ One `git push` kicks off the complete delivery chain: the code is sent to **Azur
 
 ### 🔄 GitOps Delivery
 
-**Argo CD** continuously reconciles the Kubernetes application state with Git.
 
-Azure Pipelines is responsible for the CI/CD workflow and infrastructure deployment. Argo CD then keeps the Kubernetes application state aligned with the declared configuration.
+
+Azure Pipelines is responsible for the CI/CD workflow and infrastructure deployment. 
 
 Because I work full-time, I don't have the energy to manually run:
 
@@ -167,7 +165,7 @@ at 2 AM while half-asleep.
 
 Push code, go to bed, and let the machines do the heavy lifting while I dream. 😴
 
-**Git is the source of truth. Azure Pipelines moves the change through the delivery process; Argo CD keeps Kubernetes reconciled.**
+**Git is the source of truth. Azure Pipelines moves the change through the delivery process.**
 
 ---
 
@@ -301,35 +299,7 @@ It's also about the moment when Kubernetes tells you:
 
 and you figure out why.
 
-### 💥 Argo CD + Traefik Redirect Loop
-
-Argo CD behind Traefik initially produced an endless HTTPS redirect.
-
-The issue:
-
-```text
-Client
-  ↓ HTTPS
-Traefik
-  ↓ HTTP
-Argo CD
-  ↓
-"Why aren't you HTTPS?"
-```
-
-The fix was configuring:
-
-```text
-server.insecure=true
-```
-
-through the deployment configuration so TLS termination could remain at the ingress layer.
-
----
-
 ### 📦 Kubernetes Annotation Limit
-
-Large Argo CD CRDs hit Kubernetes' annotation size limit:
 
 ```text
 Too long: may not be more than 262144 bytes
@@ -424,7 +394,6 @@ The application follows a **12-Factor style architecture**, keeping configuratio
                   DockerHub
                        │
                        ▼
-                   Argo CD
                        │
                        ▼
                  K3s Cluster
@@ -438,7 +407,8 @@ The pipeline also includes scheduled SSL-expiry monitoring.
 
 The project deliberately uses free tiers wherever practical.
 
-A massive shoutout to the heroes of the free-tier world: **Oracle Cloud, Argo CD, MongoDB and OpenObserve.**
+A massive shoutout to the heroes of the free-tier world: **Oracle Cloud,
+, MongoDB and OpenObserve.**
 
 Without you, this project would just be a local Docker container melting my laptop. 😂
 
@@ -452,7 +422,7 @@ Here's the stack:
 Oracle Cloud        → Compute
 MongoDB Atlas       → Database
 Let's Encrypt       → TLS
-Argo CD             → GitOps
+             → GitOps
 K3s                 → Kubernetes
 OpenObserve         → Observability
 Azure DevOps        → CI/CD
