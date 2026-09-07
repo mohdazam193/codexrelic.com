@@ -1022,3 +1022,8 @@ body::after {
 .cve-ticker-icon {
   font-size: 1rem;
 }
+
+/* Light Mode Logo Swap */
+[data-theme="light"] img[src*="logo-dark.png"] {
+  content: url("../images/logo-light.png");
+}
