@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('div');
             row.className = 'vm-stat-row';
             row.innerHTML = `
-              <span class="vm-stat-label">${i}[</span>
+              <span class="vm-stat-label">CPU${i}[</span>
               <div class="vm-bar-track">
                 <div id="vm-cpu-bar-${i}" class="vm-bar-fill" style="width:0%; background:var(--c-green)"></div>
               </div>

@@ -1033,7 +1033,7 @@ body::after {
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 380px;
+  width: 420px;
   background: var(--c-bg);
   border: 1px solid var(--c-border);
   border-radius: var(--r-md);
@@ -1085,7 +1085,7 @@ body::after {
 
 .vm-stat-label {
   color: var(--c-accent);
-  width: 32px;
+  width: 48px;
   text-align: right;
 }
 
@@ -1120,9 +1120,10 @@ body::after {
 }
 
 .vm-stat-value {
-  width: 65px;
+  width: 95px;
   text-align: right;
   color: var(--c-text-secondary);
+  white-space: nowrap;
 }
 
 .vm-stat-text-group {
