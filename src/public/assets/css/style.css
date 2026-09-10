@@ -564,7 +564,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 .footer-links a { color: var(--c-text-muted); transition: color var(--t-fast); }
 .footer-links a:hover { color: var(--c-accent); }
 
-.page-footer img { max-height: 16px !important; width: auto; object-fit: contain; }
+.page-footer img { max-height: 28px !important; width: auto; object-fit: contain; }
 
 /* Animations */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
