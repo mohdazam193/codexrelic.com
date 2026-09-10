@@ -114,9 +114,10 @@
 
   <!-- ═══ MAIN ════════════════════════════════════════ -->
   <main class="main" id="main-content">
-    <div class="content-wrap">
+    <div class="dashboard-layout">
+      <div class="content-wrap">
 
-      <!-- Premium Bento Dashboard -->
+        <!-- Premium Bento Dashboard -->
       <section class="bento-grid reveal" aria-label="Command Center Dashboard">
         
         <!-- Panel 1: Identity (2x2) -->
@@ -194,25 +195,7 @@
         </div>
 
       </section>
-
-      <!-- Footer -->
-      <footer class="page-footer">
-        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-          <span class="latex-badge">
-            <img src="assets/images/logo-dark.png" style="height:10px;display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
-            codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
-          </span>
-          <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
-        </div>
-        <div class="footer-links">
-          <a href="resume.html">Resume</a>
-          <a href="blog.html">Blog</a>
-          <a href="movies.html">Movies</a>
-          <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
-        </div>
-      </footer>
-
-    </div>
+      </div>
 
     <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
     <aside class="right-sidebar">
@@ -259,7 +242,27 @@
         </div>
       </div>
     </aside>
+  </div>
+
+  <!-- Footer (Full Width) -->
+  <footer class="page-footer">
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+      <span class="latex-badge">
+        <img src="assets/images/logo-dark.png" style="height:10px;display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
+        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
+      </span>
+      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+    </div>
+    <div class="footer-links">
+      <a href="resume.html">Resume</a>
+      <a href="blog.html">Blog</a>
+      <a href="movies.html">Movies</a>
+      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
+    </div>
+  </footer>
+
   </main>
+
 
 
   <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
