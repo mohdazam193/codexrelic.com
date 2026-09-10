@@ -157,6 +157,89 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(err => console.error('Error loading CVE news:', err));
 
+  /* Live VM Stats WebSocket */
+  const vmWidget = document.getElementById('vm-stats-widget');
+  if (vmWidget) {
+    const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${wsProto}//${window.location.host}/api/ws/stats`;
+    let ws = new WebSocket(wsUrl);
+
+    const statusEl = document.getElementById('vm-connection-status');
+    const cpuContainer = document.getElementById('vm-cpu-container');
+    const memBar = document.getElementById('vm-mem-bar');
+    const memText = document.getElementById('vm-mem-text');
+    const swpBar = document.getElementById('vm-swp-bar');
+    const swpText = document.getElementById('vm-swp-text');
+    const tasksText = document.getElementById('vm-tasks-text');
+    const loadText = document.getElementById('vm-load-text');
+    const uptimeText = document.getElementById('vm-uptime-text');
+
+    // Helper to convert bytes to GB/MB
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0K';
+      const k = 1024;
+      const sizes = ['B', 'K', 'M', 'G', 'T'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + sizes[i];
+    }
+
+    ws.onopen = () => {
+      statusEl.textContent = 'WS CON';
+      statusEl.className = 'bento-status status-green';
+    };
+
+    ws.onclose = () => {
+      statusEl.textContent = 'DISCON';
+      statusEl.className = 'bento-status status-red';
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const stats = JSON.parse(event.data);
+
+        // Update CPU bars dynamically based on cores
+        if (cpuContainer.children.length !== stats.cpu.length) {
+          cpuContainer.innerHTML = ''; // clear
+          stats.cpu.forEach((_, i) => {
+            const row = document.createElement('div');
+            row.className = 'vm-stat-row';
+            row.innerHTML = `
+              <span class="vm-stat-label">${i}[</span>
+              <div class="vm-bar-track">
+                <div id="vm-cpu-bar-${i}" class="vm-bar-fill" style="width:0%; background:var(--c-green)"></div>
+              </div>
+              <span id="vm-cpu-text-${i}" class="vm-stat-value">0.0%]</span>
+            `;
+            cpuContainer.appendChild(row);
+          });
+        }
+
+        // Update CPU values
+        stats.cpu.forEach((perc, i) => {
+          const bar = document.getElementById(`vm-cpu-bar-${i}`);
+          const txt = document.getElementById(`vm-cpu-text-${i}`);
+          if (bar) bar.style.width = `${perc}%`;
+          if (txt) txt.textContent = `${perc.toFixed(1)}%]`;
+        });
+
+        // Update Mem
+        memBar.style.width = `${stats.memory.percent}%`;
+        memText.textContent = `${formatBytes(stats.memory.used)}/${formatBytes(stats.memory.total)}]`;
+
+        // Update Swap
+        swpBar.style.width = `${stats.swap.percent}%`;
+        swpText.textContent = `${formatBytes(stats.swap.used)}/${formatBytes(stats.swap.total)}]`;
+
+        // Update Text
+        tasksText.textContent = `${stats.tasks.total}, ${stats.tasks.running} running`;
+        loadText.textContent = `${stats.load[0].toFixed(2)} ${stats.load[1].toFixed(2)} ${stats.load[2].toFixed(2)}`;
+        uptimeText.textContent = stats.uptime;
+      } catch (e) {
+        console.error('Error parsing VM stats:', e);
+      }
+    };
+  }
+
 });
 
 /* ── SVG helpers ── */

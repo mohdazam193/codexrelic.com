@@ -18,8 +18,11 @@ from collections import defaultdict
 from fastapi import FastAPI, HTTPException, Request, Response, Form, UploadFile, File, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.websockets import WebSocket, WebSocketDisconnect
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import psutil
+import asyncio
 
 # ── Structured JSON Logger Setup ──
 class JSONFormatter(logging.Formatter):
@@ -511,6 +514,65 @@ def get_dashboard(request: Request):
     dashboard_path = os.path.join(BASE_DIR, "templates", "admin", "dashboard.html")
     with open(dashboard_path, "r") as f:
         return HTMLResponse(content=f.read())
+
+# ── WebSocket VM Stats Endpoint ──
+@app.websocket("/api/ws/stats")
+async def websocket_vm_stats(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            # CPU
+            cpu_per_core = psutil.cpu_percent(interval=None, percpu=True)
+            
+            # Memory
+            mem = psutil.virtual_memory()
+            
+            # Swap
+            swap = psutil.swap_memory()
+            
+            # Uptime (in seconds)
+            boot_time = psutil.boot_time()
+            uptime_seconds = time.time() - boot_time
+            days, rem = divmod(uptime_seconds, 86400)
+            hours, rem = divmod(rem, 3600)
+            minutes, seconds = divmod(rem, 60)
+            uptime_str = f"{int(days)} days, {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}"
+            
+            # Tasks / Processes
+            tasks_total = len(psutil.pids())
+            tasks_running = sum(1 for p in psutil.process_iter(['status']) if p.info['status'] == psutil.STATUS_RUNNING)
+            
+            # Load average (1, 5, 15 min) - Note: os.getloadavg() works on Unix/Mac
+            try:
+                load_avg = os.getloadavg()
+            except AttributeError:
+                load_avg = (0.0, 0.0, 0.0) # Fallback for Windows
+
+            stats = {
+                "cpu": cpu_per_core,
+                "memory": {
+                    "used": mem.used,
+                    "total": mem.total,
+                    "percent": mem.percent
+                },
+                "swap": {
+                    "used": swap.used,
+                    "total": swap.total,
+                    "percent": swap.percent
+                },
+                "uptime": uptime_str,
+                "tasks": {
+                    "total": tasks_total,
+                    "running": tasks_running
+                },
+                "load": load_avg
+            }
+            await websocket.send_json(stats)
+            await asyncio.sleep(1.5)
+    except WebSocketDisconnect:
+        logger.info("WebSocket client disconnected from VM stats stream.")
+    except Exception as e:
+        logger.error(f"WebSocket error: {e}")
 
 # ── Serve Static Assets ──
 app.mount("/assets", StaticFiles(directory=os.path.join(BASE_DIR, "public", "assets")), name="assets")

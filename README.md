@@ -245,6 +245,14 @@ Instead of just displaying raw feeds, the FastAPI backend applies a **heuristic 
 
 ---
 
+### 🖥️ Live VM Telemetry Widget
+
+To showcase real-time data streaming and systems-level integration, the platform includes a **Live VM Stats Widget**. 
+
+Built with an `htop`-inspired terminal aesthetic, this widget sits on the frontend and communicates with the backend via **WebSockets**. The FastAPI server utilizes `psutil` to asynchronously collect live hardware telemetry (CPU per core, Memory, Swap, Uptime, and Load Average) directly from the underlying Oracle ARM VM and streams it to the UI every 1.5 seconds without needing to refresh the page.
+
+---
+
 ## 🧪 Three Environments
 
 | Environment | URL | Purpose |

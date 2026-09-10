@@ -1027,3 +1027,128 @@ body::after {
 [data-theme="light"] img[src*="logo-dark.png"] {
   content: url("../images/logo-light.png");
 }
+
+/* ════ LIVE VM STATS WIDGET ════ */
+.vm-stats-widget {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 380px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: opacity var(--t-base), transform var(--t-base);
+}
+
+.vm-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+}
+
+.vm-widget-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.vm-widget-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--c-text);
+}
+
+.vm-stat-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vm-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.vm-stat-label {
+  color: var(--c-accent);
+  width: 32px;
+  text-align: right;
+}
+
+.vm-bar-track {
+  flex: 1;
+  height: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--c-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.vm-bar-track::before {
+  content: "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+  position: absolute;
+  left: 0;
+  top: -2px;
+  color: rgba(255,255,255,0.1);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.vm-bar-fill {
+  height: 100%;
+  transition: width 0.5s ease-out;
+  position: relative;
+  z-index: 1;
+  opacity: 0.8;
+  mix-blend-mode: screen;
+}
+
+.vm-stat-value {
+  width: 65px;
+  text-align: right;
+  color: var(--c-text-secondary);
+}
+
+.vm-stat-text-group {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--c-text-secondary);
+}
+
+.vm-stat-text-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vm-text-label {
+  color: var(--c-accent);
+}
+
+.vm-text-val {
+  color: var(--c-text);
+}
+
+/* Hide on smaller screens */
+@media (max-width: 1024px) {
+  .vm-stats-widget {
+    display: none;
+  }
+}
