@@ -206,9 +206,30 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   margin-left: var(--sidebar-w);
   min-height: 100vh;
   padding: var(--sp-10) var(--sp-8) var(--sp-16);
+  display: flex;
+  gap: var(--sp-8);
+  align-items: flex-start;
+  max-width: 100%;
 }
 
-.content-wrap { max-width: var(--content-max); margin: 0 auto; }
+.content-wrap { 
+  flex: 1;
+  max-width: var(--content-max); 
+  margin: 0; 
+}
+
+.right-sidebar {
+  width: 420px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1400px) {
+  .main {
+    flex-direction: column;
+  }
+  .content-wrap { margin: 0 auto; }
+  .right-sidebar { width: 100%; max-width: var(--content-max); margin: 0 auto; }
+}
 
 /* 5. SIDEBAR COMPONENTS */
 .sidebar-brand {
@@ -1030,10 +1051,9 @@ body::after {
 
 /* ════ LIVE VM STATS WIDGET ════ */
 .vm-stats-widget {
-  position: fixed;
+  position: sticky;
   top: 20px;
-  right: 20px;
-  width: 420px;
+  width: 100%;
   background: var(--c-bg);
   border: 1px solid var(--c-border);
   border-radius: var(--r-md);
