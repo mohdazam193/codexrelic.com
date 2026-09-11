@@ -218,6 +218,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   gap: var(--sp-8);
   align-items: flex-start;
   width: 100%;
+  justify-content: center;
 }
 
 .content-wrap { 
@@ -229,7 +230,6 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 .right-sidebar {
   width: 420px;
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 @media (max-width: 1400px) {
