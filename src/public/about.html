@@ -118,6 +118,7 @@
     </div>
   </aside>
   <main class="main">
+    <div class="dashboard-layout">
     <div class="content-wrap">
       <header class="page-header">
         <div class="page-header-text">
@@ -130,6 +131,56 @@
         <h2 style="font-family:var(--font-mono);font-size:1rem;color:var(--c-accent);margin-bottom:var(--sp-2)">[ WIP: Content Under Construction ]</h2>
         <p style="font-size:0.86rem;color:var(--c-text-secondary)">This section will detail SRE philosophies, career timeline summaries, and personal interests. Coming soon.</p>
       </div>
+    </div>
+  
+    <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
+    <aside class="right-sidebar">
+      <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
+      <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
+        <div class="vm-widget-header">
+          <span class="vm-widget-title">htop - Live VM</span>
+      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
+        <button class="htop-tab active">Live</button>
+      </div>
+          <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
+        </div>
+        <div class="vm-widget-body">
+          <div id="vm-cpu-container" class="vm-stat-section">
+            <!-- CPU bars will be injected here -->
+          </div>
+          <div class="vm-stat-section">
+            <div class="vm-stat-row">
+              <span class="vm-stat-label">Mem[</span>
+              <div class="vm-bar-track">
+                <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
+              </div>
+              <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
+            </div>
+            <div class="vm-stat-row">
+              <span class="vm-stat-label">Swp[</span>
+              <div class="vm-bar-track">
+                <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
+              </div>
+              <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
+            </div>
+          </div>
+          <div class="vm-stat-text-group">
+            <div class="vm-stat-text-row">
+              <span class="vm-text-label">Tasks:</span>
+              <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
+            </div>
+            <div class="vm-stat-text-row">
+              <span class="vm-text-label">Load average:</span>
+              <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
+            </div>
+            <div class="vm-stat-text-row">
+              <span class="vm-text-label">Uptime:</span>
+              <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
     </div>
   </main>
 
