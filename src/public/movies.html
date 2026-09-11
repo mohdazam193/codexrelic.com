@@ -27,8 +27,7 @@
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
       document.documentElement.setAttribute('data-theme',t);
-      var p=localStorage.getItem('cr-palette')||'default';
-      document.documentElement.setAttribute('data-palette',p);
+      
     })();
   </script>
 

@@ -147,8 +147,19 @@ One `git push` kicks off the complete delivery chain: the code is sent to **Azur
 
 ## 🚀 What This Project Demonstrates
 
-### 🔄 GitOps Delivery
+### 🧩 Modular Component Architecture
 
+The backend is built as a highly scalable **Component-Based FastAPI Architecture**. 
+Rather than a single monolithic file, the server is structured into clean components:
+- **Core Engine**: Isolated modules for Database resilience, Logging, JWT Security, and Object Storage.
+- **API Routers**: Endpoints are split by context (`admin.py`, `news.py`, `public.py`, `telemetry.py`), making adding new features simple.
+- **Background Tasks**: Independent `asyncio` loops (like the Daily Tech News fetcher) run securely in the background.
+
+The main `server.py` is an incredibly thin entrypoint that simply mounts these modular routes and middlewares.
+
+---
+
+### 🔄 GitOps Delivery
 
 
 Azure Pipelines is responsible for the CI/CD workflow and infrastructure deployment. 
@@ -260,6 +271,16 @@ As part of a growing suite of DevSecOps utilities, the platform features a **Cer
 This tool allows users to paste raw X.509 PEM certificates and instantly parse out vital details like the Subject, Issuer, Validity periods (with active countdowns), Serial Number, Signature Algorithm, and Subject Alternative Names (SANs).
 
 **Privacy-First Architecture:** Rather than sending sensitive certificate data to the FastAPI backend for processing, the decoder is built using a **pure client-side architecture** leveraging `node-forge`. The certificate is parsed 100% locally in the browser, guaranteeing zero-trust privacy and zero network overhead.
+
+---
+
+### 📰 Daily Tech News Feed
+
+The platform includes a self-sufficient **Daily Tech News** feature that aggregates the top 10 tech stories of the day.
+
+Built using an `asyncio` background task inside the FastAPI server, the system automatically wakes up at midnight (UTC) to fetch and parse the Hacker News (YCombinator) RSS feed. The Top 10 articles are extracted and saved locally.
+
+**Rolling 10-Day Archive:** To ensure the system remains entirely self-contained without bloating the database or storage, the application automatically moves the previous day's feed into an archive array and strictly enforces a 10-day retention limit, automatically purging older news.
 
 ---
 

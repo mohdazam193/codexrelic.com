@@ -27,8 +27,7 @@
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
       document.documentElement.setAttribute('data-theme',t);
-      var p=localStorage.getItem('cr-palette')||'default';
-      document.documentElement.setAttribute('data-palette',p);
+      
     })();
   </script>
 
@@ -225,6 +224,12 @@
       <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
         <div class="vm-widget-header">
           <span class="vm-widget-title">htop - Live VM</span>
+      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
+        <button class="htop-tab active">Live</button>
+        <button class="htop-tab">30m</button>
+        <button class="htop-tab">1h</button>
+        <button class="htop-tab">5d</button>
+      </div>
           <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
         </div>
         <div class="vm-widget-body">
