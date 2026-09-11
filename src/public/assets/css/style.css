@@ -972,8 +972,8 @@ body::after {
   position: sticky;
   top: 20px;
   width: 100%;
-  background: rgba(10, 15, 20, 0.95);
-  border: 1px solid #194a64;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
   border-radius: var(--r-md);
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   font-family: var(--font-mono);
@@ -990,15 +990,15 @@ body::after {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid #194a64;
-  color: #8bb1c4;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
 }
 
 .vm-widget-title {
   font-weight: 600;
   letter-spacing: 0.5px;
-  color: #e2f0f5;
+  color: var(--c-text);
 }
 
 .htop-tab {
@@ -1006,21 +1006,21 @@ body::after {
   font-size: 0.65rem;
   padding: 2px 6px;
   background: transparent;
-  color: #8bb1c4;
+  color: var(--c-text-secondary);
   border: 1px solid transparent;
   border-radius: 3px;
   transition: all var(--t-fast);
 }
 
 .htop-tab:hover {
-  background: rgba(255,255,255,0.1);
-  color: #e2f0f5;
+  background: var(--c-surface);
+  color: var(--c-text);
 }
 
 .htop-tab.active {
-  background: rgba(93, 209, 197, 0.15);
-  color: #5dd1c5;
-  border-color: rgba(93, 209, 197, 0.3);
+  background: var(--c-accent-dim);
+  color: var(--c-accent);
+  border-color: var(--c-accent);
 }
 
 .vm-widget-body {
@@ -1028,7 +1028,7 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: #e2f0f5;
+  color: var(--c-text);
 }
 
 .vm-stat-section {
@@ -1045,7 +1045,7 @@ body::after {
 }
 
 .vm-stat-label {
-  color: #5dd1c5;
+  color: var(--c-accent);
   width: 48px;
   text-align: right;
 }
@@ -1053,8 +1053,8 @@ body::after {
 .vm-bar-track {
   flex: 1;
   height: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #194a64;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
   position: relative;
   overflow: hidden;
 }
@@ -1064,7 +1064,7 @@ body::after {
   position: absolute;
   left: 0;
   top: -2px;
-  color: #5dd1c5;
+  color: var(--c-accent);
   opacity: 0.3;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -1084,7 +1084,7 @@ body::after {
 .vm-stat-value {
   width: 95px;
   text-align: right;
-  color: #8bb1c4;
+  color: var(--c-text-secondary);
   white-space: nowrap;
 }
 
@@ -1093,7 +1093,7 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  color: #8bb1c4;
+  color: var(--c-text-secondary);
 }
 
 .vm-stat-text-row {
@@ -1102,11 +1102,11 @@ body::after {
 }
 
 .vm-text-label {
-  color: #5dd1c5;
+  color: var(--c-accent);
 }
 
 .vm-text-val {
-  color: #e2f0f5;
+  color: var(--c-text);
 }
 
 /* Hide on smaller screens */
