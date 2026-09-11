@@ -295,7 +295,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   border-radius: var(--r-sm);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.7rem; font-weight: 700; color: #fff;
+  font-size: 0.7rem; font-weight: 700; color: var(--c-bg);
   letter-spacing: -0.03em; flex-shrink: 0;
 }
 
@@ -380,7 +380,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   transition: all var(--t-fast); border: 1px solid transparent;
   cursor: pointer; text-decoration: none;
 }
-.btn-primary { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+.btn-primary { background: var(--c-accent); color: var(--c-bg); border-color: var(--c-accent); font-weight: 600; }
 .btn-primary:hover {
   background: var(--c-accent-hover); border-color: var(--c-accent-hover);
   transform: translateY(-1px); box-shadow: var(--c-accent-glow);
@@ -946,13 +946,17 @@ body::after {
   height: 300vh;
   transform: translate(-50%, -50%) rotate(-25deg);
   background-image: var(--logo-watermark);
-  background-size: 280px 140px; /* Elegant tiled size */
   background-repeat: repeat;
-  background-position: 0 0;
-  opacity: 0.022;
-  pointer-events: none;
+  background-size: 280px 140px;
+  opacity: 0.02;
   z-index: -1;
+  pointer-events: none;
   filter: var(--logo-filter);
+}
+
+[data-theme="light"] body::after {
+  opacity: 0.01;
+  mix-blend-mode: multiply;
 }
 
 /* ============================================================
@@ -1075,7 +1079,11 @@ body::after {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   overflow: hidden;
-  transition: opacity var(--t-base), transform var(--t-base);
+  transition: opacity var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+}
+
+[data-theme="light"] .vm-stats-widget {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .vm-widget-header {
@@ -1123,7 +1131,7 @@ body::after {
 .vm-bar-track {
   flex: 1;
   height: 12px;
-  background: rgba(255,255,255,0.05);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
   position: relative;
   overflow: hidden;
@@ -1134,7 +1142,8 @@ body::after {
   position: absolute;
   left: 0;
   top: -2px;
-  color: rgba(255,255,255,0.1);
+  color: var(--c-text-muted);
+  opacity: 0.15;
   letter-spacing: 1px;
   white-space: nowrap;
   font-size: 10px;

@@ -253,6 +253,16 @@ Built with an `htop`-inspired terminal aesthetic, this widget sits on the fronte
 
 ---
 
+### 🧰 Sysadmin Tools: Certificate Decoder
+
+As part of a growing suite of DevSecOps utilities, the platform features a **Certificate Decoder**.
+
+This tool allows users to paste raw X.509 PEM certificates and instantly parse out vital details like the Subject, Issuer, Validity periods (with active countdowns), Serial Number, Signature Algorithm, and Subject Alternative Names (SANs).
+
+**Privacy-First Architecture:** Rather than sending sensitive certificate data to the FastAPI backend for processing, the decoder is built using a **pure client-side architecture** leveraging `node-forge`. The certificate is parsed 100% locally in the browser, guaranteeing zero-trust privacy and zero network overhead.
+
+---
+
 ## 🧪 Three Environments
 
 | Environment | URL | Purpose |
