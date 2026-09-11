@@ -130,16 +130,20 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   margin: 0; 
 }
 
+.dashboard-layout .content-wrap {
+  max-width: none;
+}
+
 .right-sidebar {
   width: 420px;
   flex-shrink: 0;
 }
 
 @media (max-width: 1400px) {
-  .main {
+  .dashboard-layout {
     flex-direction: column;
   }
-  .content-wrap { margin: 0 auto; }
+  .content-wrap { margin: 0 auto; max-width: var(--content-max); }
   .right-sidebar { width: 100%; max-width: var(--content-max); margin: 0 auto; }
 }
 
