@@ -7,6 +7,8 @@ html_files = [
     "resume.html",
     "projects.html",
     "blog.html",
+    "tech-news.html",
+    "tools.html",
     "movies.html",
     "community.html",
     "contact.html"
@@ -14,28 +16,48 @@ html_files = [
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Master navigation items list
-nav_items = [
-    {"href": "index.html", "label": "Home", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'},
-    {"href": "about.html", "label": "About", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
-    {"href": "resume.html", "label": "Resume", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'},
-    {"href": "projects.html", "label": "Projects", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'},
-    {"href": "blog.html", "label": "Blog", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'},
-    {"href": "movies.html", "label": "Movies", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>'}
-]
-
-community_items = [
-    {"href": "community.html", "label": "Community", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'},
-    {"href": "contact.html", "label": "Contact", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'}
-]
-
-# Mobile navigation items list
-mobile_nav_items = [
-    {"href": "index.html", "label": "Home", "icon": '<svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'},
-    {"href": "about.html", "label": "About", "icon": '<svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
-    {"href": "resume.html", "label": "Resume", "icon": '<svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'},
-    {"href": "blog.html", "label": "Blog", "icon": '<svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'},
-    {"href": "movies.html", "label": "Movies", "icon": '<svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>'}
+# Nav structure
+nav_groups = [
+    {
+        "label": "Navigation",
+        "items": [
+            {"href": "index.html", "label": "Home", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'}
+        ]
+    },
+    {
+        "label": "Identity",
+        "items": [
+            {"href": "about.html", "label": "About", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'},
+            {"href": "resume.html", "label": "Resume", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'}
+        ]
+    },
+    {
+        "label": "Engineering",
+        "items": [
+            {"href": "projects.html", "label": "Projects", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'},
+            {"href": "blog.html", "label": "Blog", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'},
+            {"href": "tech-news.html", "label": "Tech News", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>'}
+        ]
+    },
+    {
+        "label": "Tools",
+        "items": [
+            {"href": "tools.html", "label": "Tools", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>'}
+        ]
+    },
+    {
+        "label": "Leisure",
+        "items": [
+            {"href": "movies.html", "label": "Movies", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>'}
+        ]
+    },
+    {
+        "label": "Community",
+        "items": [
+            {"href": "community.html", "label": "Community", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'},
+            {"href": "contact.html", "label": "Contact", "icon": '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'}
+        ]
+    }
 ]
 
 def build_sidebar_html(filename):
@@ -45,30 +67,23 @@ def build_sidebar_html(filename):
     lines.append('      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">')
     lines.append('    </a>\n')
     lines.append('    <nav class="nav" role="navigation">')
-    lines.append('      <span class="nav-group-label">Navigation</span>\n')
     
-    for item in nav_items:
-        is_active = item["href"] == filename
-        active_str = ' class="nav-link active" aria-current="page"' if is_active else ' class="nav-link"'
-        lines.append(f'      <a href="{item["href"]}"{active_str}>')
-        lines.append(f'        {item["icon"]}')
-        lines.append(f'        {item["label"]}')
-        lines.append('      </a>')
-        
-    lines.append('\n      <div class="nav-sep"></div>')
-    lines.append('      <span class="nav-group-label">Community</span>\n')
-    
-    for item in community_items:
-        is_active = item["href"] == filename
-        active_str = ' class="nav-link active" aria-current="page"' if is_active else ' class="nav-link"'
-        lines.append(f'      <a href="{item["href"]}"{active_str}>')
-        lines.append(f'        {item["icon"]}')
-        lines.append(f'        {item["label"]}')
-        lines.append('      </a>')
+    first = True
+    for group in nav_groups:
+        if not first:
+            lines.append('      <div class="nav-sep"></div>')
+        lines.append(f'      <span class="nav-group-label">{group["label"]}</span>')
+        for item in group["items"]:
+            is_active = item["href"] == filename
+            active_str = ' class="nav-link active" aria-current="page"' if is_active else ' class="nav-link"'
+            lines.append(f'      <a href="{item["href"]}"{active_str}>')
+            lines.append(f'        {item["icon"]}')
+            lines.append(f'        {item["label"]}')
+            lines.append('      </a>')
+        first = False
         
     lines.append('    </nav>\n')
     lines.append('    <div class="sidebar-footer">')
-
     lines.append('      <div class="sidebar-status">')
     lines.append('        <span class="status-dot" aria-hidden="true"></span>')
     lines.append('        Available · Hyderabad, IN')
@@ -91,14 +106,19 @@ def build_mobile_nav_html(filename):
     lines.append('  <nav class="mobile-nav" aria-label="Mobile navigation">')
     lines.append('    <div class="mobile-nav-items">')
     
-    for item in mobile_nav_items:
-        is_active = item["href"] == filename
-        active_str = ' class="mobile-nav-item active" aria-current="page"' if is_active else ' class="mobile-nav-item"'
-        lines.append(f'      <a href="{item["href"]}"{active_str}>')
-        lines.append(f'        {item["icon"]}')
-        lines.append(f'        {item["label"]}')
-        lines.append('      </a>')
-        
+    for group in nav_groups:
+        for item in group["items"]:
+            # Mobile nav icon substitution
+            mobile_icon = item["icon"].replace('nav-icon', 'mobile-nav-item-icon')
+            is_active = item["href"] == filename
+            active_str = ' class="mobile-nav-item active" aria-current="page"' if is_active else ' class="mobile-nav-item"'
+            lines.append(f'      <a href="{item["href"]}"{active_str}>')
+            lines.append(f'        {mobile_icon}')
+            # Abbreviate long names on mobile
+            label = "News" if item["label"] == "Tech News" else item["label"]
+            lines.append(f'        {label}')
+            lines.append('      </a>')
+            
     lines.append('    </div>')
     lines.append('  </nav>')
     return '\n'.join(lines)
@@ -108,7 +128,6 @@ combined_script = """  <script>
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
       document.documentElement.setAttribute('data-theme',t);
-      
     })();
   </script>"""
 
