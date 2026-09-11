@@ -121,7 +121,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   gap: var(--sp-8);
   align-items: flex-start;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .content-wrap { 
