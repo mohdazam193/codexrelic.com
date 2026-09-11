@@ -53,6 +53,9 @@
   --c-accent-hover:  #065e55;
   --c-accent-dim:    rgba(8, 122, 110, 0.07);
   --c-accent-glow:   0 0 24px rgba(8, 122, 110, 0.12);
+  --c-green:         #059669;
+  --c-red:           #dc2626;
+  --c-amber:         #d97706;
   --logo-watermark:  url('../images/logo-light.png');
 }
 
@@ -195,7 +198,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   flex-direction: column;
   background: var(--c-surface);
   border-right: 1px solid var(--c-border);
-  padding: var(--sp-6) var(--sp-4);
+  padding: var(--sp-4);
   overflow-y: auto;
   z-index: 100;
   transition: background var(--t-base), border-color var(--t-base);
@@ -311,12 +314,12 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   font-family: var(--font-mono);
   font-size: 0.72rem; text-transform: uppercase;
   letter-spacing: 0.14em; color: var(--c-text-muted);
-  padding: var(--sp-5) var(--sp-4) var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-1);
 }
 
 .nav-link {
-  display: flex; align-items: center; gap: var(--sp-4);
-  padding: var(--sp-3) var(--sp-4);
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
   border-radius: var(--r-sm);
   font-size: 0.95rem; color: var(--c-text-secondary);
   transition: all var(--t-fast); position: relative; text-decoration: none;
@@ -330,10 +333,10 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 }
 .nav-icon { width: 17px; height: 17px; flex-shrink: 0; opacity: 0.6; transition: opacity var(--t-fast); }
 .nav-link.active .nav-icon, .nav-link:hover .nav-icon { opacity: 1; }
-.nav-sep { height: 1px; background: var(--c-border); margin: var(--sp-3) 0; }
+.nav-sep { height: 1px; background: var(--c-border); margin: var(--sp-2) 0; }
 
 .sidebar-footer {
-  margin-top: auto; padding-top: var(--sp-5);
+  margin-top: auto; padding-top: var(--sp-4);
   border-top: 1px solid var(--c-border);
   display: flex; flex-direction: column; gap: var(--sp-3);
 }
@@ -603,7 +606,7 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 /* Responsive */
 @media (max-width: 768px) {
   .sidebar { display: none; }
-  .main { margin-left: 0; max-width: 100%; padding: var(--sp-6) var(--sp-5) 80px; }
+  .main { margin-left: 0; max-width: 100%; padding: var(--sp-6) var(--sp-5) 130px; }
   .mobile-nav { display: block; }
   .resume-identity { flex-direction: column; text-align: center; }
   .resume-contacts { justify-content: center; }
@@ -676,13 +679,13 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--c-text);
+  color: #e2f0f5; /* Force light text over dark gradient */
   line-height: 1.2;
 }
 
 .netflix-meta {
   font-size: 0.7rem;
-  color: var(--c-text-muted);
+  color: #8bb1c4; /* Force light text */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -690,13 +693,13 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 
 .netflix-rating {
   font-family: var(--font-mono);
-  color: var(--c-accent);
+  color: #5dd1c5; /* Force bright teal */
   font-weight: 600;
 }
 
 .netflix-desc {
   font-size: 0.72rem;
-  color: var(--c-text-secondary);
+  color: #8bb1c4; /* Force light text */
   line-height: 1.5;
 }
 
@@ -708,12 +711,12 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   padding: var(--sp-2);
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--c-text-muted);
+  color: #8bb1c4; /* Force light text */
   line-height: 1.4;
 }
 
 .netflix-sre-box strong {
-  color: var(--c-accent);
+  color: #5dd1c5; /* Force bright text */
   display: block;
   margin-bottom: 2px;
 }
@@ -980,7 +983,7 @@ body::after {
 @media (max-width: 1024px) {
   .cve-ticker {
     left: 0;
-    bottom: 60px; /* above mobile nav if any */
+    bottom: 66px; /* above mobile nav */
   }
 }
 
@@ -1131,7 +1134,7 @@ body::after {
 .vm-bar-track {
   flex: 1;
   height: 12px;
-  background: var(--c-surface);
+  background: var(--c-accent-dim);
   border: 1px solid var(--c-border);
   position: relative;
   overflow: hidden;
@@ -1142,8 +1145,8 @@ body::after {
   position: absolute;
   left: 0;
   top: -2px;
-  color: var(--c-text-muted);
-  opacity: 0.15;
+  color: var(--c-accent);
+  opacity: 0.3;
   letter-spacing: 1px;
   white-space: nowrap;
   font-size: 10px;

@@ -1,4 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // --- TABS LOGIC ---
+  const tabBtns = document.querySelectorAll('.tool-tab-btn');
+  const tabPanes = document.querySelectorAll('.tool-tab-pane');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Deactivate all
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'transparent';
+        b.style.color = 'var(--c-text-muted)';
+        b.style.border = '1px solid transparent';
+      });
+      tabPanes.forEach(p => p.style.display = 'none');
+
+      // Activate clicked
+      btn.classList.add('active');
+      btn.style.background = 'var(--c-accent-dim)';
+      btn.style.color = 'var(--c-accent)';
+      btn.style.border = '1px solid var(--c-accent)';
+      
+      const targetId = btn.getAttribute('data-target');
+      document.getElementById(targetId).style.display = 'block';
+    });
+  });
+
+  // --- CERTIFICATE DECODER LOGIC ---
   const decodeBtn = document.getElementById('decode-btn');
   const certInput = document.getElementById('cert-input');
   const resultsDiv = document.getElementById('cert-results');
