@@ -58,7 +58,6 @@
   --c-amber:         #d97706;
   --logo-watermark:  url('../images/logo-light.png');
 }
-}
 
 /* 2. RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

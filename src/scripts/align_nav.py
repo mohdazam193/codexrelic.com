@@ -68,14 +68,7 @@ def build_sidebar_html(filename):
         
     lines.append('    </nav>\n')
     lines.append('    <div class="sidebar-footer">')
-    lines.append('      <span class="palette-selector-label">Theme Accent</span>')
-    lines.append('      <div class="palette-selector" aria-label="Choose color palette">')
-    lines.append('        <button class="palette-swatch" data-palette="default" style="background:#5dd1c5" title="Default Teal"></button>')
-    lines.append('        <button class="palette-swatch" data-palette="cyber" style="background:#10b981" title="Cyber Emerald"></button>')
-    lines.append('        <button class="palette-swatch" data-palette="cosmic" style="background:#8b5cf6" title="Cosmic Violet"></button>')
-    lines.append('        <button class="palette-swatch" data-palette="codex" style="background:#f59e0b" title="Ancient Codex"></button>')
-    lines.append('        <button class="palette-swatch" data-palette="steel" style="background:#3b82f6" title="Steel SRE"></button>')
-    lines.append('      </div>\n')
+
     lines.append('      <div class="sidebar-status">')
     lines.append('        <span class="status-dot" aria-hidden="true"></span>')
     lines.append('        Available · Hyderabad, IN')
@@ -115,8 +108,7 @@ combined_script = """  <script>
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
       document.documentElement.setAttribute('data-theme',t);
-      var p=localStorage.getItem('cr-palette')||'default';
-      document.documentElement.setAttribute('data-palette',p);
+      
     })();
   </script>"""
 
