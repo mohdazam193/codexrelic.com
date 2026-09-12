@@ -67,12 +67,12 @@ SEO_DATA = {
         "keywords": "Tech News, Hacker News, Top 10, Daily Tech, Technology News, Startups, Engineering News",
     },
     "tools.html": {
-        "title": "SRE Tools — Certificate Decoder · codexrelic.com",
+        "title": "SRE Tools — SSL Certificate Decoder · codexrelic.com",
         "description": "Free online SRE tools — decode X.509 SSL/TLS certificates instantly. View Common Name, SANs, validity, serial number, and signature algorithm.",
-        "og_title": "SRE Tools — Certificate Decoder · codexrelic.com",
-        "og_description": "Free online X.509 certificate decoder — instantly view CN, SANs, expiry, serial number and more.",
+        "og_title": "SRE Tools — SSL Certificate Decoder · codexrelic.com",
+        "og_description": "Free online X.509 SSL certificate decoder — instantly view CN, SANs, expiry, serial number and more.",
         "canonical": "https://codexrelic.com/tools.html",
-        "keywords": "Certificate Decoder, SSL Certificate, TLS, X.509, PEM Decoder, SRE Tools, Online Tools, Mohd Azam",
+        "keywords": "SSL Certificate Decoder, Certificate Decoder, SSL Certificate, TLS, X.509, PEM Decoder, SRE Tools, Online Tools, Mohd Azam",
     },
     "movies.html": {
         "title": "Cinema Logs — Mohd Azam · codexrelic.com",

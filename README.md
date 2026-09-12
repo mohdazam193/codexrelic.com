@@ -264,9 +264,9 @@ Built with an `htop`-inspired terminal aesthetic, this widget sits on the fronte
 
 ---
 
-### 🧰 Sysadmin Tools: Certificate Decoder
+### 🧰 Sysadmin Tools: SSL Certificate Decoder
 
-As part of a growing suite of DevSecOps utilities, the platform features a **Certificate Decoder**.
+As part of a growing suite of DevSecOps utilities, the platform features an **SSL Certificate Decoder**.
 
 This tool allows users to paste raw X.509 PEM certificates and instantly parse out vital details like the Subject, Issuer, Validity periods (with active countdowns), Serial Number, Signature Algorithm, and Subject Alternative Names (SANs).
 
