@@ -3,6 +3,10 @@ import asyncio
 import feedparser
 import traceback
 import os
+import urllib.request
+import re
+import html
+from urllib.parse import urlparse
 from datetime import datetime, timedelta
 from api.core.logger import logger
 from api.core.config import TECH_NEWS_FILE, TECH_NEWS_URL
@@ -21,6 +25,7 @@ def load_tech_news():
 
 def save_tech_news(data):
     try:
+        os.makedirs(os.path.dirname(TECH_NEWS_FILE), exist_ok=True)
         with open(TECH_NEWS_FILE, "w") as f:
             json.dump(data, f, indent=2)
     except Exception as e:
@@ -45,6 +50,42 @@ def _cleanup_old_archives(data, max_days=10):
         if entry.get("date", "9999-99-99") >= cutoff
     ]
 
+def _fetch_meta_summary(url):
+    """Synchronous worker to fetch domain and brief description meta tag."""
+    domain = urlparse(url).netloc.replace("www.", "")
+    summary = ""
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=4) as response:
+            content_type = response.headers.get("Content-Type", "")
+            if "text/html" in content_type:
+                raw = response.read(65536).decode("utf-8", errors="ignore")
+                matches = re.findall(
+                    r'<meta\s+(?:name|property)=[\"\'](?:og:description|description)[\"\']\s+content=[\"\'](.*?)[\"\']',
+                    raw,
+                    re.IGNORECASE
+                )
+                if not matches:
+                    matches = re.findall(
+                        r'<meta\s+content=[\"\'](.*?)[\"\']\s+(?:name|property)=[\"\'](?:og:description|description)[\"\']',
+                        raw,
+                        re.IGNORECASE
+                    )
+                if matches:
+                    summary = html.unescape(matches[0].strip())
+                    # Clean newlines and excessive whitespace
+                    summary = " ".join(summary.split())
+                    if len(summary) > 220:
+                        summary = summary[:217] + "..."
+    except Exception:
+        pass
+    return {"domain": domain, "summary": summary}
+
 async def fetch_tech_news_task():
     logger.info(f"Starting Tech News background fetch loop (every {FETCH_INTERVAL_HOURS}h)...")
     while True:
@@ -56,19 +97,28 @@ async def fetch_tech_news_task():
                 today_str = now.strftime("%Y-%m-%d")
                 logger.info(f"Fetching Tech News at {now.isoformat()}...")
                 feed = feedparser.parse(TECH_NEWS_URL)
+                raw_entries = feed.entries[:10]
+                
+                # Concurrently extract summaries for the top entries
+                loop = asyncio.get_event_loop()
+                tasks = [loop.run_in_executor(None, _fetch_meta_summary, entry.link) for entry in raw_entries]
+                meta_results = await asyncio.gather(*tasks, return_exceptions=True)
+                
                 news_items = []
-                for entry in feed.entries[:10]:
+                for entry, meta in zip(raw_entries, meta_results):
+                    meta_dict = meta if isinstance(meta, dict) else {"domain": "", "summary": ""}
                     news_items.append({
                         "title": entry.title,
                         "link": entry.link,
                         "published": entry.get("published", ""),
+                        "domain": meta_dict.get("domain", ""),
+                        "summary": meta_dict.get("summary", "")
                     })
                 
                 if news_items:
                     # Archive previous batch if it exists
                     if data.get("current_news"):
                         archive_date = data.get("last_fetch", today_str)
-                        # Normalize archive date to just the date portion
                         try:
                             archive_date = datetime.fromisoformat(archive_date).strftime("%Y-%m-%d")
                         except (ValueError, TypeError):
@@ -85,7 +135,7 @@ async def fetch_tech_news_task():
                     data["current_news"] = news_items
                     data["last_fetch"] = now.isoformat()
                     save_tech_news(data)
-                    logger.info(f"Successfully fetched Tech News. Next fetch in ~{FETCH_INTERVAL_HOURS}h.")
+                    logger.info(f"Successfully fetched Tech News with summaries. Next fetch in ~{FETCH_INTERVAL_HOURS}h.")
                 else:
                     logger.warning("Feed returned 0 items, skipping update.")
             else:
@@ -95,4 +145,5 @@ async def fetch_tech_news_task():
             logger.error(f"Error in tech news fetch loop: {e}\n{traceback.format_exc()}")
             
         await asyncio.sleep(FETCH_INTERVAL_HOURS * 3600)
+
 

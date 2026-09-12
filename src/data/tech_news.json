@@ -1,55 +1,75 @@
 {
-  "last_fetch": "2026-09-11",
+  "last_fetch": "2026-09-13T01:58:00",
   "current_news": [
     {
-      "title": "The Waymo effect: how AI is quietly making research less collaborative",
-      "link": "https://www.researchagenda.news/articles/the-waymo-effect.html",
-      "published": "Fri, 11 Sep 2026 11:17:50 +0000"
+      "title": "LG denies TV spying claims, says tracking and snooping concerns 'not true'",
+      "link": "https://www.tomshardware.com/tech-industry/big-tech/lg-strongly-denies-tv-security-claims-says-tracking-and-snooping-concerns-not-true-online-investigation-claims-216-000-000-spy-tvs-record-audio",
+      "published": "Thu, 10 Sep 2026 15:31:37 +0000",
+      "domain": "tomshardware.com",
+      "summary": "TVs were also said to be recording, scanning local area networks, logging data, and recording audio while in standby."
     },
     {
-      "title": "Houthis 'take control' of key island in global shipping route",
-      "link": "https://www.bbc.com/news/live/cmd683p01eljt",
-      "published": "Fri, 11 Sep 2026 13:41:38 +0000"
+      "title": "Make your first edit to OpenStreetMap",
+      "link": "https://high5apps.github.io/josm-plugin-website-wizard/",
+      "published": "Sat, 12 Sep 2026 16:25:08 +0000",
+      "domain": "high5apps.github.io",
+      "summary": "Website Wizard JOSM Plugin"
     },
     {
-      "title": "Logo Programming Language",
-      "link": "https://el.media.mit.edu/logo-foundation/what_is_logo/logo_programming.html",
-      "published": "Wed, 09 Sep 2026 07:07:26 +0000"
+      "title": "Nvidia is the central bank of AI",
+      "link": "https://www.economist.com/interactive/briefing/2026/09/03/nvidia-is-the-central-bank-of-ai",
+      "published": "Sat, 12 Sep 2026 15:08:27 +0000",
+      "domain": "economist.com",
+      "summary": "But will its loans prove sound?"
     },
     {
-      "title": "Re-Engineering YouTube for the Living Room: Bringing \"Chrobalt\" to RDK",
-      "link": "https://www.collabora.com/news-and-blog/news-and-events/re-engineering-youtube-for-the-living-room-bringing-%E2%80%9Cchrobalt%E2%80%9D-to-rdk.html",
-      "published": "Fri, 11 Sep 2026 13:41:58 +0000"
+      "title": "Stabilizing Rust's Never Type",
+      "link": "https://lwn.net/SubscriberLink/1091015/d9e48318ed242b41/",
+      "published": "Wed, 09 Sep 2026 11:57:45 +0000",
+      "domain": "lwn.net",
+      "summary": "A function"
     },
     {
-      "title": "If coding is solved, what now?: Measuring the sloppiness of code",
-      "link": "https://earendil.com/posts/measuring-code-sloppiness/",
-      "published": "Fri, 11 Sep 2026 13:42:28 +0000"
+      "title": "An open letter to Dario: if you mean it, open the weights",
+      "link": "https://jacob.gold/posts/open-letter-to-dario-amodei-about-open-weights/",
+      "published": "Sat, 12 Sep 2026 19:15:32 +0000",
+      "domain": "jacob.gold",
+      "summary": ""
     },
     {
-      "title": "So you want to use OpenRouter?",
-      "link": "https://mmoustafa.com/blog/so-you-want-to-use-openrouter/",
-      "published": "Wed, 09 Sep 2026 05:37:21 +0000"
+      "title": "Will There Be a 7G?",
+      "link": "https://arxiv.org/abs/2609.01877",
+      "published": "Sat, 12 Sep 2026 17:05:31 +0000",
+      "domain": "arxiv.org",
+      "summary": "Abstract page for arXiv paper 2609.01877: Will there be a 7G?"
     },
     {
-      "title": "Cherenkov Radiation - traveling faster than light",
-      "link": "http://www.iaea.org/newscenter/news/what-is-cherenkov-radiation",
-      "published": "Fri, 11 Sep 2026 08:42:04 +0000"
+      "title": "We must pace the frontier",
+      "link": "https://darioamodei.com/post/we-must-pace-the-frontier",
+      "published": "Sat, 12 Sep 2026 14:10:49 +0000",
+      "domain": "darioamodei.com",
+      "summary": ""
     },
     {
-      "title": "Show HN: ClaudeStatsBar: your session is 486k deep and nothing told you",
-      "link": "https://github.com/Field-Logic-Ltd/ClaudeStatsBar",
-      "published": "Fri, 11 Sep 2026 13:43:53 +0000"
+      "title": "IKEA made a mod for Skyrim [video]",
+      "link": "https://www.youtube.com/watch?v=iZODN0QUgjI",
+      "published": "Thu, 10 Sep 2026 07:20:50 +0000",
+      "domain": "youtube.com",
+      "summary": ""
     },
     {
-      "title": "Shopify is moving from React Native back to Swift and Kotlin",
-      "link": "https://shopify.engineering/back-to-native",
-      "published": "Thu, 10 Sep 2026 14:09:31 +0000"
+      "title": "Microcode in Intel's 8087 floating-point chip: the scale instruction",
+      "link": "https://www.righto.com/2026/09/8087-microcode-reverse-engineering-fscale.html",
+      "published": "Sat, 12 Sep 2026 15:49:52 +0000",
+      "domain": "righto.com",
+      "summary": "In the 1970s, floating-point arithmetic was a mess. Computer manufacturers had a dozen incompatible arithmetic standards. Moreover, floating..."
     },
     {
-      "title": "RTK reports token savings, but our cost benchmarks disagree",
-      "link": "https://quesma.com/blog/does-rtk-make-ai-coding-cheaper/",
-      "published": "Fri, 11 Sep 2026 11:15:13 +0000"
+      "title": "I made a build visualizer to understand Bun's compile times",
+      "link": "https://lalitm.com/post/buildprof/",
+      "published": "Sat, 12 Sep 2026 14:45:28 +0000",
+      "domain": "lalitm.com",
+      "summary": "I built buildprof (Github), an open-source tracing tool that shows where the time goes when you compile software on Linux. Here\u2019s a realtime video of it profiling a clean build of ripgrep: Watch the \u2026"
     }
   ],
   "archive": []

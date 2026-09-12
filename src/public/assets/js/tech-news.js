@@ -5,17 +5,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabArchive = document.getElementById('tab-archive');
 
   function renderNewsItem(item, index) {
+    const domainBadge = item.domain 
+      ? `<span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-accent); background: var(--c-accent-dim); padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid rgba(124,58,237,0.2);">${item.domain}</span>` 
+      : '';
+    
+    const summaryHtml = item.summary 
+      ? `<p style="font-size: 0.86rem; color: var(--c-text-secondary); line-height: 1.5; margin-top: 6px; margin-bottom: 6px;">${item.summary}</p>` 
+      : '';
+
     return `
-      <a href="${item.link}" target="_blank" class="timeline-card reveal visible" style="display: flex; gap: var(--sp-4); text-decoration: none; align-items: center; cursor: pointer; flex-direction: row;">
-        <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--c-accent); opacity: 0.5; width: 40px; text-align: center; flex-shrink: 0;">
+      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="timeline-card reveal visible" style="display: flex; gap: var(--sp-4); text-decoration: none; align-items: flex-start; cursor: pointer; flex-direction: row; padding: var(--sp-4) var(--sp-5); transition: all var(--t-fast); border-radius: var(--r-md); background: var(--c-card); border: 1px solid var(--c-border);">
+        <div style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--c-accent); opacity: 0.6; width: 32px; text-align: center; flex-shrink: 0; margin-top: 2px;">
           ${index + 1}
         </div>
-        <div style="flex: 1;">
-          <h3 style="font-size: 1.1rem; color: var(--c-text); margin-bottom: 4px;">${item.title}</h3>
-          <p style="font-size: 0.8rem; color: var(--c-text-muted); font-family: var(--font-mono);">${new Date(item.published).toLocaleString()}</p>
+        <div style="flex: 1; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: 4px;">
+            <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--c-text); margin: 0; line-height: 1.4;">${item.title}</h3>
+            ${domainBadge}
+          </div>
+          ${summaryHtml}
+          <p style="font-size: 0.75rem; color: var(--c-text-muted); font-family: var(--font-mono); margin: 0; margin-top: 4px;">${new Date(item.published).toLocaleString()}</p>
         </div>
-        <div style="flex-shrink: 0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <div style="flex-shrink: 0; margin-top: 4px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
         </div>
       </a>
     `;
