@@ -130,10 +130,128 @@
           <p class="page-subtitle">The background story, interests, and philosophy.</p>
         </div>
       </header>
-      <div class="placeholder-box reveal">
-        <h2 style="font-family:var(--font-mono);font-size:1rem;color:var(--c-accent);margin-bottom:var(--sp-2)">[ WIP: Content Under Construction ]</h2>
-        <p style="font-size:0.86rem;color:var(--c-text-secondary)">This section will detail SRE philosophies, career timeline summaries, and personal interests. Coming soon.</p>
+      <!-- ── Bio & Introduction ── -->
+      <div class="bento-panel reveal" style="margin-bottom: var(--sp-6);">
+        <div class="bento-panel-inner">
+          <div class="bento-header">
+            <span class="bento-label">IDENTITY.BACKGROUND</span>
+            <span class="bento-status status-green">SRE &bull; DEVOPS</span>
+          </div>
+          <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:var(--sp-3);color:var(--c-text)">
+            Engineering Resilient Platforms, Eliminating Toil &amp; Scaling Observability
+          </h2>
+          <p style="font-size:0.92rem;line-height:1.7;color:var(--c-text-secondary);margin-bottom:var(--sp-4)">
+            Hi, I’m <strong style="color:var(--c-text)">Mohd Azam</strong>. I'm a DevOps &amp; Site Reliability Engineer based in Hyderabad, India, with over 6 years of deep infrastructure ownership across multi-tenant enterprise SaaS environments. Currently, I lead platform reliability and DevSecOps initiatives at <strong style="color:var(--c-text)">Mitratech</strong>, serving Global Fortune 500 legal and compliance enterprises.
+          </p>
+          <p style="font-size:0.92rem;line-height:1.7;color:var(--c-text-secondary)">
+            My work sits at the intersection of production reliability, cloud infrastructure automation, and developer velocity. Whether it’s architecting end-to-end distributed observability pipelines, orchestrating seamless multi-cloud migrations, or ruthlessly automating manual operational toil, I build systems designed to stay up when things get chaotic.
+          </p>
+        </div>
       </div>
+
+      <!-- ── Journey & Career Story ── -->
+      <section class="resume-section reveal" style="margin-bottom: var(--sp-8);">
+        <div class="resume-section-header">
+          <span class="resume-section-title">The Journey So Far</span>
+          <div class="resume-section-line"></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+          <!-- Phase 1 -->
+          <div class="bento-panel" style="border-left: 3px solid var(--c-accent)">
+            <div class="bento-panel-inner">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--sp-2)">
+                <h3 style="font-size:1rem;font-weight:600;color:var(--c-text)">The Early Crucible: Command Centers &amp; High-Pressure Ops</h3>
+                <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-accent)">2013 – 2019</span>
+              </div>
+              <p style="font-size:0.86rem;line-height:1.6;color:var(--c-text-secondary)">
+                My engineering journey began on the frontline of tech support and real-time operations. At <strong>Electronic Arts (EA)</strong>, I diagnosed network and hardware escalations during global AAA title launches like <em>Battlefield 4</em> and <em>Titanfall</em>. Later at <strong>Amazon’s Global Command Center</strong>, I served as a Real-Time Analyst monitoring live operational metrics across four international marketplaces during massive peak events like Prime Day. This phase forged my instincts for incident triage, real-time pressure mitigation, and clear stakeholder communication.
+              </p>
+            </div>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="bento-panel" style="border-left: 3px solid var(--c-accent)">
+            <div class="bento-panel-inner">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--sp-2)">
+                <h3 style="font-size:1rem;font-weight:600;color:var(--c-text)">The Multi-Cloud &amp; SRE Evolution: Mitratech</h3>
+                <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-accent)">2020 – 2026</span>
+              </div>
+              <p style="font-size:0.86rem;line-height:1.6;color:var(--c-text-secondary)">
+                Stepping into cloud operations at <strong>Mitratech</strong>, I took ownership of multi-tenant enterprise platforms (TeamConnect, TAP, Policy Hub, CMO, INSZoom) across Azure, AWS, Oracle Cloud, and legacy Rackspace footprints. I led critical cross-cloud migrations (Rackspace &rarr; Azure), engineered unified observability dashboards using New Relic and AppDynamics, and maintained a continuous <strong>99.9%+ uptime SLO</strong>. Along the way, I spearheaded FinOps automations that shaved deployment cycles from 50 minutes down to 10 minutes while returning over $4,300/year in infrastructure waste back to the bottom line.
+              </p>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="bento-panel" style="border-left: 3px solid var(--c-green)">
+            <div class="bento-panel-inner">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--sp-2)">
+                <h3 style="font-size:1rem;font-weight:600;color:var(--c-green)">Today: DevSecOps, Container Platforms &amp; GitOps</h3>
+                <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-green)">Present</span>
+              </div>
+              <p style="font-size:0.86rem;line-height:1.6;color:var(--c-text-secondary)">
+                Now as <strong>DevOps Engineer II</strong>, my focus is shifting security left and standardising cloud-native workflows. I build automated compliance gates into CI/CD pipelines, codify immutable infrastructure with Terraform, and explore Kubernetes orchestration, Falco runtime security, and AI-driven cloud cost optimization.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Engineering Philosophy ── -->
+      <section class="resume-section reveal" style="margin-bottom: var(--sp-8);">
+        <div class="resume-section-header">
+          <span class="resume-section-title">Core Philosophies</span>
+          <div class="resume-section-line"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:var(--sp-4)">
+          <div class="bento-panel">
+            <div class="bento-panel-inner">
+              <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-accent);margin-bottom:var(--sp-2)">01 / RELIABILITY</div>
+              <h4 style="font-size:0.95rem;font-weight:600;color:var(--c-text);margin-bottom:var(--sp-2)">SLOs Over Hype</h4>
+              <p style="font-size:0.82rem;color:var(--c-text-secondary);line-height:1.5">Reliability is a feature. Measurable error budgets and proactive observability give development teams the safety to move fast without breaking production.</p>
+            </div>
+          </div>
+
+          <div class="bento-panel">
+            <div class="bento-panel-inner">
+              <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-accent);margin-bottom:var(--sp-2)">02 / AUTOMATION</div>
+              <h4 style="font-size:0.95rem;font-weight:600;color:var(--c-text);margin-bottom:var(--sp-2)">Ruthless Toil Reduction</h4>
+              <p style="font-size:0.82rem;color:var(--c-text-secondary);line-height:1.5">If a manual task has to be performed more than twice, it deserves a script, a pipeline, or an architectural fix.</p>
+            </div>
+          </div>
+
+          <div class="bento-panel">
+            <div class="bento-panel-inner">
+              <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--c-accent);margin-bottom:var(--sp-2)">03 / SECURITY</div>
+              <h4 style="font-size:0.95rem;font-weight:600;color:var(--c-text);margin-bottom:var(--sp-2)">Shift-Left &amp; Zero-Trust</h4>
+              <p style="font-size:0.82rem;color:var(--c-text-secondary);line-height:1.5">Security isn't a post-deployment checklist. Embedding SAST/DAST, secret scanning, and least-privilege IAM directly into pipelines prevents disasters early.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Beyond the Terminal ── -->
+      <section class="resume-section reveal">
+        <div class="resume-section-header">
+          <span class="resume-section-title">Beyond the Terminal</span>
+          <div class="resume-section-line"></div>
+        </div>
+        <div class="bento-panel">
+          <div class="bento-panel-inner">
+            <p style="font-size:0.88rem;line-height:1.6;color:var(--c-text-secondary);margin-bottom:var(--sp-4)">
+              When I'm not tuning alerts or optimizing cloud infrastructure, you can find me:
+            </p>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2);font-size:0.85rem;color:var(--c-text-secondary)">
+              <li style="display:flex;align-items:center;gap:var(--sp-2)"><span style="color:var(--c-accent)">&#9656;</span> <span>Exploring high-concept cinema and reviewing world movies (check out my <a href="movies.html" style="color:var(--c-accent);text-decoration:none">Movie Log</a>)</span></li>
+              <li style="display:flex;align-items:center;gap:var(--sp-2)"><span style="color:var(--c-accent)">&#9656;</span> <span>Tracking cybersecurity zero-days, CVE feeds, and cloud-native developments</span></li>
+              <li style="display:flex;align-items:center;gap:var(--sp-2)"><span style="color:var(--c-accent)">&#9656;</span> <span>Building side projects like <em>Cloud Analyser</em> and personal zero-trust utility toolsets</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
     </div>
   
     <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
@@ -185,6 +303,24 @@
       </div>
     </aside>
     </div>
+
+  <!-- Footer (Full Width) -->
+  <footer class="page-footer">
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+      <span class="latex-badge">
+        <img src="assets/images/logo-dark.png" style="display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
+        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
+      </span>
+      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+    </div>
+    <div class="footer-links">
+      <a href="resume.html">Resume</a>
+      <a href="blog.html">Blog</a>
+      <a href="movies.html">Movies</a>
+      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
+    </div>
+  </footer>
+
   </main>
 
 
