@@ -1,5 +1,5 @@
 {
-  "last_fetch": "2026-09-13T01:58:00",
+  "last_fetch": "2026-09-13T02:10:00",
   "current_news": [
     {
       "title": "LG denies TV spying claims, says tracking and snooping concerns 'not true'",
@@ -13,42 +13,49 @@
       "link": "https://high5apps.github.io/josm-plugin-website-wizard/",
       "published": "Sat, 12 Sep 2026 16:25:08 +0000",
       "domain": "high5apps.github.io",
-      "summary": "Website Wizard JOSM Plugin"
+      "summary": "This quick tutorial will help you make a meaningful contribution to OpenStreetMap (OSM) in less than 15 minutes. By the end, you will have added an official website tag to a nearby shop or amenity. Soon after, your contribution will be ingested into dozens of free OSM-based services, helping people worldwide. Why a website tag? Once a place in OSM has a website tag, it becomes way easier to determine other helpful info about that place. Nearly every place\u2019s official website has info about its phone, opening_hours, email, and other..."
     },
     {
       "title": "Nvidia is the central bank of AI",
       "link": "https://www.economist.com/interactive/briefing/2026/09/03/nvidia-is-the-central-bank-of-ai",
       "published": "Sat, 12 Sep 2026 15:08:27 +0000",
       "domain": "economist.com",
-      "summary": "But will its loans prove sound?"
-    },
-    {
-      "title": "Stabilizing Rust's Never Type",
-      "link": "https://lwn.net/SubscriberLink/1091015/d9e48318ed242b41/",
-      "published": "Wed, 09 Sep 2026 11:57:45 +0000",
-      "domain": "lwn.net",
-      "summary": "A function"
+      "summary": "Nvidia has invested over $2bn in CoreWeave and owns around 11% of the company. CoreWeave buys AI chips from Nvidia to build data centres. Nvidia agrees to buy up to $6.3bn of unused data-centre capacity from CoreWeave until 2032. This is one of many deals Nvidia has done that use complex financial arrangements. It has become financially entangled with many of its own customers: neocloud providers, AI labs and even investment firms. Nvidia holds equity stakes in many of these companies. And it has also provided financial backstops to many..."
     },
     {
       "title": "An open letter to Dario: if you mean it, open the weights",
       "link": "https://jacob.gold/posts/open-letter-to-dario-amodei-about-open-weights/",
       "published": "Sat, 12 Sep 2026 19:15:32 +0000",
       "domain": "jacob.gold",
-      "summary": ""
+      "summary": "You published We Must Pace the Frontier today, which committed Anthropic to embedded third-party evaluators and asked governments to require every other frontier company to match. Sam Altman agreed within hours.1 I believe you\u2019re being sincere, so I\u2019m asking you to call for a different law, one that would actually slow things down, even though it would require real sacrifice on your part. Any AI model a company offers to the public has to be released as open weights. This wouldn\u2019t cover every model you train, just the ones you..."
+    },
+    {
+      "title": "Stabilizing Rust's Never Type",
+      "link": "https://lwn.net/SubscriberLink/1091015/d9e48318ed242b41/",
+      "published": "Wed, 09 Sep 2026 11:57:45 +0000",
+      "domain": "lwn.net",
+      "summary": "(Note: Rust also uses exclamation marks to indicate calls to macros. The way the syntax is constructed, a place where it is valid to use the never type is not a valid place to put a macro invocation and vice versa.) There are two reasons that Rust has a never type, one practical and one philosophical. The practical reason is that it allows for more efficient generic code. For example, consider the FromStr trait in the standard library, which is used for types that can be instantiated from a string:..."
     },
     {
       "title": "Will There Be a 7G?",
       "link": "https://arxiv.org/abs/2609.01877",
       "published": "Sat, 12 Sep 2026 17:05:31 +0000",
       "domain": "arxiv.org",
-      "summary": "Abstract page for arXiv paper 2609.01877: Will there be a 7G?"
+      "summary": "Abstract page for arXiv paper 2609.01877: Will there be a 7G? Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Adnan Aijaz [view email] [v1] Tue, 1 Sep 2026 21:20:51 UTC (190 KB) Full-text links: Access Paper: View a PDF of the paper titled Will there be a 7G?, by Adnan AijazView PDFHTML (experimental)TeX Source view license Current browse context: cs.NI < prev | next > new | recent | 2026-09 Change to browse by: cs References & Citations NASA ADSGoogle Scholar Semantic Scholar export BibTeX..."
+    },
+    {
+      "title": "Benchmark: CadQuery vs. OpenSCAD for agentic CAD work",
+      "link": "https://modelrift.com/blog/cadquery-vs-openscad/",
+      "published": "Sat, 12 Sep 2026 19:57:19 +0000",
+      "domain": "modelrift.com",
+      "summary": "We gave six AI agents the same three printable parts to model, three in CadQuery and three in OpenSCAD, then verified every mesh independently. Both toolchains shipped. The difference is in how they fail. ModelRift generates OpenSCAD for every model on the platform. That choice is worth re-testing occasionally, so we ran a controlled comparison against the most credible alternative for code-first CAD: CadQuery, a Python library on top of the OpenCascade B-rep kernel. The question was narrow: which one can an AI agent drive to a correct, printable, functional..."
     },
     {
       "title": "We must pace the frontier",
       "link": "https://darioamodei.com/post/we-must-pace-the-frontier",
       "published": "Sat, 12 Sep 2026 14:10:49 +0000",
       "domain": "darioamodei.com",
-      "summary": ""
+      "summary": "I have worked on AI for the last twelve years because I believe it could dramatically raise the quality of human life. I\u2019ve written often about these incredible benefits: I believe that AI could cure most major diseases in the next 5\u201310 years, greatly accelerate economic growth rates, create a world of abundance and empowerment, and usher in a renaissance of democracy and freedom. I feel the urgency personally. My own father died of a disease that was cured just a few years after his death, and I myself survived..."
     },
     {
       "title": "IKEA made a mod for Skyrim [video]",
@@ -63,13 +70,6 @@
       "published": "Sat, 12 Sep 2026 15:49:52 +0000",
       "domain": "righto.com",
       "summary": "In the 1970s, floating-point arithmetic was a mess. Computer manufacturers had a dozen incompatible arithmetic standards. Moreover, floating..."
-    },
-    {
-      "title": "I made a build visualizer to understand Bun's compile times",
-      "link": "https://lalitm.com/post/buildprof/",
-      "published": "Sat, 12 Sep 2026 14:45:28 +0000",
-      "domain": "lalitm.com",
-      "summary": "I built buildprof (Github), an open-source tracing tool that shows where the time goes when you compile software on Linux. Here\u2019s a realtime video of it profiling a clean build of ripgrep: Watch the \u2026"
     }
   ],
   "archive": []

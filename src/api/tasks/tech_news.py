@@ -51,7 +51,7 @@ def _cleanup_old_archives(data, max_days=10):
     ]
 
 def _fetch_meta_summary(url):
-    """Synchronous worker to fetch domain and brief description meta tag."""
+    """Fetch domain and rich ~80-100 word preview summary from article content or meta tags."""
     domain = urlparse(url).netloc.replace("www.", "")
     summary = ""
     try:
@@ -61,27 +61,60 @@ def _fetch_meta_summary(url):
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             }
         )
-        with urllib.request.urlopen(req, timeout=4) as response:
+        with urllib.request.urlopen(req, timeout=5) as response:
             content_type = response.headers.get("Content-Type", "")
             if "text/html" in content_type:
-                raw = response.read(65536).decode("utf-8", errors="ignore")
-                matches = re.findall(
+                raw = response.read(300000).decode("utf-8", errors="ignore")
+                
+                # Check meta description
+                meta_matches = re.findall(
                     r'<meta\s+(?:name|property)=[\"\'](?:og:description|description)[\"\']\s+content=[\"\'](.*?)[\"\']',
                     raw,
                     re.IGNORECASE
                 )
-                if not matches:
-                    matches = re.findall(
+                if not meta_matches:
+                    meta_matches = re.findall(
                         r'<meta\s+content=[\"\'](.*?)[\"\']\s+(?:name|property)=[\"\'](?:og:description|description)[\"\']',
                         raw,
                         re.IGNORECASE
                     )
-                if matches:
-                    summary = html.unescape(matches[0].strip())
-                    # Clean newlines and excessive whitespace
-                    summary = " ".join(summary.split())
-                    if len(summary) > 220:
-                        summary = summary[:217] + "..."
+                meta_desc = html.unescape(meta_matches[0].strip()) if meta_matches else ""
+                
+                # Locate article/main container
+                body_html = ""
+                body_match = re.search(r'<(?:article|main)[^>]*>(.*?)</(?:article|main)>', raw, flags=re.DOTALL | re.IGNORECASE)
+                if body_match:
+                    body_html = body_match.group(1)
+                else:
+                    body_match = re.search(r'<div[^>]*(?:id|class)=[\"\'][^\"\']*(?:article|content|post|entry|story)[^\"\']*[\"\'][^>]*>(.*?)</div>', raw, flags=re.DOTALL | re.IGNORECASE)
+                    body_html = body_match.group(1) if body_match else raw
+                
+                clean = re.sub(r'<(script|style|nav|header|footer|aside)[^>]*>.*?</\1>', '', body_html, flags=re.DOTALL | re.IGNORECASE)
+                paragraphs = re.findall(r'<p[^>]*>(.*?)</p>', clean, flags=re.DOTALL | re.IGNORECASE)
+                clean_ps = []
+                for p in paragraphs:
+                    text = re.sub(r'<[^>]+>', '', p)
+                    text = html.unescape(' '.join(text.split()))
+                    if len(text) > 40 and not any(k in text.lower() for k in ['cookie', 'javascript', 'subscribe', 'terms of', 'all rights reserved', 'sign up', 'member get started']):
+                        clean_ps.append(text)
+                
+                body_text = ' '.join(clean_ps)
+                
+                if meta_desc and len(meta_desc) > 50:
+                    if meta_desc.lower() not in body_text.lower():
+                        full_text = meta_desc + ' ' + body_text
+                    else:
+                        full_text = body_text
+                else:
+                    full_text = body_text if body_text else meta_desc
+                
+                words = full_text.split()
+                if len(words) > 90:
+                    summary = ' '.join(words[:90]) + '...'
+                elif len(words) >= 15:
+                    summary = ' '.join(words)
+                else:
+                    summary = meta_desc
     except Exception:
         pass
     return {"domain": domain, "summary": summary}
