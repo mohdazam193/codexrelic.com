@@ -5,24 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07151e">
   <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>SRE Tools — SSL Certificate Decoder · codexrelic.com</title>
-  <meta name="description" content="Free online SRE tools — decode X.509 SSL/TLS certificates instantly. View Common Name, SANs, validity, serial number, and signature algorithm.">
-  <meta name="keywords" content="SSL Certificate Decoder, Certificate Decoder, SSL Certificate, TLS, X.509, PEM Decoder, SRE Tools, Online Tools, Mohd Azam">
+  <title>SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com</title>
+  <meta name="description" content="Free online DevSecOps & SRE tools — decode X.509 SSL/TLS certificates and generate cryptographically secure ASP.NET Machine Keys in your browser. Zero-trust, 100% client-side.">
+  <meta name="keywords" content="Machine Key Generator, ASP.NET Machine Key, SSL Certificate Decoder, Certificate Decoder, SSL Certificate, TLS, X.509, HMACSHA256, AES-256, SRE Tools, Online Tools, Mohd Azam">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/tools.html">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://codexrelic.com/tools.html">
-  <meta property="og:title" content="SRE Tools — SSL Certificate Decoder · codexrelic.com">
-  <meta property="og:description" content="Free online X.509 SSL certificate decoder — instantly view CN, SANs, expiry, serial number and more.">
+  <meta property="og:title" content="SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com">
+  <meta property="og:description" content="Free online DevSecOps & SRE tools — decode X.509 SSL certificates and generate secure ASP.NET Machine Keys in-browser. Zero server logging.">
   <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://codexrelic.com/tools.html">
-  <meta name="twitter:title" content="SRE Tools — SSL Certificate Decoder · codexrelic.com">
-  <meta name="twitter:description" content="Free online X.509 SSL certificate decoder — instantly view CN, SANs, expiry, serial number and more.">
+  <meta name="twitter:title" content="SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com">
+  <meta property="twitter:description" content="Free online DevSecOps & SRE tools — decode X.509 SSL certificates and generate secure ASP.NET Machine Keys in-browser. Zero server logging.">
   <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
       <script>
@@ -125,12 +125,16 @@
         <h1 class="page-title">Sysadmin Tools</h1>
         <p class="page-desc">A growing suite of DevSecOps and Systems Engineering utilities built for maximum privacy and zero-trust.</p>
         
-        <div class="tools-tabs" style="display: flex; gap: var(--sp-2); margin-top: var(--sp-6); border-bottom: 1px solid var(--c-border); padding-bottom: var(--sp-2);">
+        <div class="tools-tabs" style="display: flex; gap: var(--sp-2); margin-top: var(--sp-6); border-bottom: 1px solid var(--c-border); padding-bottom: var(--sp-2); flex-wrap: wrap;">
           <button class="tool-tab-btn active" data-target="tab-cert-decoder" style="padding: var(--sp-2) var(--sp-4); border-radius: var(--r-sm); font-weight: 500; font-size: 0.9rem; transition: all var(--t-fast); background: var(--c-accent-dim); color: var(--c-accent); border: 1px solid var(--c-accent);">SSL Certificate Decoder</button>
-          <button class="tool-tab-btn" data-target="tab-coming-soon" style="padding: var(--sp-2) var(--sp-4); border-radius: var(--r-sm); font-weight: 500; font-size: 0.9rem; transition: all var(--t-fast); color: var(--c-text-muted);">Coming Soon</button>
+          <button class="tool-tab-btn" data-target="tab-machine-key" style="padding: var(--sp-2) var(--sp-4); border-radius: var(--r-sm); font-weight: 500; font-size: 0.9rem; transition: all var(--t-fast); color: var(--c-text-muted); display: inline-flex; align-items: center; gap: 6px;">
+            Machine Key Generator 
+            <span style="font-size: 0.68rem; font-weight: 700; background: rgba(16,185,129,0.15); color: var(--c-green); padding: 1px 6px; border-radius: var(--r-full); border: 1px solid rgba(16,185,129,0.3);">SECURE</span>
+          </button>
         </div>
       </div>
 
+      <!-- ═══ TAB 1: SSL CERTIFICATE DECODER ═══ -->
       <div id="tab-cert-decoder" class="tool-tab-pane active" style="display: block;">
         <div class="bento-panel reveal" style="margin-bottom: var(--sp-8);">
         <div class="bento-panel-inner">
@@ -172,13 +176,150 @@
       </div>
       </div> <!-- /tab-cert-decoder -->
 
-      <div id="tab-coming-soon" class="tool-tab-pane" style="display: none;">
-        <div class="bento-panel reveal">
-          <div class="bento-panel-inner" style="align-items: center; justify-content: center; padding: var(--sp-12) 0;">
-            <p style="color: var(--c-text-muted); font-family: var(--font-mono);">[ NEXT TOOL INITIALIZING... ]</p>
+      <!-- ═══ TAB 2: ASP.NET MACHINE KEY GENERATOR ═══ -->
+      <div id="tab-machine-key" class="tool-tab-pane" style="display: none;">
+        
+        <!-- Privacy Guarantee Banner -->
+        <div class="tool-security-banner reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div>
+            <strong>100% In-Browser Cryptography:</strong> Keys are generated using standard Web Crypto API (<code>window.crypto.getRandomValues</code>). No data ever leaves your device or touches any server. Keys are purely ephemeral and automatically destroyed on page refresh.
           </div>
         </div>
-      </div>
+
+        <!-- Configuration Panel -->
+        <div class="bento-panel reveal" style="margin-bottom: var(--sp-6);">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">SYS.TOOL.CONFIG</span>
+              <span class="bento-status status-green">EPHEMERAL MEMORY</span>
+            </div>
+
+            <!-- Framework Preset -->
+            <div class="tool-option-group" style="margin-top: var(--sp-4);">
+              <label class="tool-option-label">Framework Preset:</label>
+              <div class="tool-pill-grid" id="mk-preset-group">
+                <button type="button" class="tool-pill-btn active" data-preset="net45">ASP.NET 4.5+ (HMACSHA256 + AES)</button>
+                <button type="button" class="tool-pill-btn" data-preset="net20">ASP.NET 2.0 - 4.0 (SHA1 + AES)</button>
+                <button type="button" class="tool-pill-btn" data-preset="net11">ASP.NET 1.1 (SHA1 + 3DES)</button>
+                <button type="button" class="tool-pill-btn" data-preset="custom">Custom Configuration</button>
+              </div>
+            </div>
+
+            <!-- Validation Algorithm -->
+            <div class="tool-option-group">
+              <label class="tool-option-label">
+                Validation Method:
+                <span id="mk-val-info" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-muted); font-weight:normal;">(64 Bytes · 128 Hex Characters)</span>
+              </label>
+              <div class="tool-pill-grid" id="mk-val-group">
+                <button type="button" class="tool-pill-btn active" data-val="HMACSHA256" data-bytes="64">HMACSHA256</button>
+                <button type="button" class="tool-pill-btn" data-val="HMACSHA384" data-bytes="96">HMACSHA384</button>
+                <button type="button" class="tool-pill-btn" data-val="HMACSHA512" data-bytes="128">HMACSHA512</button>
+                <button type="button" class="tool-pill-btn" data-val="SHA1" data-bytes="64">SHA1</button>
+                <button type="button" class="tool-pill-btn" data-val="AES" data-bytes="32">AES</button>
+                <button type="button" class="tool-pill-btn" data-val="3DES" data-bytes="24">3DES</button>
+                <button type="button" class="tool-pill-btn" data-val="MD5" data-bytes="32">MD5</button>
+              </div>
+            </div>
+
+            <!-- Decryption Algorithm -->
+            <div class="tool-option-group">
+              <label class="tool-option-label">
+                Decryption Method:
+                <span id="mk-dec-info" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-muted); font-weight:normal;">(32 Bytes · 64 Hex Characters)</span>
+              </label>
+              <div class="tool-pill-grid" id="mk-dec-group">
+                <button type="button" class="tool-pill-btn active" data-dec="AES" data-bytes="32" data-name="AES-256">AES-256 (Default)</button>
+                <button type="button" class="tool-pill-btn" data-dec="AES" data-bytes="24" data-name="AES-192">AES-192</button>
+                <button type="button" class="tool-pill-btn" data-dec="AES" data-bytes="16" data-name="AES-128">AES-128</button>
+                <button type="button" class="tool-pill-btn" data-dec="3DES" data-bytes="24" data-name="3DES">3DES / TripleDES</button>
+                <button type="button" class="tool-pill-btn" data-dec="DES" data-bytes="8" data-name="DES">DES</button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: var(--sp-3); margin-top: var(--sp-6); flex-wrap: wrap;">
+              <button id="mk-generate-btn" class="btn btn-primary" style="flex: 1; justify-content: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Generate Machine Key
+              </button>
+              <button id="mk-clear-btn" class="btn btn-outline" style="justify-content: center;">
+                Clear Memory
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div id="mk-results-panel" class="bento-panel reveal" style="display: none; margin-bottom: var(--sp-8);">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">SYS.TOOL.OUTPUT</span>
+              <span class="bento-status status-green" id="mk-status-badge">GENERATED (IN-MEMORY)</span>
+            </div>
+
+            <!-- Full Web.config snippet -->
+            <div style="margin-top: var(--sp-4);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
+                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">Web.config &lt;machineKey&gt; Element:</span>
+                <button class="copy-badge-btn" id="mk-copy-xml-btn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copy XML</span>
+                </button>
+              </div>
+              <div class="terminal-output" style="margin-top: 0;">
+                <pre id="mk-xml-output" style="margin: 0; white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 0.8rem; color: var(--c-text);"></pre>
+              </div>
+            </div>
+
+            <!-- Validation Key breakdown -->
+            <div style="margin-top: var(--sp-5);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
+                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">
+                  Validation Key <span id="mk-val-key-count" style="color: var(--c-text-muted); font-size: 0.75rem; font-family: var(--font-mono); font-weight: normal;">(128 Hex)</span>:
+                </span>
+                <button class="copy-badge-btn" id="mk-copy-val-btn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copy Key</span>
+                </button>
+              </div>
+              <div class="tool-key-box" id="mk-val-key-box"></div>
+            </div>
+
+            <!-- Decryption Key breakdown -->
+            <div style="margin-top: var(--sp-4);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
+                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">
+                  Decryption Key <span id="mk-dec-key-count" style="color: var(--c-text-muted); font-size: 0.75rem; font-family: var(--font-mono); font-weight: normal;">(64 Hex)</span>:
+                </span>
+                <button class="copy-badge-btn" id="mk-copy-dec-btn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copy Key</span>
+                </button>
+              </div>
+              <div class="tool-key-box" id="mk-dec-key-box"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Educational Bento Section -->
+        <div class="bento-panel reveal">
+          <div class="bento-panel-inner">
+            <h3 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--c-text); margin-bottom: var(--sp-2);">What is an ASP.NET Machine Key?</h3>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; margin-bottom: var(--sp-4);">
+              The <code>&lt;machineKey&gt;</code> element in ASP.NET <code>web.config</code> specifies the algorithms and cryptographic keys used for encryption, decryption, and hash validation of <strong>Forms Authentication tickets</strong>, <strong>ViewState data</strong>, and anti-CSRF tokens.
+            </p>
+            <h4 style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--c-accent); margin-bottom: var(--sp-2);">Why Static Keys in Web Farms / Kubernetes?</h4>
+            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; margin-bottom: 0;">
+              By default, IIS sets keys to <code>AutoGenerate</code>. In a load-balanced cluster (AWS ALB, Azure App Service, Kubernetes, or IIS Web Farm), different servers generate differing random keys. A user authenticated on Server A will receive an encryption error when routed to Server B unless all nodes share identical, synchronized static machine keys in <code>web.config</code>.
+            </p>
+          </div>
+        </div>
+
+      </div> <!-- /tab-machine-key -->
 
     </div>
 

@@ -1245,3 +1245,110 @@ body::after {
   gap: 4px;
 }
 
+/* ============================================================
+   18. MACHINE KEY GENERATOR STYLES
+   ============================================================ */
+
+.tool-option-group {
+  margin-bottom: var(--sp-5);
+}
+
+.tool-option-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: var(--sp-2);
+}
+
+.tool-pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.tool-pill-btn {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-pill-btn:hover {
+  border-color: var(--c-accent);
+  color: var(--c-text);
+  background: var(--c-card-hover);
+}
+
+.tool-pill-btn.active {
+  background: var(--c-accent-dim);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.2);
+}
+
+.tool-key-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding: var(--sp-3) var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--c-text);
+  word-break: break-all;
+  user-select: all;
+  position: relative;
+  line-height: 1.5;
+}
+
+[data-theme="light"] .tool-key-box {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tool-security-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--r-sm);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 0.82rem;
+  color: var(--c-green);
+  margin-bottom: var(--sp-5);
+  line-height: 1.5;
+}
+
+.copy-badge-btn {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--t-fast);
+}
+
+.copy-badge-btn:hover {
+  background: var(--c-accent-dim);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+
