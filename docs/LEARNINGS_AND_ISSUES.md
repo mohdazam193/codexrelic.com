@@ -235,4 +235,14 @@ This is a living document tracking the timeline of architectural decisions, issu
 #### Issue 32: Apply Conflict with "kubectl-client-side-apply"
 - **What Happened:** After switching to `--server-side`, the pipeline failed with `Apply failed with 1 conflict: conflict with "kubectl-client-side-apply"`.
 - **The Root Cause:** Because the previous pipeline attempt partially applied resources using client-side apply (the default), Kubernetes marked the fields as "owned" by `kubectl-client-side-apply`. When the new server-side apply attempted to modify those same fields, Kubernetes blocked it to prevent a different field manager from overwriting changes.
+- **The Fix:** Added `--force-conflicts` to the `kubectl apply --server-side` command. This instructs Kubernetes that the pipeline agent is the authoritative controller and should forcefully claim ownership of the fields.
+
+#### Decision 33: Zero-Trust Client-Side Cryptography for DevSecOps Tools
+- **Context:** When building security utilities (such as the ASP.NET Machine Key Generator and X.509 SSL Certificate Decoder), traditional web architectures send sensitive keys or user certificates to a backend server API (e.g., FastAPI) to compute hashes or generate entropy.
+- **The Risk:** Sending production secrets or certificate bundles across network boundaries introduces data leakage risks, compliance concerns, and potential storage in server access logs or memory dumps.
+- **The Solution / Pattern:**
+  1. **Web Crypto API:** Implemented 100% in-browser CSPRNG using `window.crypto.getRandomValues(new Uint8Array(byteLength))` for generating high-entropy validation and decryption keys across all ASP.NET framework specifications (HMACSHA256, HMACSHA384, HMACSHA512, SHA1, AES-256, 3DES, MD5).
+  2. **Zero Network Transmission:** No API calls are dispatched to the backend; zero persistent storage is used (`localStorage`, `sessionStorage`, cookies, and server logs are completely bypassed).
+  3. **Ephemeral Lifecycle:** Generated keys exist exclusively in volatile browser JavaScript memory and are immediately wiped upon page refresh or tab closure, giving users verifiable zero-trust security.
+
 

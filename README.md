@@ -264,13 +264,25 @@ Built with an `htop`-inspired terminal aesthetic, this widget sits on the fronte
 
 ---
 
-### 🧰 Sysadmin Tools: SSL Certificate Decoder
+### 🧰 Sysadmin & DevSecOps Tools
 
-As part of a growing suite of DevSecOps utilities, the platform features an **SSL Certificate Decoder**.
+The platform provides a browser-native suite of DevSecOps and Systems Engineering utilities designed around a **strict zero-trust, client-side execution model**:
 
-This tool allows users to paste raw X.509 PEM certificates and instantly parse out vital details like the Subject, Issuer, Validity periods (with active countdowns), Serial Number, Signature Algorithm, and Subject Alternative Names (SANs).
+1. **SSL Certificate Decoder**:
+   - Allows engineers to paste raw X.509 PEM certificates and decode Subject, Issuer, Validity periods (with active expiry countdowns), Serial Number, Signature Algorithm, and Subject Alternative Names (SANs).
+   - Built with `node-forge` running 100% locally in the browser with zero server transmission.
 
-**Privacy-First Architecture:** Rather than sending sensitive certificate data to the FastAPI backend for processing, the decoder is built using a **pure client-side architecture** leveraging `node-forge`. The certificate is parsed 100% locally in the browser, guaranteeing zero-trust privacy and zero network overhead.
+2. **ASP.NET Machine Key Generator**:
+   - Generates cryptographically secure static `<machineKey>` elements for ASP.NET applications deployed across web farms, Kubernetes clusters, and load-balanced IIS nodes (AWS ALB, Azure App Service, ARR).
+   - **Supported Presets & Algorithms**:
+     - Frameworks: `ASP.NET 4.5+` (`HMACSHA256` + `AES-256`), `ASP.NET 2.0 - 4.0` (`SHA1` + `AES`), `ASP.NET 1.1` (`SHA1` + `3DES`), and custom combinations.
+     - Validation Algorithms: `HMACSHA256` (128 hex), `HMACSHA384` (192 hex), `HMACSHA512` (256 hex), `SHA1`, `AES`, `3DES`, `MD5`.
+     - Decryption Algorithms: `AES-256` (64 hex), `AES-192` (48 hex), `AES-128` (32 hex), `3DES`, `DES`.
+   - **Zero-Trust & Ephemeral Security**:
+     - Uses standard Web Crypto API (`window.crypto.getRandomValues`) for CSPRNG entropy.
+     - Keys are generated purely in volatile browser memory.
+     - Never transmitted over the network, never logged, and destroyed immediately upon page reload or tab closure.
+
 
 ---
 
