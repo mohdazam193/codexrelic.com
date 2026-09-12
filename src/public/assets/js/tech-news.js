@@ -4,32 +4,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabToday = document.getElementById('tab-today');
   const tabArchive = document.getElementById('tab-archive');
 
+  const fallbackImages = [
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=700&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=700&auto=format&fit=crop&q=80'
+  ];
+
   function renderNewsItem(item, index) {
     const rankNum = String(index + 1).padStart(2, '0');
-    const domainBadge = item.domain 
-      ? `<span class="news-domain-tag">${item.domain}</span>` 
-      : '';
+    const fallbackImg = fallbackImages[index % fallbackImages.length];
+    const imgSrc = item.image && item.image.startsWith('http') ? item.image : fallbackImg;
     
-    const summaryHtml = item.summary 
-      ? `<p class="news-card-summary">${item.summary}</p>` 
-      : '';
+    const domainText = item.domain || 'YCOMBINATOR.COM';
+    const faviconUrl = item.domain ? `https://www.google.com/s2/favicons?domain=${item.domain}&sz=64` : 'assets/images/logo-dark.png';
 
-    const dateStr = item.published ? new Date(item.published).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' }) : '';
+    const summaryText = item.summary || 'Click to view full story, source discussion and real-time updates on this trending technology topic.';
+
+    const words = (item.summary || '').split(' ').length;
+    const readTime = `${Math.max(2, Math.ceil(words / 35))} min read`;
 
     return `
       <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-card reveal visible">
-        <div class="news-card-header">
-          <span class="news-rank-badge">#${rankNum}</span>
-          ${domainBadge}
-          <div class="news-external-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </div>
+        <div class="news-card-media">
+          <span class="news-card-rank-overlay">#${rankNum}</span>
+          <img src="${imgSrc}" alt="${item.title}" class="news-card-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
         </div>
-        <h3 class="news-card-title">${item.title}</h3>
-        ${summaryHtml}
-        <div class="news-card-footer">
-          <span>${dateStr}</span>
-          <span class="news-read-link">Read Story &rarr;</span>
+        <div class="news-card-body">
+          <div class="news-card-eyebrow">
+            <span class="news-domain-tag">${domainText}</span>
+            <div class="news-external-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </div>
+          </div>
+          <h3 class="news-card-title">${item.title}</h3>
+          <p class="news-card-summary">${summaryText}</p>
+          <div class="news-card-footer">
+            <div class="news-author-meta">
+              <img src="${faviconUrl}" alt="" class="news-author-avatar" onerror="this.src='assets/images/logo-dark.png';">
+              <span class="news-author-name">${domainText}</span>
+            </div>
+            <span class="news-read-time">${readTime}</span>
+          </div>
         </div>
       </a>
     `;

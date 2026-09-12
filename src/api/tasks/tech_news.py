@@ -51,9 +51,10 @@ def _cleanup_old_archives(data, max_days=10):
     ]
 
 def _fetch_meta_summary(url):
-    """Fetch domain and rich ~80-100 word preview summary from article content or meta tags."""
+    """Fetch domain, og:image, and rich ~80-100 word preview summary from article content or meta tags."""
     domain = urlparse(url).netloc.replace("www.", "")
     summary = ""
+    image = ""
     try:
         req = urllib.request.Request(
             url,
@@ -66,6 +67,23 @@ def _fetch_meta_summary(url):
             if "text/html" in content_type:
                 raw = response.read(300000).decode("utf-8", errors="ignore")
                 
+                # Check og:image or twitter:image
+                img_matches = re.findall(
+                    r'<meta\s+(?:property|name)=[\"\'](?:og:image|twitter:image|twitter:image:src)[\"\']\s+content=[\"\'](.*?)[\"\']',
+                    raw,
+                    re.IGNORECASE
+                )
+                if not img_matches:
+                    img_matches = re.findall(
+                        r'<meta\s+content=[\"\'](.*?)[\"\']\s+(?:property|name)=[\"\'](?:og:image|twitter:image|twitter:image:src)[\"\']',
+                        raw,
+                        re.IGNORECASE
+                    )
+                if img_matches:
+                    found_img = html.unescape(img_matches[0].strip())
+                    if found_img.startswith("http"):
+                        image = found_img
+
                 # Check meta description
                 meta_matches = re.findall(
                     r'<meta\s+(?:name|property)=[\"\'](?:og:description|description)[\"\']\s+content=[\"\'](.*?)[\"\']',
@@ -117,7 +135,7 @@ def _fetch_meta_summary(url):
                     summary = meta_desc
     except Exception:
         pass
-    return {"domain": domain, "summary": summary}
+    return {"domain": domain, "summary": summary, "image": image}
 
 async def fetch_tech_news_task():
     logger.info(f"Starting Tech News background fetch loop (every {FETCH_INTERVAL_HOURS}h)...")
@@ -139,13 +157,14 @@ async def fetch_tech_news_task():
                 
                 news_items = []
                 for entry, meta in zip(raw_entries, meta_results):
-                    meta_dict = meta if isinstance(meta, dict) else {"domain": "", "summary": ""}
+                    meta_dict = meta if isinstance(meta, dict) else {"domain": "", "summary": "", "image": ""}
                     news_items.append({
                         "title": entry.title,
                         "link": entry.link,
                         "published": entry.get("published", ""),
                         "domain": meta_dict.get("domain", ""),
-                        "summary": meta_dict.get("summary", "")
+                        "summary": meta_dict.get("summary", ""),
+                        "image": meta_dict.get("image", "")
                     })
                 
                 if news_items:
