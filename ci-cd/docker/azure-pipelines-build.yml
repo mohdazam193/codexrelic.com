@@ -64,17 +64,37 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - script: |
-        echo "Creating Buildx builder..."
-        docker buildx create --use
+        echo "Creating and bootstrapping Buildx builder with retry resilience..."
+        docker buildx create --name container-builder --driver docker-container --use --driver-opt network=host || docker buildx use container-builder
+        
+        # Retry bootstrap up to 3 times in case of transient DockerHub TLS handshake timeouts
+        for i in {1..3}; do
+          echo "Attempt $i: Bootstrapping Buildkit..."
+          docker buildx inspect --bootstrap && break || {
+            echo "Bootstrap attempt $i failed due to network timeout, retrying in 5s..."
+            sleep 5
+          }
+        done
+
         echo "Building image with Buildx caching..."
-        docker buildx build \
-          --platform linux/arm64 \
-          --cache-from type=registry,ref=$(imageName):buildcache \
-          --cache-to type=registry,ref=$(imageName):buildcache,mode=max \
-          --load \
-          -t $(imageName):$(Build.BuildId) \
-          -t $(imageName):latest \
-          -f docker/Dockerfile .
+        for i in {1..2}; do
+          echo "Build attempt $i..."
+          docker buildx build \
+            --platform linux/arm64 \
+            --cache-from type=registry,ref=$(imageName):buildcache \
+            --cache-to type=registry,ref=$(imageName):buildcache,mode=max \
+            --load \
+            -t $(imageName):$(Build.BuildId) \
+            -t $(imageName):latest \
+            -f docker/Dockerfile . && break || {
+              if [ $i -eq 2 ]; then
+                echo "Build failed after retry."
+                exit 1
+              fi
+              echo "Build failed on attempt $i, retrying in 10s..."
+              sleep 10
+            }
+        done
       displayName: 'Build Docker Image with Buildx Caching'
 
     - task: SnykSecurityScan@1
