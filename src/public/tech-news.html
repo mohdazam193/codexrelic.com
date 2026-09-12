@@ -213,10 +213,14 @@
       </div>
     </header>
 
-      <!-- Blog List -->
-      <section class="blog-list reveal" id="blogs-container">
-        <!-- Loader -->
-        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading journal coordinates from database...</p>
+      <!-- Today's News -->
+      <section id="tech-news-container" class="blog-list reveal" style="display:flex; flex-direction:column; gap:var(--sp-4);">
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading today's tech news...</p>
+      </section>
+
+      <!-- Archive -->
+      <section id="tech-news-archive-container" style="display:none;">
+        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading archive...</p>
       </section>
 
     </div>
@@ -321,73 +325,6 @@
 </div>
 <script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
 <script src="assets/js/tech-news.js"></script>
-
-<!-- Dynamic Blog Loader Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', async () => {
-    const container = document.getElementById('blogs-container');
-
-    function escapeHTML(str) {
-      if (str === null || str === undefined) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-        .replace(/\//g, '&#x2F;');
-    }
-
-    async function loadBlogs() {
-      try {
-        const res = await fetch('/api/blogs');
-        const blogs = await res.json();
-        
-        container.innerHTML = '';
-        
-        if (blogs.length === 0) {
-          container.innerHTML = '<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">No blog posts found in database.</p>';
-          return;
-        }
-
-        blogs.forEach(post => {
-          const item = document.createElement('a');
-          const slug = escapeHTML(post.slug);
-          item.href = `blog/${slug}.html`;
-          item.className = 'blog-item';
-
-          const tagsHTML = post.tags.map(tag => `<span class="blog-tag">${escapeHTML(tag)}</span>`).join('');
-          const title = escapeHTML(post.title);
-          const createdAt = escapeHTML(post.created_at);
-          const category = escapeHTML(post.category);
-          const readTime = escapeHTML(post.read_time);
-          const summary = escapeHTML(post.summary);
-
-          item.innerHTML = `
-            <div class="blog-header">
-              <div>
-                <h2 class="blog-title">${title}</h2>
-                <div class="blog-meta">Posted: ${createdAt} · Category: ${category}</div>
-              </div>
-              <span class="read-time-badge">${readTime} min read</span>
-            </div>
-            <div class="blog-tag-row">
-              ${tagsHTML}
-            </div>
-            <p class="blog-summary">
-              ${summary}
-            </p>
-          `;
-          container.appendChild(item);
-        });
-
-      } catch (err) {
-        container.innerHTML = `<p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-red)">Failed to load data from server: ${escapeHTML(err.message)}</p>`;
-      }
-    }
-
-    loadBlogs();
-  });
-</script>
 </body>
 </html>
+
