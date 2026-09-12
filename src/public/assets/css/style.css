@@ -1119,3 +1119,129 @@ body::after {
     display: none;
   }
 }
+
+/* ============================================================
+   17. TECH NEWS GRID & TILES
+   ============================================================ */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--sp-5);
+  margin-top: var(--sp-4);
+}
+
+@media (max-width: 640px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+  text-decoration: none;
+  transition: transform var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--c-accent);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35), var(--c-accent-glow);
+  background: var(--c-card-hover);
+}
+
+.news-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+
+.news-rank-badge {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--c-accent);
+  background: var(--c-accent-dim);
+  padding: 2px 7px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-border-accent);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.news-domain-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-muted);
+  background: var(--c-surface);
+  padding: 2px 7px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-border);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.news-external-icon {
+  margin-left: auto;
+  color: var(--c-text-muted);
+  transition: color var(--t-fast), transform var(--t-fast);
+  flex-shrink: 0;
+}
+
+.news-card:hover .news-external-icon {
+  color: var(--c-accent);
+  transform: translate(2px, -2px);
+}
+
+.news-card-title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.4;
+  margin: 0 0 var(--sp-3) 0;
+  transition: color var(--t-fast);
+}
+
+.news-card:hover .news-card-title {
+  color: var(--c-accent);
+}
+
+.news-card-summary {
+  font-size: 0.85rem;
+  color: var(--c-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 var(--sp-4) 0;
+  flex: 1;
+}
+
+.news-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-muted);
+  border-top: 1px solid var(--c-border);
+  padding-top: var(--sp-3);
+  margin-top: auto;
+}
+
+.news-read-link {
+  color: var(--c-accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
