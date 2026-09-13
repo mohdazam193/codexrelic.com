@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#07151e">
   <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
   <title>Contact — Mohd Azam · codexrelic.com</title>
-  <meta name="description" content="Contact Mohd Azam — reach out for SRE consulting, DevOps collaboration, or platform engineering opportunities. Based in Hyderabad, India.">
-  <meta name="keywords" content="Contact, Mohd Azam, SRE Consulting, DevOps, Hire, Platform Engineer, Hyderabad">
+  <meta name="description" content="Get in touch with Mohd Azam — reach out for SRE consulting, DevOps collaboration, or platform engineering opportunities. Based in Hyderabad, India.">
+  <meta name="keywords" content="Contact, Mohd Azam, SRE Consulting, DevOps, Hire, Platform Engineer, Hyderabad, DevSecOps">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/contact.html">
 
@@ -25,7 +25,7 @@
   <meta name="twitter:description" content="Reach out to Mohd Azam for SRE consulting, DevOps collaboration, or career opportunities.">
   <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
-          <script>
+  <script>
     (function(){
       var t=localStorage.getItem('cr-theme')||
         (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
@@ -34,87 +34,6 @@
   </script>
 
   <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
-
-  <style>
-    /* ── Contact-specific additions ── */
-    .contact-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--sp-8);
-    }
-
-    .form-card {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-lg);
-      padding: var(--sp-8);
-      position: relative;
-    }
-
-    .form-group {
-      margin-bottom: var(--sp-5);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-2);
-    }
-
-    .form-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--c-text-secondary);
-    }
-
-    .form-input, .form-textarea {
-      width: 100%;
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-sm);
-      padding: var(--sp-3) var(--sp-4);
-      color: var(--c-text);
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: border-color var(--t-fast);
-    }
-
-    .form-input:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--c-accent);
-    }
-
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    /* Success state card replacement */
-    .form-success-overlay {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: var(--sp-4);
-      padding: var(--sp-8) 0;
-    }
-
-    .success-icon {
-      width: 48px; height: 48px;
-      background: var(--c-green-dim);
-      border-radius: 50%;
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--c-green);
-    }
-
-    .success-title {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--c-text);
-    }
-  </style>
 </head>
 
 <body>
@@ -206,54 +125,132 @@
       <header class="page-header">
         <div class="page-header-text">
           <p class="page-eyebrow">Communications Ingress</p>
-          <h1 class="page-title">Contact</h1>
-          <p class="page-subtitle">Submit a query. Routed via stateless POST API. No persistent cookies.</p>
+          <h1 class="page-title">Get in Touch</h1>
+          <p class="page-subtitle">Direct dispatch coordinates for SRE consulting, systems engineering, and open-source collaboration.</p>
         </div>
       </header>
 
-      <!-- Contact Container -->
-      <div class="contact-container reveal">
+      <!-- ── Section 1: Direct Communication Channels (3-Bento Grid) ── -->
+      <div class="contact-bento-grid reveal">
         
-        <div class="form-card">
+        <!-- Email Card -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <span class="bento-label">DIRECT DISPATCH</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
+          <h3 class="contact-card-title">Primary Inbox</h3>
+          <p class="contact-card-value">aazam.mohammad193@gmail.com</p>
+          <p class="contact-card-desc">Direct communications line for architecture inquiries, consulting, and confidential opportunities.</p>
+          <div class="contact-actions">
+            <button class="copy-badge-btn" id="copy-email-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy Email</span>
+            </button>
+            <a href="mailto:aazam.mohammad193@gmail.com" class="btn btn-primary btn-sm" style="padding: 4px 12px; font-size: 0.78rem;">
+              Compose &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Social & Code Networks -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <span class="bento-label">NETWORKS</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </div>
+          <h3 class="contact-card-title">Professional Profiles</h3>
+          <p class="contact-card-value">linkedin &bull; github</p>
+          <p class="contact-card-desc">Review open-source repositories, systems telemetry scripts, and professional engineering history.</p>
+          <div class="contact-actions">
+            <a href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              LinkedIn &nearr;
+            </a>
+            <a href="https://github.com/mohdazam193" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              GitHub &nearr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Operations & Location -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <span class="bento-label">AVAILABILITY</span>
+            <span class="bento-status status-green">ONLINE</span>
+          </div>
+          <h3 class="contact-card-title">Hyderabad, India</h3>
+          <p class="contact-card-value" id="live-clock">IST (UTC+5:30) &bull; --:--:--</p>
+          <p class="contact-card-desc">Open for Senior SRE, Platform Engineering &amp; DevSecOps opportunities (Remote / Hybrid).</p>
+          <div class="contact-actions">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--c-green); background: rgba(16,185,129,0.1); padding: 3px 8px; border-radius: var(--r-sm); border: 1px solid rgba(16,185,129,0.25);">
+              &bull; Response SLA &lt; 24h
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Section 2: Interactive Transmission Console ── -->
+      <div class="contact-form-panel reveal">
+        
+        <div class="bento-header" style="margin-bottom: var(--sp-4);">
+          <span class="bento-label">SYS.COMMS.TRANSMITTER</span>
+          <span class="bento-status status-green">ENCRYPTED DISPATCH</span>
+        </div>
+
+        <!-- Quick Subject Presets -->
+        <p style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--c-text-muted); margin-bottom: var(--sp-2);">
+          Select Inquiry Type:
+        </p>
+        <div class="contact-preset-grid">
+          <button type="button" class="contact-preset-btn active" data-subject="[SRE Role / Opportunity]">SRE Opportunity</button>
+          <button type="button" class="contact-preset-btn" data-subject="[DevOps Consulting / Contract]">DevOps Consulting</button>
+          <button type="button" class="contact-preset-btn" data-subject="[Open Source / devops-cms]">Open Source / devops-cms</button>
+          <button type="button" class="contact-preset-btn" data-subject="[General Systems Discussion]">General Inquiry</button>
+        </div>
+
+        <!-- Form Ingress -->
+        <form id="contact-form">
           
-          <!-- Success State Display -->
-          <div class="form-success-overlay" id="success-overlay">
-            <div class="success-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-4); margin-bottom: var(--sp-4);">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="form-name">Sender Name</label>
+              <input class="form-input" type="text" id="form-name" required placeholder="e.g. Sarah Connor">
             </div>
-            <h2 class="success-title">Message Transmitted</h2>
-            <p style="font-size:0.86rem;color:var(--c-text-secondary);max-width:320px">Your query has been posted to the serverless endpoint. I will respond to your provided coordinates shortly.</p>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="form-email">Sender Email</label>
+              <input class="form-input" type="email" id="form-email" required placeholder="e.g. sarah@cyberdyne.com">
+            </div>
           </div>
 
-          <!-- The Form -->
-          <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-            
-            <div class="form-group">
-              <label class="form-label" for="form-name">Name</label>
-              <input class="form-input" type="text" id="form-name" name="name" required placeholder="e.g. John Doe">
-            </div>
+          <div class="form-group" style="margin-bottom: var(--sp-4);">
+            <label class="form-label" for="form-subject">Subject Line</label>
+            <input class="form-input" type="text" id="form-subject" required value="[SRE Role / Opportunity]">
+          </div>
 
-            <div class="form-group">
-              <label class="form-label" for="form-email">Email Coordinate</label>
-              <input class="form-input" type="email" id="form-email" name="email" required placeholder="e.g. name@example.com">
-            </div>
+          <div class="form-group" style="margin-bottom: var(--sp-5);">
+            <label class="form-label" for="form-message">Message Payload</label>
+            <textarea class="form-textarea" id="form-message" required placeholder="Describe your project, team requirements, or discussion topic..." style="height: 140px;"></textarea>
+          </div>
 
-            <div class="form-group">
-              <label class="form-label" for="form-subject">Subject</label>
-              <input class="form-input" type="text" id="form-subject" name="subject" required placeholder="SRE Opportunity / Freelance Inquiry">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="form-message">Payload (Message)</label>
-              <textarea class="form-textarea" id="form-message" name="message" required placeholder="Write your message here..."></textarea>
-            </div>
-
-            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center;margin-top:var(--sp-4)">
-              Transmit Message
+          <div style="display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center;">
+            <button class="btn btn-primary" type="submit" id="submit-btn" style="flex: 1; justify-content: center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              Transmit via Email Client
             </button>
-          </form>
+            <button type="button" class="btn btn-outline" id="copy-payload-btn">
+              Copy Payload
+            </button>
+          </div>
 
-        </div><!-- /form-card -->
+          <!-- Privacy Guarantee -->
+          <div style="display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-4); font-size: 0.75rem; color: var(--c-text-muted); font-family: var(--font-mono);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Direct Ingress Guarantee: Zero trackers or third-party CRM scrapers. Dispatches directly to personal mailbox.</span>
+          </div>
+
+        </form>
 
       </div>
 
@@ -265,14 +262,14 @@
       <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
         <div class="vm-widget-header">
           <span class="vm-widget-title">htop - Live VM</span>
-      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
-        <button class="htop-tab active">Live</button>
-      </div>
+          <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
+            <button class="htop-tab active">Live</button>
+          </div>
           <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
         </div>
         <div class="vm-widget-body">
           <div id="vm-cpu-container" class="vm-stat-section">
-            <!-- CPU bars will be injected here -->
+            <!-- CPU bars injected dynamically -->
           </div>
           <div class="vm-stat-section">
             <div class="vm-stat-row">
@@ -308,11 +305,27 @@
       </div>
     </aside>
     </div>
+
+  <!-- Footer (Full Width) -->
+  <footer class="page-footer">
+    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+      <span class="latex-badge">
+        <img src="assets/images/logo-dark.png" style="display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
+        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
+      </span>
+      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+    </div>
+    <div class="footer-links">
+      <a href="resume.html">Resume</a>
+      <a href="blog.html">Blog</a>
+      <a href="movies.html">Movies</a>
+      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
+    </div>
+  </footer>
+
   </main>
 
-
-
-<!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
     <div class="mobile-nav-items">
       <a href="index.html" class="mobile-nav-item">
@@ -357,44 +370,97 @@
       </a>
     </div>
   </nav>
+
 </div>
 
 <script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
 
-<!-- Stateless submit intercept script -->
 <script>
-  const form = document.getElementById('contact-form');
-  const success = document.getElementById('success-overlay');
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Live Local Clock (IST · UTC+5:30)
+    const clockEl = document.getElementById('live-clock');
+    function updateClock() {
+      if (!clockEl) return;
+      const now = new Date();
+      const istTime = now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      clockEl.textContent = `IST (UTC+5:30) • ${istTime}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const data = new FormData(form);
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Transmitting...';
-
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
+    // 2. Copy Email helper
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('aazam.mohammad193@gmail.com').then(() => {
+          const original = copyEmailBtn.innerHTML;
+          copyEmailBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span style="color:var(--c-green)">Copied!</span>`;
+          setTimeout(() => { copyEmailBtn.innerHTML = original; }, 2000);
         });
+      });
+    }
 
-        if (response.ok) {
-          form.style.display = 'none';
-          success.style.display = 'flex';
-        } else {
-          throw new Error('Server returned non-200 status');
+    // 3. Subject Preset Pills
+    const presetBtns = document.querySelectorAll('.contact-preset-btn');
+    const subjectInput = document.getElementById('form-subject');
+    const messageInput = document.getElementById('form-message');
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (subjectInput) {
+          subjectInput.value = btn.getAttribute('data-subject');
         }
-      } catch (err) {
-        alert('Transmission failed. Please check your connectivity or reach out directly at aazam.mohammad193@gmail.com');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Transmit Message';
-      }
+        if (messageInput) {
+          messageInput.focus();
+        }
+      });
     });
-  }
+
+    // 4. Copy Payload helper
+    const copyPayloadBtn = document.getElementById('copy-payload-btn');
+    if (copyPayloadBtn) {
+      copyPayloadBtn.addEventListener('click', () => {
+        const name = document.getElementById('form-name').value || '[Sender Name]';
+        const email = document.getElementById('form-email').value || '[Sender Email]';
+        const subject = subjectInput ? subjectInput.value : '';
+        const message = messageInput ? messageInput.value : '';
+
+        const payload = `To: aazam.mohammad193@gmail.com\nSubject: ${subject}\nFrom: ${name} <${email}>\n\n${message}`;
+
+        navigator.clipboard.writeText(payload).then(() => {
+          const originalText = copyPayloadBtn.textContent;
+          copyPayloadBtn.textContent = '✓ Payload Copied!';
+          setTimeout(() => { copyPayloadBtn.textContent = originalText; }, 2000);
+        });
+      });
+    }
+
+    // 5. Form Submit -> Mailto Transmitter
+    const form = document.getElementById('contact-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('form-name').value.trim();
+        const email = document.getElementById('form-email').value.trim();
+        const subject = subjectInput.value.trim();
+        const message = messageInput.value.trim();
+
+        const body = `Hi Azam,\n\n${message}\n\n---\nFrom: ${name}\nContact: ${email}`;
+        const mailtoUrl = `mailto:aazam.mohammad193@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoUrl;
+      });
+    }
+  });
 </script>
 </body>
 </html>
+

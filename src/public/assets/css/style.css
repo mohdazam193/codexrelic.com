@@ -1395,4 +1395,103 @@ body::after {
   color: var(--c-accent);
 }
 
+/* ============================================================
+   19. CONTACT & COMMS INGRESS STYLES
+   ============================================================ */
+
+.contact-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.contact-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-accent);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.25), var(--c-accent-glow);
+}
+
+.contact-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+}
+
+.contact-card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 4px;
+}
+
+.contact-card-value {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--c-accent);
+  word-break: break-all;
+  margin-bottom: var(--sp-2);
+}
+
+.contact-card-desc {
+  font-size: 0.82rem;
+  color: var(--c-text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--sp-4);
+  flex: 1;
+}
+
+.contact-actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.contact-form-panel {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-8);
+}
+
+.contact-preset-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+
+.contact-preset-btn {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+  padding: 4px 10px;
+  border-radius: var(--r-sm);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.contact-preset-btn:hover, .contact-preset-btn.active {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+  background: var(--c-accent-dim);
+}
+
+
 
