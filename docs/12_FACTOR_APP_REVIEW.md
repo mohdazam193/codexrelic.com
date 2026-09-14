@@ -17,8 +17,8 @@ This document reviews the `codexrelic.com` application against the industry-stan
 
 ### 3. Config 🟢 (Pass)
 *Store config in the environment.*
-- **Implementation:** Zero credentials or environment-specific configurations are hardcoded. Everything (`MONGO_URI`, `JWT_SECRET`, etc.) is loaded via environment variables using `os.getenv()`.
-- **Secrets Management:** Environment variables are securely injected at deployment time by reading directly from environment-specific Azure Key Vaults.
+- **Implementation:** Zero credentials or environment-specific configurations are hardcoded. Everything (`MONGO_URI`, `JWT_SECRET`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_RECIPIENT_EMAIL`, etc.) is loaded via environment variables using `os.getenv()`.
+- **Secrets Management:** Environment variables are securely injected at deployment time by reading directly from environment-specific Azure Key Vaults (`deploy-stage.yml`). See [docs/CONTACT_RELAY_GATEWAY.md](docs/CONTACT_RELAY_GATEWAY.md) for the full specification.
 
 ### 4. Backing Services 🟢 (Pass)
 *Treat backing services as attached resources.*

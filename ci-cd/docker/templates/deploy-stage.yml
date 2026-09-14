@@ -52,7 +52,7 @@ stages:
             inputs:
               azureSubscription: 'keyvalute-codex'
               KeyVaultName: ${{ parameters.keyVaultName }}
-              SecretsFilter: 'MONGO-URI,JWT-SECRET,O2-ROOT-USER,O2-ROOT-PASSWORD'
+              SecretsFilter: 'MONGO-URI,JWT-SECRET,O2-ROOT-USER,O2-ROOT-PASSWORD,SMTP-USER,SMTP-PASS'
               RunAsPreJob: true
 
 
@@ -79,6 +79,11 @@ stages:
               APP_ENV=${{ parameters.namespace }}
               O2_ROOT_USER=$(O2-ROOT-USER)
               O2_ROOT_PASSWORD=$(O2-ROOT-PASSWORD)
+              SMTP_HOST=smtp.gmail.com
+              SMTP_PORT=587
+              SMTP_USER=$(SMTP-USER)
+              SMTP_PASS=$(SMTP-PASS)
+              CONTACT_RECIPIENT_EMAIL=aazam.mohammad193@gmail.com
               EOF
               
               cat > $(Pipeline.Workspace)/o2-values.yaml << 'EOF'

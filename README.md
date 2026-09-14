@@ -72,6 +72,7 @@ It is not a collection of disconnected demos.
 | 🌍 DNS | GoDaddy |
 | 🏗️ IaC | Terraform |
 | 🐍 Backend | Python 3.11 + FastAPI + Uvicorn |
+| 📨 Ingress Relay | Zero-Exposure Contact Gateway (SMTP + MongoDB) |
 | 🔒 Auth | Ed25519 + bcrypt + JWT |
 | 🎨 Frontend | Vanilla HTML / CSS / JavaScript |
 
