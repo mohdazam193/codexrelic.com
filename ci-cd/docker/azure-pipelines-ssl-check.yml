@@ -22,10 +22,10 @@ steps:
       sudo kubectl get certificates -A
       
       echo "Checking for expired or not ready certificates..."
-      FAILS=$(sudo kubectl get certificates -A -o jsonpath='{range .items[?(@.status.conditions[?(@.type=="Ready")].status=="False")]}{.metadata.namespace}/{.metadata.name}{"\n"}{end}')
+      FAILS=$(sudo kubectl get certificates -A --no-headers | awk '$3 != "True" {print $1 "/" $2 " (Ready: " $3 ")"}')
       
       if [ -n "$FAILS" ]; then
-        echo "##[error] The following certificates are failing or expired:"
+        echo "##[error] The following certificates are not ready or failing:"
         echo "$FAILS"
         exit 1
       else
