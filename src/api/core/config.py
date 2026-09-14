@@ -17,3 +17,10 @@ APP_ENV = os.getenv("APP_ENV", "dev")
 TECH_NEWS_FILE = os.path.join(BASE_DIR, "data", "tech_news.json")
 TECH_NEWS_URL = "https://news.ycombinator.com/rss"
 CVE_FEED_URL = "https://cve.report/cve.rss"
+
+# SMTP Email Dispatch Configuration
+SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+SMTP_USER = os.getenv("SMTP_USER", "")
+SMTP_PASS = os.getenv("SMTP_PASS", "")
+CONTACT_RECIPIENT_EMAIL = os.getenv("CONTACT_RECIPIENT_EMAIL", "aazam.mohammad193@gmail.com")

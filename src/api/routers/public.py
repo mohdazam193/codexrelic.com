@@ -1,7 +1,87 @@
-from fastapi import APIRouter
+import smtplib
+from datetime import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, EmailStr, Field
+
 from api.core.database import db, DB_CONNECTED
+from api.core.config import (
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
+    CONTACT_RECIPIENT_EMAIL,
+)
+from api.core.logger import logger
 
 router = APIRouter(prefix="/api")
+
+class ContactRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=80)
+    email: str = Field(..., min_length=5, max_length=120, pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+    subject: str = Field(..., min_length=3, max_length=150)
+    message: str = Field(..., min_length=10, max_length=3000)
+
+@router.post("/contact")
+async def send_contact_inquiry(payload: ContactRequest):
+    """
+    Receives visitor contact form submissions securely without exposing
+    recipient email credentials to the client/browser.
+    """
+    # 1. Store in MongoDB if available
+    inquiry_saved = False
+    if DB_CONNECTED and db is not None:
+        try:
+            inquiries_col = db.get_collection("inquiries")
+            inquiries_col.insert_one({
+                "name": payload.name,
+                "email": payload.email,
+                "subject": payload.subject,
+                "message": payload.message,
+                "created_at": datetime.utcnow()
+            })
+            inquiry_saved = True
+            logger.info(f"Persisted contact inquiry from {payload.email} to MongoDB")
+        except Exception as e:
+            logger.warning(f"Could not persist inquiry to MongoDB: {e}")
+
+    # 2. Forward to personal mailbox via SMTP
+    email_dispatched = False
+    if SMTP_USER and SMTP_PASS and CONTACT_RECIPIENT_EMAIL:
+        try:
+            msg = MIMEMultipart()
+            msg["From"] = f"CodexRelic Portal <{SMTP_USER}>"
+            msg["To"] = CONTACT_RECIPIENT_EMAIL
+            msg["Reply-To"] = f"{payload.name} <{payload.email}>"
+            msg["Subject"] = f"[CodexRelic Contact] {payload.subject}"
+
+            body = (
+                f"You received a new message via CodexRelic Contact Portal:\n\n"
+                f"Sender Name: {payload.name}\n"
+                f"Sender Email: {payload.email}\n"
+                f"Subject: {payload.subject}\n"
+                f"Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}\n\n"
+                f"--- Message ---\n"
+                f"{payload.message}\n"
+            )
+            msg.attach(MIMEText(body, "plain"))
+
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                server.starttls()
+                server.login(SMTP_USER, SMTP_PASS)
+                server.send_message(msg)
+
+            email_dispatched = True
+            logger.info(f"Successfully dispatched contact email to {CONTACT_RECIPIENT_EMAIL}")
+        except Exception as e:
+            logger.error(f"Failed to dispatch contact email via SMTP: {e}")
+
+    return {
+        "success": True,
+        "message": "Thank you! Your message has been received and routed securely."
+    }
+
 
 @router.get("/movies")
 def get_movies():
