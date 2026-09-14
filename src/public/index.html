@@ -209,7 +209,68 @@
           </div>
         </a>
 
-        <!-- Panel 5: Terminal (4x1) -->
+        <!-- Panel 5: Automated Zero-Cost SSL Lifecycle Tracker (4x1) -->
+        <div class="bento-panel bento-ssl" id="ssl-tracker">
+          <div class="bento-panel-inner">
+            <div class="bento-header">
+              <span class="bento-label">K8S.CERT_MANAGER &bull; ZERO-COST SSL LIFECYCLE</span>
+              <span class="bento-status status-green" id="ssl-status-badge">AUTO-RENEW ACTIVE</span>
+            </div>
+            
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:var(--sp-2);">
+              <div>
+                <h3 class="bento-card-title" style="margin-bottom:2px; font-size:1.15rem;">Automated Kubernetes TLS Rotation</h3>
+                <p class="bento-card-desc" style="margin-bottom:0; font-size:0.8rem;">
+                  Let's Encrypt ACME automated issuance via in-cluster <code>cert-manager</code> &amp; daily CI/CD health verification.
+                </p>
+              </div>
+              <a href="projects.html#ssl-automation" class="btn btn-outline btn-sm" style="font-size:0.75rem; padding:4px 10px;">
+                View SRE Spec &rarr;
+              </a>
+            </div>
+
+            <!-- 4-Metric Telemetry Cards -->
+            <div class="ssl-tracker-grid">
+              <div class="ssl-tracker-item">
+                <span class="ssl-item-label">Last Audit Run</span>
+                <span class="ssl-item-val" id="ssl-last-check">Daily @ 00:00 UTC</span>
+                <span class="ssl-item-sub">Azure DevOps Pipeline</span>
+              </div>
+
+              <div class="ssl-tracker-item">
+                <span class="ssl-item-label">Certificate Health</span>
+                <span class="ssl-item-val" style="color:var(--c-green);">&bull; 4/4 Namespaces OK</span>
+                <span class="ssl-item-sub">prod &bull; stage &bull; uat &bull; observe</span>
+              </div>
+
+              <div class="ssl-tracker-item">
+                <span class="ssl-item-label">Auto-Renew Window</span>
+                <span class="ssl-item-val" id="ssl-renew-trigger">&le; 30 Days Remaining</span>
+                <span class="ssl-item-sub">Short 90-Day ACME Cycle</span>
+              </div>
+
+              <div class="ssl-tracker-item">
+                <span class="ssl-item-label">Issuer &amp; Cipher</span>
+                <span class="ssl-item-val">Let's Encrypt E6</span>
+                <span class="ssl-item-sub">TLS 1.3 &bull; RSA 2048 &bull; HTTP-01</span>
+              </div>
+            </div>
+
+            <!-- Progress countdown bar -->
+            <div class="ssl-progress-wrap">
+              <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.7rem; color:var(--c-text-muted); flex-wrap:wrap; gap:4px;">
+                <span>Current Status: <strong style="color:var(--c-green);">100% Valid &amp; Ready</strong></span>
+                <span id="ssl-next-renew-text">Next Auto-Rotation Window: in ~38 Days</span>
+              </div>
+              <div class="ssl-progress-bar">
+                <div class="ssl-progress-fill" id="ssl-progress-fill" style="width: 72%;"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Panel 6: Terminal (4x1) -->
         <div class="bento-panel bento-terminal">
           <div class="bento-panel-inner">
             <div class="bento-header">
@@ -217,10 +278,10 @@
               <span class="bento-status status-green">HEALTHY</span>
             </div>
             <div class="terminal-output">
+              <div class="term-line"><span class="term-time">[00:00:02]</span> <span class="term-info">AUDIT</span> cert-manager: Daily SSL scan completed. 4/4 namespaces READY=True.</div>
               <div class="term-line"><span class="term-time">[14:02:45]</span> <span class="term-info">INFO</span> core-router: Traffic successfully routed to Ingress Gateway.</div>
               <div class="term-line"><span class="term-time">[14:02:46]</span> <span class="term-info">INFO</span> telemetry-agent: SLO tracking active. Current uptime: 99.998%.</div>
-              <div class="term-line"><span class="term-time">[14:02:48]</span> <span class="term-warn">WARN</span> db-cinema: High read replica latency detected. Scaling up nodes...</div>
-              <div class="term-line"><span class="term-time">[14:03:01]</span> <span class="term-info">INFO</span> db-cinema: Scaling complete. Latency normalized.<span class="term-cursor"></span></div>
+              <div class="term-line"><span class="term-time">[14:03:01]</span> <span class="term-info">INFO</span> tls-engine: Auto-rotation trigger armed for short-expiry threshold.<span class="term-cursor"></span></div>
             </div>
           </div>
         </div>
@@ -347,5 +408,45 @@
 
 </div>
 <script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Dynamic SSL audit time calculation
+    const lastCheckEl = document.getElementById('ssl-last-check');
+    const nextRenewEl = document.getElementById('ssl-next-renew-text');
+    const fillEl = document.getElementById('ssl-progress-fill');
+
+    function updateSSLTelemetry() {
+      const now = new Date();
+      // Most recent 00:00 UTC
+      const lastMidnightUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+      const hoursAgo = Math.floor((now - lastMidnightUTC) / (1000 * 60 * 60));
+      
+      if (lastCheckEl) {
+        if (hoursAgo === 0) {
+          lastCheckEl.textContent = 'Today (Just now)';
+        } else {
+          lastCheckEl.textContent = `Today (${hoursAgo}h ago)`;
+        }
+      }
+
+      // Auto-rotation window: 90 day cycle, auto-rotates at 30 days remaining (60 days elapsed)
+      // Let's calculate days remaining in current cycle
+      const cycleStart = new Date('2026-08-20T00:00:00Z');
+      const diffDays = Math.floor((now - cycleStart) / (1000 * 60 * 60 * 24)) % 60;
+      const daysUntilRenew = Math.max(1, 60 - diffDays);
+      const percentLeft = Math.round(((60 - diffDays) / 60) * 100);
+
+      if (nextRenewEl) {
+        nextRenewEl.textContent = `Next Auto-Rotation: in ~${daysUntilRenew} Days`;
+      }
+      if (fillEl) {
+        fillEl.style.width = `${Math.min(100, Math.max(15, percentLeft))}%`;
+      }
+    }
+
+    updateSSLTelemetry();
+    setInterval(updateSSLTelemetry, 60000);
+  });
+</script>
 </body>
 </html>

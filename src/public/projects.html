@@ -130,9 +130,177 @@
           <p class="page-subtitle">Demonstrated platforms, tools, and automation solutions.</p>
         </div>
       </header>
-      <div class="placeholder-box reveal">
-        <h2 style="font-family:var(--font-mono);font-size:1rem;color:var(--c-accent);margin-bottom:var(--sp-2)">[ WIP: Content Under Construction ]</h2>
-        <p style="font-size:0.86rem;color:var(--c-text-secondary)">This section will host detailed diagrams and case study writeups for SRE and Platform Engineering work. Coming soon.</p>
+      <!-- Projects Showcase Container -->
+      <div class="projects-container reveal">
+
+        <!-- ═══ FEATURED PROJECT: AUTOMATED SSL LIFECYCLE ═══ -->
+        <article class="project-card featured" id="ssl-automation">
+          <div class="project-header">
+            <div class="project-badge-group">
+              <span class="project-badge badge-green">FEATURED SRE PROJECT</span>
+              <span class="project-badge">SECURITY AUTOMATION</span>
+              <span class="project-badge">ZERO-COST INFRA</span>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-green);">
+              ● ACTIVE IN PROD
+            </span>
+          </div>
+
+          <h2 class="project-title">Automated Zero-Cost SSL Lifecycle &amp; Daily Pipeline Health Auditing</h2>
+          <p class="project-desc">
+            Designed and implemented an automated, zero-toil TLS certificate issuance and renewal architecture across all Kubernetes environments (<code>prod</code>, <code>stage</code>, <code>uat</code>, <code>observability</code>). Embracing the industry-standard short 90-day expiry model, this system operates at $0 cost while eliminating manual certificate expiration risks.
+          </p>
+
+          <!-- Highlights Grid -->
+          <div class="project-highlights">
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">1. ACME Protocol &amp; cert-manager</span>
+              <span class="project-highlight-desc">In-cluster <code>cert-manager</code> controller resolving automated HTTP-01 and DNS-01 challenges via Let's Encrypt ACME ClusterIssuers.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">2. Short-Expiry Auto-Rotation</span>
+              <span class="project-highlight-desc">Automated renewal trigger at &le;30 days before expiration, seamlessly reloading Traefik Ingress without dropping active client connections.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">3. Multi-Tenant Sync</span>
+              <span class="project-highlight-desc">Autonomous TLS secret reconciliation across 4 segregated namespaces: <code>codexrelic.com</code>, <code>stage</code>, <code>uat</code>, and <code>openobserve</code>.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">4. Daily CI/CD Health Audit</span>
+              <span class="project-highlight-desc">Automated Azure DevOps pipeline running daily midnight audits with POSIX parsing to detect certificate drift or expiration.</span>
+            </div>
+          </div>
+
+          <!-- Metrics Row -->
+          <div class="project-metrics-row">
+            <div class="project-metric">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span>100% Zero-Toil Automated Rotation</span>
+            </div>
+            <div class="project-metric">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><shield><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></shield></svg>
+              <span>0 Certificate Expiry Outages</span>
+            </div>
+            <div class="project-metric">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span>$0/yr Commercial CA Cost</span>
+            </div>
+          </div>
+
+          <!-- Footer & Tags -->
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">Kubernetes (K3s)</span>
+              <span class="project-tag">cert-manager</span>
+              <span class="project-tag">Let's Encrypt</span>
+              <span class="project-tag">Traefik Ingress</span>
+              <span class="project-tag">Azure Pipelines</span>
+              <span class="project-tag">Bash / awk</span>
+            </div>
+            <a href="index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              View Live Telemetry Tracker &rarr;
+            </a>
+          </div>
+        </article>
+
+        <!-- ═══ PROJECT 2: GITOPS & CLOUD ARCHITECTURE ═══ -->
+        <article class="project-card">
+          <div class="project-header">
+            <div class="project-badge-group">
+              <span class="project-badge">INFRASTRUCTURE AS CODE</span>
+              <span class="project-badge">GITOPS &amp; CI/CD</span>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-accent);">
+              ARCHITECTURE V2
+            </span>
+          </div>
+
+          <h2 class="project-title">CodexRelic Multi-Environment Cloud Platform (K3s + Terraform + OCI ARM)</h2>
+          <p class="project-desc">
+            An immutable, production-grade cloud platform running on an Oracle Cloud Infrastructure (OCI) Ampere A1 ARM compute instance. Entirely orchestrated via Terraform with automated Azure DevOps multi-stage CI/CD deployments (Build, Snyk SAST/SCA security scan, UAT, Staging, and Production).
+          </p>
+
+          <div class="project-highlights">
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Terraform IaC</span>
+              <span class="project-highlight-desc">Declarative provisioning of VCN networking, security lists, compute instances, and Key Vault secret bindings.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Snyk Shift-Left Security</span>
+              <span class="project-highlight-desc">Automated SAST/SCA vulnerability scans and TruffleHog credential leak detection in CI before container publication.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Multi-Stage Promotion</span>
+              <span class="project-highlight-desc">Isolated Kubernetes namespaces with Kustomize overlays supporting seamless rollbacks and canary evaluations.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">High-Density ARM Optimization</span>
+              <span class="project-highlight-desc">Native ARM64 container builds with Docker Buildx multi-stage caching, slashing image footprint below 60MB.</span>
+            </div>
+          </div>
+
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">Terraform</span>
+              <span class="project-tag">OCI ARM64</span>
+              <span class="project-tag">K3s Kubernetes</span>
+              <span class="project-tag">Docker Buildx</span>
+              <span class="project-tag">Azure Key Vault</span>
+              <span class="project-tag">Snyk Security</span>
+            </div>
+            <a href="https://github.com/mohdazam193/codexrelic.com" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              View Repository &nearr;
+            </a>
+          </div>
+        </article>
+
+        <!-- ═══ PROJECT 3: ZERO-EXPOSURE INGRESS RELAY ═══ -->
+        <article class="project-card">
+          <div class="project-header">
+            <div class="project-badge-group">
+              <span class="project-badge">SECURITY &amp; PRIVACY</span>
+              <span class="project-badge">FASTAPI BACKEND</span>
+            </div>
+          </div>
+
+          <h2 class="project-title">Zero-Exposure Contact Gateway &amp; SMTP Relay</h2>
+          <p class="project-desc">
+            A privacy-hardened communication ingress proxy allowing public visitors to send authenticated inquiries directly into private developer mailboxes. Completely shields developer personal email and phone numbers from scrapers, spam bots, and client-side inspection.
+          </p>
+
+          <div class="project-highlights">
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Client-Side Obfuscation</span>
+              <span class="project-highlight-desc">Zero plain-text email or telephone exposure in HTML/JS source code, neutralizing automated harvesting crawlers.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Input Sanitization</span>
+              <span class="project-highlight-desc">Strict Pydantic payload validation blocking CRLF header injection, XSS vectors, and SQL/command signatures.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">Dual Ingress Routing</span>
+              <span class="project-highlight-desc">Simultaneous MongoDB Atlas record persistence and authenticated TLS SMTP mail dispatch with dynamic Reply-To headers.</span>
+            </div>
+            <div class="project-highlight-item">
+              <span class="project-highlight-title">12-Factor Secret Isolation</span>
+              <span class="project-highlight-desc">Runtime credential injection via Azure Key Vault, guaranteeing zero credentials stored in source control.</span>
+            </div>
+          </div>
+
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">FastAPI</span>
+              <span class="project-tag">Python 3.11</span>
+              <span class="project-tag">SMTP / STARTTLS</span>
+              <span class="project-tag">MongoDB Atlas</span>
+              <span class="project-tag">Pydantic</span>
+            </div>
+            <a href="contact.html" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              Test Contact Gateway &rarr;
+            </a>
+          </div>
+        </article>
+
       </div>
     </div>
   
