@@ -5,24 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07151e">
   <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension — Mohd Azam</title>
-  <meta name="description" content="Production guide &amp; architecture blueprint for Automated Zero-Cost SSL/TLS Lifecycle on Kubernetes (K3s + cert-manager + Let's Encrypt + Traefik) and enterprise commercial CA extensions.">
-  <meta name="keywords" content="Automated SSL, Zero-Cost SSL, cert-manager, Let's Encrypt, Kubernetes SSL, Traefik TLS, DigiCert, Sectigo, ZeroSSL, SRE Guide, Mohd Azam">
+  <title>Projects — Mohd Azam · codexrelic.com</title>
+  <meta name="description" content="SRE &amp; Platform Engineering case studies by Mohd Azam — open-source projects, infrastructure automation, and DevSecOps tooling.">
+  <meta name="keywords" content="Projects, SRE Projects, DevOps Tools, Open Source, Infrastructure Automation, Mohd Azam">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/projects.html">
   
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://codexrelic.com/projects.html">
-  <meta property="og:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
-  <meta property="og:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
+  <meta property="og:title" content="Projects — Mohd Azam · codexrelic.com">
+  <meta property="og:description" content="Explore SRE case studies, open-source projects, and infrastructure automation by Mohd Azam.">
   <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://codexrelic.com/projects.html">
-  <meta name="twitter:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
-  <meta name="twitter:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
+  <meta name="twitter:title" content="Projects — Mohd Azam · codexrelic.com">
+  <meta name="twitter:description" content="Explore SRE case studies, open-source projects, and infrastructure automation by Mohd Azam.">
   <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
   <script>
     (function(){
@@ -116,32 +116,56 @@
       <div class="content-wrap">
         <header class="page-header">
           <div class="page-header-text">
-            <p class="page-eyebrow">SRE Implementation Blueprint &amp; Guide</p>
-            <h1 class="page-title">Automated Zero-Cost SSL Lifecycle</h1>
-            <p class="page-subtitle">Production blueprint for short-expiry TLS automation on Kubernetes and enterprise commercial CA integration.</p>
+            <p class="page-eyebrow">Featured Systems &amp; Case Studies</p>
+            <h1 class="page-title">SRE Projects</h1>
+            <p class="page-subtitle">Demonstrated platforms, tools, and automation solutions.</p>
           </div>
         </header>
 
-        <!-- Project Guide Container -->
+        <!-- Projects Showcase Container -->
         <div class="projects-container reveal">
 
-          <!-- ═══ PRIMARY CARD: ARCHITECTURE OVERVIEW & METRICS ═══ -->
-          <article class="project-card featured" id="ssl-overview">
+          <!-- ═══ FEATURED PROJECT CARD: AUTOMATED ZERO-COST SSL LIFECYCLE ═══ -->
+          <article class="project-card featured" id="ssl-automation">
             <div class="project-header">
               <div class="project-badge-group">
-                <span class="project-badge badge-green">LIVE IN PRODUCTION</span>
+                <span class="project-badge badge-green">FEATURED SRE PROJECT</span>
                 <span class="project-badge">SECURITY AUTOMATION</span>
                 <span class="project-badge">ZERO-COST INFRA</span>
               </div>
               <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-green);">
-                ● 100% AUTOMATED
+                ● ACTIVE IN PROD
               </span>
             </div>
 
-            <h2 class="project-title" style="font-size: 1.4rem;">Zero-Toil Short-Expiry TLS Architecture (K3s + cert-manager + Let's Encrypt)</h2>
+            <h2 class="project-title">
+              <a href="project-ssl-automation.html" style="color:inherit;text-decoration:none;transition:color var(--t-fast);" onmouseover="this.style.color='var(--c-accent)'" onmouseout="this.style.color='inherit'">
+                Automated Zero-Cost SSL Lifecycle &amp; Daily Pipeline Health Auditing
+              </a>
+            </h2>
             <p class="project-desc">
-              Designed and implemented an automated, zero-toil TLS certificate issuance and renewal architecture across all Kubernetes environments (<code>prod</code>, <code>stage</code>, <code>uat</code>, <code>observability</code>). Embracing the industry-standard short 90-day expiry model, this system operates at <strong>$0 cost</strong> while eliminating human error and expired certificate outages.
+              Designed and implemented an automated, zero-toil TLS certificate issuance and renewal architecture across all Kubernetes environments (<code>prod</code>, <code>stage</code>, <code>uat</code>, <code>observability</code>). Embracing the industry-standard short 90-day expiry model, this system operates at $0 cost while eliminating manual certificate expiration risks.
             </p>
+
+            <!-- Highlights Grid -->
+            <div class="project-highlights">
+              <div class="project-highlight-item">
+                <span class="project-highlight-title">1. ACME Protocol &amp; cert-manager</span>
+                <span class="project-highlight-desc">In-cluster controller resolving automated HTTP-01 challenges via Let's Encrypt ClusterIssuers with zero human intervention.</span>
+              </div>
+              <div class="project-highlight-item">
+                <span class="project-highlight-title">2. Short-Expiry Auto-Rotation</span>
+                <span class="project-highlight-desc">Automated renewal trigger at &le;30 days before expiration, seamlessly reloading Traefik Ingress without dropping client traffic.</span>
+              </div>
+              <div class="project-highlight-item">
+                <span class="project-highlight-title">3. Multi-Tenant Sync</span>
+                <span class="project-highlight-desc">Autonomous TLS secret reconciliation across 4 segregated namespaces: <code>codexrelic.com</code>, <code>stage</code>, <code>uat</code>, and <code>openobserve</code>.</span>
+              </div>
+              <div class="project-highlight-item">
+                <span class="project-highlight-title">4. Daily CI/CD Health Audit</span>
+                <span class="project-highlight-desc">Scheduled Azure DevOps pipeline running daily audits with POSIX parsing to detect certificate drift or renewal stalls.</span>
+              </div>
+            </div>
 
             <!-- Metrics Row -->
             <div class="project-metrics-row">
@@ -159,319 +183,25 @@
               </div>
             </div>
 
-            <div class="project-footer" style="padding-top: var(--sp-3); margin-top: 0; border-top: none;">
+            <!-- Footer & Actions -->
+            <div class="project-footer">
               <div class="project-tags">
                 <span class="project-tag">Kubernetes (K3s)</span>
-                <span class="project-tag">cert-manager v1.14+</span>
-                <span class="project-tag">Let's Encrypt ACME</span>
+                <span class="project-tag">cert-manager</span>
+                <span class="project-tag">Let's Encrypt</span>
                 <span class="project-tag">Traefik Ingress</span>
-                <span class="project-tag">Azure DevOps CI/CD</span>
-                <span class="project-tag">EAB Commercial CAs</span>
+                <span class="project-tag">Azure Pipelines</span>
               </div>
-              <a href="index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
-                View Live Telemetry Tracker &rarr;
-              </a>
+              <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap;">
+                <a href="index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+                  Live Telemetry Tracker
+                </a>
+                <a href="project-ssl-automation.html" class="btn btn-primary btn-sm" style="font-size: 0.78rem;">
+                  View Implementation &amp; Extension Guide &rarr;
+                </a>
+              </div>
             </div>
           </article>
-
-          <!-- ═══ INTERACTIVE IMPLEMENTATION & EXTENSION GUIDE ═══ -->
-          <section class="guide-section" style="margin-top: var(--sp-6);">
-            <!-- Tab Buttons -->
-            <div class="guide-tabs" role="tablist">
-              <button class="guide-tab-btn active" id="tab-btn-replicate" data-tab="tab-replicate" role="tab" aria-selected="true">
-                📖 How We Built It (Step-by-Step Implementation Guide)
-              </button>
-              <button class="guide-tab-btn" id="tab-btn-extension" data-tab="tab-extension" role="tab" aria-selected="false">
-                🏢 Extension Guide (Commercial CAs &amp; Custom SSL Providers)
-              </button>
-            </div>
-
-            <!-- ─── TAB 1: HOW WE BUILT IT (STEP-BY-STEP) ─── -->
-            <div class="guide-tab-panel active" id="tab-replicate" role="tabpanel">
-              <div class="guide-callout">
-                <div class="guide-callout-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                </div>
-                <div class="guide-callout-text">
-                  <strong>Replication Blueprint:</strong> Follow these 4 steps on any Kubernetes cluster (K3s, MicroK8s, EKS, AKS, GKE) to achieve automated, zero-cost TLS certificate rotation using <code>cert-manager</code> and Let's Encrypt.
-                </div>
-              </div>
-
-              <!-- Step 1 -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">1</span>
-                  <div class="guide-step-title">Deploy cert-manager Controller</div>
-                </div>
-                <p class="guide-step-text">
-                  Install the official <code>cert-manager</code> Custom Resource Definitions (CRDs) and controller. This adds native Kubernetes resources like <code>ClusterIssuer</code>, <code>Certificate</code>, and <code>Challenge</code> to your cluster.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">BASH &middot; Install cert-manager via Helm / Manifest</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code># Install cert-manager with CustomResourceDefinitions (CRDs)
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
-
-# Verify that cert-manager pods are Running
-kubectl get pods -n cert-manager</code></pre>
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">2</span>
-                  <div class="guide-step-title">Configure ACME ClusterIssuer (Let's Encrypt Production)</div>
-                </div>
-                <p class="guide-step-text">
-                  Create a cluster-wide <code>ClusterIssuer</code> configuring the ACME HTTP-01 solver. Traefik (or ingress-nginx) will automatically answer ACME HTTP challenges under <code>/.well-known/acme-challenge/</code>.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">YAML &middot; cluster-issuer.yml</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code>apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-prod
-spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: your-sre-team@example.com
-    privateKeySecretRef:
-      name: letsencrypt-prod-account-key
-    solvers:
-    - http01:
-        ingress:
-          class: traefik   # or 'nginx' depending on your ingress controller</code></pre>
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">3</span>
-                  <div class="guide-step-title">Annotate Ingress for Zero-Touch Auto-Issuance &amp; Renewal</div>
-                </div>
-                <p class="guide-step-text">
-                  Add the annotation <code>cert-manager.io/cluster-issuer: letsencrypt-prod</code> to your Ingress resource. When applied, cert-manager automatically issues the certificate, stores it in <code>secretName</code>, and automatically renews it 30 days before the 90-day expiry.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">YAML &middot; ingress-tls.yml</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code>apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: codexrelic-web-ingress
-  namespace: default
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
-spec:
-  ingressClassName: traefik
-  tls:
-  - hosts:
-    - codexrelic.com
-    - www.codexrelic.com
-    secretName: codexrelic-tls-secret   # cert-manager manages and updates this secret
-  rules:
-  - host: codexrelic.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: web-service
-            port:
-              number: 80</code></pre>
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">4</span>
-                  <div class="guide-step-title">Automate Daily CI/CD Certificate Audits (Azure DevOps Pipeline)</div>
-                </div>
-                <p class="guide-step-text">
-                  Set up a scheduled cron pipeline in Azure DevOps or GitHub Actions that connects via SSH/kubectl and validates that all certificates are in <code>READY=True</code> state across all namespaces, failing the build and alerting the on-call SRE if any renewal stalls.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">YAML &middot; azure-pipelines-ssl-check.yml</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code>trigger: none
-schedules:
-- cron: "0 0 * * *"   # Runs daily at midnight UTC
-  displayName: Daily SSL Expiry &amp; Renewal Check
-  branches:
-    include:
-    - main
-  always: true
-
-jobs:
-- job: SSL_Health_Audit
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - task: SSH@0
-    inputs:
-      sshEndpoint: 'k3s-control-plane'
-      runOptions: 'inline'
-      inline: |
-        echo "=== Auditing Kubernetes SSL Certificates ==="
-        kubectl get certificates --all-namespaces -o wide
-        
-        # POSIX verification: Ensure 100% of certs have READY=True
-        INVALID_CERTS=$(kubectl get certificates --all-namespaces --no-headers | awk '$3 != "True" {print $1 "/" $2 " (Status: " $3 ")"}')
-        
-        if [ -n "$INVALID_CERTS" ]; then
-          echo "##vso[task.logissue type=error]Certificates not READY: $INVALID_CERTS"
-          exit 1
-        fi
-        echo "✅ All Kubernetes SSL Certificates are Valid and Auto-Managed!"</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- ─── TAB 2: EXTENSION GUIDE (COMMERCIAL SSL PROVIDERS) ─── -->
-            <div class="guide-tab-panel" id="tab-extension" role="tabpanel">
-              <div class="guide-callout">
-                <div class="guide-callout-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                </div>
-                <div class="guide-callout-text">
-                  <strong>Enterprise CA Extension:</strong> If your organization uses commercial SSL certificates issued by providers like <strong>DigiCert, Sectigo, ZeroSSL, Cloudflare, or GoDaddy</strong>, you can easily adapt this architecture using three standard production patterns.
-                </div>
-              </div>
-
-              <!-- Pattern A -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">A</span>
-                  <div class="guide-step-title">Pattern A: ACME Automation with Commercial Providers (EAB)</div>
-                </div>
-                <p class="guide-step-text">
-                  Major commercial CAs (Sectigo, DigiCert CertCentral, ZeroSSL, Entrust) support the ACME protocol via <strong>External Account Binding (EAB)</strong>. You retain fully automated rotation while using your corporate enterprise CA account.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">YAML &middot; commercial-eab-issuer.yml (DigiCert / Sectigo / ZeroSSL)</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code># 1. Store your CA provider's EAB HMAC Key in a Secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ca-eab-secret
-  namespace: cert-manager
-type: Opaque
-stringData:
-  secret: "YOUR_COMMERCIAL_CA_HMAC_KEY"
----
-# 2. Configure ClusterIssuer with External Account Binding (EAB)
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: commercial-ca-issuer
-spec:
-  acme:
-    server: https://acme.zerossl.com/v2/DV90 # Or DigiCert / Sectigo ACME URL
-    email: security-ops@enterprise.com
-    externalAccountBinding:
-      keyID: "YOUR_EAB_KEY_ID_FROM_CA_PORTAL"
-      keySecretRef:
-        name: ca-eab-secret
-        key: secret
-    privateKeySecretRef:
-      name: commercial-account-key
-    solvers:
-    - http01:
-        ingress:
-          class: traefik</code></pre>
-                </div>
-              </div>
-
-              <!-- Pattern B -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">B</span>
-                  <div class="guide-step-title">Pattern B: Applying Pre-Issued Commercial TLS Bundles (.crt &amp; .key)</div>
-                </div>
-                <p class="guide-step-text">
-                  If you purchased a 1-year or multi-year Wildcard SSL certificate (e.g., <code>*.yourcompany.com</code>) from GoDaddy, Namecheap, or Comodo as flat certificate files, you can bind it directly to Kubernetes as a native TLS Secret.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">BASH &middot; Create Kubernetes TLS Secret</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code># Create standard Kubernetes TLS secret with Certificate Bundle (cert + intermediate CA) &amp; Private Key
-kubectl create secret tls enterprise-wildcard-tls \
-  --cert=/path/to/fullchain_bundle.crt \
-  --key=/path/to/private.key \
-  --namespace=prod
-
-# Reference the secret directly in your Ingress manifest:
-# spec:
-#   tls:
-#   - hosts:
-#     - app.yourcompany.com
-#     secretName: enterprise-wildcard-tls</code></pre>
-                </div>
-              </div>
-
-              <!-- Pattern C -->
-              <div class="guide-step">
-                <div class="guide-step-header">
-                  <span class="guide-step-num">C</span>
-                  <div class="guide-step-title">Pattern C: Enterprise Cloud Vault Sync (External Secrets Operator / CSI)</div>
-                </div>
-                <p class="guide-step-text">
-                  For enterprise multi-cloud setups, store commercial certificates in <strong>Azure Key Vault, AWS Secrets Manager, or HashiCorp Vault</strong> and use the <strong>External Secrets Operator (ESO)</strong> to auto-sync TLS secrets directly into Kubernetes namespaces whenever updated in the vault.
-                </p>
-                <div class="code-box">
-                  <div class="code-box-header">
-                    <span class="code-box-title">YAML &middot; external-secrets-tls-sync.yml</span>
-                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-                  </div>
-                  <pre><code>apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: corporate-wildcard-tls
-  namespace: prod
-spec:
-  refreshInterval: 1h   # Automatically pulls updated cert from Cloud Vault
-  secretStoreRef:
-    name: azure-keyvault-store
-    kind: ClusterSecretStore
-  target:
-    name: corporate-wildcard-tls-secret
-    template:
-      type: kubernetes.io/tls
-      data:
-        tls.crt: "{{ .certificate }}"
-        tls.key: "{{ .privatekey }}"
-  data:
-  - secretKey: certificate
-    remoteRef:
-      key: CorporateWildcardCert
-  - secretKey: privatekey
-    remoteRef:
-      key: CorporateWildcardKey</code></pre>
-                </div>
-              </div>
-
-            </div>
-          </section>
 
         </div>
       </div>
@@ -573,44 +303,5 @@ spec:
 </div>
 
 <script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
-<script>
-  // Tab switching logic for projects guide
-  document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.guide-tab-btn');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', function() {
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        document.querySelectorAll('.guide-tab-panel').forEach(panel => {
-          panel.classList.remove('active');
-        });
-        this.classList.add('active');
-        this.setAttribute('aria-selected', 'true');
-        const targetPanel = document.getElementById(this.dataset.tab);
-        if (targetPanel) {
-          targetPanel.classList.add('active');
-        }
-      });
-    });
-  });
-
-  // Copy code snippet helper
-  function copySnippet(btn) {
-    const code = btn.closest('.code-box').querySelector('code').innerText;
-    navigator.clipboard.writeText(code).then(() => {
-      const originalText = btn.innerText;
-      btn.innerText = 'Copied!';
-      btn.style.borderColor = 'var(--c-green)';
-      btn.style.color = 'var(--c-green)';
-      setTimeout(() => {
-        btn.innerText = originalText;
-        btn.style.borderColor = '';
-        btn.style.color = '';
-      }, 2000);
-    });
-  }
-</script>
 </body>
 </html>

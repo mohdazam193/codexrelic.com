@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07151e">
+  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
+  <title>Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Guide — Mohd Azam</title>
+  <meta name="description" content="Production guide &amp; architecture blueprint for Automated Zero-Cost SSL/TLS Lifecycle on Kubernetes (K3s + cert-manager + Let's Encrypt + Traefik) and enterprise commercial CA extensions.">
+  <meta name="keywords" content="Automated SSL, Zero-Cost SSL, cert-manager, Let's Encrypt, Kubernetes SSL, Traefik TLS, DigiCert, Sectigo, ZeroSSL, SRE Guide, Mohd Azam">
+  <meta name="author" content="Mohd Azam">
+  <link rel="canonical" href="https://codexrelic.com/project-ssl-automation.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://codexrelic.com/project-ssl-automation.html">
+  <meta property="og:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
+  <meta property="og:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
+  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://codexrelic.com/project-ssl-automation.html">
+  <meta name="twitter:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
+  <meta name="twitter:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
+  <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
+  <script>
+    (function(){
+      var t=localStorage.getItem('cr-theme')||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Main navigation">
+    <a class="sidebar-brand" href="index.html">
+      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
+    </a>
+
+    <nav class="nav" role="navigation">
+      <span class="nav-group-label">Navigation</span>
+      <a href="index.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Identity</span>
+      <a href="about.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a href="resume.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Engineering</span>
+      <a href="projects.html" class="nav-link active" aria-current="page">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a href="blog.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a href="tech-news.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
+        Tech News
+      </a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Tools</span>
+      <a href="tools.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Tools
+      </a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Leisure</span>
+      <a href="movies.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+      <div class="nav-sep"></div>
+      <span class="nav-group-label">Community</span>
+      <a href="community.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a href="contact.html" class="nav-link">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available · Hyderabad, IN
+      </div>
+      <div class="sidebar-socials">
+        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
+        <a class="social-btn" href="contact.html" title="Contact">@</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
+        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="toggle-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="dashboard-layout">
+      <div class="content-wrap">
+        <header class="page-header">
+          <div class="page-header-text">
+            <p class="page-eyebrow">
+              <a href="projects.html" style="color: var(--c-accent); text-decoration: none;">&larr; Back to Projects</a>
+            </p>
+            <h1 class="page-title">Automated Zero-Cost SSL Lifecycle</h1>
+            <p class="page-subtitle">Production blueprint for short-expiry TLS automation on Kubernetes and enterprise commercial CA integration.</p>
+          </div>
+        </header>
+
+        <!-- Project Guide Container -->
+        <div class="projects-container reveal">
+
+          <!-- ═══ PRIMARY CARD: ARCHITECTURE OVERVIEW & METRICS ═══ -->
+          <article class="project-card featured" id="ssl-overview">
+            <div class="project-header">
+              <div class="project-badge-group">
+                <span class="project-badge badge-green">LIVE IN PRODUCTION</span>
+                <span class="project-badge">SECURITY AUTOMATION</span>
+                <span class="project-badge">ZERO-COST INFRA</span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-green);">
+                ● 100% AUTOMATED
+              </span>
+            </div>
+
+            <h2 class="project-title" style="font-size: 1.4rem;">Zero-Toil Short-Expiry TLS Architecture (K3s + cert-manager + Let's Encrypt)</h2>
+            <p class="project-desc">
+              Designed and implemented an automated, zero-toil TLS certificate issuance and renewal architecture across all Kubernetes environments (<code>prod</code>, <code>stage</code>, <code>uat</code>, <code>observability</code>). Embracing the industry-standard short 90-day expiry model, this system operates at <strong>$0 cost</strong> while eliminating human error and expired certificate outages.
+            </p>
+
+            <!-- Metrics Row -->
+            <div class="project-metrics-row">
+              <div class="project-metric">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>100% Zero-Toil Automated Rotation</span>
+              </div>
+              <div class="project-metric">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>0 Certificate Expiry Outages</span>
+              </div>
+              <div class="project-metric">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span>$0/yr Commercial CA Cost</span>
+              </div>
+            </div>
+
+            <div class="project-footer" style="padding-top: var(--sp-3); margin-top: 0; border-top: none;">
+              <div class="project-tags">
+                <span class="project-tag">Kubernetes (K3s)</span>
+                <span class="project-tag">cert-manager v1.14+</span>
+                <span class="project-tag">Let's Encrypt ACME</span>
+                <span class="project-tag">Traefik Ingress</span>
+                <span class="project-tag">Azure DevOps CI/CD</span>
+                <span class="project-tag">EAB Commercial CAs</span>
+              </div>
+              <a href="index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+                View Live Telemetry Tracker &rarr;
+              </a>
+            </div>
+          </article>
+
+          <!-- ═══ INTERACTIVE IMPLEMENTATION & EXTENSION GUIDE ═══ -->
+          <section class="guide-section" style="margin-top: var(--sp-6);">
+            <!-- Tab Buttons -->
+            <div class="guide-tabs" role="tablist">
+              <button class="guide-tab-btn active" id="tab-btn-replicate" data-tab="tab-replicate" role="tab" aria-selected="true">
+                📖 How We Built It (Step-by-Step Implementation Guide)
+              </button>
+              <button class="guide-tab-btn" id="tab-btn-extension" data-tab="tab-extension" role="tab" aria-selected="false">
+                🏢 Extension Guide (Commercial CAs &amp; Custom SSL Providers)
+              </button>
+            </div>
+
+            <!-- ─── TAB 1: HOW WE BUILT IT (STEP-BY-STEP) ─── -->
+            <div class="guide-tab-panel active" id="tab-replicate" role="tabpanel">
+              <div class="guide-callout">
+                <div class="guide-callout-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </div>
+                <div class="guide-callout-text">
+                  <strong>Replication Blueprint:</strong> Follow these 4 steps on any Kubernetes cluster (K3s, MicroK8s, EKS, AKS, GKE) to achieve automated, zero-cost TLS certificate rotation using <code>cert-manager</code> and Let's Encrypt.
+                </div>
+              </div>
+
+              <!-- Step 1 -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">1</span>
+                  <div class="guide-step-title">Deploy cert-manager Controller</div>
+                </div>
+                <p class="guide-step-text">
+                  Install the official <code>cert-manager</code> Custom Resource Definitions (CRDs) and controller. This adds native Kubernetes resources like <code>ClusterIssuer</code>, <code>Certificate</code>, and <code>Challenge</code> to your cluster.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">BASH &middot; Install cert-manager via Helm / Manifest</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code># Install cert-manager with CustomResourceDefinitions (CRDs)
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+
+# Verify that cert-manager pods are Running
+kubectl get pods -n cert-manager</code></pre>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">2</span>
+                  <div class="guide-step-title">Configure ACME ClusterIssuer (Let's Encrypt Production)</div>
+                </div>
+                <p class="guide-step-text">
+                  Create a cluster-wide <code>ClusterIssuer</code> configuring the ACME HTTP-01 solver. Traefik (or ingress-nginx) will automatically answer ACME HTTP challenges under <code>/.well-known/acme-challenge/</code>.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">YAML &middot; cluster-issuer.yml</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code>apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: your-sre-team@example.com
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+    - http01:
+        ingress:
+          class: traefik   # or 'nginx' depending on your ingress controller</code></pre>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">3</span>
+                  <div class="guide-step-title">Annotate Ingress for Zero-Touch Auto-Issuance &amp; Renewal</div>
+                </div>
+                <p class="guide-step-text">
+                  Add the annotation <code>cert-manager.io/cluster-issuer: letsencrypt-prod</code> to your Ingress resource. When applied, cert-manager automatically issues the certificate, stores it in <code>secretName</code>, and automatically renews it 30 days before the 90-day expiry.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">YAML &middot; ingress-tls.yml</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: codexrelic-web-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - codexrelic.com
+    - www.codexrelic.com
+    secretName: codexrelic-tls-secret   # cert-manager manages and updates this secret
+  rules:
+  - host: codexrelic.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80</code></pre>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">4</span>
+                  <div class="guide-step-title">Automate Daily CI/CD Certificate Audits (Azure DevOps Pipeline)</div>
+                </div>
+                <p class="guide-step-text">
+                  Set up a scheduled cron pipeline in Azure DevOps or GitHub Actions that connects via SSH/kubectl and validates that all certificates are in <code>READY=True</code> state across all namespaces, failing the build and alerting the on-call SRE if any renewal stalls.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">YAML &middot; azure-pipelines-ssl-check.yml</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code>trigger: none
+schedules:
+- cron: "0 0 * * *"   # Runs daily at midnight UTC
+  displayName: Daily SSL Expiry &amp; Renewal Check
+  branches:
+    include:
+    - main
+  always: true
+
+jobs:
+- job: SSL_Health_Audit
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: SSH@0
+    inputs:
+      sshEndpoint: 'k3s-control-plane'
+      runOptions: 'inline'
+      inline: |
+        echo "=== Auditing Kubernetes SSL Certificates ==="
+        kubectl get certificates --all-namespaces -o wide
+        
+        # POSIX verification: Ensure 100% of certs have READY=True
+        INVALID_CERTS=$(kubectl get certificates --all-namespaces --no-headers | awk '$3 != "True" {print $1 "/" $2 " (Status: " $3 ")"}')
+        
+        if [ -n "$INVALID_CERTS" ]; then
+          echo "##vso[task.logissue type=error]Certificates not READY: $INVALID_CERTS"
+          exit 1
+        fi
+        echo "✅ All Kubernetes SSL Certificates are Valid and Auto-Managed!"</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- ─── TAB 2: EXTENSION GUIDE (COMMERCIAL SSL PROVIDERS) ─── -->
+            <div class="guide-tab-panel" id="tab-extension" role="tabpanel">
+              <div class="guide-callout">
+                <div class="guide-callout-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div class="guide-callout-text">
+                  <strong>Enterprise CA Extension:</strong> If your organization uses commercial SSL certificates issued by providers like <strong>DigiCert, Sectigo, ZeroSSL, Cloudflare, or GoDaddy</strong>, you can easily adapt this architecture using three standard production patterns.
+                </div>
+              </div>
+
+              <!-- Pattern A -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">A</span>
+                  <div class="guide-step-title">Pattern A: ACME Automation with Commercial Providers (EAB)</div>
+                </div>
+                <p class="guide-step-text">
+                  Major commercial CAs (Sectigo, DigiCert CertCentral, ZeroSSL, Entrust) support the ACME protocol via <strong>External Account Binding (EAB)</strong>. You retain fully automated rotation while using your corporate enterprise CA account.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">YAML &middot; commercial-eab-issuer.yml (DigiCert / Sectigo / ZeroSSL)</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code># 1. Store your CA provider's EAB HMAC Key in a Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ca-eab-secret
+  namespace: cert-manager
+type: Opaque
+stringData:
+  secret: "YOUR_COMMERCIAL_CA_HMAC_KEY"
+---
+# 2. Configure ClusterIssuer with External Account Binding (EAB)
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: commercial-ca-issuer
+spec:
+  acme:
+    server: https://acme.zerossl.com/v2/DV90 # Or DigiCert / Sectigo ACME URL
+    email: security-ops@enterprise.com
+    externalAccountBinding:
+      keyID: "YOUR_EAB_KEY_ID_FROM_CA_PORTAL"
+      keySecretRef:
+        name: ca-eab-secret
+        key: secret
+    privateKeySecretRef:
+      name: commercial-account-key
+    solvers:
+    - http01:
+        ingress:
+          class: traefik</code></pre>
+                </div>
+              </div>
+
+              <!-- Pattern B -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">B</span>
+                  <div class="guide-step-title">Pattern B: Applying Pre-Issued Commercial TLS Bundles (.crt &amp; .key)</div>
+                </div>
+                <p class="guide-step-text">
+                  If you purchased a 1-year or multi-year Wildcard SSL certificate (e.g., <code>*.yourcompany.com</code>) from GoDaddy, Namecheap, or Comodo as flat certificate files, you can bind it directly to Kubernetes as a native TLS Secret.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">BASH &middot; Create Kubernetes TLS Secret</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code># Create standard Kubernetes TLS secret with Certificate Bundle (cert + intermediate CA) &amp; Private Key
+kubectl create secret tls enterprise-wildcard-tls \
+  --cert=/path/to/fullchain_bundle.crt \
+  --key=/path/to/private.key \
+  --namespace=prod
+
+# Reference the secret directly in your Ingress manifest:
+# spec:
+#   tls:
+#   - hosts:
+#     - app.yourcompany.com
+#     secretName: enterprise-wildcard-tls</code></pre>
+                </div>
+              </div>
+
+              <!-- Pattern C -->
+              <div class="guide-step">
+                <div class="guide-step-header">
+                  <span class="guide-step-num">C</span>
+                  <div class="guide-step-title">Pattern C: Enterprise Cloud Vault Sync (External Secrets Operator / CSI)</div>
+                </div>
+                <p class="guide-step-text">
+                  For enterprise multi-cloud setups, store commercial certificates in <strong>Azure Key Vault, AWS Secrets Manager, or HashiCorp Vault</strong> and use the <strong>External Secrets Operator (ESO)</strong> to auto-sync TLS secrets directly into Kubernetes namespaces whenever updated in the vault.
+                </p>
+                <div class="code-box">
+                  <div class="code-box-header">
+                    <span class="code-box-title">YAML &middot; external-secrets-tls-sync.yml</span>
+                    <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+                  </div>
+                  <pre><code>apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: corporate-wildcard-tls
+  namespace: prod
+spec:
+  refreshInterval: 1h   # Automatically pulls updated cert from Cloud Vault
+  secretStoreRef:
+    name: azure-keyvault-store
+    kind: ClusterSecretStore
+  target:
+    name: corporate-wildcard-tls-secret
+    template:
+      type: kubernetes.io/tls
+      data:
+        tls.crt: "{{ .certificate }}"
+        tls.key: "{{ .privatekey }}"
+  data:
+  - secretKey: certificate
+    remoteRef:
+      key: CorporateWildcardCert
+  - secretKey: privatekey
+    remoteRef:
+      key: CorporateWildcardKey</code></pre>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    
+      <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
+      <aside class="right-sidebar">
+        <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
+        <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
+          <div class="vm-widget-header">
+            <span class="vm-widget-title">htop - Live VM</span>
+            <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
+              <button class="htop-tab active">Live</button>
+            </div>
+            <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
+          </div>
+          <div class="vm-widget-body">
+            <div id="vm-cpu-container" class="vm-stat-section"></div>
+            <div class="vm-stat-section">
+              <div class="vm-stat-row">
+                <span class="vm-stat-label">Mem[</span>
+                <div class="vm-bar-track">
+                  <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
+                </div>
+                <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
+              </div>
+              <div class="vm-stat-row">
+                <span class="vm-stat-label">Swp[</span>
+                <div class="vm-bar-track">
+                  <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
+                </div>
+                <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
+              </div>
+            </div>
+            <div class="vm-stat-text-group">
+              <div class="vm-stat-text-row">
+                <span class="vm-text-label">Tasks:</span>
+                <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
+              </div>
+              <div class="vm-stat-text-row">
+                <span class="vm-text-label">Load average:</span>
+                <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
+              </div>
+              <div class="vm-stat-text-row">
+                <span class="vm-text-label">Uptime:</span>
+                <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-items">
+      <a href="index.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a href="about.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        About
+      </a>
+      <a href="resume.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Resume
+      </a>
+      <a href="projects.html" class="mobile-nav-item active" aria-current="page">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Projects
+      </a>
+      <a href="blog.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog
+      </a>
+      <a href="tech-news.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
+        News
+      </a>
+      <a href="tools.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Tools
+      </a>
+      <a href="movies.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        Movies
+      </a>
+      <a href="community.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </a>
+      <a href="contact.html" class="mobile-nav-item">
+        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </div>
+  </nav>
+</div>
+
+<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
+<script>
+  // Tab switching logic for projects guide
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.guide-tab-btn');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.guide-tab-panel').forEach(panel => {
+          panel.classList.remove('active');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        const targetPanel = document.getElementById(this.dataset.tab);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+      });
+    });
+  });
+
+  // Copy code snippet helper
+  function copySnippet(btn) {
+    const code = btn.closest('.code-box').querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const originalText = btn.innerText;
+      btn.innerText = 'Copied!';
+      btn.style.borderColor = 'var(--c-green)';
+      btn.style.color = 'var(--c-green)';
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
