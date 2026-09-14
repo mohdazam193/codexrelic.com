@@ -50,10 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* Active Nav Link */
-  const path = window.location.pathname.split('/').pop() || 'index.html';
+  const fullPath = window.location.pathname;
+  const path = fullPath.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link, .mobile-nav-item').forEach(link => {
-    const href = (link.getAttribute('href') || '').split('/').pop();
-    if (href === path || (path === '' && (href === 'index.html' || href === ''))) {
+    const rawHref = link.getAttribute('href') || '';
+    const href = rawHref.split('/').pop();
+    if (href === path || (path === '' && (href === 'index.html' || href === '')) || (fullPath.includes('/projects/') && href === 'projects.html') || (fullPath.includes('/blog/') && href === 'blog.html')) {
       link.classList.add('active');
     }
   });

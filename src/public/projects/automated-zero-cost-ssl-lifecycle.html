@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07151e">
-  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
+  <link rel="icon" type="image/png" href="../assets/images/logo-dark.png">
   <title>Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Guide — Mohd Azam</title>
   <meta name="description" content="Production guide &amp; architecture blueprint for Automated Zero-Cost SSL/TLS Lifecycle on Kubernetes (K3s + cert-manager + Let's Encrypt + Traefik) and enterprise commercial CA extensions.">
   <meta name="keywords" content="Automated SSL, Zero-Cost SSL, cert-manager, Let's Encrypt, Kubernetes SSL, Traefik TLS, DigiCert, Sectigo, ZeroSSL, SRE Guide, Mohd Azam">
   <meta name="author" content="Mohd Azam">
-  <link rel="canonical" href="https://codexrelic.com/project-ssl-automation.html">
+  <link rel="canonical" href="https://codexrelic.com/projects/automated-zero-cost-ssl-lifecycle.html">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://codexrelic.com/project-ssl-automation.html">
+  <meta property="og:url" content="https://codexrelic.com/projects/automated-zero-cost-ssl-lifecycle.html">
   <meta property="og:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
   <meta property="og:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
   <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://codexrelic.com/project-ssl-automation.html">
+  <meta name="twitter:url" content="https://codexrelic.com/projects/automated-zero-cost-ssl-lifecycle.html">
   <meta name="twitter:title" content="Automated Zero-Cost SSL Lifecycle &amp; Commercial CA Extension">
   <meta name="twitter:description" content="Step-by-step implementation guide &amp; enterprise extension blueprint for Kubernetes TLS automation.">
   <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
@@ -31,64 +31,64 @@
       document.documentElement.setAttribute('data-theme',t);
     })();
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
+  <link rel="stylesheet" href="../assets/css/style.css?v=codexrelic.com v1.0.0">
 </head>
 <body>
 <div class="layout">
   <aside class="sidebar" aria-label="Main navigation">
-    <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
+    <a class="sidebar-brand" href="../index.html">
+      <img src="../assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
     </a>
 
     <nav class="nav" role="navigation">
       <span class="nav-group-label">Navigation</span>
-      <a href="index.html" class="nav-link">
+      <a href="../index.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Home
       </a>
       <div class="nav-sep"></div>
       <span class="nav-group-label">Identity</span>
-      <a href="about.html" class="nav-link">
+      <a href="../about.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         About
       </a>
-      <a href="resume.html" class="nav-link">
+      <a href="../resume.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         Resume
       </a>
       <div class="nav-sep"></div>
       <span class="nav-group-label">Engineering</span>
-      <a href="projects.html" class="nav-link active" aria-current="page">
+      <a href="../projects.html" class="nav-link active" aria-current="page">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         Projects
       </a>
-      <a href="blog.html" class="nav-link">
+      <a href="../blog.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Blog
       </a>
-      <a href="tech-news.html" class="nav-link">
+      <a href="../tech-news.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
         Tech News
       </a>
       <div class="nav-sep"></div>
       <span class="nav-group-label">Tools</span>
-      <a href="tools.html" class="nav-link">
+      <a href="../tools.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Tools
       </a>
       <div class="nav-sep"></div>
       <span class="nav-group-label">Leisure</span>
-      <a href="movies.html" class="nav-link">
+      <a href="../movies.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
         Movies
       </a>
       <div class="nav-sep"></div>
       <span class="nav-group-label">Community</span>
-      <a href="community.html" class="nav-link">
+      <a href="../community.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Community
       </a>
-      <a href="contact.html" class="nav-link">
+      <a href="../contact.html" class="nav-link">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Contact
       </a>
@@ -102,7 +102,7 @@
       <div class="sidebar-socials">
         <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
         <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
-        <a class="social-btn" href="contact.html" title="Contact">@</a>
+        <a class="social-btn" href="../contact.html" title="Contact">@</a>
       </div>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
         <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -117,7 +117,7 @@
         <header class="page-header">
           <div class="page-header-text">
             <p class="page-eyebrow">
-              <a href="projects.html" style="color: var(--c-accent); text-decoration: none;">&larr; Back to Projects</a>
+              <a href="../projects.html" style="color: var(--c-accent); text-decoration: none;">&larr; Back to Projects</a>
             </p>
             <h1 class="page-title">Automated Zero-Cost SSL Lifecycle</h1>
             <p class="page-subtitle">Production blueprint for short-expiry TLS automation on Kubernetes and enterprise commercial CA integration.</p>
@@ -170,7 +170,7 @@
                 <span class="project-tag">Azure DevOps CI/CD</span>
                 <span class="project-tag">EAB Commercial CAs</span>
               </div>
-              <a href="index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
+              <a href="../index.html#ssl-tracker" class="btn btn-outline btn-sm" style="font-size: 0.78rem;">
                 View Live Telemetry Tracker &rarr;
               </a>
             </div>
@@ -192,7 +192,7 @@
             <div class="guide-tab-panel active" id="tab-replicate" role="tabpanel">
               <div class="guide-callout">
                 <div class="guide-callout-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                 </div>
                 <div class="guide-callout-text">
                   <strong>Replication Blueprint:</strong> Follow these 4 steps on any Kubernetes cluster (K3s, MicroK8s, EKS, AKS, GKE) to achieve automated, zero-cost TLS certificate rotation using <code>cert-manager</code> and Let's Encrypt.
@@ -530,43 +530,43 @@ spec:
   <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
     <div class="mobile-nav-items">
-      <a href="index.html" class="mobile-nav-item">
+      <a href="../index.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Home
       </a>
-      <a href="about.html" class="mobile-nav-item">
+      <a href="../about.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         About
       </a>
-      <a href="resume.html" class="mobile-nav-item">
+      <a href="../resume.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         Resume
       </a>
-      <a href="projects.html" class="mobile-nav-item active" aria-current="page">
+      <a href="../projects.html" class="mobile-nav-item active" aria-current="page">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         Projects
       </a>
-      <a href="blog.html" class="mobile-nav-item">
+      <a href="../blog.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Blog
       </a>
-      <a href="tech-news.html" class="mobile-nav-item">
+      <a href="../tech-news.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
         News
       </a>
-      <a href="tools.html" class="mobile-nav-item">
+      <a href="../tools.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Tools
       </a>
-      <a href="movies.html" class="mobile-nav-item">
+      <a href="../movies.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
         Movies
       </a>
-      <a href="community.html" class="mobile-nav-item">
+      <a href="../community.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Community
       </a>
-      <a href="contact.html" class="mobile-nav-item">
+      <a href="../contact.html" class="mobile-nav-item">
         <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Contact
       </a>
@@ -574,7 +574,7 @@ spec:
   </nav>
 </div>
 
-<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
+<script src="../assets/js/main.js?v=codexrelic.com v1.0.0"></script>
 <script>
   // Tab switching logic for projects guide
   document.addEventListener('DOMContentLoaded', function() {
