@@ -210,28 +210,34 @@
         </div>
 
         <!-- Form Ingress -->
-        <form id="contact-form">
+        <form id="contact-form" novalidate>
           
+          <!-- Security Alert Box -->
+          <div id="form-security-alert" style="display: none; padding: var(--sp-3) var(--sp-4); background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--r-sm); color: var(--c-red); font-size: 0.82rem; line-height: 1.5; margin-bottom: var(--sp-4); align-items: center; gap: var(--sp-2);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="form-security-msg"></span>
+          </div>
+
           <div class="form-row">
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="form-name">Sender Name</label>
-              <input class="form-input" type="text" id="form-name" required placeholder="e.g. Sarah Connor">
+              <input class="form-input" type="text" id="form-name" required maxlength="80" autocomplete="name" placeholder="e.g. Sarah Connor">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="form-email">Sender Email</label>
-              <input class="form-input" type="email" id="form-email" required placeholder="e.g. sarah@cyberdyne.com">
+              <input class="form-input" type="email" id="form-email" required maxlength="120" autocomplete="email" placeholder="e.g. sarah@cyberdyne.com">
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom: var(--sp-4);">
             <label class="form-label" for="form-subject">Subject Line</label>
-            <input class="form-input" type="text" id="form-subject" required value="[SRE Role / Opportunity]">
+            <input class="form-input" type="text" id="form-subject" required maxlength="150" value="[SRE Role / Opportunity]">
           </div>
 
           <div class="form-group" style="margin-bottom: var(--sp-5);">
             <label class="form-label" for="form-message">Message Payload</label>
-            <textarea class="form-textarea" id="form-message" required placeholder="Describe your project, team requirements, or discussion topic..." style="height: 140px;"></textarea>
+            <textarea class="form-textarea" id="form-message" required maxlength="3000" placeholder="Describe your project, team requirements, or discussion topic..." style="height: 140px;"></textarea>
           </div>
 
           <div style="display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center;">
@@ -247,7 +253,7 @@
           <!-- Privacy Guarantee -->
           <div style="display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-4); font-size: 0.75rem; color: var(--c-text-muted); font-family: var(--font-mono);">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span>Direct Ingress Guarantee: Zero trackers or third-party CRM scrapers. Dispatches directly to personal mailbox.</span>
+            <span>Direct Ingress Guarantee: Zero trackers, client-side input sanitization, and strict anti-injection protection.</span>
           </div>
 
         </form>
@@ -408,8 +414,12 @@
 
     // 3. Subject Preset Pills
     const presetBtns = document.querySelectorAll('.contact-preset-btn');
+    const nameInput = document.getElementById('form-name');
+    const emailInput = document.getElementById('form-email');
     const subjectInput = document.getElementById('form-subject');
     const messageInput = document.getElementById('form-message');
+    const alertBox = document.getElementById('form-security-alert');
+    const alertMsg = document.getElementById('form-security-msg');
 
     presetBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -417,6 +427,7 @@
         btn.classList.add('active');
         if (subjectInput) {
           subjectInput.value = btn.getAttribute('data-subject');
+          clearError(subjectInput);
         }
         if (messageInput) {
           messageInput.focus();
@@ -424,20 +435,147 @@
       });
     });
 
+    // ── SECURITY & ANTI-INJECTION VALIDATORS ──
+    const patterns = {
+      // XSS: HTML tags, event handlers, javascript/data/vbscript URIs
+      xss: /<\s*script|javascript:|data:|vbscript:|on\w+\s*=|<\s*\/?\s*(iframe|object|embed|svg|img|style|link|meta|applet|form|body|html)/i,
+      // CRLF header injection (newlines in single-line headers)
+      crlf: /[\r\n]/,
+      // SQL injection signatures
+      sql: /(\b(union\s+select|select\s+.*\s+from|insert\s+into|delete\s+from|drop\s+table|update\s+.*\s+set|exec\s*\(|xp_cmdshell)\b|(--|;--|\/\*|\*\/))/i,
+      // Template / Code interpolation
+      template: /(\{\{.*?\}\}|\$\{.*?\}|<%.*?%>)/i,
+      // RFC-compliant safe email regex
+      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/,
+      // Name: alphabetic, spaces, hyphens, periods, apostrophes
+      safeName: /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s.'\-]+$/
+    };
+
+    function showError(element, message) {
+      if (element) {
+        element.style.borderColor = 'var(--c-red)';
+        element.style.boxShadow = '0 0 0 2px rgba(239, 68, 68, 0.25)';
+        element.focus();
+      }
+      if (alertBox && alertMsg) {
+        alertMsg.textContent = message;
+        alertBox.style.display = 'flex';
+      }
+    }
+
+    function clearError(element) {
+      if (element) {
+        element.style.borderColor = '';
+        element.style.boxShadow = '';
+      }
+      if (alertBox) {
+        alertBox.style.display = 'none';
+      }
+    }
+
+    [nameInput, emailInput, subjectInput, messageInput].forEach(input => {
+      if (input) {
+        input.addEventListener('input', () => clearError(input));
+      }
+    });
+
+    // Deep payload sanitizer
+    function validateAndSanitize() {
+      const name = (nameInput.value || '').trim();
+      const email = (emailInput.value || '').trim();
+      const subject = (subjectInput.value || '').trim();
+      const message = (messageInput.value || '').trim();
+
+      // 1. Name validation
+      if (!name || name.length < 2) {
+        showError(nameInput, 'Please provide a valid sender name (min 2 characters).');
+        return null;
+      }
+      if (name.length > 80) {
+        showError(nameInput, 'Name exceeds maximum length of 80 characters.');
+        return null;
+      }
+      if (patterns.crlf.test(name)) {
+        showError(nameInput, 'Security Alert: Newline characters are not allowed in name field.');
+        return null;
+      }
+      if (patterns.xss.test(name) || patterns.sql.test(name) || patterns.template.test(name) || !patterns.safeName.test(name)) {
+        showError(nameInput, 'Security Alert: Invalid characters or script tags detected in name.');
+        return null;
+      }
+
+      // 2. Email validation
+      if (!email || !patterns.email.test(email)) {
+        showError(emailInput, 'Please enter a valid RFC-compliant email address (e.g. name@domain.com).');
+        return null;
+      }
+      if (email.length > 120) {
+        showError(emailInput, 'Email address exceeds maximum length of 120 characters.');
+        return null;
+      }
+      if (patterns.crlf.test(email) || patterns.xss.test(email) || patterns.sql.test(email)) {
+        showError(emailInput, 'Security Alert: Potential header injection or script detected in email.');
+        return null;
+      }
+
+      // 3. Subject validation
+      if (!subject || subject.length < 3) {
+        showError(subjectInput, 'Please enter a subject line (min 3 characters).');
+        return null;
+      }
+      if (subject.length > 150) {
+        showError(subjectInput, 'Subject exceeds maximum length of 150 characters.');
+        return null;
+      }
+      if (patterns.crlf.test(subject)) {
+        showError(subjectInput, 'Security Alert: Header injection (CRLF) detected in subject line.');
+        return null;
+      }
+      if (patterns.xss.test(subject) || patterns.sql.test(subject) || patterns.template.test(subject)) {
+        showError(subjectInput, 'Security Alert: Script or SQL injection signatures detected in subject.');
+        return null;
+      }
+
+      // 4. Message Payload validation
+      if (!message || message.length < 10) {
+        showError(messageInput, 'Message payload is too short (min 10 characters).');
+        return null;
+      }
+      if (message.length > 3000) {
+        showError(messageInput, 'Message payload exceeds maximum limit of 3,000 characters.');
+        return null;
+      }
+      if (patterns.xss.test(message)) {
+        showError(messageInput, 'Security Alert: Raw HTML, <script>, or active event handlers are blocked in payload.');
+        return null;
+      }
+
+      // Clean/strip null bytes and control characters
+      const cleanName = name.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      const cleanEmail = email.replace(/[\x00-\x1F\x7F]/g, '');
+      const cleanSubject = subject.replace(/[\x00-\x1F\x7F]/g, '');
+      const cleanMessage = message.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+
+      return {
+        name: cleanName,
+        email: cleanEmail,
+        subject: cleanSubject,
+        message: cleanMessage
+      };
+    }
+
     // 4. Copy Payload helper
     const copyPayloadBtn = document.getElementById('copy-payload-btn');
     if (copyPayloadBtn) {
       copyPayloadBtn.addEventListener('click', () => {
-        const name = document.getElementById('form-name').value || '[Sender Name]';
-        const email = document.getElementById('form-email').value || '[Sender Email]';
-        const subject = subjectInput ? subjectInput.value : '';
-        const message = messageInput ? messageInput.value : '';
+        const validated = validateAndSanitize();
+        if (!validated) return;
 
-        const payload = `To: aazam.mohammad193@gmail.com\nSubject: ${subject}\nFrom: ${name} <${email}>\n\n${message}`;
+        const payload = `To: aazam.mohammad193@gmail.com\nSubject: ${validated.subject}\nFrom: ${validated.name} <${validated.email}>\n\n${validated.message}`;
 
         navigator.clipboard.writeText(payload).then(() => {
           const originalText = copyPayloadBtn.textContent;
-          copyPayloadBtn.textContent = '✓ Payload Copied!';
+          copyPayloadBtn.textContent = '✓ Payload Verified & Copied!';
           setTimeout(() => { copyPayloadBtn.textContent = originalText; }, 2000);
         });
       });
@@ -448,13 +586,11 @@
     if (form) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = document.getElementById('form-name').value.trim();
-        const email = document.getElementById('form-email').value.trim();
-        const subject = subjectInput.value.trim();
-        const message = messageInput.value.trim();
+        const validated = validateAndSanitize();
+        if (!validated) return;
 
-        const body = `Hi Azam,\n\n${message}\n\n---\nFrom: ${name}\nContact: ${email}`;
-        const mailtoUrl = `mailto:aazam.mohammad193@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const body = `Hi Azam,\n\n${validated.message}\n\n---\nFrom: ${validated.name}\nContact: ${validated.email}`;
+        const mailtoUrl = `mailto:aazam.mohammad193@gmail.com?subject=${encodeURIComponent(validated.subject)}&body=${encodeURIComponent(body)}`;
 
         window.location.href = mailtoUrl;
       });
