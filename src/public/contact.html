@@ -222,22 +222,26 @@
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="form-name">Sender Name</label>
               <input class="form-input" type="text" id="form-name" required maxlength="80" autocomplete="name" placeholder="e.g. Sarah Connor">
+              <div class="form-field-error" id="error-form-name"></div>
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="form-email">Sender Email</label>
               <input class="form-input" type="email" id="form-email" required maxlength="120" autocomplete="email" placeholder="e.g. sarah@cyberdyne.com">
+              <div class="form-field-error" id="error-form-email"></div>
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom: var(--sp-4);">
             <label class="form-label" for="form-subject">Subject Line</label>
             <input class="form-input" type="text" id="form-subject" required maxlength="150" value="[SRE Role / Opportunity]">
+            <div class="form-field-error" id="error-form-subject"></div>
           </div>
 
           <div class="form-group" style="margin-bottom: var(--sp-5);">
             <label class="form-label" for="form-message">Message Payload</label>
             <textarea class="form-textarea" id="form-message" required maxlength="3000" placeholder="Describe your project, team requirements, or discussion topic..." style="height: 140px;"></textarea>
+            <div class="form-field-error" id="error-form-message"></div>
           </div>
 
           <div style="display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center;">
@@ -445,17 +449,35 @@
       sql: /(\b(union\s+select|select\s+.*\s+from|insert\s+into|delete\s+from|drop\s+table|update\s+.*\s+set|exec\s*\(|xp_cmdshell)\b|(--|;--|\/\*|\*\/))/i,
       // Template / Code interpolation
       template: /(\{\{.*?\}\}|\$\{.*?\}|<%.*?%>)/i,
-      // RFC-compliant safe email regex
-      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/,
+      // Strict Active Email regex (RFC 5322 compliant with mandatory valid TLD)
+      emailStrict: /^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,24}$/,
       // Name: alphabetic, spaces, hyphens, periods, apostrophes
       safeName: /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s.'\-]+$/
     };
 
-    function showError(element, message) {
-      if (element) {
-        element.style.borderColor = 'var(--c-red)';
-        element.style.boxShadow = '0 0 0 2px rgba(239, 68, 68, 0.25)';
-        element.focus();
+    const DISPOSABLE_OR_DUMMY_DOMAINS = new Set([
+      'example.com', 'example.org', 'example.net',
+      'test.com', 'test.org', 'test.net',
+      'fake.com', 'sample.com', 'invalid.com',
+      'tempmail.com', 'temp-mail.org', 'dispostable.com',
+      '10minutemail.com', 'trashmail.com', 'guerrillamail.com',
+      'mailinator.com', 'yopmail.com', 'sharklasers.com',
+      'localhost', 'test', 'local'
+    ]);
+
+    const errorName = document.getElementById('error-form-name');
+    const errorEmail = document.getElementById('error-form-email');
+    const errorSubject = document.getElementById('error-form-subject');
+    const errorMessage = document.getElementById('error-form-message');
+
+    function setFieldError(inputEl, errorEl, message) {
+      if (inputEl) {
+        inputEl.classList.remove('is-valid');
+        inputEl.classList.add('is-invalid');
+      }
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
       }
       if (alertBox && alertMsg) {
         alertMsg.textContent = message;
@@ -463,21 +485,137 @@
       }
     }
 
-    function clearError(element) {
-      if (element) {
-        element.style.borderColor = '';
-        element.style.boxShadow = '';
+    function setFieldValid(inputEl, errorEl) {
+      if (inputEl) {
+        inputEl.classList.remove('is-invalid');
+        inputEl.classList.add('is-valid');
+      }
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.style.display = 'none';
       }
       if (alertBox) {
         alertBox.style.display = 'none';
       }
     }
 
-    [nameInput, emailInput, subjectInput, messageInput].forEach(input => {
-      if (input) {
-        input.addEventListener('input', () => clearError(input));
+    function clearFieldState(inputEl, errorEl) {
+      if (inputEl) {
+        inputEl.classList.remove('is-invalid');
+        inputEl.classList.remove('is-valid');
+      }
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.style.display = 'none';
+      }
+      if (alertBox) {
+        alertBox.style.display = 'none';
+      }
+    }
+
+    // High-precision email validator
+    function getEmailValidationError(rawEmail) {
+      const email = (rawEmail || '').trim();
+      if (!email) {
+        return 'Sender email address is required.';
+      }
+      if (email.length > 100) {
+        return 'Email address exceeds maximum length of 100 characters.';
+      }
+      if (/[\s\r\n\t]/.test(email)) {
+        return 'Email cannot contain spaces, tabs, or newline characters.';
+      }
+      if (patterns.xss.test(email) || patterns.sql.test(email) || patterns.template.test(email)) {
+        return 'Security Alert: Script, SQL, or injection payload detected in email.';
+      }
+      if (!email.includes('@')) {
+        return 'Email address is missing the "@" symbol (e.g. name@domain.com).';
+      }
+      const parts = email.split('@');
+      if (parts.length !== 2) {
+        return 'Email address can only contain a single "@" symbol.';
+      }
+      const [localPart, domainPart] = parts;
+      if (!localPart || localPart.length < 1) {
+        return 'Email username portion before "@" cannot be empty.';
+      }
+      if (!domainPart || domainPart.length < 3) {
+        return 'Email domain portion after "@" is incomplete (e.g. domain.com).';
+      }
+      if (/\.{2,}/.test(email)) {
+        return 'Email cannot contain consecutive dots (..).';
+      }
+      if (localPart.startsWith('.') || localPart.endsWith('.')) {
+        return 'Email username cannot start or end with a dot.';
+      }
+      if (!patterns.emailStrict.test(email)) {
+        return 'Please enter a valid, active email address with a valid domain (e.g. name@domain.com).';
+      }
+      const domainLower = domainPart.toLowerCase();
+      if (DISPOSABLE_OR_DUMMY_DOMAINS.has(domainLower)) {
+        return 'Please provide an active business or personal email address (temporary/test domains not allowed).';
+      }
+      const domainSections = domainLower.split('.');
+      const tld = domainSections[domainSections.length - 1];
+      if (!tld || tld.length < 2 || !/^[a-z]{2,24}$/i.test(tld)) {
+        return 'Email requires a valid top-level domain extension (e.g. .com, .org, .io).';
+      }
+      return null;
+    }
+
+    // Live validation event bindings
+    emailInput.addEventListener('blur', () => {
+      const val = emailInput.value.trim();
+      if (!val) {
+        clearFieldState(emailInput, errorEmail);
+        return;
+      }
+      const err = getEmailValidationError(val);
+      if (err) {
+        setFieldError(emailInput, errorEmail, err);
+      } else {
+        setFieldValid(emailInput, errorEmail);
       }
     });
+
+    emailInput.addEventListener('input', () => {
+      const val = emailInput.value.trim();
+      if (!val) {
+        clearFieldState(emailInput, errorEmail);
+        return;
+      }
+      const err = getEmailValidationError(val);
+      if (!err) {
+        setFieldValid(emailInput, errorEmail);
+      } else if (emailInput.classList.contains('is-invalid')) {
+        setFieldError(emailInput, errorEmail, err);
+      }
+    });
+
+    nameInput.addEventListener('blur', () => {
+      const val = nameInput.value.trim();
+      if (!val) {
+        clearFieldState(nameInput, errorName);
+        return;
+      }
+      if (val.length < 2 || !patterns.safeName.test(val)) {
+        setFieldError(nameInput, errorName, 'Please provide a valid sender name (min 2 characters, letters only).');
+      } else {
+        setFieldValid(nameInput, errorName);
+      }
+    });
+
+    nameInput.addEventListener('input', () => {
+      if (nameInput.classList.contains('is-invalid')) {
+        const val = nameInput.value.trim();
+        if (val.length >= 2 && patterns.safeName.test(val)) {
+          setFieldValid(nameInput, errorName);
+        }
+      }
+    });
+
+    subjectInput.addEventListener('input', () => clearFieldState(subjectInput, errorSubject));
+    messageInput.addEventListener('input', () => clearFieldState(messageInput, errorMessage));
 
     // Deep payload sanitizer
     function validateAndSanitize() {
@@ -488,67 +626,76 @@
 
       // 1. Name validation
       if (!name || name.length < 2) {
-        showError(nameInput, 'Please provide a valid sender name (min 2 characters).');
+        setFieldError(nameInput, errorName, 'Please provide a valid sender name (min 2 characters).');
+        nameInput.focus();
         return null;
       }
       if (name.length > 80) {
-        showError(nameInput, 'Name exceeds maximum length of 80 characters.');
+        setFieldError(nameInput, errorName, 'Name exceeds maximum length of 80 characters.');
+        nameInput.focus();
         return null;
       }
       if (patterns.crlf.test(name)) {
-        showError(nameInput, 'Security Alert: Newline characters are not allowed in name field.');
+        setFieldError(nameInput, errorName, 'Security Alert: Newline characters are not allowed in name field.');
+        nameInput.focus();
         return null;
       }
       if (patterns.xss.test(name) || patterns.sql.test(name) || patterns.template.test(name) || !patterns.safeName.test(name)) {
-        showError(nameInput, 'Security Alert: Invalid characters or script tags detected in name.');
+        setFieldError(nameInput, errorName, 'Security Alert: Invalid characters or script tags detected in name.');
+        nameInput.focus();
         return null;
       }
+      setFieldValid(nameInput, errorName);
 
-      // 2. Email validation
-      if (!email || !patterns.email.test(email)) {
-        showError(emailInput, 'Please enter a valid RFC-compliant email address (e.g. name@domain.com).');
+      // 2. Strict Email validation
+      const emailError = getEmailValidationError(email);
+      if (emailError) {
+        setFieldError(emailInput, errorEmail, emailError);
+        emailInput.focus();
         return null;
       }
-      if (email.length > 120) {
-        showError(emailInput, 'Email address exceeds maximum length of 120 characters.');
-        return null;
-      }
-      if (patterns.crlf.test(email) || patterns.xss.test(email) || patterns.sql.test(email)) {
-        showError(emailInput, 'Security Alert: Potential header injection or script detected in email.');
-        return null;
-      }
+      setFieldValid(emailInput, errorEmail);
 
       // 3. Subject validation
       if (!subject || subject.length < 3) {
-        showError(subjectInput, 'Please enter a subject line (min 3 characters).');
+        setFieldError(subjectInput, errorSubject, 'Please enter a subject line (min 3 characters).');
+        subjectInput.focus();
         return null;
       }
       if (subject.length > 150) {
-        showError(subjectInput, 'Subject exceeds maximum length of 150 characters.');
+        setFieldError(subjectInput, errorSubject, 'Subject exceeds maximum length of 150 characters.');
+        subjectInput.focus();
         return null;
       }
       if (patterns.crlf.test(subject)) {
-        showError(subjectInput, 'Security Alert: Header injection (CRLF) detected in subject line.');
+        setFieldError(subjectInput, errorSubject, 'Security Alert: Header injection (CRLF) detected in subject line.');
+        subjectInput.focus();
         return null;
       }
       if (patterns.xss.test(subject) || patterns.sql.test(subject) || patterns.template.test(subject)) {
-        showError(subjectInput, 'Security Alert: Script or SQL injection signatures detected in subject.');
+        setFieldError(subjectInput, errorSubject, 'Security Alert: Script or SQL injection signatures detected in subject.');
+        subjectInput.focus();
         return null;
       }
+      setFieldValid(subjectInput, errorSubject);
 
       // 4. Message Payload validation
       if (!message || message.length < 10) {
-        showError(messageInput, 'Message payload is too short (min 10 characters).');
+        setFieldError(messageInput, errorMessage, 'Message payload is too short (min 10 characters).');
+        messageInput.focus();
         return null;
       }
       if (message.length > 3000) {
-        showError(messageInput, 'Message payload exceeds maximum limit of 3,000 characters.');
+        setFieldError(messageInput, errorMessage, 'Message payload exceeds maximum limit of 3,000 characters.');
+        messageInput.focus();
         return null;
       }
       if (patterns.xss.test(message)) {
-        showError(messageInput, 'Security Alert: Raw HTML, <script>, or active event handlers are blocked in payload.');
+        setFieldError(messageInput, errorMessage, 'Security Alert: Raw HTML, <script>, or active event handlers are blocked in payload.');
+        messageInput.focus();
         return null;
       }
+      setFieldValid(messageInput, errorMessage);
 
       // Clean/strip null bytes and control characters
       const cleanName = name.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');

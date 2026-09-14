@@ -1555,6 +1555,26 @@ body::after {
   resize: vertical;
 }
 
+.form-input.is-invalid,
+.form-textarea.is-invalid {
+  border-color: var(--c-red) !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+}
+
+.form-input.is-valid {
+  border-color: var(--c-green) !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+}
+
+.form-field-error {
+  display: none;
+  font-size: 0.75rem;
+  color: var(--c-red);
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  line-height: 1.3;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
