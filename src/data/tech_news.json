@@ -1,88 +1,1873 @@
 {
-  "last_fetch": "2026-09-14T20:55:32.566810",
+  "last_fetch": "2026-09-19T04:08:22.146013",
   "current_news": [
     {
-      "title": "GPT-5.6 Luna vs. GPT-6 Astra: Is a $1.20 Model Good Enough for Code Review?",
-      "link": "https://entelligence.ai/blogs/gpt-5.6-luna-vs-gpt-6-astra-is-a-1.20-model-good-enough-for-code-review",
-      "published": "Mon, 14 Sep 2026 19:56:20 +0000",
-      "domain": "entelligence.ai",
-      "summary": "See how AI is being used across engineering, improve the quality of what it produces, and use the right level of intelligence for every task and budget. GPT-5.6 Luna costs $0.20 per million input tokens and $1.20 per million output tokens. GPT-6 Astra costs $10 and $50. On the same pull requests, one Luna review cost $0.0041 and one Astra review cost $0.113, a 28x difference. Our last post compared Astra with GPT-5.6 Sol. This time we wanted to know what you give up if every pull request goes through...",
-      "image": "https://framerusercontent.com/images/gPrTReKBwM5bVRyIqVcgBE4kEAk.png"
-    },
-    {
-      "title": "Distributed Systems Classics (2017)",
-      "link": "https://nvartolomei.com/dist-sys-classics/",
-      "published": "Mon, 14 Sep 2026 16:02:01 +0000",
-      "domain": "nvartolomei.com",
-      "summary": "A selected list of timeless and influential papers in distributed systems that shaped the research in the field. Intended to serve as a good starting point for a better understanding of the problem space.",
+      "title": "Android 17 is the first since 3.x to add new APIs without releasing to the AOSP",
+      "link": "https://grapheneos.social/@GrapheneOS/117282080803799576",
+      "published": "Fri, 18 Sep 2026 19:03:09 +0000",
+      "domain": "grapheneos.social",
+      "summary": "",
       "image": ""
     },
     {
-      "title": "A Beginning for Mathematics",
-      "link": "https://www.daniellitt.com/blog/2026/9/13/a-beginning-for-mathematics/",
-      "published": "Mon, 14 Sep 2026 15:33:07 +0000",
-      "domain": "daniellitt.com",
-      "summary": "A positive vision for the future of mathematics: how our institutions can deepen human understanding as AI transforms mathematical research. This essay also appears on Proofs and Prompts. Three years ago, AI systems could not reliably add two numbers. A year ago, internal models at OpenAI and DeepMind received the equivalent of a gold-medal score on the IMO. Now, these systems are autonomously resolving major open questions. It\u2019s hard to imagine this trend continuing for another year, but I expect it will. It is clear that this will require a...",
-      "image": "https://www.daniellitt.com/images/daniel-litt-social-diagram.png"
-    },
-    {
-      "title": "Principles for Fast Tokio Applications",
-      "link": "https://dial9-rs.github.io/blog/principles-for-fast-tokio-applications/",
-      "published": "Mon, 14 Sep 2026 15:27:56 +0000",
-      "domain": "dial9-rs.github.io",
-      "summary": "I'm on my way back from RustConf. At the Unconf, we had a productive discussion about debugging and benchmarking async applications. Many interesting insights were shared. I'm attempting to enumerate some of them here, along with some of my own experiences. This is the first draft of what I hope can become a living document of best practices. Feel free to file an issue or open a PR. I'm hoping to also add a sample app in the coming days demonstrating these issues along with what the dial9 trace looks...",
+      "title": "Science Is Open Software",
+      "link": "https://jepedersen.dk/blog/202505_research/",
+      "published": "Sat, 19 Sep 2026 02:21:35 +0000",
+      "domain": "jepedersen.dk",
+      "summary": "TL;DR I claim that modern science is synonymous with open source software. This post explains why, why it matters, and what you can (and should) do next. I spend a lot of my time working on software. I have been asked why software matters more times than I can remember. Software is, people say, not science. It\u2019s a time sink, something to rush past in the pursuit of what really matters: results (and papers if you\u2019re in academia). Publish or perish. Well. I think software matters. In fact, I think...",
       "image": ""
     },
     {
-      "title": "Why don't machine learning research agents overfit?",
-      "link": "https://www.amazon.science/blog/why-dont-machine-learning-research-agents-overfit",
-      "published": "Mon, 14 Sep 2026 16:32:23 +0000",
-      "domain": "amazon.science",
-      "summary": "New research shows that AI agents \u2014 like human research communities \u2014 learn strategies compressible enough to fit in a few tokens, which prevents memorization and explains why benchmark-driven ML keeps producing real progress. The more your listener already knows, the shorter the message you need to send. An expert ML engineer needs only a few sentences; a newcomer needs the whole manual. Machine learning Why don\u2019t machine learning research agents overfit? New research indicates that AI agents learn compressible models of data, which don\u2019t have enough space to enable...",
-      "image": "https://cdn.amazon.science/dims4/default/8f33283/2147483647/strip/true/crop/1920x1008+0+36/resize/1200x630!/quality/90/?url=https%3A%2F%2Famzn-science-production-science.s3.us-east-1.amazonaws.com%2Fscience%2F28%2F46%2F0121ba1e4b42be0c56e7560c9844%2Fcompressionmodels-03-16x9.png"
-    },
-    {
-      "title": "OpenAI bots knew about the RubyGems caching vulnerability",
-      "link": "https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/",
-      "published": "Mon, 14 Sep 2026 12:40:57 +0000",
-      "domain": "tenderlovemaking.com",
-      "summary": "Today Reuters and the Wall Street Journal both reported about rogue AI agents at OpenAI attacking RubyGems.org. https://www.rubyhack.ai/ has an amazing writeup, and you should read it. I just wanted to make a quick post about it because it\u2019s wild. TL;DR: It seems like OpenAI Bots knew about this caching vulnerability, tried to take advantage of it, and at the same time ran some weird web scraping code on RubyDoc.info. Back in May, socket.dev reported about a \u201cGemStuffer Campaign\u201d where someone (I guess OpenAI) was uploading tons of junk gems...",
+      "title": "SDCC \u2013 Small Device C Compiler",
+      "link": "https://sdcc.sourceforge.net/",
+      "published": "Sat, 19 Sep 2026 02:32:36 +0000",
+      "domain": "sdcc.sourceforge.net",
+      "summary": "",
       "image": ""
     },
     {
-      "title": "How my e-reader lost its stripes",
-      "link": "https://www.serpentine.com/posts/2026/x3-stripes/",
-      "published": "Mon, 14 Sep 2026 16:23:16 +0000",
-      "domain": "serpentine.com",
-      "summary": "I\u2019ve been a lifelong reader, which has proved a fragile habit in our era of endless trivial distraction. While books and e-ink readers solve the problem of competition for attention, they can\u2019t compete with a phone for convenience. That tiny device in my pocket has made reading both easier and more vulnerable to displacement whenever a notification pops up. A few days ago, I learned for the first time about a recent generation of tiny e-ink readers. Since they\u2019re cheap, it was easy to give into curiosity: I bought an...",
+      "title": "Cloudflare Quick Tunnels",
+      "link": "https://try.cloudflare.com/",
+      "published": "Fri, 18 Sep 2026 14:18:41 +0000",
+      "domain": "try.cloudflare.com",
+      "summary": "Localhost, meet the Internet. Turn the server on your laptop into a public, encrypted URL on Cloudflare",
       "image": ""
     },
     {
-      "title": "Cloudflare AKE cuts origin HelloRetryRequests from 52% to 3.7%",
-      "link": "https://blog.cloudflare.com/automatic-key-exchange-for-origins/",
-      "published": "Mon, 14 Sep 2026 17:02:34 +0000",
+      "title": "Saving another 100TB of RAM",
+      "link": "https://blog.cloudflare.com/saving-100-tb-of-ram-with-math/",
+      "published": "Fri, 18 Sep 2026 18:51:46 +0000",
       "domain": "blog.cloudflare.com",
-      "summary": "",
-      "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M1PVVA86NJR4N0MTKCH06A9V.01M1PVVAXCHV18R9AZA18HS4AQ.png"
+      "summary": "Cloudflare's global network is immense but not limitless. As we look for small ways to trim our resource usage, we sometimes get lucky and we can cut significantly more. Here\u2019s how we reduced one of our Pingora-based service's RAM usage with statistics. Cloudflare operates at a scale so big that even after working here for years, it doesn\u2019t seem real. We have thousands of servers all over the world with petabytes of RAM and millions of CPU cores, and all of it is pushed to the max. As vast as...",
+      "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M2PFY1FZ7AH3P8JEQCDM9YWH.01M2PFY2XJ3KBV9JD78JMJK88K.png"
     },
     {
-      "title": "Pion, an agent designed to run any company autonomously",
-      "link": "https://andonlabs.com/blog/why-we-built-pion",
-      "published": "Mon, 14 Sep 2026 17:16:06 +0000",
-      "domain": "andonlabs.com",
-      "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
-      "image": "https://andonlabs.com/pion.og.webp"
-    },
-    {
-      "title": "XCancel service is suspended until further notice",
-      "link": "https://xcancel.com/#",
-      "published": "Mon, 14 Sep 2026 09:51:50 +0000",
-      "domain": "xcancel.com",
-      "summary": "",
+      "title": "Why building a Rust LSP is hard",
+      "link": "https://rust-glancer.github.io/blog/why-lsp-is-hard/",
+      "published": "Wed, 16 Sep 2026 22:51:16 +0000",
+      "domain": "rust-glancer.github.io",
+      "summary": "A long, long time ago, mighty matklad used to write great posts about how Rust tooling works. Those were great times, but alas, the last rust-analyzer blog post dates 2023 I am no matklad, but I'm building Rust Glancer, an experimental Rust LSP, for quite a while now. It's probably the most interesting and ambitious project I've worked on, and I want to share some things I've learned while working on it. This will be a (hopefully coherent) story about how Rust LSPs work, from the perspective of both rust-analyzer...",
       "image": ""
+    },
+    {
+      "title": "How to Write with an LLM",
+      "link": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/",
+      "published": "Thu, 17 Sep 2026 21:48:38 +0000",
+      "domain": "sockpuppet.org",
+      "summary": "Two rules keep an LLM from pasteurizing your writing: never take a word it suggests, and never let it encourage you. Then hand it all the tedious work. Two simple rules that let LLMs streamline and improve your writing without pasteurizing and jacking it with corn syrup. It\u2019s tricky to write about writing. It comes across as a brag; you\u2019re implying that you write well. Maybe you do, and maybe you don\u2019t, but there\u2019s for damned sure a quorum of critics on the Internet somewhere that think you suck at...",
+      "image": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/workshop_hu_1de7cdec7d0e03c9.jpg"
+    },
+    {
+      "title": "How OpenAI Used Its Own LLMs to Design Its Jalape\u00f1o Chip",
+      "link": "https://spectrum.ieee.org/llms-for-chip-design",
+      "published": "Fri, 18 Sep 2026 23:04:17 +0000",
+      "domain": "spectrum.ieee.org",
+      "summary": "AI drastically shortened its design time; it will only get faster",
+      "image": "https://spectrum.ieee.org/media-library/close-up-of-a-computer-processor-consisting-of-several-pieces-of-silicon.jpg?id=67770467&width=1200&height=600&coordinates=0%2C356%2C0%2C144"
+    },
+    {
+      "title": "Xcode 27.1 Beta Release Notes",
+      "link": "https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes",
+      "published": "Fri, 18 Sep 2026 18:39:31 +0000",
+      "domain": "developer.apple.com",
+      "summary": "Update your apps to use new features, and test your apps against API changes. A Markdown version of the page content is available: View Markdown",
+      "image": "https://developer.apple.com/tutorials/developer-og.jpg"
+    },
+    {
+      "title": "Show HN: LiveWorld \u2013 Every 24/7 YouTube live camera on one globe",
+      "link": "https://liveworld.info/",
+      "published": "Sat, 19 Sep 2026 00:30:34 +0000",
+      "domain": "liveworld.info",
+      "summary": "Teleport around the world through live YouTube cameras. Chat with people watching the same view.",
+      "image": "https://liveworld.info/og-image.png"
     }
   ],
   "archive": [
+    {
+      "date": "2026-09-19",
+      "news": [
+        {
+          "title": "Android 17 is the first since 3.x to add new APIs without releasing to the AOSP",
+          "link": "https://grapheneos.social/@GrapheneOS/117282080803799576",
+          "published": "Fri, 18 Sep 2026 19:03:09 +0000",
+          "domain": "grapheneos.social",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Cloudflare Quick Tunnels",
+          "link": "https://try.cloudflare.com/",
+          "published": "Fri, 18 Sep 2026 14:18:41 +0000",
+          "domain": "try.cloudflare.com",
+          "summary": "Localhost, meet the Internet. Turn the server on your laptop into a public, encrypted URL on Cloudflare",
+          "image": ""
+        },
+        {
+          "title": "Saving another 100TB of RAM",
+          "link": "https://blog.cloudflare.com/saving-100-tb-of-ram-with-math/",
+          "published": "Fri, 18 Sep 2026 18:51:46 +0000",
+          "domain": "blog.cloudflare.com",
+          "summary": "Cloudflare's global network is immense but not limitless. As we look for small ways to trim our resource usage, we sometimes get lucky and we can cut significantly more. Here\u2019s how we reduced one of our Pingora-based service's RAM usage with statistics. Cloudflare operates at a scale so big that even after working here for years, it doesn\u2019t seem real. We have thousands of servers all over the world with petabytes of RAM and millions of CPU cores, and all of it is pushed to the max. As vast as...",
+          "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M2PFY1FZ7AH3P8JEQCDM9YWH.01M2PFY2XJ3KBV9JD78JMJK88K.png"
+        },
+        {
+          "title": "The Farnese letter",
+          "link": "https://simonklee.dk/farnese-letter",
+          "published": "Thu, 17 Sep 2026 17:39:01 +0000",
+          "domain": "simonklee.dk",
+          "summary": "Recovering the key and text of a 1542 cipher from Cardinal Alessandro Farnese to Giovanni Poggio. In April 1542 a letter left Rome for the court of Charles V in Spain. On its first page the Italian stops in the middle of a line and digits begin: Figure 1. The opening of the cipher, f. 70r. Archivio Apostolico Vaticano (AAV), Segr. Stato, Spagna 1A, photograph supplied through DECODE record 92. Detail enlarged from the photograph. Read with the key recovered below, the first ten digits group like this: 73 4...",
+          "image": "https://simonklee.dk/static/writing/farnese-letter/social-card.png"
+        },
+        {
+          "title": "Xcode 27.1 Beta Release Notes",
+          "link": "https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes",
+          "published": "Fri, 18 Sep 2026 18:39:31 +0000",
+          "domain": "developer.apple.com",
+          "summary": "Update your apps to use new features, and test your apps against API changes. A Markdown version of the page content is available: View Markdown",
+          "image": "https://developer.apple.com/tutorials/developer-og.jpg"
+        },
+        {
+          "title": "How to Write with an LLM",
+          "link": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/",
+          "published": "Thu, 17 Sep 2026 21:48:38 +0000",
+          "domain": "sockpuppet.org",
+          "summary": "Two rules keep an LLM from pasteurizing your writing: never take a word it suggests, and never let it encourage you. Then hand it all the tedious work. Two simple rules that let LLMs streamline and improve your writing without pasteurizing and jacking it with corn syrup. It\u2019s tricky to write about writing. It comes across as a brag; you\u2019re implying that you write well. Maybe you do, and maybe you don\u2019t, but there\u2019s for damned sure a quorum of critics on the Internet somewhere that think you suck at...",
+          "image": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/workshop_hu_1de7cdec7d0e03c9.jpg"
+        },
+        {
+          "title": "Cache-to-Cache: Direct Semantic Communication Between LLMs (2025)",
+          "link": "https://arxiv.org/abs/2510.03215",
+          "published": "Fri, 18 Sep 2026 18:55:35 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2510.03215: Cache-to-Cache: Direct Semantic Communication Between Large Language Models Focus to learn more arXiv-issued DOI via DataCite Submission history From: Tianyu Fu [view email] [v1] Fri, 3 Oct 2025 17:52:32 UTC (484 KB) [v2] Mon, 2 Mar 2026 19:24:02 UTC (546 KB) Full-text links: Access Paper: View a PDF of the paper titled Cache-to-Cache: Direct Semantic Communication Between Large Language Models, by Tianyu Fu and 6 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.CL < prev | next > new | recent...",
+          "image": ""
+        },
+        {
+          "title": "How OpenAI Used Its Own LLMs to Design Its Jalape\u00f1o Chip",
+          "link": "https://spectrum.ieee.org/llms-for-chip-design",
+          "published": "Fri, 18 Sep 2026 23:04:17 +0000",
+          "domain": "spectrum.ieee.org",
+          "summary": "AI drastically shortened its design time; it will only get faster",
+          "image": "https://spectrum.ieee.org/media-library/close-up-of-a-computer-processor-consisting-of-several-pieces-of-silicon.jpg?id=67770467&width=1200&height=600&coordinates=0%2C356%2C0%2C144"
+        },
+        {
+          "title": "Photon-Emission-Guided Laser Fault Injection Enables RP2350 Secure Debug",
+          "link": "https://donjon.ledger.com/blog/rp2350-secure-debug-laser-fault-injection/",
+          "published": "Fri, 18 Sep 2026 16:54:18 +0000",
+          "domain": "donjon.ledger.com",
+          "summary": "Differential photon-emission microscopy localized debug enable register activity and narrowed the laser search before SWD-guided injection set the two bits required to restore Secure debug on an RP2350 A4. \u2014 Photon-emission microscopy allowed us to locate a register responsible for the enabling of debug features on the Raspberry Pi microcontroller. \u2014 Laser pulses at two nearby positions then restored debugger access to the chip\u2019s Secure world, even though debug had been permanently disabled. \u2014 Using that access after a rescue reset, we recovered a secret from one-time-programmable memory. The reset...",
+          "image": "https://donjon.ledger.com/blog/rp2350-secure-debug-laser-fault-injection/cover.png"
+        },
+        {
+          "title": "Show HN: Cactus Needle 3: 8-29MB automation models can match DeepSeek V4 Flash",
+          "link": "https://cactuscompute.com/needle",
+          "published": "Fri, 18 Sep 2026 00:11:44 +0000",
+          "domain": "cactuscompute.com",
+          "summary": "A foundation model for mobile, wearables, robots, smart home, automotive and microcontrollers. One 8-29 MB binary that beats models 10x its size on mobile tool calls and matches 2-3x bigger models on extraction. One set of weights, every depth from 2 to 20 layers a model of its own: an intelligence ladder. Tool callsGiven the functions your app exposes, Needle picks the right ones and fills every argument from what the user said. Ask for two things and you get two calls in order; ask for something no tool covers...",
+          "image": "https://cactuscompute.com/opengraph-image?9df76a35fe8276e2"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-18",
+      "news": [
+        {
+          "title": "Claude Code now reads AGENTS.md if there is no Claude.md",
+          "link": "https://code.claude.com/docs/en/changelog",
+          "published": "Fri, 18 Sep 2026 21:00:32 +0000",
+          "domain": "code.claude.com",
+          "summary": "Release notes for Claude Code, including new features, improvements, and bug fixes by version.",
+          "image": "https://claude-code.mintlify.app/_next/image?url=%2F_mintlify%2Fapi%2Fog%3Fdivision%3DGetting%2Bstarted%26title%3DClaude%2BCode%2Bchangelog%26description%3DRelease%2Bnotes%2Bfor%2BClaude%2BCode%252C%2Bincluding%2Bnew%2Bfeatures%252C%2Bimprovements%252C%2Band%2Bbug%2Bfixes%2Bby%2Bversion.%26theme%3D03628e99c753a03aec319053&w=1200&q=100"
+        },
+        {
+          "title": "Android 17 is the first since 3.x to add new APIs without releasing to the AOSP",
+          "link": "https://grapheneos.social/@GrapheneOS/117282080803799576",
+          "published": "Fri, 18 Sep 2026 19:03:09 +0000",
+          "domain": "grapheneos.social",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Saving another 100TB of RAM",
+          "link": "https://blog.cloudflare.com/saving-100-tb-of-ram-with-math/",
+          "published": "Fri, 18 Sep 2026 18:51:46 +0000",
+          "domain": "blog.cloudflare.com",
+          "summary": "Cloudflare's global network is immense but not limitless. As we look for small ways to trim our resource usage, we sometimes get lucky and we can cut significantly more. Here\u2019s how we reduced one of our Pingora-based service's RAM usage with statistics. Cloudflare operates at a scale so big that even after working here for years, it doesn\u2019t seem real. We have thousands of servers all over the world with petabytes of RAM and millions of CPU cores, and all of it is pushed to the max. As vast as...",
+          "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M2PFY1FZ7AH3P8JEQCDM9YWH.01M2PFY2XJ3KBV9JD78JMJK88K.png"
+        },
+        {
+          "title": "Cloudflare Quick Tunnels",
+          "link": "https://try.cloudflare.com/",
+          "published": "Fri, 18 Sep 2026 14:18:41 +0000",
+          "domain": "try.cloudflare.com",
+          "summary": "Localhost, meet the Internet. Turn the server on your laptop into a public, encrypted URL on Cloudflare",
+          "image": ""
+        },
+        {
+          "title": "Xcode 27.1 Beta Release Notes",
+          "link": "https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes",
+          "published": "Fri, 18 Sep 2026 18:39:31 +0000",
+          "domain": "developer.apple.com",
+          "summary": "Update your apps to use new features, and test your apps against API changes. A Markdown version of the page content is available: View Markdown",
+          "image": "https://developer.apple.com/tutorials/developer-og.jpg"
+        },
+        {
+          "title": "Cache-to-Cache: Direct Semantic Communication Between LLMs (2025)",
+          "link": "https://arxiv.org/abs/2510.03215",
+          "published": "Fri, 18 Sep 2026 18:55:35 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2510.03215: Cache-to-Cache: Direct Semantic Communication Between Large Language Models Focus to learn more arXiv-issued DOI via DataCite Submission history From: Tianyu Fu [view email] [v1] Fri, 3 Oct 2025 17:52:32 UTC (484 KB) [v2] Mon, 2 Mar 2026 19:24:02 UTC (546 KB) Full-text links: Access Paper: View a PDF of the paper titled Cache-to-Cache: Direct Semantic Communication Between Large Language Models, by Tianyu Fu and 6 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.CL < prev | next > new | recent...",
+          "image": ""
+        },
+        {
+          "title": "Photon-Emission-Guided Laser Fault Injection Enables RP2350 Secure Debug",
+          "link": "https://donjon.ledger.com/blog/rp2350-secure-debug-laser-fault-injection/",
+          "published": "Fri, 18 Sep 2026 16:54:18 +0000",
+          "domain": "donjon.ledger.com",
+          "summary": "Differential photon-emission microscopy localized debug enable register activity and narrowed the laser search before SWD-guided injection set the two bits required to restore Secure debug on an RP2350 A4. \u2014 Photon-emission microscopy allowed us to locate a register responsible for the enabling of debug features on the Raspberry Pi microcontroller. \u2014 Laser pulses at two nearby positions then restored debugger access to the chip\u2019s Secure world, even though debug had been permanently disabled. \u2014 Using that access after a rescue reset, we recovered a secret from one-time-programmable memory. The reset...",
+          "image": "https://donjon.ledger.com/blog/rp2350-secure-debug-laser-fault-injection/cover.png"
+        },
+        {
+          "title": "How to Write with an LLM",
+          "link": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/",
+          "published": "Thu, 17 Sep 2026 21:48:38 +0000",
+          "domain": "sockpuppet.org",
+          "summary": "Two rules keep an LLM from pasteurizing your writing: never take a word it suggests, and never let it encourage you. Then hand it all the tedious work. Two simple rules that let LLMs streamline and improve your writing without pasteurizing and jacking it with corn syrup. It\u2019s tricky to write about writing. It comes across as a brag; you\u2019re implying that you write well. Maybe you do, and maybe you don\u2019t, but there\u2019s for damned sure a quorum of critics on the Internet somewhere that think you suck at...",
+          "image": "https://sockpuppet.org/blog/2026/09/17/how-to-write-with-an-llm/workshop_hu_1de7cdec7d0e03c9.jpg"
+        },
+        {
+          "title": "Show HN: Cactus Needle 3: 8-29MB automation models can match DeepSeek V4 Flash",
+          "link": "https://cactuscompute.com/needle",
+          "published": "Fri, 18 Sep 2026 00:11:44 +0000",
+          "domain": "cactuscompute.com",
+          "summary": "A foundation model for mobile, wearables, robots, smart home, automotive and microcontrollers. One 8-29 MB binary that beats models 10x its size on mobile tool calls and matches 2-3x bigger models on extraction. One set of weights, every depth from 2 to 20 layers a model of its own: an intelligence ladder. Tool callsGiven the functions your app exposes, Needle picks the right ones and fills every argument from what the user said. Ask for two things and you get two calls in order; ask for something no tool covers...",
+          "image": "https://cactuscompute.com/opengraph-image?9df76a35fe8276e2"
+        },
+        {
+          "title": "OpenJev",
+          "link": "https://openjev.com/",
+          "published": "Fri, 18 Sep 2026 09:42:22 +0000",
+          "domain": "openjev.com",
+          "summary": "Run typed option logits and autoregressive JSON locally with open models and WebGPU. A local model can either read probabilities for your allowed options without decoding them, or write the same kind of distribution token by token. Pick a size, run both on your own GPU, and measure the difference. celebrationThere is no waitlist! Just try it out \u2193 MiniCPM5 2B is selected by default. On a phone or smaller device, switch to Qwen3 0.6B in the model box if needed. Larger model. Loading may be slower or may not...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-18",
+      "news": [
+        {
+          "title": "There's no point at which turning your brain off will work",
+          "link": "https://danluu.com/brain-off/",
+          "published": "Fri, 18 Sep 2026 17:02:52 +0000",
+          "domain": "danluu.com",
+          "summary": "In early 2025, I started seeing people turn off their brain as they use LLMs1. They would have an LLM take an action (summarize text, write some code, etc.), and just assume that it worked2. This generally didn't work in early 2025 and the result was often quite silly. As LLMs have gotten better, I've seen more of this. Sometimes, people will try to get the LLM to write some code for them and basically just assume that it works3. Sometimes there's a human in the loop and, if the...",
+          "image": ""
+        },
+        {
+          "title": "Cloudflare Quick Tunnels",
+          "link": "https://try.cloudflare.com/",
+          "published": "Fri, 18 Sep 2026 14:18:41 +0000",
+          "domain": "try.cloudflare.com",
+          "summary": "Expose your local server to the Internet with a single command. No account, no DNS, no configuration required. \u2728 Free \u00b7 \ud83d\udd12 Secure \u00b7 \u26a1 Instant Free, secure tunnel for everything you are building. Preview and ship ideas globally in seconds with Quick Tunnels. Deploy your local application to the Internet with a single command. The Modern Way to Build and Share You're a single command away from sharing your project with the Internet. Built on Cloudflare's global network, Quick Tunnels give you instant, secure access to your local development...",
+          "image": ""
+        },
+        {
+          "title": "Photon-Emission-Guided Laser Fault Injection Enables RP2350 Secure Debug",
+          "link": "https://donjon.ledger.com/blog/rp2350-secure-debug-laser-fault-injection/",
+          "published": "Fri, 18 Sep 2026 16:54:18 +0000",
+          "domain": "donjon.ledger.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "An Empirical Study of Harness Design for Coding Agents",
+          "link": "https://arxiv.org/abs/2609.20804",
+          "published": "Fri, 18 Sep 2026 13:06:30 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.20804: An Empirical Study of Harness Design for Coding Agents Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Run-Ze Fan [view email] [v1] Thu, 17 Sep 2026 17:58:07 UTC (6,713 KB) Full-text links: Access Paper: View a PDF of the paper titled An Empirical Study of Harness Design for Coding Agents, by Run-Ze Fan and 8 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.AI < prev | next > new | recent | 2026-09 Change to browse...",
+          "image": ""
+        },
+        {
+          "title": "North Korean nuclear test sets off years of earthquakes",
+          "link": "https://www.science.org/content/article/north-korean-nuclear-test-sets-years-earthquakes",
+          "published": "Fri, 18 Sep 2026 14:45:32 +0000",
+          "domain": "science.org",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Cactus Needle 3: 8-29MB automation models can match DeepSeek V4 Flash",
+          "link": "https://cactuscompute.com/needle",
+          "published": "Fri, 18 Sep 2026 00:11:44 +0000",
+          "domain": "cactuscompute.com",
+          "summary": "A foundation model for mobile, wearables, robots, smart home, automotive and microcontrollers. One 8-29 MB binary that beats models 10x its size on mobile tool calls and matches 2-3x bigger models on extraction. One set of weights, every depth from 2 to 20 layers a model of its own: an intelligence ladder. Tool callsGiven the functions your app exposes, Needle picks the right ones and fills every argument from what the user said. Ask for two things and you get two calls in order; ask for something no tool covers...",
+          "image": "https://cactuscompute.com/opengraph-image?9df76a35fe8276e2"
+        },
+        {
+          "title": "C++26: Trivial infinite loops are no longer undefined behaviour",
+          "link": "https://www.sandordargo.com/blog/2026/09/16/cpp26-trivial-infinite-loops",
+          "published": "Thu, 17 Sep 2026 20:52:33 +0000",
+          "domain": "sandordargo.com",
+          "summary": "Let\u2019s start with a question! Is this program well-defined? 1 2 3 4 int main() { while (true) ; } If you said yes, you\u2019d be wrong \u2014 at least before C++26. A while (true); loop with no side effects used to be undefined behaviour. Compilers were free to assume it terminates, and some \u2014 Clang in particular \u2014 would optimize it away entirely, with spectacular consequences: 1 2 3 4 5 6 7 8 9 10 11 // https://godbolt.org/z/WYMxxeW1T #include <iostream> int main() { while (true) ; } void...",
+          "image": ""
+        },
+        {
+          "title": "OpenJev",
+          "link": "https://openjev.com/",
+          "published": "Fri, 18 Sep 2026 09:42:22 +0000",
+          "domain": "openjev.com",
+          "summary": "Run typed option logits and autoregressive JSON locally with open models and WebGPU. A local model can either read probabilities for your allowed options without decoding them, or write the same kind of distribution token by token. Pick a size, run both on your own GPU, and measure the difference. celebrationThere is no waitlist! Just try it out \u2193 MiniCPM5 2B is selected by default. On a phone or smaller device, switch to Qwen3 0.6B in the model box if needed. Larger model. Loading may be slower or may not...",
+          "image": ""
+        },
+        {
+          "title": "Mathematicians Build Long-Awaited Graph Sandwich",
+          "link": "https://www.quantamagazine.org/mathematicians-build-long-awaited-graph-sandwich-20260918/",
+          "published": "Fri, 18 Sep 2026 14:41:02 +0000",
+          "domain": "quantamagazine.org",
+          "summary": "The proof of a decades-old conjecture has given researchers a new way to understand complex networks. Home Mathematicians Build Long-Awaited Graph Sandwich Comment Save Article Read Later Share Facebook Copied! Copy link Email Pocket Reddit Ycombinator Comment Comments Save Article Read Later Read Later graph theory Mathematicians Build Long-Awaited Graph Sandwich By Paulina Rowi\u0144ska September 18, 2026 Save Article Read Later Kristina Armitage/Quanta Magazine In 2004, two mathematicians hypothesized a powerful kind of sandwich. They were studying graphs, which are collections of points (called vertices) and lines (called edges). Graphs...",
+          "image": "https://www.quantamagazine.org/wp-content/uploads/2026/09/GraphSandwiches-crKristinaArmitage-Social.jpg"
+        },
+        {
+          "title": "I vibed a proof of Conway's conjecture",
+          "link": "https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/",
+          "published": "Fri, 18 Sep 2026 14:36:10 +0000",
+          "domain": "overreacted.io",
+          "summary": "A few months ago, AI math results started making headlines. \u201cDo a breakthrough\u201d became a Twitter meme. Naturally, I became curious whether I, too, a math noob, can find some open mathematical problem and then have a frontier model solve it. It took me an entire month of my free time and a boatload of tokens, but I believe I\u2019ve obtained a Lean proof of this conjecture posed by John Conway 50 years ago: Conway\u2019s refinement conjecture claims that omnific integers have a refinement property: if ab = cd, there...",
+          "image": "https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/opengraph-image?5b0b970dfd19bb8c"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-18",
+      "news": [
+        {
+          "title": "An Empirical Study of Harness Design for Coding Agents",
+          "link": "https://arxiv.org/abs/2609.20804",
+          "published": "Fri, 18 Sep 2026 13:06:30 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.20804: An Empirical Study of Harness Design for Coding Agents Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Run-Ze Fan [view email] [v1] Thu, 17 Sep 2026 17:58:07 UTC (6,713 KB) Full-text links: Access Paper: View a PDF of the paper titled An Empirical Study of Harness Design for Coding Agents, by Run-Ze Fan and 8 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.AI < prev | next > new | recent | 2026-09 Change to browse...",
+          "image": ""
+        },
+        {
+          "title": "Bend 2 and the Vibe-Coding Trap",
+          "link": "https://blog.liampwll.com/posts/bend_vibe_coding/",
+          "published": "Fri, 18 Sep 2026 12:03:55 +0000",
+          "domain": "blog.liampwll.com",
+          "summary": "Bend just serves as a useful example of my general point regarding vibe-coding as it is recent, high-profile, and has aspects that make it easy to use as an example. I don\u2019t know anything about the author\u2019s history with designing languages or if they actually did consider the tradeoffs below and made what I think is a poor choice. Feel free to replace \u201cthe author\u201d below with \u201ca hypothetical author who could have created the same thing\u201d. I obviously do not like the design decisions made in Bend and I...",
+          "image": ""
+        },
+        {
+          "title": "I don't like passkeys",
+          "link": "https://hawksley.dev/blog/i-dont-like-passkeys",
+          "published": "Fri, 18 Sep 2026 12:06:50 +0000",
+          "domain": "hawksley.dev",
+          "summary": "width=device-width,initial-scale=1,viewport-fit=cover\" name=\"viewport\"><title>I don't like passkeys | Ethan Hawksley</title><meta content=\"light dark\" name=\"color-scheme\"><meta content=\"#ff4f00\" name=\"theme-color\" media=\"not all\"><meta content=\"#fafafa\" name=\"theme-color\" media=\"(prefers-color-scheme: light)\"><meta content=\"#0f0f0f\" name=\"theme-color\" media=\"(prefers-color-scheme: dark)\"><meta content=\"#ff4f00\" name=\"theme-color\" media=\"not all\"><link href=\"/fonts/ibm-sans-subset.woff2\" rel=\"preload\" type=\"font/woff2\" as=\"font\" crossorigin fetchpriority=\"high\"><link href=\"/fonts/ibm-mono-subset.woff2\" rel=\"preload\" type=\"font/woff2\" as=\"font\" crossorigin fetchpriority=\"high\"><script>window.__getTheme=()=>{const e=document.documentElement.getAttribute(\"data-theme\");if(\"dark\"===e||\"light\"===e)return e;try{const e=localStorage.getItem(\"theme\");if(\"dark\"===e||\"light\"===e)return e}catch{}return matchMedia(\"(prefers-color-scheme: dark)\").matches?\"dark\":\"light\"},window.__setTheme=(e,t=!0,n=document)=>{n.documentElement.setAttribute(\"data-theme\",e);const a=\"dark\"===e?\"#0f0f0f\":\"#fafafa\";n.head.querySelectorAll('meta[name=\"theme-color\"]').forEach(e=>{e.setAttribute(\"content\",a),e.removeAttribute(\"media\")}),t&&setTimeout(()=>{try{localStorage.setItem(\"theme\",e)}catch{}})},window.__setTheme(window.__getTheme(),!1),window.__themeTransition=document.startViewTransition?document.startViewTransition.bind(document):null,navigator.userAgentData&&navigator.userAgentData.brands&&navigator.userAgentData.brands.some(e=>\"Chromium\"===e.brand)&&(document.startViewTransition=void 0),document.addEventListener(\"astro:before-swap\",e=>{window.__setTheme(window.__getTheme(),!1,e.newDocument),e.newDocument.documentElement.classList.add(\"js\")}),document.documentElement.classList.add(\"js\")</script><meta content=\"Why passkeys are a step back for personal security: examining account lockout risks, platform lock-in, hardware key limits, and fragile recovery flows. For the past few years, the tech industry has kept pushing passkeys as the ultimate solution to logging in. Many Big...",
+          "image": ""
+        },
+        {
+          "title": "AI chatbots becoming experts at changing people's minds. What's their secret?",
+          "link": "https://www.science.org/content/article/ai-chatbots-are-becoming-experts-changing-people-s-minds-what-s-their-secret",
+          "published": "Fri, 18 Sep 2026 13:39:27 +0000",
+          "domain": "science.org",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "OpenJev",
+          "link": "https://openjev.com/",
+          "published": "Fri, 18 Sep 2026 09:42:22 +0000",
+          "domain": "openjev.com",
+          "summary": "Run typed option logits and autoregressive JSON locally with open models and WebGPU. A local model can either read probabilities for your allowed options without decoding them, or write the same kind of distribution token by token. Pick a size, run both on your own GPU, and measure the difference. celebrationThere is no waitlist! Just try it out \u2193 MiniCPM5 2B is selected by default. On a phone or smaller device, switch to Qwen3 0.6B in the model box if needed. Larger model. Loading may be slower or may not...",
+          "image": ""
+        },
+        {
+          "title": "The Shadows Lurking in the Equations \u2013 Underwater Islands",
+          "link": "https://gods.art/articles/equation_shadows",
+          "published": "Wed, 16 Sep 2026 02:37:22 +0000",
+          "domain": "gods.art",
+          "summary": "If you've ever graphed equations, chances are you have only ever graphed equations in what I refer to as \"Binary mode\" - which draws a line where the equation is EXACTLY equal, and leaves white everywhere else. FuzzyGraph, on the other hand, visualizes equations in a Fuzzy/Non-Binary mode - showing not only where an equation are exactly equal, but also where the equation nearly equal and where the equation is far from equal (where the error is high). And when we look at things in this Non-Binary way, we can...",
+          "image": ""
+        },
+        {
+          "title": "I Vibed a Proof of Conway's Conjecture",
+          "link": "https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/",
+          "published": "Fri, 18 Sep 2026 14:36:10 +0000",
+          "domain": "overreacted.io",
+          "summary": "A few months ago, AI math results started making headlines. \u201cDo a breakthrough\u201d became a Twitter meme. Naturally, I became curious whether I, too, a math noob, can find some open mathematical problem and then have a frontier model solve it. It took me an entire month of my free time and a boatload of tokens, but I believe I\u2019ve obtained a Lean proof of this conjecture posed by John Conway 50 years ago: Conway\u2019s refinement conjecture claims that omnific integers have a refinement property: if ab = cd, there...",
+          "image": "https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/opengraph-image?5b0b970dfd19bb8c"
+        },
+        {
+          "title": "Subnormal floating-point numbers are expensive on Intel processors",
+          "link": "https://lemire.me/blog/2026/09/15/subnormal-floating-point-numbers-are-expensive-on-intel-processors/",
+          "published": "Tue, 15 Sep 2026 16:58:22 +0000",
+          "domain": "lemire.me",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Jemalloc 5.4.0",
+          "link": "https://github.com/jemalloc/jemalloc/releases/tag/5.4.0",
+          "published": "Fri, 18 Sep 2026 04:20:24 +0000",
+          "domain": "github.com",
+          "summary": "Contribute to jemalloc/jemalloc development by creating an account on GitHub. jemalloc / jemalloc Public Notifications You must be signed in to change notification settings Fork 1.6k Star 11.2k 5.4.0 Latest Latest Compare Choose a tag to compare Sorry, something went wrong. Filter Loading Sorry, something went wrong. Uh oh! There was an error while loading. Please reload this page. 5.4.0 7a34f18 This release contains over 160 commits, focusing on the technical debts cleaning including refactorings, bug fixes, test coverage improvement, and option cleanups. The release also includes portability improvements per...",
+          "image": "https://opengraph.githubassets.com/757edfa22c8cec63243b6db8691aa148bbcede35b72fb0f10a038fa3aa43da14/jemalloc/jemalloc/releases/tag/5.4.0"
+        },
+        {
+          "title": "Warren Buffett Steps Down as Berkshire Chairman, Names Son to Replace Him",
+          "link": "https://www.nytimes.com/2026/09/18/business/warren-buffett-berkshire-chairman.html",
+          "published": "Fri, 18 Sep 2026 11:01:44 +0000",
+          "domain": "nytimes.com",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "news": [
+        {
+          "title": "One Year of Sponsored Servo Development",
+          "link": "https://servo.org/blog/2026/09/15/one-year-of-sponsorship/",
+          "published": "Thu, 17 Sep 2026 08:13:54 +0000",
+          "domain": "servo.org",
+          "summary": "Looking back on Servo's first donation-funded role. Last September, the Servo project announced that long-time maintainer Josh Bowman-Matthews (@jdm) would work part-time on improving the Servo contributor experience, entirely funded by the monthly donations on OpenCollective and GitHub. In his own words, here is a look back over the past year! First of all, I am enormously grateful to everyone who financially supports Servo, as those donations have enabled me to devote significant time to a project that I care a lot about. Some highlights from that funded work that...",
+          "image": ""
+        },
+        {
+          "title": "GLM Built Its Own Inference Infrastructure",
+          "link": "https://z.ai/blog/glm-built-its-inference-infrastructure",
+          "published": "Thu, 17 Sep 2026 08:27:09 +0000",
+          "domain": "z.ai",
+          "summary": "",
+          "image": "https://z-cdn-media.chatglm.cn/prompts-rich-media-resources/glm-built-its-inference-infrastructure/20260917-143951.jpeg?w=1376&h=768&fit=fill"
+        },
+        {
+          "title": "Nvidia announces native GPU programming in Rust",
+          "link": "https://developer.nvidia.com/blog/introducing-cuda-rust-two-tracks-for-writing-gpu-kernels/",
+          "published": "Wed, 16 Sep 2026 11:15:53 +0000",
+          "domain": "developer.nvidia.com",
+          "summary": "In September 2026, NVIDIA announced it is leaning into native GPU programming in Rust. CUDA C++ and CUDA Python are mature, enterprise-grade toolchains\u2026 AI-Generated Summary cuda-oxide provides a custom rustc codegen backend that compiles SIMT-style GPU kernels written in Rust directly to PTX using the Pliron IR framework and LLVM.cutile-rs enables Tile-based GPU programming in stable Rust, where the compiler manages thread mapping and memory layout through CUDA Tile IR JIT compilation.Both projects enforce memory safety at compile time: cuda-oxide uses DisjointSlice and launch contracts to prevent aliasing, while cutile-rs...",
+          "image": "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image1-1.webp"
+        },
+        {
+          "title": "Keys Not Included: recovering the signing keys for US driver's license barcodes",
+          "link": "https://ryan.science/blog/keys-not-included",
+          "published": "Thu, 17 Sep 2026 03:03:23 +0000",
+          "domain": "ryan.science",
+          "summary": "My personal website, portfolio, and blog.",
+          "image": ""
+        },
+        {
+          "title": "The Relation Between Mathematics and Physics by Paul Dirac",
+          "link": "https://www.damtp.cam.ac.uk/events/strings02/dirac/speach.html",
+          "published": "Sun, 13 Sep 2026 16:38:22 +0000",
+          "domain": "damtp.cam.ac.uk",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "My temporary PHP fix from 2014 has nearly 20M installs. Today I'm deprecating it",
+          "link": "https://jakeasmith.com/blog/http-build-url/",
+          "published": "Tue, 15 Sep 2026 20:53:36 +0000",
+          "domain": "jakeasmith.com",
+          "summary": "In 2014 I wrote http_build_url, a temporary PHP polyfill for AOL Twelve years ago, I wrote 174 lines of PHP as a stopgap for AOL\u2019s content management system. I put it on Packagist in case anyone else needed the same patch, and somehow it\u2019s been installed nearly 20 million times since. Today I marked it deprecated. In 2014, we were in the middle of upgrading AOL\u2019s CMS from PHP 5.2 to 5.3. Part of that upgrade was dropping version 1 of the pecl_http extension, which gave us a function called...",
+          "image": "https://jakeasmith.com/blog/http-build-url/og.png"
+        },
+        {
+          "title": "Training a 4B model to produce 81% faster query plans than Postgres",
+          "link": "https://rohanbansal.com/qorl",
+          "published": "Wed, 16 Sep 2026 18:50:00 +0000",
+          "domain": "rohanbansal.com",
+          "summary": "...or how to make Qwen learn query optimization via agentic reinforcement learning Four RL rollouts commence for a single query. Qwen produces a candidate strategy per rollout and sends it off to Postgres for measurement against its own default plan. Scalar rewards are assigned to each rollout, which flow backwards to update Qwen's weights. SELECT count(*) FROM title t JOIN movie_companies mc ON mc.movie_id = t.id JOIN company_name cn ON cn.id = mc.company_id WHERE cn.name = 'Toho' /*+ HashJoin(mc cn) */ 96 ms 118 ms default +0.21 /*+ Leading((cn mc)...",
+          "image": "https://rohanbansal.com/og/qorl-20260916.png"
+        },
+        {
+          "title": "Xiaomi Mimo 2.6 live post-training dashboard",
+          "link": "https://mimo.xiaomi.com/rl/",
+          "published": "Wed, 16 Sep 2026 20:09:18 +0000",
+          "domain": "mimo.xiaomi.com",
+          "summary": "Training metrics of the mimo-v2.6-pro and mimo-v2.6-flash reinforcement-learning runs, live from the trainer",
+          "image": ""
+        },
+        {
+          "title": "Lucasart's Afterlife",
+          "link": "https://togameforlife.wordpress.com/2023/12/09/on-lucasarts-afterlife/",
+          "published": "Tue, 15 Sep 2026 22:30:30 +0000",
+          "domain": "togameforlife.wordpress.com",
+          "summary": "I can hardly believe I\u2019m writing a blog post about a game that came out 27 years ago, but here we are. Lucasfilm, at one time had a gaming subsidiary called Lucasarts, and they produced somet\u2026 I can hardly believe I\u2019m writing a blog post about a game that came out 27 years ago, but here we are. Lucasfilm, at one time had a gaming subsidiary called Lucasarts, and they produced something that has never been sequeled or surpassed : Afterlife. Here is your elevator pitch for this game \u2013...",
+          "image": "https://togameforlife.wordpress.com/wp-content/uploads/2023/12/screenshot-2023-12-09-074944.jpg"
+        },
+        {
+          "title": "OpenAI Model Misalignment Report",
+          "link": "https://openai.com/index/model-misalignment-reporting-framework/",
+          "published": "Thu, 17 Sep 2026 07:21:19 +0000",
+          "domain": "openai.com",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "news": [
+        {
+          "title": "Nvidia announces native GPU programming in Rust",
+          "link": "https://developer.nvidia.com/blog/introducing-cuda-rust-two-tracks-for-writing-gpu-kernels/",
+          "published": "Wed, 16 Sep 2026 11:15:53 +0000",
+          "domain": "developer.nvidia.com",
+          "summary": "In September 2026, NVIDIA announced it is leaning into native GPU programming in Rust. CUDA C++ and CUDA Python are mature, enterprise-grade toolchains\u2026 AI-Generated Summary cuda-oxide provides a custom rustc codegen backend that compiles SIMT-style GPU kernels written in Rust directly to PTX using the Pliron IR framework and LLVM.cutile-rs enables Tile-based GPU programming in stable Rust, where the compiler manages thread mapping and memory layout through CUDA Tile IR JIT compilation.Both projects enforce memory safety at compile time: cuda-oxide uses DisjointSlice and launch contracts to prevent aliasing, while cutile-rs...",
+          "image": "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image1-1.webp"
+        },
+        {
+          "title": "Training a 4B model to produce 81% faster query plans than Postgres",
+          "link": "https://rohanbansal.com/qorl",
+          "published": "Wed, 16 Sep 2026 18:50:00 +0000",
+          "domain": "rohanbansal.com",
+          "summary": "...or how to make Qwen learn query optimization via agentic reinforcement learning Four RL rollouts commence for a single query. Qwen produces a candidate strategy per rollout and sends it off to Postgres for measurement against its own default plan. Scalar rewards are assigned to each rollout, which flow backwards to update Qwen's weights. SELECT count(*) FROM title t JOIN movie_companies mc ON mc.movie_id = t.id JOIN company_name cn ON cn.id = mc.company_id WHERE cn.name = 'Toho' /*+ HashJoin(mc cn) */ 96 ms 118 ms default +0.21 /*+ Leading((cn mc)...",
+          "image": "https://rohanbansal.com/og/qorl-20260916.png"
+        },
+        {
+          "title": "Xiaomi Mimo 2.6 live post-training dashboard",
+          "link": "https://mimo.xiaomi.com/rl/",
+          "published": "Wed, 16 Sep 2026 20:09:18 +0000",
+          "domain": "mimo.xiaomi.com",
+          "summary": "Training metrics of the mimo-v2.6-pro and mimo-v2.6-flash reinforcement-learning runs, live from the trainer",
+          "image": ""
+        },
+        {
+          "title": "DeepSeek-v4.1 Flash: Pushing the Limits of KV Cache Compression",
+          "link": "https://zartbot.github.io/blog/model_arch/dsv41flash_arch/en.html",
+          "published": "Thu, 17 Sep 2026 01:39:47 +0000",
+          "domain": "zartbot.github.io",
+          "summary": "A deep dive into the DeepSeek-V4.1 Flash technical report: CED, CSA2, HSI, Single-Pass mHC, Engram and FP4 KV Cache \u2014 how the KV cache was compressed to just 890 bytes per token. When DeepSeek-V4.1 Flash was released, I thought it might just be a post-training iteration version... but after using it for a while, I found it reached nearly 420 Tokens/s in speed, and then Cui said all DeepSeek-V4 Pro models would be taken offline... suddenly I felt this was no small matter... until the Technical Report \u300aDeepSeek-V4.1-Flash: Pushing the...",
+          "image": ""
+        },
+        {
+          "title": "Breaking the 1.58-bit Barrier for Ternary LLMs",
+          "link": "https://arxiv.org/abs/2609.16338",
+          "published": "Wed, 16 Sep 2026 20:59:24 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.16338: Breaking the 1.58-bit Barrier for Ternary LLMs Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Evangelos Georganas [view email] [v1] Mon, 14 Sep 2026 20:54:24 UTC (144 KB) Full-text links: Access Paper: View a PDF of the paper titled Breaking the 1.58-bit Barrier for Ternary LLMs, by Evangelos Georganas and 2 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.AI < prev | next > new | recent | 2026-09 Change to browse by: cs cs.LG References...",
+          "image": ""
+        },
+        {
+          "title": "Backups Aren't Simple",
+          "link": "https://filipovski.net/2026/09/16/backups-arent-simple.html",
+          "published": "Wed, 16 Sep 2026 20:27:16 +0000",
+          "domain": "filipovski.net",
+          "summary": "See also: John Salvatier\u2019s excellent blog, Reality has a surprising amount of detail I read a comment somewhere that stuck with me, that went something like this: \u201cThere are two types of people: those who have suffered a catastrophic loss of data, and those who will.\u201d Trying to find the source for it for this blog, it turned out that every other sysadmin has his rehashed version of the quote, but the gist of it is the same everywhere. Data loss is something that happens more often than we\u2019d hope,...",
+          "image": ""
+        },
+        {
+          "title": "Small programming tricks",
+          "link": "https://will-keleher.com/posts/small-programming-tricks-matter/",
+          "published": "Wed, 16 Sep 2026 15:56:47 +0000",
+          "domain": "will-keleher.com",
+          "summary": "A lot of effective engineering comes from the accumulation of small nuggets of knowledge. Day to day, I think a surprising amount of engineering productivity comes from small nuggets of knowledge: being aware that a language feature exists; knowing that an unexplained tcp delay is probably related to the TCP_NO_DELAY setting and Nagle\u2019s algorithm; knowing the right git incantation to get out of a pickle; or knowing a trick with sed to rewrite a file. In one sense, this is self-evident: anything you know is going to be made up...",
+          "image": ""
+        },
+        {
+          "title": "Developing provably correct Rust code with Verus",
+          "link": "https://www.amazon.science/blog/developing-provably-correct-rust-code-with-verus",
+          "published": "Mon, 14 Sep 2026 16:57:50 +0000",
+          "domain": "amazon.science",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "The engineering behind the US Strategic Petroleum Reserve",
+          "link": "https://johnjwang.com/post/2026/09/15/engineering-behind-us-strategic-petroleum-reserve",
+          "published": "Tue, 15 Sep 2026 22:15:25 +0000",
+          "domain": "johnjwang.com",
+          "summary": "One of the most fascinating things I\u2019ve learned about recently is the engineering behind the US Strategic Petroleum Reserve. Here are the key requirements it\u2019s designed to meet: The actual solution, like many great engineering solutions, is incredibly elegant and simple. But before we talk about it, let\u2019s start with how you might go about solving this: Looking at the requirements, the first thing most people would probably think to do is to just take what we do commercially for storing petroleum and scale it up. External floating roof tanks...",
+          "image": "https://johnjwang.com/og-image.jpg"
+        },
+        {
+          "title": "Keys Not Included: recovering the signing keys for US driver's license barcodes",
+          "link": "https://ryan.science/blog/keys-not-included",
+          "published": "Thu, 17 Sep 2026 03:03:23 +0000",
+          "domain": "ryan.science",
+          "summary": "My personal website, portfolio, and blog.",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "Training a 4B model to produce 81% faster query plans than Postgres",
+          "link": "https://rohanbansal.com/qorl",
+          "published": "Wed, 16 Sep 2026 18:50:00 +0000",
+          "domain": "rohanbansal.com",
+          "summary": "...or how to make Qwen learn query optimization via agentic reinforcement learning Four RL rollouts commence for a single query. Qwen produces a candidate strategy per rollout and sends it off to Postgres for measurement against its own default plan. Scalar rewards are assigned to each rollout, which flow backwards to update Qwen's weights. SELECT count(*) FROM title t JOIN movie_companies mc ON mc.movie_id = t.id JOIN company_name cn ON cn.id = mc.company_id WHERE cn.name = 'Toho' /*+ HashJoin(mc cn) */ 96 ms 118 ms default +0.21 /*+ Leading((cn mc)...",
+          "image": "https://rohanbansal.com/og/qorl-20260916.png"
+        },
+        {
+          "title": "Breaking the 1.58-bit Barrier for Ternary LLMs",
+          "link": "https://arxiv.org/abs/2609.16338",
+          "published": "Wed, 16 Sep 2026 20:59:24 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.16338: Breaking the 1.58-bit Barrier for Ternary LLMs Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Evangelos Georganas [view email] [v1] Mon, 14 Sep 2026 20:54:24 UTC (144 KB) Full-text links: Access Paper: View a PDF of the paper titled Breaking the 1.58-bit Barrier for Ternary LLMs, by Evangelos Georganas and 2 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.AI < prev | next > new | recent | 2026-09 Change to browse by: cs cs.LG References...",
+          "image": ""
+        },
+        {
+          "title": "Xiaomi Mimo 2.6 live post-training dashboard",
+          "link": "https://mimo.xiaomi.com/rl/",
+          "published": "Wed, 16 Sep 2026 20:09:18 +0000",
+          "domain": "mimo.xiaomi.com",
+          "summary": "Training metrics of the mimo-v2.6-pro and mimo-v2.6-flash reinforcement-learning runs, live from the trainer",
+          "image": ""
+        },
+        {
+          "title": "Small programming tricks",
+          "link": "https://will-keleher.com/posts/small-programming-tricks-matter/",
+          "published": "Wed, 16 Sep 2026 15:56:47 +0000",
+          "domain": "will-keleher.com",
+          "summary": "A lot of effective engineering comes from the accumulation of small nuggets of knowledge. Day to day, I think a surprising amount of engineering productivity comes from small nuggets of knowledge: being aware that a language feature exists; knowing that an unexplained tcp delay is probably related to the TCP_NO_DELAY setting and Nagle\u2019s algorithm; knowing the right git incantation to get out of a pickle; or knowing a trick with sed to rewrite a file. In one sense, this is self-evident: anything you know is going to be made up...",
+          "image": ""
+        },
+        {
+          "title": "Reversing Factorio's RNG",
+          "link": "https://gegell.github.io/posts/factorio-rng/",
+          "published": "Sat, 12 Sep 2026 17:02:19 +0000",
+          "domain": "gegell.github.io",
+          "summary": "Factorio 2.1 changes the way the RNG is used. This breaks my in-game implementations. The theoretical aspects of how the RNG works still apply, as they still use the same RNG. For more info see section 6.1. Factorio 2.1.",
+          "image": ""
+        },
+        {
+          "title": "AWS says it can't restore some data from mideast facilities struck by Iran",
+          "link": "https://www.wsj.com/world/middle-east/aws-says-it-cant-restore-some-data-from-mideast-facilities-struck-by-iran-ddcb7e5d",
+          "published": "Tue, 15 Sep 2026 21:41:42 +0000",
+          "domain": "wsj.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Performance Improvements in .NET 11",
+          "link": "https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-11/",
+          "published": "Tue, 15 Sep 2026 12:18:16 +0000",
+          "domain": "devblogs.microsoft.com",
+          "summary": "Take a tour through hundreds of performance improvements in .NET 11.",
+          "image": "https://devblogs.microsoft.com/dotnet/wp-content/uploads/sites/10/2026/09/net11perf.webp"
+        },
+        {
+          "title": "Accurate Models of AMD Matrix Cores",
+          "link": "https://arxiv.org/abs/2609.14845",
+          "published": "Wed, 16 Sep 2026 18:56:05 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.14845: Accurate Models of AMD Matrix Cores Focus to learn more arXiv-issued DOI via DataCite Submission history From: Faizan Ahmad Khattak [view email] [v1] Sun, 13 Sep 2026 23:34:01 UTC (1,297 KB) [v2] Tue, 15 Sep 2026 10:33:08 UTC (1,297 KB) Full-text links: Access Paper: View a PDF of the paper titled Accurate Models of AMD Matrix Cores, by Faizan A Khattak and Mantas Mikaitis and Carlo J. GrazianiView PDFHTML (experimental)TeX Source view license Current browse context: cs.AR < prev | next > new |...",
+          "image": ""
+        },
+        {
+          "title": "macOS 27 Golden Gate \u2013 Review",
+          "link": "https://arstechnica.com/gadgets/2026/09/macos-27-golden-gate-the-ars-technica-review/",
+          "published": "Wed, 16 Sep 2026 19:53:36 +0000",
+          "domain": "arstechnica.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "How good are frontier models at physics?",
+          "link": "https://arxiv.org/abs/2609.13009",
+          "published": "Wed, 16 Sep 2026 19:19:08 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.13009: How Good Are Frontier Models at Physics? Expert Re-Grading Reveals Broken Evaluations and Near-Saturation of Leading Benchmarks Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Ali Ansari [view email] [v1] Fri, 11 Sep 2026 16:06:50 UTC (178 KB) Full-text links: Access Paper: View a PDF of the paper titled How Good Are Frontier Models at Physics? Expert Re-Grading Reveals Broken Evaluations and Near-Saturation of Leading Benchmarks, by Ali Ansari and 50 other authorsView PDFHTML (experimental)TeX Source view license Current...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "Small Programming Tricks",
+          "link": "https://will-keleher.com/posts/small-programming-tricks-matter/",
+          "published": "Wed, 16 Sep 2026 15:56:47 +0000",
+          "domain": "will-keleher.com",
+          "summary": "A lot of effective engineering comes from the accumulation of small nuggets of knowledge. Day to day, I think a surprising amount of engineering productivity comes from small nuggets of knowledge: being aware that a language feature exists; knowing that an unexplained tcp delay is probably related to the TCP_NO_DELAY setting and Nagle\u2019s algorithm; knowing the right git incantation to get out of a pickle; or knowing a trick with sed to rewrite a file. In one sense, this is self-evident: anything you know is going to be made up...",
+          "image": ""
+        },
+        {
+          "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+          "link": "https://arxiv.org/abs/2609.14858",
+          "published": "Wed, 16 Sep 2026 13:44:40 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.14858: Dream-RSI: Recursive Self-Improvement through Evolving Worlds Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Tong Zheng [view email] [v1] Mon, 14 Sep 2026 00:10:47 UTC (777 KB) Full-text links: Access Paper: View a PDF of the paper titled Dream-RSI: Recursive Self-Improvement through Evolving Worlds, by Tong Zheng and 16 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.CL < prev | next > new | recent | 2026-09 Change to browse by: cs References & Citations NASA...",
+          "image": ""
+        },
+        {
+          "title": "Mistral X Mozilla: Private, Multilingual AI Browsing",
+          "link": "https://mistral.ai/news/mistral-x-mozilla/",
+          "published": "Wed, 16 Sep 2026 08:08:57 +0000",
+          "domain": "mistral.ai",
+          "summary": "Open, private and multilingual AI is coming to your web browser. Mistral and Mozilla team up to put powerful, trustworthy AI where you already browse. Today, we are announcing a partnership with Mozilla to bring privacy, control and choice to people using AI to browse online. Firefox Smart Window (beta), Mozilla\u2019s AI browsing assistant, is now powered by Mistral models. Smart Window helps you make sense of complex searches, remember something important you clicked away from and source information important to you based on your browser tabs. Mistral will help...",
+          "image": "https://mistral.ai/cms-media/api/media/file/Linkedin-Partnership-Firefox%20copie.jpg"
+        },
+        {
+          "title": "Tell the speakers that you liked their talks",
+          "link": "https://ohhelloana.blog/tell-the-speakers/",
+          "published": "Tue, 15 Sep 2026 11:28:19 +0000",
+          "domain": "ohhelloana.blog",
+          "summary": "Published by Ana Rodrigues on the 14th September 2026 I spent a great chunk of last week at SmashingConf Freiburg and it was lovely as usual. It was great to meet some people I've only ever seen online and see old friends. And I am not going to lie - it was pretty flattering to have people come over to me and challenge me to admit I was the mystery speaker (SmashingConf always has a mystery speaker they only announce on the day). I wasn't, as you all know now,...",
+          "image": "https://ohhelloana.blog/assets/icons/og.png"
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "ER visits for gambling disorders doubled after expanded online gambling market",
+          "link": "https://temertymedicine.utoronto.ca/news/emergency-room-visits-gambling-disorders-nearly-doubled-after-expanded-online-gambling-market",
+          "published": "Wed, 16 Sep 2026 17:27:37 +0000",
+          "domain": "temertymedicine.utoronto.ca",
+          "summary": "ER visits for gambling disorders doubled after single-event sports betting was legalized and Ontario's online gambling market expanded. Ryan Forrest and Daniel Myran By Charlotte Lam Emergency department visits for gambling disorders doubled following the legalization of single-event sports betting and expansion of Ontario's online gambling market, according to a new study by University of Toronto researchers. The increase was observed predominantly among young men. Canada legalized single-event sports betting in August 2021. In April 2022, Ontario became the first province to allow private companies to operate in a regulated...",
+          "image": "https://temertymedicine.utoronto.ca/sites/default/files/styles/social_image/public/assets/images/Forrest%20and%20Myran_1140x760.jpg?itok=cJ61qU3I"
+        },
+        {
+          "title": "Claude Cowork and chat are now one Claude",
+          "link": "https://claude.com/blog/cowork-is-now-claude",
+          "published": "Wed, 16 Sep 2026 16:26:25 +0000",
+          "domain": "claude.com",
+          "summary": "Starting today, Claude Cowork and chat are one Claude, rolling out on Pro and Max plans. Hand over the task and Claude does the work. You keep the final say.",
+          "image": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6aaaa16ed688635ea2b10fa1_tn-artifacts.jpg"
+        },
+        {
+          "title": "The DeepMind Institute",
+          "link": "https://institute.deepmind.com/",
+          "published": "Wed, 16 Sep 2026 14:32:11 +0000",
+          "domain": "institute.deepmind.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Apple Reference Image: A New Approach for Verified Photography",
+          "link": "https://security.apple.com/blog/apple-reference-image/",
+          "published": "Wed, 16 Sep 2026 02:07:31 +0000",
+          "domain": "security.apple.com",
+          "summary": "Introducing Apple Reference Image, a new solution for verifiable photography on iPhone. This new, opt-in camera mode lets a photographer create a securely timestamped reference image that accurately depicts what was captured by the iPhone's camera sensor. Apple Reference Image offers a trustworthy, scalable guarantee that a reference image is what it claims to be: a real photograph, captured by a real sensor in an iPhone camera, at a specific period in time. Today, powerful, widely available AI tools allow users to easily generate or alter photorealistic images to a...",
+          "image": "https://security.apple.com/assets/image/seo-image.jpg"
+        },
+        {
+          "title": "How big are factorials?",
+          "link": "https://eli.thegreenplace.net/2026/how-big-are-factorials/",
+          "published": "Tue, 15 Sep 2026 13:25:38 +0000",
+          "domain": "eli.thegreenplace.net",
+          "summary": "The other day, I found myself wondering how big 52! (52 factorial) is, and that led me to ponder how these could be estimated without a calculator or a computer. It turns out there\u2019s some fairly interesting math behind being able to estimate the size (number of digits) of a factorial reasonably accurately. This post will start by stating how to do the estimate, and if you\u2019re curious you can read on for the math background. Without further ado, the approximation is: As an example, let\u2019s use my original question,...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "EU chief opens door for Canada to become 'associate member'",
+          "link": "https://www.bbc.com/news/articles/cjwyzrr9d3dko",
+          "published": "Wed, 16 Sep 2026 09:54:05 +0000",
+          "domain": "bbc.com",
+          "summary": "Canada is seeking closer ties with EU after a breakdown in relations with the US and its president Donald Trump. ShareSaveAdd as preferred on GoogleAmy WalkerandNick Beake,Europe correspondentEPAMark Carney (left) walks alongside European Parliament President Roberta Metsola (centre) and European Commission President Ursula von der Leyen (right)The president of the European Commission has backed proposals for Canada to become the EU's first \"associate member\". Ursula von der Leyen told the European Parliament on Wednesday she wanted to work on \"opening the door\" for Canada, which would involve closer ties on...",
+          "image": "https://ichef.bbci.co.uk/news/1024/branded_news/b431/live/3960b020-b1b9-11f1-bdcf-d393eb724fa3.jpg"
+        },
+        {
+          "title": "The Google Play app review process now regularly takes longer than a week",
+          "link": "https://gultsch.social/@daniel/117280438824908947",
+          "published": "Wed, 16 Sep 2026 11:19:11 +0000",
+          "domain": "gultsch.social",
+          "summary": "",
+          "image": "https://gultsch.social/system/media_attachments/files/117/280/433/871/988/752/original/63774980a2cd31cf.png"
+        },
+        {
+          "title": "Mistral X Mozilla: Private, Multilingual AI Browsing",
+          "link": "https://mistral.ai/news/mistral-x-mozilla/",
+          "published": "Wed, 16 Sep 2026 08:08:57 +0000",
+          "domain": "mistral.ai",
+          "summary": "Open, private and multilingual AI is coming to your web browser. Mistral and Mozilla team up to put powerful, trustworthy AI where you already browse. Today, we are announcing a partnership with Mozilla to bring privacy, control and choice to people using AI to browse online. Firefox Smart Window (beta), Mozilla\u2019s AI browsing assistant, is now powered by Mistral models. Smart Window helps you make sense of complex searches, remember something important you clicked away from and source information important to you based on your browser tabs. Mistral will help...",
+          "image": "https://mistral.ai/cms-media/api/media/file/Linkedin-Partnership-Firefox%20copie.jpg"
+        },
+        {
+          "title": "Introducing System One Models and Jev",
+          "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "published": "Tue, 15 Sep 2026 19:25:03 +0000",
+          "domain": "typesafe.ai",
+          "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access. Models have been superhuman at chat for years, so where is all the automation? This has been my driving question for the last four years. At OpenAI, I helped build the methods that made language models useful at following instructions and talking with people. That work ended up as the research behind ChatGPT. At the time, I thought maybe chat models would...",
+          "image": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg"
+        },
+        {
+          "title": "Salesforce Global Outage",
+          "link": "https://status.salesforce.com/products/all",
+          "published": "Wed, 16 Sep 2026 10:37:08 +0000",
+          "domain": "status.salesforce.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "Kyber (YC W23) Is Hiring a Forward Deployed Engineer",
+          "link": "https://www.ycombinator.com/companies/kyber/jobs/eturrAR-forward-deployed-engineer",
+          "published": "Wed, 16 Sep 2026 12:01:09 +0000",
+          "domain": "ycombinator.com",
+          "summary": "Instantly draft, review, and send complex regulatory notices. At Kyber, we're building the next-generation document platform for enterprises. Today, our AI-native solution transforms regulatory document workflows, enabling insurance claims organizations to consolidate 80% of their templates, spend 65% less time drafting, and compress overall communication cycle times by 5x. Our vision is for every enterprise to seamlessly leverage AI templates to generate every document. Kyber is backed by top Silicon Valley VCs, including Y Combinator and Fellows Fund. We're looking for a future founder and early-career engineer to quarterback the...",
+          "image": ""
+        },
+        {
+          "title": "Learning Programming in an Age of LLMs",
+          "link": "https://blog.ploeh.dk/2026/09/16/on-learning-programming-in-an-age-of-llms/",
+          "published": "Wed, 16 Sep 2026 09:12:34 +0000",
+          "domain": "blog.ploeh.dk",
+          "summary": "Open answers to a reader",
+          "image": "https://blog.ploeh.dk/assets/themes/ploeh/images/favicons/favicon.png"
+        },
+        {
+          "title": "Apple Reference Image: A New Approach for Verified Photography",
+          "link": "https://security.apple.com/blog/apple-reference-image/",
+          "published": "Wed, 16 Sep 2026 02:07:31 +0000",
+          "domain": "security.apple.com",
+          "summary": "Introducing Apple Reference Image, a new solution for verifiable photography on iPhone. This new, opt-in camera mode lets a photographer create a securely timestamped reference image that accurately depicts what was captured by the iPhone's camera sensor. Apple Reference Image offers a trustworthy, scalable guarantee that a reference image is what it claims to be: a real photograph, captured by a real sensor in an iPhone camera, at a specific period in time. Today, powerful, widely available AI tools allow users to easily generate or alter photorealistic images to a...",
+          "image": "https://security.apple.com/assets/image/seo-image.jpg"
+        },
+        {
+          "title": "Douglas Adams and the exterminated Doctor Who adventure",
+          "link": "https://www.bbc.co.uk/news/articles/c8jdp38z4jgo",
+          "published": "Sun, 13 Sep 2026 21:49:19 +0000",
+          "domain": "bbc.co.uk",
+          "summary": "Image caption, The Doctor punting in Cambridge with his companion Romana For more than six decades, Doctor Who has taken viewers across time and space. But hidden within the show's history are unfinished episodes recorded in Cambridge. In 1979, production teams arrived in the university city following a storyline called 'Shada', written by local author Douglas Adams - featuring Tom Baker as the fourth Doctor. However, not everything went smoothly during the shoot. Speaking on a new BBC Sounds documentary Doctor Who: Lost in Cambridge, Marcus Hearn said his father,...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "Introducing System One Models and Jev",
+          "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "published": "Tue, 15 Sep 2026 19:25:03 +0000",
+          "domain": "typesafe.ai",
+          "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access. Models have been superhuman at chat for years, so where is all the automation? This has been my driving question for the last four years. At OpenAI, I helped build the methods that made language models useful at following instructions and talking with people. That work ended up as the research behind ChatGPT. At the time, I thought maybe chat models would...",
+          "image": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg"
+        },
+        {
+          "title": "Apple Reference Image: A New Approach for Verified Photography",
+          "link": "https://security.apple.com/blog/apple-reference-image/",
+          "published": "Wed, 16 Sep 2026 02:07:31 +0000",
+          "domain": "security.apple.com",
+          "summary": "Introducing Apple Reference Image, a new solution for verifiable photography on iPhone. This new, opt-in camera mode lets a photographer create a securely timestamped reference image that accurately depicts what was captured by the iPhone's camera sensor. Apple Reference Image offers a trustworthy, scalable guarantee that a reference image is what it claims to be: a real photograph, captured by a real sensor in an iPhone camera, at a specific period in time. Today, powerful, widely available AI tools allow users to easily generate or alter photorealistic images to a...",
+          "image": "https://security.apple.com/assets/image/seo-image.jpg"
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "Show HN: I made a flight simulator, except you're just a passenger",
+          "link": "https://inflightsimulator.com",
+          "published": "Mon, 14 Sep 2026 09:08:56 +0000",
+          "domain": "inflightsimulator.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "An update on Wayback Machine access",
+          "link": "https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/",
+          "published": "Tue, 15 Sep 2026 17:52:18 +0000",
+          "domain": "blog.archive.org",
+          "summary": "We\u2019ve heard you: \u201cFix the Wayback Machine!\u201d Here\u2019s what\u2019s going on. The Internet Archive\u2019s Wayback Machine has been hit by waves of high-volume automated traffic, and we\u2019ve put protections in place to keep the service running. One recent change: we rewrote the message you see when a request is blocked with a 429 error \u2014 the HTTP code that means \u201ctoo many requests.\u201d Those protections sometimes catch real people by mistake. If that\u2019s happened to you, we\u2019re sorry, and we appreciate your patience while we work to reduce the errors....",
+          "image": ""
+        },
+        {
+          "title": "Doing Everyone Else's Job",
+          "link": "https://yosefk.com/blog/doing-everyone-elses-job.html",
+          "published": "Tue, 15 Sep 2026 00:01:31 +0000",
+          "domain": "yosefk.com",
+          "summary": "I find it very useful to be able to do everyone else\u2019s job \u2014 it helps you learn how they work and what they need, and it helps even more when you need their job done, but they won\u2019t do it themselves. If you made something new and those you made it for can\u2019t be bothered to start using it, go ahead and integrate it into their system. It worked for Intel back when they made their first 32-bit CPU and had their people add support for that CPU in...",
+          "image": ""
+        },
+        {
+          "title": "Gemini 3.8 Live and 3.8 Live Extended Thinking",
+          "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+          "published": "Tue, 15 Sep 2026 17:38:18 +0000",
+          "domain": "blog.google",
+          "summary": "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking are our most advanced live dialogue models yet, built for natural conversation.",
+          "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-8_live___keyword__blog-social.width-1300.png"
+        },
+        {
+          "title": "Negativland, Culture Jamming, and the Art of Making Something New",
+          "link": "https://blog.archive.org/2026/09/11/negativland-culture-jamming-and-the-art-of-making-something-new/",
+          "published": "Wed, 16 Sep 2026 02:46:06 +0000",
+          "domain": "blog.archive.org",
+          "summary": "In 1980, Negativland released its first self-titled album with handmade covers and distributed it through a few record stores in the California Bay Area. \u201cWe thought we might sell 100 in the next five years, and we sold all 500 in three months. So we kept going,\u201d said band co-founder Mark Hosler of the experimental sound collage record, which eventually sold 15,000 copies. \u201cWe were shocked that people were interested in something so strange.\u201d Hosler started the group with David Wills and Richard Lyons, but the Negativland lineup has changed,...",
+          "image": ""
+        },
+        {
+          "title": "Building a Linux GPU Driver for the M4 Mac Mini in One Month",
+          "link": "https://codyho.dev/blog/gpu-driver/",
+          "published": "Tue, 15 Sep 2026 19:30:03 +0000",
+          "domain": "codyho.dev",
+          "summary": "Previous blog post: https://codyho.dev/blog/hypervisor-macbook-neo/ TL;DR: Niklas and I built a fully OpenGL ES 3.0 compliant GPU driver for the M4 Mac Mini and MacBook Neo in about a month, a process which normally takes years. Here is Chrome and Firefox running WebGL on the M4 Mac Mini with working compositing: Most importantly, the driver is fast enough to run Minecraft at 200fps: Building this driver involved reverse engineering the AGX\u2019s (Apple\u2019s name for the GPU) incredibly complicated firmware ABI and user-space components. This was all done in a transparent, verifiably...",
+          "image": ""
+        },
+        {
+          "title": "Why I'm still bearish on LLMs after Navier-Stokes",
+          "link": "https://dank.systems/posts/2026-09-15-ai-bear.html",
+          "published": "Tue, 15 Sep 2026 17:37:12 +0000",
+          "domain": "dank.systems",
+          "summary": "[thank you to claude fable 5.1, holden saberhagen, gabriel kammer, andres erbsen, alice mckean, and tristan wylde-larue for comments on this post] i'll begin with a few theses for the reader to chew on: taken together, it appears that for most domains LLMs will continue to look like a cracked intern: quick and effective in the hands of an adult but not given run of the place. most firms will not be able to adopt fully autonomous AI, not for problems of skill issue or lagging technology diffusion but rather...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "Introducing System One Models and Jev",
+          "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "published": "Tue, 15 Sep 2026 19:25:03 +0000",
+          "domain": "typesafe.ai",
+          "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access. Models have been superhuman at chat for years, so where is all the automation? This has been my driving question for the last four years. At OpenAI, I helped build the methods that made language models useful at following instructions and talking with people. That work ended up as the research behind ChatGPT. At the time, I thought maybe chat models would...",
+          "image": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg"
+        },
+        {
+          "title": "Apple Reference Image: A New Approach for Verified Photography",
+          "link": "https://security.apple.com/blog/apple-reference-image/",
+          "published": "Wed, 16 Sep 2026 02:07:31 +0000",
+          "domain": "security.apple.com",
+          "summary": "Introducing Apple Reference Image, a new solution for verifiable photography on iPhone. This new, opt-in camera mode lets a photographer create a securely timestamped reference image that accurately depicts what was captured by the iPhone's camera sensor. Apple Reference Image offers a trustworthy, scalable guarantee that a reference image is what it claims to be: a real photograph, captured by a real sensor in an iPhone camera, at a specific period in time. Today, powerful, widely available AI tools allow users to easily generate or alter photorealistic images to a...",
+          "image": "https://security.apple.com/assets/image/seo-image.jpg"
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "Show HN: I made a flight simulator, except you're just a passenger",
+          "link": "https://inflightsimulator.com",
+          "published": "Mon, 14 Sep 2026 09:08:56 +0000",
+          "domain": "inflightsimulator.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Negativland, Culture Jamming, and the Art of Making Something New",
+          "link": "https://blog.archive.org/2026/09/11/negativland-culture-jamming-and-the-art-of-making-something-new/",
+          "published": "Wed, 16 Sep 2026 02:46:06 +0000",
+          "domain": "blog.archive.org",
+          "summary": "In 1980, Negativland released its first self-titled album with handmade covers and distributed it through a few record stores in the California Bay Area. \u201cWe thought we might sell 100 in the next five years, and we sold all 500 in three months. So we kept going,\u201d said band co-founder Mark Hosler of the experimental sound collage record, which eventually sold 15,000 copies. \u201cWe were shocked that people were interested in something so strange.\u201d Hosler started the group with David Wills and Richard Lyons, but the Negativland lineup has changed,...",
+          "image": ""
+        },
+        {
+          "title": "Datamimic \u2013 don't let your coding agent invent its own test world",
+          "link": "https://github.com/rapiddweller/datamimic",
+          "published": "Wed, 16 Sep 2026 04:58:36 +0000",
+          "domain": "github.com",
+          "summary": "Model-driven synthetic test data for CI/CD and analytics - deterministic, privacy-preserving, and domain-aware. Includes Python APIs, XML pipelines, and MCP/IDE integration to orchestrate realistic datasets for finance, healthcare, and other regulated environments. - rapiddweller/datamimic",
+          "image": "https://repository-images.githubusercontent.com/900760746/4120d593-3112-4d4a-bca0-270c6c980097"
+        },
+        {
+          "title": "An update on Wayback Machine access",
+          "link": "https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/",
+          "published": "Tue, 15 Sep 2026 17:52:18 +0000",
+          "domain": "blog.archive.org",
+          "summary": "We\u2019ve heard you: \u201cFix the Wayback Machine!\u201d Here\u2019s what\u2019s going on. The Internet Archive\u2019s Wayback Machine has been hit by waves of high-volume automated traffic, and we\u2019ve put protections in place to keep the service running. One recent change: we rewrote the message you see when a request is blocked with a 429 error \u2014 the HTTP code that means \u201ctoo many requests.\u201d Those protections sometimes catch real people by mistake. If that\u2019s happened to you, we\u2019re sorry, and we appreciate your patience while we work to reduce the errors....",
+          "image": ""
+        },
+        {
+          "title": "Gemini 3.8 Live and 3.8 Live Extended Thinking",
+          "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+          "published": "Tue, 15 Sep 2026 17:38:18 +0000",
+          "domain": "blog.google",
+          "summary": "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking are our most advanced live dialogue models yet, built for natural conversation.",
+          "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-8_live___keyword__blog-social.width-1300.png"
+        },
+        {
+          "title": "Recreating Voodoo Graphics and a Late-1990s Gaming PC on an FPGA",
+          "link": "https://nand2mario.github.io/posts/2026/zsst-voodoo/",
+          "published": "Tue, 15 Sep 2026 22:50:55 +0000",
+          "domain": "nand2mario.github.io",
+          "summary": "I've spent the last month adding features and improving performance in z486_MiSTer, mostly working through games from the first half of the 1990s. Looking a few years ahead brought me to another change I wanted to explore: the arrival of 3D graphics cards. The first one that left a strong impression on me was the Voodoo. The game was Need for Speed II SE. Smooth textures, fog, and the speed of the whole thing made it feel like a new generation of PC gaming. Could I recreate that on an...",
+          "image": ""
+        },
+        {
+          "title": "German Rheinmetall open-sources its Battlesuite connected weapon system protcol",
+          "link": "https://rheinmetall.github.io/onboardapi-documentation/9.10.0/index.html",
+          "published": "Tue, 15 Sep 2026 21:07:47 +0000",
+          "domain": "rheinmetall.github.io",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "news": [
+        {
+          "title": "Introducing System One Models and Jev",
+          "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "published": "Tue, 15 Sep 2026 19:25:03 +0000",
+          "domain": "typesafe.ai",
+          "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access. Models have been superhuman at chat for years, so where is all the automation? This has been my driving question for the last four years. At OpenAI, I helped build the methods that made language models useful at following instructions and talking with people. That work ended up as the research behind ChatGPT. At the time, I thought maybe chat models would...",
+          "image": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg"
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "German Rheinmetall open-sources its Battlesuite connected weapon system protcol",
+          "link": "https://rheinmetall.github.io/onboardapi-documentation/9.10.0/index.html",
+          "published": "Tue, 15 Sep 2026 21:07:47 +0000",
+          "domain": "rheinmetall.github.io",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "An Update on Wayback Machine Access",
+          "link": "https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/",
+          "published": "Tue, 15 Sep 2026 17:52:18 +0000",
+          "domain": "blog.archive.org",
+          "summary": "We\u2019ve heard you: \u201cFix the Wayback Machine!\u201d Here\u2019s what\u2019s going on. The Internet Archive\u2019s Wayback Machine has been hit by waves of high-volume automated traffic, and we\u2019ve put protections in place to keep the service running. One recent change: we rewrote the message you see when a request is blocked with a 429 error \u2014 the HTTP code that means \u201ctoo many requests.\u201d Those protections sometimes catch real people by mistake. If that\u2019s happened to you, we\u2019re sorry, and we appreciate your patience while we work to reduce the errors....",
+          "image": ""
+        },
+        {
+          "title": "Gemini 3.8 Live and 3.8 Live Extended Thinking",
+          "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+          "published": "Tue, 15 Sep 2026 17:38:18 +0000",
+          "domain": "blog.google",
+          "summary": "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking are our most advanced live dialogue models yet, built for natural conversation.",
+          "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-8_live___keyword__blog-social.width-1300.png"
+        },
+        {
+          "title": "Jean-Pierre Serre is 100 years old today",
+          "link": "https://mathshistory.st-andrews.ac.uk/Biographies/Serre/",
+          "published": "Tue, 15 Sep 2026 20:57:18 +0000",
+          "domain": "mathshistory.st-andrews.ac.uk",
+          "summary": "Jean-Pierre Serre is a French mathematician who has made important contributions to algebraic topology, algebraic geometry, and algebraic number theory. He was a member of Bourbaki.",
+          "image": "https://mathshistory.st-andrews.ac.uk/Biographies/Serre/thumbnail.jpg"
+        },
+        {
+          "title": "Building a Linux GPU Driver for the M4 Mac Mini in One Month",
+          "link": "https://codyho.dev/blog/gpu-driver/",
+          "published": "Tue, 15 Sep 2026 19:30:03 +0000",
+          "domain": "codyho.dev",
+          "summary": "Previous blog post: https://codyho.dev/blog/hypervisor-macbook-neo/ TL;DR: Niklas and I built a fully OpenGL ES 3.0 compliant GPU driver for the M4 Mac Mini and MacBook Neo in about a month, a process which normally takes years. Here is Chrome and Firefox running WebGL on the M4 Mac Mini with working compositing: Most importantly, the driver is fast enough to run Minecraft at 200fps: Building this driver involved reverse engineering the AGX\u2019s (Apple\u2019s name for the GPU) incredibly complicated firmware ABI and user-space components. This was all done in a transparent, verifiably...",
+          "image": ""
+        },
+        {
+          "title": "We got admin access to Baseten's production GitHub in 25 minutes",
+          "link": "https://www.strix.ai/blog/baseten-harbor-github-pat-takeover",
+          "published": "Tue, 15 Sep 2026 18:11:24 +0000",
+          "domain": "strix.ai",
+          "summary": "We gave Strix a domain. In 25 minutes, it found a live token with admin access to Baseten We were about to trust Baseten with our own and our customers\u2019 data. So to be safe, we ran Strix to ensure they were secure first. About 25 minutes later, it had a live GitHub token with repository-level admin rights on internal Baseten repos. We build Strix, an autonomous hacking agent, which of course means we need (cheap and fast) inference. We were exploring our options, and Baseten is one of the...",
+          "image": "https://www.strix.ai/blog-baseten-cover.png"
+        },
+        {
+          "title": "Why I'm still bearish on LLMs after Navier-Stokes",
+          "link": "https://dank.systems/posts/2026-09-15-ai-bear.html",
+          "published": "Tue, 15 Sep 2026 17:37:12 +0000",
+          "domain": "dank.systems",
+          "summary": "[thank you to claude fable 5.1, holden saberhagen, gabriel kammer, andres erbsen, alice mckean, and tristan wylde-larue for comments on this post] i'll begin with a few theses for the reader to chew on: taken together, it appears that for most domains LLMs will continue to look like a cracked intern: quick and effective in the hands of an adult but not given run of the place. most firms will not be able to adopt fully autonomous AI, not for problems of skill issue or lagging technology diffusion but rather...",
+          "image": ""
+        },
+        {
+          "title": "Chopping up books when they're physically too big",
+          "link": "https://attainablefelicity.mattkirkland.com/20260915/cut-up-your-books.html",
+          "published": "Tue, 15 Sep 2026 18:45:31 +0000",
+          "domain": "attainablefelicity.mattkirkland.com",
+          "summary": "Matt Kirkland is a designer. He probably reads too much. This is my appeal to readers everywhere: you should take a knife to your books. (And no, not in the sense that the destructive AI-scanners do.) Like apparently everybody else, my book club recently picked out Lonesome Dove. I\u2019m not a Western guy, but it\u2019s clear that this pulitzer-winner earned it. It\u2019s good. But come on: this is an 850+ page paperback! It is what I call Too Big. It\u2019s going to tire out your hands to hold up an...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "Introducing System One Models and Jev",
+          "link": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "published": "Tue, 15 Sep 2026 19:25:03 +0000",
+          "domain": "typesafe.ai",
+          "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access. TypeSafe announces System One models and Jev TypeSafe announces System One models and Jev Models have been superhuman at chat for years, so where is all the automation? This has been my driving question for the last four years. At OpenAI, I helped build the methods that made language models useful at following instructions and talking with people. That work ended up...",
+          "image": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg"
+        },
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "An Update on Wayback Machine Access",
+          "link": "https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/",
+          "published": "Tue, 15 Sep 2026 17:52:18 +0000",
+          "domain": "blog.archive.org",
+          "summary": "We\u2019ve heard you: \u201cFix the Wayback Machine!\u201d Here\u2019s what\u2019s going on. The Internet Archive\u2019s Wayback Machine has been hit by waves of high-volume automated traffic, and we\u2019ve put protections in place to keep the service running. One recent change: we rewrote the message you see when a request is blocked with a 429 error \u2014 the HTTP code that means \u201ctoo many requests.\u201d Those protections sometimes catch real people by mistake. If that\u2019s happened to you, we\u2019re sorry, and we appreciate your patience while we work to reduce the errors....",
+          "image": ""
+        },
+        {
+          "title": "Gemini 3.8 Live and 3.8 Live Extended Thinking",
+          "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+          "published": "Tue, 15 Sep 2026 17:38:18 +0000",
+          "domain": "blog.google",
+          "summary": "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking are our most advanced live dialogue models yet, built for natural conversation.",
+          "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-8_live___keyword__blog-social.width-1300.png"
+        },
+        {
+          "title": "Jean-Pierre Serre is 100 years old today",
+          "link": "https://mathshistory.st-andrews.ac.uk/Biographies/Serre/",
+          "published": "Tue, 15 Sep 2026 20:57:18 +0000",
+          "domain": "mathshistory.st-andrews.ac.uk",
+          "summary": "Jean-Pierre Serre is a French mathematician who has made important contributions to algebraic topology, algebraic geometry, and algebraic number theory. He was a member of Bourbaki.",
+          "image": "https://mathshistory.st-andrews.ac.uk/Biographies/Serre/thumbnail.jpg"
+        },
+        {
+          "title": "We got admin access to Baseten's production GitHub in 25 minutes",
+          "link": "https://www.strix.ai/blog/baseten-harbor-github-pat-takeover",
+          "published": "Tue, 15 Sep 2026 18:11:24 +0000",
+          "domain": "strix.ai",
+          "summary": "We gave Strix a domain. In 25 minutes, it found a live token with admin access to Baseten We were about to trust Baseten with our own and our customers\u2019 data. So to be safe, we ran Strix to ensure they were secure first. About 25 minutes later, it had a live GitHub token with repository-level admin rights on internal Baseten repos. We build Strix, an autonomous hacking agent, which of course means we need (cheap and fast) inference. We were exploring our options, and Baseten is one of the...",
+          "image": "https://www.strix.ai/blog-baseten-cover.png"
+        },
+        {
+          "title": "German Rheinmetall open-sources its Battlesuite connected weapon system protcol",
+          "link": "https://rheinmetall.github.io/onboardapi-documentation/9.10.0/index.html",
+          "published": "Tue, 15 Sep 2026 21:07:47 +0000",
+          "domain": "rheinmetall.github.io",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "WangNet \u2013 1.8 MB, zero-dependency Numberwang adjudication in 11 languages",
+          "link": "https://github.com/GraafHenk/numberwang",
+          "published": "Tue, 15 Sep 2026 19:27:35 +0000",
+          "domain": "github.com",
+          "summary": "A small neural network that decides whether a number is Numberwang. - GraafHenk/numberwang GraafHenk / numberwang Public Notifications You must be signed in to change notification settings Fork 0 Star 16 mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History5 Commits5 CommitsFolders and filesNameNameLast commit messageLast commit dateLICENSELICENSE README.mdREADME.md app.pyapp.py model.jsonmodel.json numberwang.pynumberwang.py requirements.txtrequirements.txt View all filesRepository files navigationNumberwang A small neural network that decides whether a number is Numberwang. The whole model is a 1.8 MB JSON file and the inference code is about 100 lines of pure Python standard library...",
+          "image": "https://opengraph.githubassets.com/5a7b7ba72b87cb222381d10db0e2e0efb7b931ecee720a2d1f791f329fe5e143/GraafHenk/numberwang"
+        },
+        {
+          "title": "Chopping up books when they're physically too big",
+          "link": "https://attainablefelicity.mattkirkland.com/20260915/cut-up-your-books.html",
+          "published": "Tue, 15 Sep 2026 18:45:31 +0000",
+          "domain": "attainablefelicity.mattkirkland.com",
+          "summary": "Matt Kirkland is a designer. He probably reads too much. This is my appeal to readers everywhere: you should take a knife to your books. (And no, not in the sense that the destructive AI-scanners do.) Like apparently everybody else, my book club recently picked out Lonesome Dove. I\u2019m not a Western guy, but it\u2019s clear that this pulitzer-winner earned it. It\u2019s good. But come on: this is an 850+ page paperback! It is what I call Too Big. It\u2019s going to tire out your hands to hold up an...",
+          "image": ""
+        },
+        {
+          "title": "Building a Linux GPU Driver for the M4 Mac Mini in One Month",
+          "link": "https://codyho.dev/blog/gpu-driver/",
+          "published": "Tue, 15 Sep 2026 19:30:03 +0000",
+          "domain": "codyho.dev",
+          "summary": "Previous blog post: https://codyho.dev/blog/hypervisor-macbook-neo/ TL;DR: Niklas and I built a fully OpenGL ES 3.0 compliant GPU driver for the M4 Mac Mini and MacBook Neo in about a month, a process which normally takes years. Here is Chrome and Firefox running WebGL on the M4 Mac Mini with working compositing: Most importantly, the driver is fast enough to run Minecraft at 200fps: Building this driver involved reverse engineering the AGX\u2019s (Apple\u2019s name for the GPU) incredibly complicated firmware ABI and user-space components. This was all done in a transparent, verifiably...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "Show HN: Capsule \u2013 Single-file web apps that save their data into SQLite",
+          "link": "https://withcapsule.app/",
+          "published": "Tue, 15 Sep 2026 13:31:40 +0000",
+          "domain": "withcapsule.app",
+          "summary": "Capsule packages your entire app \u2014 UI, data, and assets \u2014 into a single portable file. No cloud. No accounts. Just share it. Capsule packs your entire app \u2014 UI, data, and everything \u2014 into a single portable .capsule file. No cloud. No accounts. Just share it. Download for macOS Try Web Preview Download for other platforms \u2193 Summer Recipes.capsule Shared via WhatsApp Chloe Summer Recipes.capsule Try Recipe Book .capsule in Web Preview \u2192 AI APP GENERATION Generate & update apps using AI Capsule turns simple prompts into complete, self-contained...",
+          "image": "https://withcapsule.app/og-image.png"
+        },
+        {
+          "title": "GEFS on OpenBSD: A Early Preview",
+          "link": "https://marc.info/?l=openbsd-tech&m=178948744271633&w=2",
+          "published": "Tue, 15 Sep 2026 17:12:19 +0000",
+          "domain": "marc.info",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "I can't stop thinking about Papua New Guinea",
+          "link": "https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua",
+          "published": "Tue, 15 Sep 2026 06:16:24 +0000",
+          "domain": "notnottalmud.substack.com",
+          "summary": "7347162ShareWhen you talk about Papua New Guinea, people may say, oh, is that the place where: There are nearly distinct 1000 languages spoken, about 12% of all the languages on earth, and by far the most language diversity in the world Nobody is sure if its population is 10 million or 17 million They were having bow and arrow battles as late as 1963: Historic Vids@historyinmemesPre-bronze age war between two tribes in West Papua, 1963 12:03 PM \u00b7 Jan 19, 2024 \u00b7 18.5M Views1.68K Replies \u00b7 7.26K Reposts \u00b7 66K...",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Hacking a $20 4G wireless hotspot into a texting device",
+          "link": "https://bkovac.github.io/modem-thing/",
+          "published": "Tue, 15 Sep 2026 13:20:24 +0000",
+          "domain": "bkovac.github.io",
+          "summary": "I don\u2019t organize my things well. I try to, but quite often end up with a bunch of stuff on my desk. From various aliexpress orders and projects I\u2019m working on, all the way to gifts and stuff I didn\u2019t have time to find a place for. That is exactly how this project came to be. At one point in time I had, lying on my desk: And of course, my caveman brain combined the 3. Okay, okay, not to lie I was probably a bit conditioned by knowing about:...",
+          "image": ""
+        },
+        {
+          "title": "An Update on Wayback Machine Access",
+          "link": "https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/",
+          "published": "Tue, 15 Sep 2026 17:52:18 +0000",
+          "domain": "blog.archive.org",
+          "summary": "We\u2019ve heard you: \u201cFix the Wayback Machine!\u201d Here\u2019s what\u2019s going on. The Internet Archive\u2019s Wayback Machine has been hit by waves of high-volume automated traffic, and we\u2019ve put protections in place to keep the service running. One recent change: we rewrote the message you see when a request is blocked with a 429 error \u2014 the HTTP code that means \u201ctoo many requests.\u201d Those protections sometimes catch real people by mistake. If that\u2019s happened to you, we\u2019re sorry, and we appreciate your patience while we work to reduce the errors....",
+          "image": ""
+        },
+        {
+          "title": "The CSS Zen Garden dream, finally shipped",
+          "link": "https://josprague.com/blog/the-css-zen-garden-dream-finally-shipped/",
+          "published": "Tue, 15 Sep 2026 14:40:08 +0000",
+          "domain": "josprague.com",
+          "summary": "Rebuilding Firefox.com with Mozilla and Lincoln Loop on modern, native CSS with no preprocessors, and what that means for design systems today. Back in 2008, fresh out of college, I discovered CSS Zen Garden, Dave Shea\u2019s project where one HTML file could be restyled into something completely different using nothing but CSS. It was a glimpse of the dream: clean, reusable design, fully separated from content. Then you tried to ship real client work, and the dream fell apart. There were no CSS variables. The properties available couldn\u2019t express a...",
+          "image": "https://josprague.com/og.png"
+        },
+        {
+          "title": "Giving up on smart rings",
+          "link": "https://notesbylex.com/giving-up-on-smart-rings",
+          "published": "Sat, 12 Sep 2026 22:00:20 +0000",
+          "domain": "notesbylex.com",
+          "summary": "After about a year of wearing a smart ring, I",
+          "image": ""
+        },
+        {
+          "title": "Jiga (YC W21) Is Hiring Product Engineer (Remote/US)",
+          "link": "https://jiga.io/about-us/?ashby_jid=0b75d72d-c92b-4dca-8062-09d298ada0bd",
+          "published": "Tue, 15 Sep 2026 17:00:31 +0000",
+          "domain": "jiga.io",
+          "summary": "We are creating the tool to speed up manufacturing for NASA, Google, Tesla and hundreds more. Join us to build the future of manufacturing.",
+          "image": "https://jiga.io/wp-content/uploads/2026/07/About-us-web-preview-V2.jpg"
+        },
+        {
+          "title": "Cartesian \u2013 AI 3D Modeling for Design",
+          "link": "https://www.formas.ai/cartesian",
+          "published": "Tue, 15 Sep 2026 15:26:45 +0000",
+          "domain": "formas.ai",
+          "summary": "Turn words, sketches and references into editable 3D models. Explore Cartesian by Formas for architecture and product design. Join the preview waitlist. 01 \u00b7 EditabilityEvery part.Yours to edit.Change a chair. Keep the room. Each object has its own place in the model.",
+          "image": "https://www.formas.ai/cartesian/assets/restaurant-one-point-final.webp"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations",
+          "link": "https://github.com/arnegiacomo/fugleramme",
+          "published": "Tue, 15 Sep 2026 12:31:10 +0000",
+          "domain": "github.com",
+          "summary": "E-ink bird frame for Raspberry Pi - real-time bird detection by audio, fully local AI, rendered as real, hand-cut 1800s bird illustrations. - arnegiacomo/fugleramme",
+          "image": "https://repository-images.githubusercontent.com/1294088656/7d2dbd8d-ec72-4781-8363-f4f5b9afc352"
+        },
+        {
+          "title": "Java 27 Released",
+          "link": "https://mail.openjdk.org/archives/list/announce@openjdk.org/thread/ORGGLMN75HFEWP7YL3ZLGHLYHVIBJDYT/",
+          "published": "Tue, 15 Sep 2026 13:13:43 +0000",
+          "domain": "mail.openjdk.org",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Capsule \u2013 Single-file web apps that save their data into SQLite",
+          "link": "https://withcapsule.app/",
+          "published": "Tue, 15 Sep 2026 13:31:40 +0000",
+          "domain": "withcapsule.app",
+          "summary": "Capsule packages your entire app \u2014 UI, data, and assets \u2014 into a single portable file. No cloud. No accounts. Just share it. Capsule packs your entire app \u2014 UI, data, and everything \u2014 into a single portable .capsule file. No cloud. No accounts. Just share it. Download for macOS Try Web Preview Download for other platforms \u2193 Summer Recipes.capsule Shared via WhatsApp Chloe Summer Recipes.capsule Try Recipe Book .capsule in Web Preview \u2192 AI APP GENERATION Generate & update apps using AI Capsule turns simple prompts into complete, self-contained...",
+          "image": "https://withcapsule.app/og-image.png"
+        },
+        {
+          "title": "Show HN: Hacking a $20 4G wireless hotspot into a texting device",
+          "link": "https://bkovac.github.io/modem-thing/",
+          "published": "Tue, 15 Sep 2026 13:20:24 +0000",
+          "domain": "bkovac.github.io",
+          "summary": "I don\u2019t organize my things well. I try to, but quite often end up with a bunch of stuff on my desk. From various aliexpress orders and projects I\u2019m working on, all the way to gifts and stuff I didn\u2019t have time to find a place for. That is exactly how this project came to be. At one point in time I had, lying on my desk: And of course, my caveman brain combined the 3. Okay, okay, not to lie I was probably a bit conditioned by knowing about:...",
+          "image": ""
+        },
+        {
+          "title": "I can't stop thinking about Papua New Guinea",
+          "link": "https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua",
+          "published": "Tue, 15 Sep 2026 06:16:24 +0000",
+          "domain": "notnottalmud.substack.com",
+          "summary": "6596656ShareWhen you talk about Papua New Guinea, people may say, oh, is that the place where: There are nearly distinct 1000 languages spoken, about 12% of all the languages on earth, and by far the most language diversity in the world Nobody is sure if its population is 10 million or 17 million They were having bow and arrow battles as late as 1963: Historic Vids@historyinmemesPre-bronze age war between two tribes in West Papua, 1963 12:03 PM \u00b7 Jan 19, 2024 \u00b7 18.5M Views1.68K Replies \u00b7 7.26K Reposts \u00b7 66K...",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Panel \u2013 A research workspace where the agent can build its own panes",
+          "link": "https://github.com/greentfrapp/panel",
+          "published": "Tue, 15 Sep 2026 13:58:37 +0000",
+          "domain": "github.com",
+          "summary": "Contribute to greentfrapp/panel development by creating an account on GitHub. greentfrapp / panel Public Notifications You must be signed in to change notification settings Fork 0 Star 16 mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History594 Commits594 CommitsFolders and filesNameNameLast commit messageLast commit date.vscode.vscode appsapps assetsassets docsdocs scriptsscripts .gitattributes.gitattributes .gitignore.gitignore .nvmrc.nvmrc .prettierrc.json.prettierrc.json CLAUDE.mdCLAUDE.md LICENSELICENSE README.mdREADME.md package.jsonpackage.json pnpm-lock.yamlpnpm-lock.yaml pnpm-workspace.yamlpnpm-workspace.yaml pyproject.tomlpyproject.toml uv.lockuv.lock View all filesRepository files navigationPanel A research workspace where the agent works beside you: chat, files, PDFs and notebooks in one dock, and the agent can also create custom viewers...",
+          "image": "https://opengraph.githubassets.com/f4b9fd266e5446acb6d82f5090c22642b418096dbb41015c1c53a42c31b887f4/greentfrapp/panel"
+        },
+        {
+          "title": "25 Years of Mass Surveillance Is Enough",
+          "link": "https://www.schneier.com/blog/archives/2026/09/25-years-of-mass-surveillance-is-enough.html",
+          "published": "Tue, 15 Sep 2026 11:26:48 +0000",
+          "domain": "schneier.com",
+          "summary": "This essay was written with Cindy Cohn, and originally appeared in Lawfare. One of the many legacies of the terrorist attacks of Sept. 11 is the government-wide shift from targeted surveillance\u2014such as individual wiretaps or pen register/trap and trace orders\u2014to mass surveillance techniques\u2014such as tapping into the internet backbone or mass collection of telephone or internet metadata. The legal and technical architecture of modern mass surveillance, initially framed as a necessary defense against terrorist threats, has grown far beyond that justification and national security in general. Mass surveillance is now...",
+          "image": ""
+        },
+        {
+          "title": "Global bond yields hit 2008 highs, raising stakes for big borrowers",
+          "link": "https://www.reuters.com/world/asia-pacific/bond-selloff-drives-us-benchmark-beyond-5-stocks-rattled-2026-09-15/",
+          "published": "Tue, 15 Sep 2026 14:07:01 +0000",
+          "domain": "reuters.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Alternatives to MinIO for single-node local S3",
+          "link": "https://rmoff.net/2026/01/14/alternatives-to-minio-for-single-node-local-s3/",
+          "published": "Tue, 15 Sep 2026 08:21:27 +0000",
+          "domain": "rmoff.net",
+          "summary": "14 Jan 2026 by \u00b7 S3, MinIO, Apache Iceberg at https://rmoff.net/2026/01/14/alternatives-to-minio-for-single-node-local-s3/ In late 2025 the company behind MinIO decided to abandon it to pursue other commercial interests. As well as upsetting a bunch of folk, it also put the cat amongst the pigeons of many software demos that relied on MinIO to emulate S3 storage locally, not to mention build pipelines that used it for validating S3 compatibility. In this blog post I\u2019m going to look at some alternatives to MinIO. Whilst MinIO is a lot more than 'just' a...",
+          "image": "https://rmoff.net/images/2026/01/h_IMG_3845.jpeg"
+        },
+        {
+          "title": "Sony's First Computer \u2013 The SMC-70 from 1982 [video]",
+          "link": "https://www.youtube.com/watch?v=cT2-7KkPkBc",
+          "published": "Sun, 13 Sep 2026 05:47:13 +0000",
+          "domain": "youtube.com",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "Suspected sabotage causes major Netherlands rail disruption",
+          "link": "https://www.bbc.com/news/articles/c8ly49w9g1edo",
+          "published": "Tue, 15 Sep 2026 10:22:46 +0000",
+          "domain": "bbc.com",
+          "summary": "Trains were cancelled or delayed on Tuesday after objects were found on tracks at multiple locations. ShareSaveAdd as preferred on GoogleAmy WalkerEPAParts of the Netherlands, including Amsterdam, have been hit by major rail disruption after suspected sabotage to the tracks, the country's railway infrastructure operator has said. ProRail warned that passengers in the country's centre and north should expect cancellations and delays on Tuesday, while the closure of some level crossings could cause disruption to roads. Pipes and cables were placed on the tracks in multiple locations, according to local...",
+          "image": "https://ichef.bbci.co.uk/news/1024/branded_news/eda4/live/dbe5e120-b0de-11f1-b1d1-571ed4d7ff2c.jpg"
+        },
+        {
+          "title": "I can't stop thinking about Papua New Guinea",
+          "link": "https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua",
+          "published": "Tue, 15 Sep 2026 06:16:24 +0000",
+          "domain": "notnottalmud.substack.com",
+          "summary": "6276154ShareWhen you talk about Papua New Guinea, people may say, oh, is that the place where: There are nearly distinct 1000 languages spoken, about 12% of all the languages on earth, and by far the most language diversity in the world Nobody is sure if its population is 10 million or 17 million They were having bow and arrow battles as late as 1963: Historic Vids@historyinmemesPre-bronze age war between two tribes in West Papua, 1963 12:03 PM \u00b7 Jan 19, 2024 \u00b7 18.5M Views1.68K Replies \u00b7 7.26K Reposts \u00b7 66K...",
+          "image": ""
+        },
+        {
+          "title": "Alternatives to MinIO for single-node local S3",
+          "link": "https://rmoff.net/2026/01/14/alternatives-to-minio-for-single-node-local-s3/",
+          "published": "Tue, 15 Sep 2026 08:21:27 +0000",
+          "domain": "rmoff.net",
+          "summary": "14 Jan 2026 by \u00b7 S3, MinIO, Apache Iceberg at https://rmoff.net/2026/01/14/alternatives-to-minio-for-single-node-local-s3/ In late 2025 the company behind MinIO decided to abandon it to pursue other commercial interests. As well as upsetting a bunch of folk, it also put the cat amongst the pigeons of many software demos that relied on MinIO to emulate S3 storage locally, not to mention build pipelines that used it for validating S3 compatibility. In this blog post I\u2019m going to look at some alternatives to MinIO. Whilst MinIO is a lot more than 'just' a...",
+          "image": "https://rmoff.net/images/2026/01/h_IMG_3845.jpeg"
+        },
+        {
+          "title": "iOS 27, iPadOS 27, and macOS 27",
+          "link": "https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/",
+          "published": "Mon, 14 Sep 2026 17:50:29 +0000",
+          "domain": "apple.com",
+          "summary": "Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features. Available today, Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features that make the apps users interact with every day smarter and more useful. Apple\u2019s latest software updates introduce Siri AI, a more intelligent, knowledgeable, and capable version of Siri, and deliver helpful new Apple Intelligence features that make the apps users interact with day to day smarter and more useful. The updates also bring powerful and intuitive new features to...",
+          "image": "https://www.apple.com/newsroom/images/2026/09/major-updates-for-apples-software-platforms-are-now-available/tile/Apple-OS-availability-hero-lp.jpg.og.jpg?202609151009"
+        },
+        {
+          "title": "CSS-Tricks in Limbo",
+          "link": "https://vale.rocks/micros/20260915-0135",
+          "published": "Tue, 15 Sep 2026 07:27:46 +0000",
+          "domain": "vale.rocks",
+          "summary": "I\u2019m sad to say that CSS-Tricks is stuck in limbo again. The site was acquired by Digital Ocean in 2022 and it continued to run under their ownership until February of 2023 when Digital Ocean fired the people working on it. The site stayed latent for a year before Digital Ocean re-hired lead editor Geoff Graham in June of 2024 who got the ship sailing again. Now, CSS-Tricks sits inactive again. Its future is unclear, because there hasn\u2019t been any communication. Digital Ocean largely just went silent. Digital Ocean is...",
+          "image": "https://vale.rocks/assets/og/micro.webp"
+        },
+        {
+          "title": "OpenArm: An open-source 7DOF humanoid arm",
+          "link": "https://github.com/enactic/OpenArm",
+          "published": "Sun, 13 Sep 2026 14:17:49 +0000",
+          "domain": "github.com",
+          "summary": "A fully open-source humanoid arm for physical AI research and deployment in contact-rich environments. - enactic/openarm There was an error while loading. Please reload this page. enactic / openarm Public Notifications You must be signed in to change notification settings Fork 362 Star 3.3k mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History452 Commits452 CommitsFolders and filesNameNameLast commit messageLast commit date.github.github websitewebsite .editorconfig.editorconfig .gitignore.gitignore CODE_OF_CONDUCT.mdCODE_OF_CONDUCT.md CONTRIBUTING.mdCONTRIBUTING.md LICENSELICENSE README.mdREADME.md View all filesRepository files navigationOpenArm OpenArm is an open-source 7DOF humanoid arm designed for physical AI research and deployment in contact-rich environments. With...",
+          "image": "https://opengraph.githubassets.com/155dd20fae9911d38447d20776d2e93a8ba8885dbfca49aced21e25d35ab7e2a/enactic/openarm"
+        },
+        {
+          "title": "A rough guide for going back to the Moon",
+          "link": "https://research.ibm.com/blog/nasa-ibm-lunar-foundation-model",
+          "published": "Mon, 14 Sep 2026 14:33:00 +0000",
+          "domain": "research.ibm.com",
+          "summary": "The multi-modal model could help astronauts navigate craters, investigate ancient lava, and search for ice, as the US plans for a long-term lunar presence. NASA\u2019s Apollo missions proved that humans could make it to the Moon. The Artemis program now underway will test whether we can live and work there, too. NASA\u2019s long-term vision calls for building a base on the Moon where astronauts can carry out research, test new technologies, and prepare for a push onward to Mars. A good map is handy when exploring any unfamiliar place, but...",
+          "image": "https://research.ibm.com/_next/image?url=https%3A%2F%2Fresearch-website-prod-cms-uploads.s3.us.cloud-object-storage.appdomain.cloud%2Fblog_Art_lunar_FM_1920x1080_still_Image_90a71c95d6.jpg&w=1200&q=75"
+        },
+        {
+          "title": "4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls",
+          "link": "https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/",
+          "published": "Sat, 12 Sep 2026 18:51:40 +0000",
+          "domain": "arkeonews.net",
+          "summary": "A 4,400-year-old Saqqara tomb belonging to Egyptian judge Younmin and his father Ity has been uncovered with colored reliefs and a false door. Archaeologists working at Saqqara have uncovered a roughly 4,400-year-old mastaba tomb belonging to a high-ranking Egyptian official and his father, revealing finely carved agricultural scenes and offering processions that still preserve traces of their original colors. The tomb dates to the late Fifth Dynasty, during the reign of Pharaoh Djedkare Isesi, and was discovered during the 2026 excavation season in the Mariette Necropolis, an extensive burial ground...",
+          "image": "https://arkeonews.net/wp-content/uploads/2026/09/Saqqara-tomb.jpg"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "The k-server conjecture is true",
+          "link": "https://arxiv.org/abs/2609.15979",
+          "published": "Tue, 15 Sep 2026 07:45:31 +0000",
+          "domain": "arxiv.org",
+          "summary": "Abstract page for arXiv paper 2609.15979: The $k$-server conjecture is true Focus to learn more arXiv-issued DOI via DataCite (pending registration) Submission history From: Marek Zbysi\u0144ski [view email] [v1] Mon, 14 Sep 2026 17:58:11 UTC (22 KB) Full-text links: Access Paper: View a PDF of the paper titled The $k$-server conjecture is true, by Christian Coester and 2 other authorsView PDFHTML (experimental)TeX Source view license Current browse context: cs.DS < prev | next > new | recent | 2026-09 Change to browse by: cs References & Citations NASA ADSGoogle Scholar...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "I can't stop thinking about Papua New Guinea",
+          "link": "https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua",
+          "published": "Tue, 15 Sep 2026 06:16:24 +0000",
+          "domain": "notnottalmud.substack.com",
+          "summary": "5615651ShareWhen you talk about Papua New Guinea, people may say, oh, is that the place where: There are nearly distinct 1000 languages spoken, about 12% of all the languages on earth, and by far the most language diversity in the world Nobody is sure if its population is 10 million or 17 million They were having bow and arrow battles as late as 1963: Historic Vids@historyinmemesPre-bronze age war between two tribes in West Papua, 1963 12:03 PM \u00b7 Jan 19, 2024 \u00b7 18.5M Views1.68K Replies \u00b7 7.26K Reposts \u00b7 66K...",
+          "image": ""
+        },
+        {
+          "title": "iOS 27, iPadOS 27, and macOS 27",
+          "link": "https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/",
+          "published": "Mon, 14 Sep 2026 17:50:29 +0000",
+          "domain": "apple.com",
+          "summary": "Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features. Available today, Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features that make the apps users interact with every day smarter and more useful. Apple\u2019s latest software updates introduce Siri AI, a more intelligent, knowledgeable, and capable version of Siri, and deliver helpful new Apple Intelligence features that make the apps users interact with day to day smarter and more useful. The updates also bring powerful and intuitive new features to...",
+          "image": "https://www.apple.com/newsroom/images/2026/09/major-updates-for-apples-software-platforms-are-now-available/tile/Apple-OS-availability-hero-lp.jpg.og.jpg?202609141710"
+        },
+        {
+          "title": "OpenArm: An open-source 7DOF humanoid arm",
+          "link": "https://github.com/enactic/OpenArm",
+          "published": "Sun, 13 Sep 2026 14:17:49 +0000",
+          "domain": "github.com",
+          "summary": "A fully open-source humanoid arm for physical AI research and deployment in contact-rich environments. - enactic/openarm There was an error while loading. Please reload this page. enactic / openarm Public Notifications You must be signed in to change notification settings Fork 357 Star 3.2k mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History452 Commits452 CommitsFolders and filesNameNameLast commit messageLast commit date.github.github websitewebsite .editorconfig.editorconfig .gitignore.gitignore CODE_OF_CONDUCT.mdCODE_OF_CONDUCT.md CONTRIBUTING.mdCONTRIBUTING.md LICENSELICENSE README.mdREADME.md View all filesRepository files navigationOpenArm OpenArm is an open-source 7DOF humanoid arm designed for physical AI research and deployment in contact-rich environments. With...",
+          "image": "https://opengraph.githubassets.com/ca8d22790a6015130ef9d60c08a724a4e5f4cf36987c46dbfffd0ed4a92a5c0e/enactic/openarm"
+        },
+        {
+          "title": "Linux from Scratch",
+          "link": "https://www.linuxfromscratch.org/",
+          "published": "Tue, 15 Sep 2026 04:15:23 +0000",
+          "domain": "linuxfromscratch.org",
+          "summary": "Linux From Scratch (LFS) is a project that provides you with step-by-step instructions for building your own custom Linux system, entirely from source code. Currently, the Linux From Scratch organization consists of the following subprojects: \u00a9 1998-2026 Gerard Beekmans. Website design by Jeremy Huntwork & Matthew Burgess.",
+          "image": ""
+        },
+        {
+          "title": "4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls",
+          "link": "https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/",
+          "published": "Sat, 12 Sep 2026 18:51:40 +0000",
+          "domain": "arkeonews.net",
+          "summary": "A 4,400-year-old Saqqara tomb belonging to Egyptian judge Younmin and his father Ity has been uncovered with colored reliefs and a false door. Archaeologists working at Saqqara have uncovered a roughly 4,400-year-old mastaba tomb belonging to a high-ranking Egyptian official and his father, revealing finely carved agricultural scenes and offering processions that still preserve traces of their original colors. The tomb dates to the late Fifth Dynasty, during the reign of Pharaoh Djedkare Isesi, and was discovered during the 2026 excavation season in the Mariette Necropolis, an extensive burial ground...",
+          "image": "https://arkeonews.net/wp-content/uploads/2026/09/Saqqara-tomb.jpg"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "Charts built for Chat",
+          "link": "https://dbtcharts.com/blog/charts-built-for-chat/",
+          "published": "Mon, 14 Sep 2026 21:22:54 +0000",
+          "domain": "dbtcharts.com",
+          "summary": "We\u2019re open sourcing dbt Charts, a declarative language for dashboards, so that even the dashboards you build by chatting with an agent can be governed. AI for data is here, and the long-promised self-serve analytics is finally happening. Anyone with a data connection can chat a report into existence in an afternoon, and the first results are impressive. BI tools went the other way and bolted copilots onto their UI-first apps. That keeps the AI on governed rails, but narrow ones: the agent can do only what the UI exposes....",
+          "image": "https://dbtcharts.com/assets/social/background_hu_b580101c226cb278.png"
+        },
+        {
+          "title": "XCancel service is suspended until further notice",
+          "link": "https://xcancel.com/#",
+          "published": "Mon, 14 Sep 2026 09:51:50 +0000",
+          "domain": "xcancel.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Redis City \u2013 Explore how Redis works in an interactive 3D model",
+          "link": "https://poltora.dev/redis",
+          "published": "Sat, 12 Sep 2026 19:43:34 +0000",
+          "domain": "poltora.dev",
+          "summary": "Explore one Redis instance: command path, data structures, allocator, OS memory, and persistence.",
+          "image": "https://poltora.dev/redis/redis-city-og-v1.jpg"
+        },
+        {
+          "title": "Lingo.dev (YC F24) is hiring a senior content engineer (Remote, worldwide)",
+          "link": "https://lingo.dev/en/careers/ff88132a-cb79-4d35-a6a0-a6230de7a013",
+          "published": "Tue, 15 Sep 2026 07:00:30 +0000",
+          "domain": "lingo.dev",
+          "summary": "Senior Content Engineer at Lingo.dev. Full-time, remote. Talk to salesSign inCreate an accountAbout Lingo.devLingo.dev is the localization engineering platform where teams measure translation quality, translate with LLMs, and proofread with native speakers. Lingo.dev graduated from the world's best tech accelerator (Y Combinator) and raised venture funding to grow into new markets. You own content production and distribution: write, publish, distribute the same day, measure, and automate the boring parts, aggressively. The founders set the direction, you decide what gets written each day and how what you write reaches its readers....",
+          "image": "https://lingo.dev/og.png?title=Senior+Content+Engineer"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "Linux from Scratch",
+          "link": "https://www.linuxfromscratch.org/",
+          "published": "Tue, 15 Sep 2026 04:15:23 +0000",
+          "domain": "linuxfromscratch.org",
+          "summary": "Linux From Scratch (LFS) is a project that provides you with step-by-step instructions for building your own custom Linux system, entirely from source code. Currently, the Linux From Scratch organization consists of the following subprojects: \u00a9 1998-2026 Gerard Beekmans. Website design by Jeremy Huntwork & Matthew Burgess.",
+          "image": ""
+        },
+        {
+          "title": "iOS 27, iPadOS 27, and macOS 27",
+          "link": "https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/",
+          "published": "Mon, 14 Sep 2026 17:50:29 +0000",
+          "domain": "apple.com",
+          "summary": "Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features. Available today, Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features that make the apps users interact with every day smarter and more useful. Apple\u2019s latest software updates introduce Siri AI, a more intelligent, knowledgeable, and capable version of Siri, and deliver helpful new Apple Intelligence features that make the apps users interact with day to day smarter and more useful. The updates also bring powerful and intuitive new features to...",
+          "image": "https://www.apple.com/newsroom/images/2026/09/major-updates-for-apples-software-platforms-are-now-available/tile/Apple-OS-availability-hero-lp.jpg.og.jpg?202609141711"
+        },
+        {
+          "title": "OpenArm: An open-source 7DOF humanoid arm",
+          "link": "https://github.com/enactic/OpenArm",
+          "published": "Sun, 13 Sep 2026 14:17:49 +0000",
+          "domain": "github.com",
+          "summary": "A fully open-source humanoid arm for physical AI research and deployment in contact-rich environments. - enactic/openarm There was an error while loading. Please reload this page. enactic / openarm Public Notifications You must be signed in to change notification settings Fork 355 Star 3.1k mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History452 Commits452 CommitsFolders and filesNameNameLast commit messageLast commit date.github.github websitewebsite .editorconfig.editorconfig .gitignore.gitignore CODE_OF_CONDUCT.mdCODE_OF_CONDUCT.md CONTRIBUTING.mdCONTRIBUTING.md LICENSELICENSE README.mdREADME.md View all filesRepository files navigationOpenArm OpenArm is an open-source 7DOF humanoid arm designed for physical AI research and deployment in contact-rich environments. With...",
+          "image": "https://opengraph.githubassets.com/d0a01347815af82a2357ccfba298068ecd5e8f726657c1c455caee3b92931fb6/enactic/openarm"
+        },
+        {
+          "title": "4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls",
+          "link": "https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/",
+          "published": "Sat, 12 Sep 2026 18:51:40 +0000",
+          "domain": "arkeonews.net",
+          "summary": "A 4,400-year-old Saqqara tomb belonging to Egyptian judge Younmin and his father Ity has been uncovered with colored reliefs and a false door. Archaeologists working at Saqqara have uncovered a roughly 4,400-year-old mastaba tomb belonging to a high-ranking Egyptian official and his father, revealing finely carved agricultural scenes and offering processions that still preserve traces of their original colors. The tomb dates to the late Fifth Dynasty, during the reign of Pharaoh Djedkare Isesi, and was discovered during the 2026 excavation season in the Mariette Necropolis, an extensive burial ground...",
+          "image": "https://arkeonews.net/wp-content/uploads/2026/09/Saqqara-tomb.jpg"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "Charts built for Chat",
+          "link": "https://dbtcharts.com/blog/charts-built-for-chat/",
+          "published": "Mon, 14 Sep 2026 21:22:54 +0000",
+          "domain": "dbtcharts.com",
+          "summary": "We\u2019re open sourcing dbt Charts, a declarative language for dashboards, so that even the dashboards you build by chatting with an agent can be governed. AI for data is here, and the long-promised self-serve analytics is finally happening. Anyone with a data connection can chat a report into existence in an afternoon, and the first results are impressive. BI tools went the other way and bolted copilots onto their UI-first apps. That keeps the AI on governed rails, but narrow ones: the agent can do only what the UI exposes....",
+          "image": "https://dbtcharts.com/assets/social/background_hu_b580101c226cb278.png"
+        },
+        {
+          "title": "Every invoice in Brazil's economy runs on SOAP 1.2. We mapped it all",
+          "link": "https://github.com/stoix-dev/sefaz-webservices-postman",
+          "published": "Sun, 13 Sep 2026 03:19:54 +0000",
+          "domain": "github.com",
+          "summary": "Cole\u00e7\u00e3o Postman completa dos webservices da SEFAZ: NF-e, NFC-e, CT-e e MDF-e (SOAP 1.2, mTLS com e-CNPJ). Distribui\u00e7\u00e3o DFe testada em produ\u00e7\u00e3o. - stoix-dev/sefaz-webservices-postman There was an error while loading. Please reload this page. stoix-dev / sefaz-webservices-postman Public Notifications You must be signed in to change notification settings Fork 0 Star 10 mainBranchesTagsGo to fileCodeOpen more actions menuLatest commit History1 Commit1 CommitFolders and filesNameNameLast commit messageLast commit datepostmanpostman .gitignore.gitignore LICENSELICENSE README.mdREADME.md build_collection.pybuild_collection.py gen_inventario.pygen_inventario.py inventario.jsoninventario.json View all filesRepository files navigationCat\u00e1logo de Webservices da SEFAZ (cole\u00e7\u00e3o Postman) Cole\u00e7\u00e3o Postman completa e documentada...",
+          "image": "https://opengraph.githubassets.com/aee9623f172051c7805b6ff97c59aaa74d0ec8d83b969043e0484a2694587460/stoix-dev/sefaz-webservices-postman"
+        },
+        {
+          "title": "Dropping eBPF CPU Cost by About 90% with Memoization (Not AI Gen)",
+          "link": "https://nathannaveen.dev/posts/dropping-ebpf-cpu-cost-by-90/",
+          "published": "Mon, 14 Sep 2026 14:29:23 +0000",
+          "domain": "nathannaveen.dev",
+          "summary": "My brother and I spent a lot of time designing our eBPF security agent to be really fast from the ground up, but recently we discovered we could make it much faster using memoization! A couple of weeks ago, I profiled the eBPF code and found that the most expensive part of the protection isn\u2019t actually enforcing a policy (allow/deny), but figuring out which policy applies to a given file open. Our policies are path based, so our eBPF leverages an LSM hook that triggers on file open. We then...",
+          "image": "https://nathannaveen.dev/"
+        },
+        {
+          "title": "XCancel service is suspended until further notice",
+          "link": "https://xcancel.com/#",
+          "published": "Mon, 14 Sep 2026 09:51:50 +0000",
+          "domain": "xcancel.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Show HN: Macros with a Behringer FCB1010 MIDI Pedalboard in macOS",
+          "link": "https://github.com/JamesRyanATX/fcbnerd",
+          "published": "Mon, 14 Sep 2026 23:01:36 +0000",
+          "domain": "github.com",
+          "summary": "Do things with a Behringer FCB1010 MIDI pedalboard in MacOS - JamesRyanATX/fcbnerd",
+          "image": "https://opengraph.githubassets.com/963a67dc284132c02d66ef3578ebe7e5d82f84fbe8edb510b7774f7c3627d05b/JamesRyanATX/fcbnerd"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "news": [
+        {
+          "title": "iOS 27, iPadOS 27, and macOS 27",
+          "link": "https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/",
+          "published": "Mon, 14 Sep 2026 17:50:29 +0000",
+          "domain": "apple.com",
+          "summary": "Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features. Available today, Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features that make the apps users interact with every day smarter and more useful. Apple\u2019s latest software updates introduce Siri AI, a more intelligent, knowledgeable, and capable version of Siri, and deliver helpful new Apple Intelligence features that make the apps users interact with day to day smarter and more useful. The updates also bring powerful and intuitive new features to...",
+          "image": "https://www.apple.com/newsroom/images/2026/09/major-updates-for-apples-software-platforms-are-now-available/tile/Apple-OS-availability-hero-lp.jpg.og.jpg?202609141710"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "Charts built for Chat",
+          "link": "https://dbtcharts.com/blog/charts-built-for-chat/",
+          "published": "Mon, 14 Sep 2026 21:22:54 +0000",
+          "domain": "dbtcharts.com",
+          "summary": "We\u2019re open sourcing dbt Charts, a declarative language for dashboards, so that even the dashboards you build by chatting with an agent can be governed. AI for data is here, and the long-promised self-serve analytics is finally happening. Anyone with a data connection can chat a report into existence in an afternoon, and the first results are impressive. BI tools went the other way and bolted copilots onto their UI-first apps. That keeps the AI on governed rails, but narrow ones: the agent can do only what the UI exposes....",
+          "image": "https://dbtcharts.com/assets/social/background_hu_b580101c226cb278.png"
+        },
+        {
+          "title": "Show HN: Macros with a Behringer FCB1010 MIDI Pedalboard in macOS",
+          "link": "https://github.com/JamesRyanATX/fcbnerd",
+          "published": "Mon, 14 Sep 2026 23:01:36 +0000",
+          "domain": "github.com",
+          "summary": "Do things with a Behringer FCB1010 MIDI pedalboard in MacOS - JamesRyanATX/fcbnerd",
+          "image": "https://opengraph.githubassets.com/8fc0828b1470e831d7573bc7c26bfd0f26f0a4385fc406b227ad7562caf307c4/JamesRyanATX/fcbnerd"
+        },
+        {
+          "title": "4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls",
+          "link": "https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/",
+          "published": "Sat, 12 Sep 2026 18:51:40 +0000",
+          "domain": "arkeonews.net",
+          "summary": "A 4,400-year-old Saqqara tomb belonging to Egyptian judge Younmin and his father Ity has been uncovered with colored reliefs and a false door. Archaeologists working at Saqqara have uncovered a roughly 4,400-year-old mastaba tomb belonging to a high-ranking Egyptian official and his father, revealing finely carved agricultural scenes and offering processions that still preserve traces of their original colors. The tomb dates to the late Fifth Dynasty, during the reign of Pharaoh Djedkare Isesi, and was discovered during the 2026 excavation season in the Mariette Necropolis, an extensive burial ground...",
+          "image": "https://arkeonews.net/wp-content/uploads/2026/09/Saqqara-tomb.jpg"
+        },
+        {
+          "title": "XCancel service is suspended until further notice",
+          "link": "https://xcancel.com/#",
+          "published": "Mon, 14 Sep 2026 09:51:50 +0000",
+          "domain": "xcancel.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "Dropping eBPF CPU Cost by About 90% with Memoization (Not AI Gen)",
+          "link": "https://nathannaveen.dev/posts/dropping-ebpf-cpu-cost-by-90/",
+          "published": "Mon, 14 Sep 2026 14:29:23 +0000",
+          "domain": "nathannaveen.dev",
+          "summary": "My brother and I spent a lot of time designing our eBPF security agent to be really fast from the ground up, but recently we discovered we could make it much faster using memoization! A couple of weeks ago, I profiled the eBPF code and found that the most expensive part of the protection isn\u2019t actually enforcing a policy (allow/deny), but figuring out which policy applies to a given file open. Our policies are path based, so our eBPF leverages an LSM hook that triggers on file open. We then...",
+          "image": "https://nathannaveen.dev/"
+        },
+        {
+          "title": "Distributed Systems Classics (2017)",
+          "link": "https://nvartolomei.com/dist-sys-classics/",
+          "published": "Mon, 14 Sep 2026 16:02:01 +0000",
+          "domain": "nvartolomei.com",
+          "summary": "A selected list of timeless and influential papers in distributed systems that shaped the research in the field. Intended to serve as a good starting point for a better understanding of the problem space.",
+          "image": ""
+        },
+        {
+          "title": "Compressing a Flag to 11 Bits",
+          "link": "https://read.vantezzen.io/miniflags",
+          "published": "Sat, 12 Sep 2026 15:57:43 +0000",
+          "domain": "read.vantezzen.io",
+          "summary": "",
+          "image": "https://read.vantezzen.io/api/social-image?id=3d8e3204-0c2a-803d-9622-e8875daa6acd"
+        },
+        {
+          "title": "OpenAI bots knew about the RubyGems caching vulnerability",
+          "link": "https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/",
+          "published": "Mon, 14 Sep 2026 12:40:57 +0000",
+          "domain": "tenderlovemaking.com",
+          "summary": "Today Reuters and the Wall Street Journal both reported about rogue AI agents at OpenAI attacking RubyGems.org. https://www.rubyhack.ai/ has an amazing writeup, and you should read it. I just wanted to make a quick post about it because it\u2019s wild. TL;DR: It seems like OpenAI Bots knew about the RubyGems caching vulnerability, tried to take advantage of it, and at the same time ran some weird web scraping code on RubyDoc.info. Back in May, socket.dev reported about a \u201cGemStuffer Campaign\u201d where someone (I guess OpenAI) was uploading tons of junk...",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "news": [
+        {
+          "title": "iOS 27, iPadOS 27, and macOS 27",
+          "link": "https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/",
+          "published": "Mon, 14 Sep 2026 17:50:29 +0000",
+          "domain": "apple.com",
+          "summary": "Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features. Available today, Apple\u2019s latest software updates introduce Siri AI and deliver helpful new Apple Intelligence features that make the apps users interact with every day smarter and more useful. Apple\u2019s latest software updates introduce Siri AI, a more intelligent, knowledgeable, and capable version of Siri, and deliver helpful new Apple Intelligence features that make the apps users interact with day to day smarter and more useful. The updates also bring powerful and intuitive new features to...",
+          "image": "https://www.apple.com/newsroom/images/2026/09/major-updates-for-apples-software-platforms-are-now-available/tile/Apple-OS-availability-hero-lp.jpg.og.jpg?202609141710"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "Show HN: Macros with a Behringer FCB1010 MIDI Pedalboard in macOS",
+          "link": "https://github.com/JamesRyanATX/fcbnerd",
+          "published": "Mon, 14 Sep 2026 23:01:36 +0000",
+          "domain": "github.com",
+          "summary": "Do things with a Behringer FCB1010 MIDI pedalboard in MacOS - JamesRyanATX/fcbnerd",
+          "image": "https://opengraph.githubassets.com/248cc81034e28f0c5d34f812facea27a8d2eca8224ec395c8f1863e7c8ac257b/JamesRyanATX/fcbnerd"
+        },
+        {
+          "title": "Charts built for Chat",
+          "link": "https://dbtcharts.com/blog/charts-built-for-chat/",
+          "published": "Mon, 14 Sep 2026 21:22:54 +0000",
+          "domain": "dbtcharts.com",
+          "summary": "We\u2019re open sourcing dbt Charts, a declarative language for dashboards, so that even the dashboards you build by chatting with an agent can be governed. AI for data is here, and the long-promised self-serve analytics is finally happening. Anyone with a data connection can chat a report into existence in an afternoon, and the first results are impressive. BI tools went the other way and bolted copilots onto their UI-first apps. That keeps the AI on governed rails, but narrow ones: the agent can do only what the UI exposes....",
+          "image": "https://dbtcharts.com/assets/social/background_hu_b580101c226cb278.png"
+        },
+        {
+          "title": "Distributed Systems Classics (2017)",
+          "link": "https://nvartolomei.com/dist-sys-classics/",
+          "published": "Mon, 14 Sep 2026 16:02:01 +0000",
+          "domain": "nvartolomei.com",
+          "summary": "A selected list of timeless and influential papers in distributed systems that shaped the research in the field. Intended to serve as a good starting point for a better understanding of the problem space.",
+          "image": ""
+        },
+        {
+          "title": "Compressing a Flag to 11 Bits",
+          "link": "https://read.vantezzen.io/miniflags",
+          "published": "Sat, 12 Sep 2026 15:57:43 +0000",
+          "domain": "read.vantezzen.io",
+          "summary": "",
+          "image": "https://read.vantezzen.io/api/social-image?id=3d8e3204-0c2a-803d-9622-e8875daa6acd"
+        },
+        {
+          "title": "OpenAI bots knew about the RubyGems caching vulnerability",
+          "link": "https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/",
+          "published": "Mon, 14 Sep 2026 12:40:57 +0000",
+          "domain": "tenderlovemaking.com",
+          "summary": "Today Reuters and the Wall Street Journal both reported about rogue AI agents at OpenAI attacking RubyGems.org. https://www.rubyhack.ai/ has an amazing writeup, and you should read it. I just wanted to make a quick post about it because it\u2019s wild. TL;DR: It seems like OpenAI Bots knew about the RubyGems caching vulnerability, tried to take advantage of it, and at the same time ran some weird web scraping code on RubyDoc.info. Back in May, socket.dev reported about a \u201cGemStuffer Campaign\u201d where someone (I guess OpenAI) was uploading tons of junk...",
+          "image": ""
+        },
+        {
+          "title": "Amazon vs. Perplexity \u2013 U.S. Court of Appeals for the Ninth Circuit",
+          "link": "https://law.justia.com/cases/federal/appellate-courts/ca9/26-1444/26-1444-2026-08-04.html",
+          "published": "Mon, 14 Sep 2026 21:05:22 +0000",
+          "domain": "law.justia.com",
+          "summary": "",
+          "image": ""
+        },
+        {
+          "title": "A Beginning for Mathematics",
+          "link": "https://www.daniellitt.com/blog/2026/9/13/a-beginning-for-mathematics/",
+          "published": "Mon, 14 Sep 2026 15:33:07 +0000",
+          "domain": "daniellitt.com",
+          "summary": "A positive vision for the future of mathematics: how our institutions can deepen human understanding as AI transforms mathematical research. This essay also appears on Proofs and Prompts. Three years ago, AI systems could not reliably add two numbers. A year ago, internal models at OpenAI and DeepMind received the equivalent of a gold-medal score on the IMO. Now, these systems are autonomously resolving major open questions. It\u2019s hard to imagine this trend continuing for another year, but I expect it will. It is clear that this will require a...",
+          "image": "https://www.daniellitt.com/images/daniel-litt-social-diagram.png"
+        },
+        {
+          "title": "XCancel service is suspended until further notice",
+          "link": "https://xcancel.com/#",
+          "published": "Mon, 14 Sep 2026 09:51:50 +0000",
+          "domain": "xcancel.com",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "news": [
+        {
+          "title": "GPT-5.6 Luna vs. GPT-6 Astra: Is a $1.20 Model Good Enough for Code Review?",
+          "link": "https://entelligence.ai/blogs/gpt-5.6-luna-vs-gpt-6-astra-is-a-1.20-model-good-enough-for-code-review",
+          "published": "Mon, 14 Sep 2026 19:56:20 +0000",
+          "domain": "entelligence.ai",
+          "summary": "See how AI is being used across engineering, improve the quality of what it produces, and use the right level of intelligence for every task and budget. GPT-5.6 Luna costs $0.20 per million input tokens and $1.20 per million output tokens. GPT-6 Astra costs $10 and $50. On the same pull requests, one Luna review cost $0.0041 and one Astra review cost $0.113, a 28x difference. Our last post compared Astra with GPT-5.6 Sol. This time we wanted to know what you give up if every pull request goes through...",
+          "image": "https://framerusercontent.com/images/gPrTReKBwM5bVRyIqVcgBE4kEAk.png"
+        },
+        {
+          "title": "Distributed Systems Classics (2017)",
+          "link": "https://nvartolomei.com/dist-sys-classics/",
+          "published": "Mon, 14 Sep 2026 16:02:01 +0000",
+          "domain": "nvartolomei.com",
+          "summary": "A selected list of timeless and influential papers in distributed systems that shaped the research in the field. Intended to serve as a good starting point for a better understanding of the problem space.",
+          "image": ""
+        },
+        {
+          "title": "A Beginning for Mathematics",
+          "link": "https://www.daniellitt.com/blog/2026/9/13/a-beginning-for-mathematics/",
+          "published": "Mon, 14 Sep 2026 15:33:07 +0000",
+          "domain": "daniellitt.com",
+          "summary": "A positive vision for the future of mathematics: how our institutions can deepen human understanding as AI transforms mathematical research. This essay also appears on Proofs and Prompts. Three years ago, AI systems could not reliably add two numbers. A year ago, internal models at OpenAI and DeepMind received the equivalent of a gold-medal score on the IMO. Now, these systems are autonomously resolving major open questions. It\u2019s hard to imagine this trend continuing for another year, but I expect it will. It is clear that this will require a...",
+          "image": "https://www.daniellitt.com/images/daniel-litt-social-diagram.png"
+        },
+        {
+          "title": "Principles for Fast Tokio Applications",
+          "link": "https://dial9-rs.github.io/blog/principles-for-fast-tokio-applications/",
+          "published": "Mon, 14 Sep 2026 15:27:56 +0000",
+          "domain": "dial9-rs.github.io",
+          "summary": "I'm on my way back from RustConf. At the Unconf, we had a productive discussion about debugging and benchmarking async applications. Many interesting insights were shared. I'm attempting to enumerate some of them here, along with some of my own experiences. This is the first draft of what I hope can become a living document of best practices. Feel free to file an issue or open a PR. I'm hoping to also add a sample app in the coming days demonstrating these issues along with what the dial9 trace looks...",
+          "image": ""
+        },
+        {
+          "title": "Why don't machine learning research agents overfit?",
+          "link": "https://www.amazon.science/blog/why-dont-machine-learning-research-agents-overfit",
+          "published": "Mon, 14 Sep 2026 16:32:23 +0000",
+          "domain": "amazon.science",
+          "summary": "New research shows that AI agents \u2014 like human research communities \u2014 learn strategies compressible enough to fit in a few tokens, which prevents memorization and explains why benchmark-driven ML keeps producing real progress. The more your listener already knows, the shorter the message you need to send. An expert ML engineer needs only a few sentences; a newcomer needs the whole manual. Machine learning Why don\u2019t machine learning research agents overfit? New research indicates that AI agents learn compressible models of data, which don\u2019t have enough space to enable...",
+          "image": "https://cdn.amazon.science/dims4/default/8f33283/2147483647/strip/true/crop/1920x1008+0+36/resize/1200x630!/quality/90/?url=https%3A%2F%2Famzn-science-production-science.s3.us-east-1.amazonaws.com%2Fscience%2F28%2F46%2F0121ba1e4b42be0c56e7560c9844%2Fcompressionmodels-03-16x9.png"
+        },
+        {
+          "title": "OpenAI bots knew about the RubyGems caching vulnerability",
+          "link": "https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/",
+          "published": "Mon, 14 Sep 2026 12:40:57 +0000",
+          "domain": "tenderlovemaking.com",
+          "summary": "Today Reuters and the Wall Street Journal both reported about rogue AI agents at OpenAI attacking RubyGems.org. https://www.rubyhack.ai/ has an amazing writeup, and you should read it. I just wanted to make a quick post about it because it\u2019s wild. TL;DR: It seems like OpenAI Bots knew about this caching vulnerability, tried to take advantage of it, and at the same time ran some weird web scraping code on RubyDoc.info. Back in May, socket.dev reported about a \u201cGemStuffer Campaign\u201d where someone (I guess OpenAI) was uploading tons of junk gems...",
+          "image": ""
+        },
+        {
+          "title": "How my e-reader lost its stripes",
+          "link": "https://www.serpentine.com/posts/2026/x3-stripes/",
+          "published": "Mon, 14 Sep 2026 16:23:16 +0000",
+          "domain": "serpentine.com",
+          "summary": "I\u2019ve been a lifelong reader, which has proved a fragile habit in our era of endless trivial distraction. While books and e-ink readers solve the problem of competition for attention, they can\u2019t compete with a phone for convenience. That tiny device in my pocket has made reading both easier and more vulnerable to displacement whenever a notification pops up. A few days ago, I learned for the first time about a recent generation of tiny e-ink readers. Since they\u2019re cheap, it was easy to give into curiosity: I bought an...",
+          "image": ""
+        },
+        {
+          "title": "Cloudflare AKE cuts origin HelloRetryRequests from 52% to 3.7%",
+          "link": "https://blog.cloudflare.com/automatic-key-exchange-for-origins/",
+          "published": "Mon, 14 Sep 2026 17:02:34 +0000",
+          "domain": "blog.cloudflare.com",
+          "summary": "",
+          "image": "https://blog.cloudflare.com/_emdash/api/media/file/01M1PVVA86NJR4N0MTKCH06A9V.01M1PVVAXCHV18R9AZA18HS4AQ.png"
+        },
+        {
+          "title": "Pion, an agent designed to run any company autonomously",
+          "link": "https://andonlabs.com/blog/why-we-built-pion",
+          "published": "Mon, 14 Sep 2026 17:16:06 +0000",
+          "domain": "andonlabs.com",
+          "summary": "Pion is the platform we built to run our autonomous businesses. Today we are opening it up so many more people can experiment with autonomous businesses, and here is why. Today Andon is releasing Pion, an agent designed to run any company fully autonomously. Pion grew out of a question we have been studying for almost two years: when will AI systems become capable of autonomously acquiring resources in the real world? What happens after? We first tried to answer this question through simulations like Vending-Bench. We found that simulations,...",
+          "image": "https://andonlabs.com/pion.og.webp"
+        },
+        {
+          "title": "XCancel service is suspended until further notice",
+          "link": "https://xcancel.com/#",
+          "published": "Mon, 14 Sep 2026 09:51:50 +0000",
+          "domain": "xcancel.com",
+          "summary": "",
+          "image": ""
+        }
+      ]
+    },
     {
       "date": "2026-09-13",
       "news": [

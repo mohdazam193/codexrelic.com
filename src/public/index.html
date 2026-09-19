@@ -3,450 +3,508 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07151e">
-  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>Mohd Azam · SRE &amp; Platform Engineer</title>
-  <meta name="description" content="Mohd Azam — Site Reliability Engineer &amp; Platform Engineer with 6+ years building production-grade infrastructure for enterprise SaaS. Specializing in Kubernetes, observability, and DevSecOps.">
-  <meta name="keywords" content="SRE, Site Reliability Engineer, Platform Engineer, DevOps, Kubernetes, Terraform, Observability, Mohd Azam, codexrelic">
+  <meta name="theme-color" content="#06080d">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo-dark.svg">
+  <title>Mohd Azam · SRE &amp; Platform Engineering Command Cockpit</title>
+  <meta name="description" content="Mohd Azam — Site Reliability Engineer &amp; Platform Engineer with 6+ years experience in multi-tenant Kubernetes, cloud observability, Terraform, and automated SSL PKI.">
+  <meta name="keywords" content="SRE, Platform Engineer, Kubernetes, Terraform, DevOps, Observability, Mohd Azam, CodexRelic">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/">
-  
-  <!-- Open Graph / Facebook -->
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://codexrelic.com/">
-  <meta property="og:title" content="Mohd Azam · SRE &amp; Platform Engineer">
-  <meta property="og:description" content="Site Reliability Engineer with 6+ years in multi-tenant SaaS. Building production-grade platforms on Kubernetes, Terraform, and cloud-native observability stacks.">
-  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
+  <meta property="og:title" content="Mohd Azam · SRE &amp; Platform Engineering Command Cockpit">
+  <meta property="og:description" content="Site Reliability &amp; Platform Engineer with 6+ years in multi-tenant SaaS, Kubernetes, and cloud-native observability.">
+  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.svg">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://codexrelic.com/">
-  <meta name="twitter:title" content="Mohd Azam · SRE &amp; Platform Engineer">
-  <meta name="twitter:description" content="Site Reliability Engineer with 6+ years in multi-tenant SaaS. Building production-grade platforms on Kubernetes, Terraform, and cloud-native observability stacks.">
-  <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
-          <script>
+  <script>
     (function(){
-      var t=localStorage.getItem('cr-theme')||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-      document.documentElement.setAttribute('data-theme',t);
+      var t = localStorage.getItem('cr-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
-
-
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "codexrelic.com",
-    "url": "https://codexrelic.com/",
-    "description": "Portfolio and engineering hub of Mohd Azam — SRE & Platform Engineer",
-    "author": {
-      "@type": "Person",
-      "name": "Mohd Azam",
-      "jobTitle": "Site Reliability Engineer & Platform Engineer",
-      "url": "https://codexrelic.com/",
-      "sameAs": [
-        "https://linkedin.com/in/mohdazam193",
-        "https://github.com/mohdazam193"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Hyderabad",
-        "addressCountry": "IN"
-      }
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="assets/css/style.css?v=3.0.0">
 </head>
 
 <body>
-<div class="layout">
 
-  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
-  <aside class="sidebar" aria-label="Main navigation">
-    <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
-    </a>
+  <!-- ═══ 1. TOP MISSION CONTROL BAR ═══ -->
+  <header class="mission-control-header" role="banner">
+    <div class="header-left-cluster">
+      <a href="index.html" class="brand-sigil" aria-label="CodexRelic Home">
+        <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo">
+      </a>
+      
+      <div class="cluster-status-pill">
+        <span class="pulse-dot-green"></span>
+        <span>k8s-prod: HEALTHY · 0 alerts</span>
+      </div>
+    </div>
 
-    <nav class="nav" role="navigation">
-      <span class="nav-group-label">Navigation</span>
-      <a href="index.html" class="nav-link active" aria-current="page">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Identity</span>
-      <a href="about.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Engineering</span>
-      <a href="projects.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        Tech News
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Tools</span>
-      <a href="tools.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Leisure</span>
-      <a href="movies.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Community</span>
-      <a href="community.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+    <!-- Navigation Hub -->
+    <nav class="header-nav-dock" aria-label="Primary Navigation">
+      <a href="index.html" class="nav-link-btn active">Cockpit</a>
+      <a href="projects.html" class="nav-link-btn">Projects</a>
+      <a href="tech-news.html" class="nav-link-btn">Tech News</a>
+      <a href="tools.html" class="nav-link-btn">Tools</a>
+      <a href="movies.html" class="nav-link-btn">Cinema</a>
+      <a href="resume.html" class="nav-link-btn">Resume</a>
+      <a href="about.html" class="nav-link-btn">About</a>
+      <a href="contact.html" class="nav-link-btn">Contact</a>
     </nav>
 
-    <div class="sidebar-footer">
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Available · Hyderabad, IN
+    <div class="header-right-cluster">
+      <div class="clock-ticker">
+        <span id="clock-utc">UTC 00:00:00</span>
+        <span style="opacity: 0.3;">|</span>
+        <span id="clock-ist" style="color: var(--c-cyan);">IST 00:00:00</span>
       </div>
-      <div class="sidebar-socials">
-        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
-        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
-        <a class="social-btn" href="contact.html" title="Contact">@</a>
-      </div>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
-        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <span class="toggle-label">Light mode</span>
+
+      <button class="cmd-k-trigger-btn" id="cmd-k-trigger" aria-label="Search Command Palette (⌘K)">
+        <span>⌘K</span>
+        <span>Search</span>
+      </button>
+
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-  </aside>
+  </header>
 
-  <!-- ═══ MAIN ════════════════════════════════════════ -->
-  <main class="main" id="main-content">
-    <div class="dashboard-layout">
-      <div class="content-wrap">
+  <!-- ═══ 2. SRE COCKPIT 3-COLUMN STUDIO LAYOUT ═══ -->
+  <main class="cockpit-layout" id="main-content">
 
-        <!-- Premium Bento Dashboard -->
-      <section class="bento-grid reveal" aria-label="Command Center Dashboard">
-        
-        <!-- Panel 1: Identity (2x2) -->
-        <div class="bento-panel bento-identity">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYSTEM.IDENTITY</span>
-              <span class="bento-status status-green">ONLINE</span>
-            </div>
-            <h1 class="bento-title">Mohd Azam</h1>
-            <h2 class="bento-subtitle">Platform Engineer &amp; SRE</h2>
-            <p class="bento-desc">
-              Maintaining high-availability production architectures for enterprise SaaS. Specialist in observability platform engineering, toil elimination, and DevSecOps integrations.
-            </p>
-            <div class="bento-actions">
-              <a href="resume.html" class="btn btn-primary">View Resume</a>
-              <a href="contact.html" class="btn btn-outline">Initialize Contact</a>
-            </div>
+    <!-- ── LEFT RAIL: PROFILE & TELEMETRY MATRIX ── -->
+    <aside class="cockpit-left-rail" style="display: flex; flex-direction: column; gap: var(--sp-5);">
+
+      <!-- Engineer Bio Card -->
+      <div class="sre-panel engineer-profile-card">
+        <div class="profile-avatar-row">
+          <div class="avatar-squircle">MA</div>
+          <div>
+            <h1 class="profile-name" style="font-size: 1.15rem; margin: 0;">Mohd Azam</h1>
+            <div class="profile-title">Senior SRE &bull; Platform Eng</div>
           </div>
         </div>
 
-        <!-- Panel 2: Projects (2x1) -->
-        <a href="projects.html" class="bento-panel bento-projects">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">ACTIVE.DEPLOYMENTS</span>
-              <span class="bento-status status-amber">SYNCING</span>
-            </div>
-            <h3 class="bento-card-title">CodexRelic Architecture v2</h3>
-            <p class="bento-card-desc">
-              Migrating core services to a Kubernetes cluster provisioned via Terraform.
-            </p>
-            <div class="bento-tags">
-              <span class="bento-tag">Kubernetes</span>
-            </div>
+        <p style="font-size: 0.82rem; color: var(--c-text-secondary); line-height: 1.55;">
+          6+ years building fault-tolerant infrastructure, Kubernetes multi-tenant platforms, and automated observability pipelines across enterprise SaaS.
+        </p>
+
+        <!-- KPI Impact Grid -->
+        <div class="impact-kpi-grid">
+          <div class="kpi-box">
+            <span class="kpi-val">$4.3k+</span>
+            <span class="kpi-lbl">Annual FinOps Saved</span>
           </div>
-        </a>
-
-        <!-- Panel 3: Blog (1x1) -->
-        <a href="blog.html" class="bento-panel bento-blog">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">KNOWLEDGE.BASE</span>
-            </div>
-            <h3 class="bento-card-title">Distributed Systems</h3>
-            <p class="bento-card-desc">Latest notes on highly available architecture design.</p>
+          <div class="kpi-box">
+            <span class="kpi-val">99.99%</span>
+            <span class="kpi-lbl">Production SLO</span>
           </div>
-        </a>
-
-        <!-- Panel 4: Cinema (1x1) -->
-        <a href="movies.html" class="bento-panel bento-cinema">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">DB.CINEMA</span>
-            </div>
-            <h3 class="bento-card-title">Sci-Fi &amp; Philosophy</h3>
-            <p class="bento-card-desc">Curated catalog of favorite cinematic experiences.</p>
+          <div class="kpi-box">
+            <span class="kpi-val">10 min</span>
+            <span class="kpi-lbl">Deploy Duration</span>
           </div>
-        </a>
-
-        <!-- Panel 5: Automated Zero-Cost SSL Lifecycle Tracker (4x1) -->
-        <div class="bento-panel bento-ssl" id="ssl-tracker">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">K8S.CERT_MANAGER &bull; ZERO-COST SSL LIFECYCLE</span>
-              <span class="bento-status status-green" id="ssl-status-badge">AUTO-RENEW ACTIVE</span>
-            </div>
-            
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:var(--sp-2);">
-              <div>
-                <h3 class="bento-card-title" style="margin-bottom:2px; font-size:1.15rem;">Automated Kubernetes TLS Rotation</h3>
-                <p class="bento-card-desc" style="margin-bottom:0; font-size:0.8rem;">
-                  Let's Encrypt ACME automated issuance via in-cluster <code>cert-manager</code> &amp; daily CI/CD health verification.
-                </p>
-              </div>
-              <a href="projects.html#ssl-automation" class="btn btn-outline btn-sm" style="font-size:0.75rem; padding:4px 10px;">
-                View SRE Spec &rarr;
-              </a>
-            </div>
-
-            <!-- 4-Metric Telemetry Cards -->
-            <div class="ssl-tracker-grid">
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Last Audit Run</span>
-                <span class="ssl-item-val" id="ssl-last-check">Daily @ 00:00 UTC</span>
-                <span class="ssl-item-sub">Azure DevOps Pipeline</span>
-              </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Certificate Health</span>
-                <span class="ssl-item-val" style="color:var(--c-green);">&bull; 4/4 Namespaces OK</span>
-                <span class="ssl-item-sub">prod &bull; stage &bull; uat &bull; observe</span>
-              </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Auto-Renew Window</span>
-                <span class="ssl-item-val" id="ssl-renew-trigger">&le; 30 Days Remaining</span>
-                <span class="ssl-item-sub">Short 90-Day ACME Cycle</span>
-              </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Issuer &amp; Cipher</span>
-                <span class="ssl-item-val">Let's Encrypt E6</span>
-                <span class="ssl-item-sub">TLS 1.3 &bull; RSA 2048 &bull; HTTP-01</span>
-              </div>
-            </div>
-
-            <!-- Progress countdown bar -->
-            <div class="ssl-progress-wrap">
-              <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.7rem; color:var(--c-text-muted); flex-wrap:wrap; gap:4px;">
-                <span>Current Status: <strong style="color:var(--c-green);">100% Valid &amp; Ready</strong></span>
-                <span id="ssl-next-renew-text">Next Auto-Rotation Window: in ~38 Days</span>
-              </div>
-              <div class="ssl-progress-bar">
-                <div class="ssl-progress-fill" id="ssl-progress-fill" style="width: 72%;"></div>
-              </div>
-            </div>
-
+          <div class="kpi-box">
+            <span class="kpi-val">6+ Yrs</span>
+            <span class="kpi-lbl">Enterprise SaaS</span>
           </div>
         </div>
-
-        <!-- Panel 6: Terminal (4x1) -->
-        <div class="bento-panel bento-terminal">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYSTEM.OBSERVABILITY</span>
-              <span class="bento-status status-green">HEALTHY</span>
-            </div>
-            <div class="terminal-output">
-              <div class="term-line"><span class="term-time">[00:00:02]</span> <span class="term-info">AUDIT</span> cert-manager: Daily SSL scan completed. 4/4 namespaces READY=True.</div>
-              <div class="term-line"><span class="term-time">[14:02:45]</span> <span class="term-info">INFO</span> core-router: Traffic successfully routed to Ingress Gateway.</div>
-              <div class="term-line"><span class="term-time">[14:02:46]</span> <span class="term-info">INFO</span> telemetry-agent: SLO tracking active. Current uptime: 99.998%.</div>
-              <div class="term-line"><span class="term-time">[14:03:01]</span> <span class="term-info">INFO</span> tls-engine: Auto-rotation trigger armed for short-expiry threshold.<span class="term-cursor"></span></div>
-            </div>
-          </div>
-        </div>
-
-      </section>
       </div>
 
-    <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
-    <aside class="right-sidebar">
-      <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
-      <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
-        <div class="vm-widget-header">
-          <span class="vm-widget-title">htop - Live VM</span>
-      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
-        <button class="htop-tab active">Live</button>
-      </div>
-          <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
+      <!-- Technical Competency Radar -->
+      <div class="sre-panel">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>⚙️</span> Technical Radar
+          </span>
+          <span class="sre-badge sre-badge-cyan">PROD LEVEL</span>
         </div>
-        <div class="vm-widget-body">
-          <div id="vm-cpu-container" class="vm-stat-section">
-            <!-- CPU bars will be injected here -->
-          </div>
-          <div class="vm-stat-section">
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Mem[</span>
-              <div class="vm-bar-track">
-                <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
-              </div>
-              <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
+
+        <div class="skills-list">
+          <div class="skill-row">
+            <div class="skill-row-meta">
+              <span>Kubernetes &amp; Containers</span>
+              <span style="color: var(--c-cyan);">95%</span>
             </div>
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Swp[</span>
-              <div class="vm-bar-track">
-                <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
-              </div>
-              <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" style="width: 95%;"></div>
             </div>
           </div>
-          <div class="vm-stat-text-group">
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Tasks:</span>
-              <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
+
+          <div class="skill-row">
+            <div class="skill-row-meta">
+              <span>Terraform &amp; Cloud IaC</span>
+              <span style="color: var(--c-cyan);">92%</span>
             </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Load average:</span>
-              <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" style="width: 92%;"></div>
             </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Uptime:</span>
-              <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
+          </div>
+
+          <div class="skill-row">
+            <div class="skill-row-meta">
+              <span>Observability &amp; Metrics</span>
+              <span style="color: var(--c-cyan);">96%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" style="width: 96%;"></div>
+            </div>
+          </div>
+
+          <div class="skill-row">
+            <div class="skill-row-meta">
+              <span>CI/CD &amp; DevSecOps</span>
+              <span style="color: var(--c-cyan);">90%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" style="width: 90%;"></div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- AWS Certification Card -->
+      <div class="sre-panel" style="padding: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="font-size: 1.4rem;">📜</div>
+          <div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--c-text);">AWS Certified Solutions Architect</div>
+            <div style="font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono);">Associate &bull; VPC, High Availability</div>
+          </div>
+        </div>
+      </div>
+
     </aside>
-  </div>
 
-  <!-- Footer (Full Width) -->
-  <footer class="page-footer">
-    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-      <span class="latex-badge">
-        <img src="assets/images/logo-dark.png" style="display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
-        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
-      </span>
-      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
-    </div>
-    <div class="footer-links">
-      <a href="resume.html">Resume</a>
-      <a href="blog.html">Blog</a>
-      <a href="movies.html">Movies</a>
-      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
-    </div>
-  </footer>
+    <!-- ── CENTER STAGE: COCKPIT HERO & WORKSTATION ── -->
+    <section class="center-cockpit">
+
+      <!-- Hero Radar Banner -->
+      <div class="hero-radar-banner">
+        <div class="hero-eyebrow">
+          <span class="pulse-dot-green"></span>
+          <span>SYSTEM READY · INFRASTRUCTURE ORCHESTRATION</span>
+        </div>
+
+        <h2 class="hero-main-title">
+          Architecting Resilient Platforms &amp; <span class="gradient-text-cyan">Cloud-Native Telemetry</span>
+        </h2>
+
+        <p class="hero-sub-desc">
+          I design automated Kubernetes clusters, zero-trust cloud network topologies, Let's Encrypt PKI pipelines, and high-scale observability stacks. Engineered for zero toil, maximum reliability, and predictable cost.
+        </p>
+
+        <div class="hero-actions-row">
+          <a href="#cockpit-terminal" class="btn-cockpit btn-cockpit-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            <span>Launch Interactive Shell</span>
+          </a>
+          <a href="projects.html" class="btn-cockpit btn-cockpit-glass">
+            <span>Production Architectures &rarr;</span>
+          </a>
+          <a href="tools.html" class="btn-cockpit btn-cockpit-glass">
+            <span>DevSecOps Tools</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Interactive Architecture Topology Visualizer -->
+      <div class="sre-panel">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>🌐</span> Cluster Architecture Explorer
+          </span>
+          <span class="sre-badge sre-badge-green">CLICK NODES TO INSPECT</span>
+        </div>
+
+        <p style="font-size: 0.82rem; color: var(--c-text-secondary);">
+          Interactive diagram of the multi-tenant production platform. Click on any infrastructure node to inspect live configuration specifications and SLO bounds:
+        </p>
+
+        <div class="topology-container">
+          <div class="topology-grid">
+            <div class="topo-node active" data-node="ingress">
+              <div class="topo-node-title">01. Edge Ingress</div>
+              <div class="topo-node-status">● HAProxy VRRP</div>
+            </div>
+
+            <div class="topo-node" data-node="traefik">
+              <div class="topo-node-title">02. Gateway Controller</div>
+              <div class="topo-node-status">● Traefik + ACME</div>
+            </div>
+
+            <div class="topo-node" data-node="k8s-nodes">
+              <div class="topo-node-title">03. Compute Pool</div>
+              <div class="topo-node-status">● 14 Nodes · 112 vCPU</div>
+            </div>
+
+            <div class="topo-node" data-node="gitops">
+              <div class="topo-node-title">04. GitOps Engine</div>
+              <div class="topo-node-status">● ArgoCD Synced</div>
+            </div>
+
+            <div class="topo-node" data-node="observability">
+              <div class="topo-node-title">05. Observability</div>
+              <div class="topo-node-status">● VictoriaMetrics</div>
+            </div>
+
+            <div class="topo-node" data-node="storage">
+              <div class="topo-node-title">06. Storage Tier</div>
+              <div class="topo-node-status">● Ceph + EBS gp3</div>
+            </div>
+          </div>
+
+          <!-- Live Node Inspector Output -->
+          <div class="topo-detail-box" id="topo-inspector-content">
+            <strong>[NODE: INGRESS EDGE ROUTER]</strong><br>
+            Type: Dual HAProxy Load Balancer (Active-Passive VRRP)<br>
+            TLS Termination: TLS 1.3 Strict · ECDSA secp384r1 · HTTP/2 + gRPC Enabled<br>
+            SLO: p99 Latency &lt; 8ms · 0.0001% Ingress Error Rate · Auto-heal active
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive SRE Sandbox Shell (zsh / bash) -->
+      <div class="cockpit-terminal" id="cockpit-terminal">
+        <div class="terminal-topbar">
+          <div class="terminal-dots">
+            <span class="t-dot t-dot-red"></span>
+            <span class="t-dot t-dot-yellow"></span>
+            <span class="t-dot t-dot-green"></span>
+          </div>
+          <div class="terminal-tabs">
+            <div class="term-tab active">zsh · prod-session</div>
+            <div class="term-tab">k8s-telemetry</div>
+          </div>
+          <span style="font-size: 0.68rem; color: var(--c-green); font-family: var(--font-mono);">● SSH ESTABLISHED</span>
+        </div>
+
+        <div class="terminal-screen" id="cockpit-term-screen">
+          <div><span class="term-prompt-txt">azam@codexrelic:~$</span> welcome</div>
+          <div style="color: #94a3b8; font-size: 0.78rem;">
+            CodexRelic SRE Engine v3.0.0 (x86_64-cloud-linux)<br>
+            * Cluster Status: <span style="color:var(--c-green);font-weight:700;">ONLINE (0 alerts)</span> · p99 latency: &lt;14ms<br>
+            * Run quick commands below or type in prompt:
+          </div>
+        </div>
+
+        <div class="terminal-input-bar">
+          <span class="term-prompt-txt">azam@codexrelic:~$</span>
+          <input type="text" id="cockpit-term-input" class="term-input-element" placeholder="Type a command (e.g. 'kubectl get pods', 'pki audit', 'skills')..." autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="term-chip-dock">
+          <button class="chip-btn" data-cmd="kubectl get pods">kubectl get pods</button>
+          <button class="chip-btn" data-cmd="terraform plan">terraform plan</button>
+          <button class="chip-btn" data-cmd="pki audit">pki audit</button>
+          <button class="chip-btn" data-cmd="skills">skills</button>
+          <button class="chip-btn" data-cmd="finops">finops</button>
+          <button class="chip-btn" data-cmd="whoami">whoami</button>
+          <button class="chip-btn" data-cmd="clear">clear</button>
+        </div>
+      </div>
+
+      <!-- Flagship Case Studies Showcase -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-4);">
+        <!-- Project 1 -->
+        <a href="projects.html#ssl-automation" class="sre-panel" style="text-decoration: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="sre-badge sre-badge-cyan">ZERO-TOIL PKI</span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-green);">PROD VERIFIED</span>
+          </div>
+          <h3 style="font-size: 1.08rem; color: var(--c-text); margin: 4px 0;">Automated Zero-Cost SSL Lifecycle</h3>
+          <p style="font-size: 0.82rem; color: var(--c-text-secondary); line-height: 1.5;">
+            In-cluster ACME cert-manager daemon issuing ECDSA certificates with automated HTTP-01 challenges and zero-downtime Traefik reloads.
+          </p>
+          <div style="margin-top: auto; color: var(--c-cyan); font-size: 0.8rem; font-weight: 600;">
+            Explore Architecture &rarr;
+          </div>
+        </a>
+
+        <!-- Project 2 -->
+        <a href="projects.html#k8s-platform" class="sre-panel" style="text-decoration: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="sre-badge sre-badge-cyan">KUBERNETES &bull; EKS</span>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-purple);">HIGH SCALE</span>
+          </div>
+          <h3 style="font-size: 1.08rem; color: var(--c-text); margin: 4px 0;">Enterprise Multi-Tenant K8s Engine</h3>
+          <p style="font-size: 0.82rem; color: var(--c-text-secondary); line-height: 1.5;">
+            Multi-zone VPC cluster with Cilium eBPF packet filtering, ArgoCD GitOps pipelines, and Prometheus automated SLO alerting.
+          </p>
+          <div style="margin-top: auto; color: var(--c-cyan); font-size: 0.8rem; font-weight: 600;">
+            Explore Architecture &rarr;
+          </div>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ── RIGHT RAIL: LIVE VM TELEMETRY & SIGNALS ── -->
+    <aside class="cockpit-right-rail" style="display: flex; flex-direction: column; gap: var(--sp-5);">
+
+      <!-- Real-Time VM Compute Telemetry -->
+      <div class="sre-panel" id="telemetry-widget">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>📊</span> Host Telemetry
+          </span>
+          <span class="sre-badge sre-badge-green" id="ws-status-badge">ONLINE</span>
+        </div>
+
+        <div class="telemetry-gauge-group">
+          <!-- CPU Core 0 -->
+          <div class="gauge-row">
+            <div class="gauge-meta">
+              <span>CPU Core 0</span>
+              <span id="gauge-cpu-core0-txt">18.0%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill" id="gauge-cpu-core0" style="width: 18%;"></div>
+            </div>
+          </div>
+
+          <!-- CPU Core 1 -->
+          <div class="gauge-row">
+            <div class="gauge-meta">
+              <span>CPU Core 1</span>
+              <span id="gauge-cpu-core1-txt">24.0%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill" id="gauge-cpu-core1" style="width: 24%;"></div>
+            </div>
+          </div>
+
+          <!-- RAM Memory -->
+          <div class="gauge-row">
+            <div class="gauge-meta">
+              <span>Memory (RAM)</span>
+              <span id="gauge-mem-txt">3.4 GB / 8.0 GB</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill gauge-fill-purple" id="gauge-mem-fill" style="width: 42%;"></div>
+            </div>
+          </div>
+
+          <!-- Swap -->
+          <div class="gauge-row">
+            <div class="gauge-meta">
+              <span>Swap</span>
+              <span id="gauge-swp-txt">128 MB / 2.0 GB</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill gauge-fill-amber" id="gauge-swp-fill" style="width: 6%;"></div>
+            </div>
+          </div>
+
+          <!-- Load & Uptime Stats -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--c-border); font-family: var(--font-mono); font-size: 0.74rem;">
+            <div>
+              <div style="color: var(--c-text-muted); font-size: 0.65rem;">LOAD AVG</div>
+              <div id="val-load-avg" style="color: var(--c-text); font-weight: 700;">0.34, 0.45, 0.52</div>
+            </div>
+            <div>
+              <div style="color: var(--c-text-muted); font-size: 0.65rem;">UPTIME</div>
+              <div id="val-uptime" style="color: var(--c-green); font-weight: 700;">48d 14h 22m</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live CVE Threat Feed -->
+      <div class="sre-panel">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>🛡️</span> CVE Threat Radar
+          </span>
+          <span class="sre-badge" style="color: var(--c-amber); border-color: rgba(245,158,11,0.3);">LIVE ALERTS</span>
+        </div>
+
+        <div id="cve-feed-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 0.75rem; color: var(--c-text-muted); text-align: center; padding: 14px;">
+            Fetching real-time CVE feeds...
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Hub Links -->
+      <div class="sre-panel" style="padding: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="tech-news.html" class="btn-cockpit btn-cockpit-glass" style="justify-content: space-between; font-size: 0.8rem;">
+            <span>📰 Tech News Magazine</span>
+            <span style="color: var(--c-cyan);">&rarr;</span>
+          </a>
+          <a href="movies.html" class="btn-cockpit btn-cockpit-glass" style="justify-content: space-between; font-size: 0.8rem;">
+            <span>🎬 Cinema Vault</span>
+            <span style="color: var(--c-purple);">&rarr;</span>
+          </a>
+          <a href="tools.html" class="btn-cockpit btn-cockpit-glass" style="justify-content: space-between; font-size: 0.8rem;">
+            <span>🛠️ X.509 Certificate Decoder</span>
+            <span style="color: var(--c-green);">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </aside>
 
   </main>
 
-
-
-  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <div class="mobile-nav-items">
-      <a href="index.html" class="mobile-nav-item active" aria-current="page">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <a href="about.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <a href="projects.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        News
-      </a>
-      <a href="tools.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <a href="movies.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+  <!-- ═══ 3. GLOBAL COMMAND PALETTE (⌘K MODAL) ═══ -->
+  <div class="modal-backdrop-cockpit" id="cockpit-cmd-modal" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="modal-window-cockpit">
+      <div class="modal-search-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cockpit-cmd-search" class="modal-search-input" placeholder="Search modules, projects, skills, or run shell diagnostics..." autofocus>
+        <span class="sre-badge" id="cmd-close-btn" style="cursor: pointer;">ESC</span>
+      </div>
+      <div class="modal-results-list" id="cockpit-cmd-results"></div>
     </div>
-  </nav>
+  </div>
 
-</div>
-<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Dynamic SSL audit time calculation
-    const lastCheckEl = document.getElementById('ssl-last-check');
-    const nextRenewEl = document.getElementById('ssl-next-renew-text');
-    const fillEl = document.getElementById('ssl-progress-fill');
+  <!-- ═══ 4. MOBILE BOTTOM BAR ═══ -->
+  <div class="mobile-bottom-bar">
+    <a href="index.html" class="mobile-dock-btn active">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span>Cockpit</span>
+    </a>
+    <a href="projects.html" class="mobile-dock-btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Projects</span>
+    </a>
+    <a href="tech-news.html" class="mobile-dock-btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/></svg>
+      <span>News</span>
+    </a>
+    <a href="tools.html" class="mobile-dock-btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      <span>Tools</span>
+    </a>
+    <a href="resume.html" class="mobile-dock-btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span>Resume</span>
+    </a>
+  </div>
 
-    function updateSSLTelemetry() {
-      const now = new Date();
-      // Most recent 00:00 UTC
-      const lastMidnightUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
-      const hoursAgo = Math.floor((now - lastMidnightUTC) / (1000 * 60 * 60));
-      
-      if (lastCheckEl) {
-        if (hoursAgo === 0) {
-          lastCheckEl.textContent = 'Today (Just now)';
-        } else {
-          lastCheckEl.textContent = `Today (${hoursAgo}h ago)`;
-        }
-      }
+  <!-- ═══ 5. FOOTER ═══ -->
+  <footer class="cockpit-footer">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo" style="height: 18px; width: auto;">
+      <span>&copy; 2026 Mohd Azam &bull; Engineered with SRE Cockpit architecture.</span>
+    </div>
+    <div class="footer-nav-row">
+      <a href="projects.html">Projects</a>
+      <a href="tech-news.html">News</a>
+      <a href="tools.html">Tools</a>
+      <a href="movies.html">Cinema</a>
+      <a href="resume.html">Resume</a>
+      <a href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/mohdazam193" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
 
-      // Auto-rotation window: 90 day cycle, auto-rotates at 30 days remaining (60 days elapsed)
-      // Let's calculate days remaining in current cycle
-      const cycleStart = new Date('2026-08-20T00:00:00Z');
-      const diffDays = Math.floor((now - cycleStart) / (1000 * 60 * 60 * 24)) % 60;
-      const daysUntilRenew = Math.max(1, 60 - diffDays);
-      const percentLeft = Math.round(((60 - diffDays) / 60) * 100);
-
-      if (nextRenewEl) {
-        nextRenewEl.textContent = `Next Auto-Rotation: in ~${daysUntilRenew} Days`;
-      }
-      if (fillEl) {
-        fillEl.style.width = `${Math.min(100, Math.max(15, percentLeft))}%`;
-      }
-    }
-
-    updateSSLTelemetry();
-    setInterval(updateSSLTelemetry, 60000);
-  });
-</script>
+  <script src="assets/js/main.js?v=3.0.0"></script>
 </body>
 </html>

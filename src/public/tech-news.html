@@ -3,328 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07151e">
-  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>Tech News — Daily Top 10 · codexrelic.com</title>
-  <meta name="description" content="Daily top 10 tech stories curated from Hacker News, refreshed every 3 hours. Stay updated on the latest in technology, startups, and engineering.">
-  <meta name="keywords" content="Tech News, Hacker News, Top 10, Daily Tech, Technology News, Startups, Engineering News">
+  <meta name="theme-color" content="#06080d">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo-dark.svg">
+  <title>Tech News Magazine — Daily Intelligence · codexrelic.com</title>
+  <meta name="description" content="Daily top 10 curated global technology, kernel systems, and AI stories with editorial summaries.">
+  <meta name="keywords" content="Tech News, Hacker News, Daily Tech, Engineering News, SRE">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/tech-news.html">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://codexrelic.com/tech-news.html">
-  <meta property="og:title" content="Tech News — Daily Top 10 · codexrelic.com">
-  <meta property="og:description" content="Daily top 10 tech stories from Hacker News, auto-refreshed every 3 hours. Curated by codexrelic.com.">
-  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://codexrelic.com/tech-news.html">
-  <meta name="twitter:title" content="Tech News — Daily Top 10 · codexrelic.com">
-  <meta name="twitter:description" content="Daily top 10 tech stories from Hacker News, auto-refreshed every 3 hours. Curated by codexrelic.com.">
-  <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
-      <script>
+  <script>
     (function(){
-      var t=localStorage.getItem('cr-theme')||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-      document.documentElement.setAttribute('data-theme',t);
+      var t = localStorage.getItem('cr-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
+  <link rel="stylesheet" href="assets/css/style.css?v=3.0.0">
 
   <style>
-    /* ── Blog-specific additions ── */
-    .blog-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-8);
+    .news-magazine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--sp-5);
     }
-
-    .blog-item {
+    .news-mag-card {
       background: var(--c-card);
       border: 1px solid var(--c-border);
-      border-radius: var(--r-md);
-      padding: var(--sp-6);
-      transition: border-color var(--t-fast), transform var(--t-fast);
-      text-decoration: none;
+      border-radius: var(--r-lg);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: var(--sp-3);
+      text-decoration: none;
+      transition: all var(--t-fast);
+      box-shadow: var(--glass-border-top), var(--glass-shadow);
     }
-
-    .blog-item:hover {
-      border-color: var(--c-accent);
-      transform: translateX(3px);
+    .news-mag-card:hover {
+      border-color: var(--c-cyan);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-cyan), var(--glass-shadow);
     }
-
-    .blog-header {
+    .news-mag-media {
+      width: 100%;
+      height: 170px;
+      position: relative;
+      background: var(--c-surface);
+      overflow: hidden;
+    }
+    .news-mag-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .news-mag-card:hover .news-mag-img {
+      transform: scale(1.05);
+    }
+    .news-mag-rank {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(6, 8, 13, 0.85);
+      border: 1px solid var(--c-border-accent);
+      color: var(--c-cyan);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.76rem;
+      padding: 3px 8px;
+      border-radius: var(--r-xs);
+    }
+    .news-mag-body {
+      padding: var(--sp-4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 6px;
+    }
+    .news-mag-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--c-text);
+      line-height: 1.35;
+    }
+    .news-mag-desc {
+      font-size: 0.82rem;
+      color: var(--c-text-secondary);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .news-mag-footer {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--sp-3);
-    }
-
-    .blog-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--c-text);
-      line-height: 1.3;
-    }
-
-    .blog-meta {
-      font-size: 0.76rem;
-      color: var(--c-text-muted);
-      margin-top: var(--sp-1);
-    }
-
-    .blog-tag-row {
-      display: flex;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
-    }
-
-    .blog-tag {
-      font-size: 0.68rem;
-      font-family: var(--font-mono);
-      background: var(--c-surface);
-      color: var(--c-text-secondary);
-      border: 1px solid var(--c-border);
-      padding: 1px var(--sp-2);
-      border-radius: var(--r-sm);
-    }
-
-    .blog-summary {
-      font-size: 0.86rem;
-      color: var(--c-text-secondary);
-      line-height: 1.7;
-    }
-
-    .read-time-badge {
-      font-family: var(--font-mono);
+      align-items: center;
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--c-border);
       font-size: 0.72rem;
-      color: var(--c-accent);
-      background: var(--c-accent-dim);
-      padding: 2px var(--sp-2);
-      border-radius: var(--r-sm);
-      white-space: nowrap;
+      color: var(--c-text-muted);
+      font-family: var(--font-mono);
     }
   </style>
 </head>
 
 <body>
-<div class="layout">
+  <!-- ═══ TOP MISSION CONTROL BAR ═══ -->
+  <header class="mission-control-header" role="banner">
+    <div class="header-left-cluster">
+      <a href="index.html" class="brand-sigil" aria-label="CodexRelic Home">
+        <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo">
+      </a>
+      <div class="cluster-status-pill">
+        <span class="pulse-dot-green"></span>
+        <span>k8s-prod: HEALTHY · 0 alerts</span>
+      </div>
+    </div>
 
-  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
-  <aside class="sidebar" aria-label="Main navigation">
-    <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
-    </a>
-
-    <nav class="nav" role="navigation">
-      <span class="nav-group-label">Navigation</span>
-      <a href="index.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Identity</span>
-      <a href="about.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Engineering</span>
-      <a href="projects.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="nav-link active" aria-current="page">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        Tech News
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Tools</span>
-      <a href="tools.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Leisure</span>
-      <a href="movies.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Community</span>
-      <a href="community.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+    <nav class="header-nav-dock" aria-label="Primary Navigation">
+      <a href="index.html" class="nav-link-btn">Cockpit</a>
+      <a href="projects.html" class="nav-link-btn">Projects</a>
+      <a href="tech-news.html" class="nav-link-btn active">Tech News</a>
+      <a href="tools.html" class="nav-link-btn">Tools</a>
+      <a href="movies.html" class="nav-link-btn">Cinema</a>
+      <a href="resume.html" class="nav-link-btn">Resume</a>
+      <a href="about.html" class="nav-link-btn">About</a>
+      <a href="contact.html" class="nav-link-btn">Contact</a>
     </nav>
 
-    <div class="sidebar-footer">
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Available · Hyderabad, IN
+    <div class="header-right-cluster">
+      <div class="clock-ticker">
+        <span id="clock-utc">UTC 00:00:00</span>
+        <span style="opacity: 0.3;">|</span>
+        <span id="clock-ist" style="color: var(--c-cyan);">IST 00:00:00</span>
       </div>
-      <div class="sidebar-socials">
-        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
-        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
-        <a class="social-btn" href="contact.html" title="Contact">@</a>
-      </div>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
-        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <span class="toggle-label">Light mode</span>
+
+      <button class="cmd-k-trigger-btn" id="cmd-k-trigger" aria-label="Search (⌘K)">
+        <span>⌘K</span>
+        <span>Search</span>
+      </button>
+
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-  </aside>
+  </header>
 
-  <!-- ═══ MAIN ════════════════════════════════════════ -->
-  <main class="main" id="main-content">
-    <div class="dashboard-layout">
-    <div class="content-wrap">
-
-      <!-- Page Header -->
-      <header class="page-header">
-      <div>
-        <div class="page-eyebrow">YCombinator RSS</div>
-        <h1 class="page-title">Daily Top 10</h1>
-        <p class="page-subtitle">The top 10 tech stories of the day, refreshed every 3 hours.</p>
+  <!-- ═══ MAIN APPLICATION CANVAS ═══ -->
+  <main style="max-width: 1380px; margin: 0 auto; padding: var(--sp-6) var(--sp-6) var(--sp-12);" id="main-content">
+    
+    <div style="margin-bottom: var(--sp-8); text-align: center;">
+      <div class="hero-eyebrow" style="justify-content: center;">
+        <span class="pulse-dot-green"></span>
+        <span>CURATED GLOBAL INTELLIGENCE &bull; AUTO-REFRESHED</span>
       </div>
-      <div style="display: flex; gap: var(--sp-2);">
-        <button id="tab-today" class="btn btn-outline active" style="border-color: var(--c-accent); color: var(--c-accent); background: var(--c-accent-dim);">Today</button>
-        <button id="tab-archive" class="btn btn-outline">Archive</button>
+      <h1 class="hero-main-title" style="font-size: 2.4rem;">Tech News <span class="gradient-text-cyan">Magazine</span></h1>
+      <p style="max-width: 650px; margin: 0 auto; color: var(--c-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+        Top 10 daily technology, kernel architecture, cloud systems, and AI breakthroughs ranked with editorial summaries.
+      </p>
+
+      <div style="display: inline-flex; gap: 8px; margin-top: var(--sp-5); background: var(--c-surface); padding: 4px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+        <button id="tab-today" class="btn-cockpit btn-cockpit-primary" style="padding: 6px 14px; font-size: 0.78rem;">Today's Top 10</button>
+        <button id="tab-archive" class="btn-cockpit btn-cockpit-glass" style="padding: 6px 14px; font-size: 0.78rem;">Historical Archive</button>
       </div>
-    </header>
-
-      <!-- Today's News -->
-      <section id="tech-news-container" class="news-grid reveal">
-        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading today's tech news...</p>
-      </section>
-
-      <!-- Archive -->
-      <section id="tech-news-archive-container" style="display:none;">
-        <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--c-text-muted)">Loading archive...</p>
-      </section>
-
     </div>
-  
-    <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
-    <aside class="right-sidebar">
-      <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
-      <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
-        <div class="vm-widget-header">
-          <span class="vm-widget-title">htop - Live VM</span>
-      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
-        <button class="htop-tab active">Live</button>
+
+    <!-- Magazine News Feed Container -->
+    <div id="tech-news-container" class="news-magazine-grid">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: var(--c-text-muted);">
+        <div class="pulse-dot-green" style="margin: 0 auto 10px;"></div>
+        <div>Aggregating top curated intelligence...</div>
       </div>
-          <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
-        </div>
-        <div class="vm-widget-body">
-          <div id="vm-cpu-container" class="vm-stat-section">
-            <!-- CPU bars will be injected here -->
-          </div>
-          <div class="vm-stat-section">
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Mem[</span>
-              <div class="vm-bar-track">
-                <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
-              </div>
-              <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
-            </div>
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Swp[</span>
-              <div class="vm-bar-track">
-                <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
-              </div>
-              <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
-            </div>
-          </div>
-          <div class="vm-stat-text-group">
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Tasks:</span>
-              <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Load average:</span>
-              <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Uptime:</span>
-              <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
     </div>
+
+    <!-- Archive Container -->
+    <div id="tech-news-archive-container" style="display: none;"></div>
+
   </main>
 
-  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <div class="mobile-nav-items">
-      <a href="index.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <a href="about.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <a href="projects.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="mobile-nav-item active" aria-current="page">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        News
-      </a>
-      <a href="tools.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <a href="movies.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+  <!-- ═══ COMMAND PALETTE MODAL ═══ -->
+  <div class="modal-backdrop-cockpit" id="cockpit-cmd-modal" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="modal-window-cockpit">
+      <div class="modal-search-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cockpit-cmd-search" class="modal-search-input" placeholder="Search modules or run commands..." autofocus>
+        <span class="sre-badge" id="cmd-close-btn" style="cursor: pointer;">ESC</span>
+      </div>
+      <div class="modal-results-list" id="cockpit-cmd-results"></div>
     </div>
-  </nav>
+  </div>
 
-</div>
-<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
-<script src="assets/js/tech-news.js"></script>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="cockpit-footer">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo" style="height: 18px; width: auto;">
+      <span>&copy; 2026 Mohd Azam &bull; Engineered with SRE Cockpit architecture.</span>
+    </div>
+    <div class="footer-nav-row">
+      <a href="index.html">Cockpit</a>
+      <a href="projects.html">Projects</a>
+      <a href="tech-news.html">News</a>
+      <a href="tools.html">Tools</a>
+      <a href="movies.html">Cinema</a>
+      <a href="resume.html">Resume</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=3.0.0"></script>
+  <script src="assets/js/tech-news.js?v=3.0.0"></script>
 </body>
 </html>
-

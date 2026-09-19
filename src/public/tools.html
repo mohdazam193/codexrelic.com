@@ -3,446 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07151e">
-  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com</title>
-  <meta name="description" content="Free online DevSecOps & SRE tools — decode X.509 SSL/TLS certificates and generate cryptographically secure ASP.NET Machine Keys in your browser. Zero-trust, 100% client-side.">
-  <meta name="keywords" content="Machine Key Generator, ASP.NET Machine Key, SSL Certificate Decoder, Certificate Decoder, SSL Certificate, TLS, X.509, HMACSHA256, AES-256, SRE Tools, Online Tools, Mohd Azam">
+  <meta name="theme-color" content="#06080d">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo-dark.svg">
+  <title>DevSecOps &amp; SRE Tools — Certificate Decoder &amp; MachineKey · codexrelic.com</title>
+  <meta name="description" content="In-browser zero-trust DevSecOps &amp; SRE utilities — decode X.509 SSL/TLS certificates and generate secure ASP.NET Machine Keys with 100% client-side privacy.">
+  <meta name="keywords" content="Certificate Decoder, X.509, SSL Decoder, MachineKey Generator, SRE Tools, DevSecOps">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/tools.html">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://codexrelic.com/tools.html">
-  <meta property="og:title" content="SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com">
-  <meta property="og:description" content="Free online DevSecOps & SRE tools — decode X.509 SSL certificates and generate secure ASP.NET Machine Keys in-browser. Zero server logging.">
-  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://codexrelic.com/tools.html">
-  <meta name="twitter:title" content="SRE & DevSecOps Tools — Certificate Decoder & Machine Key Generator · codexrelic.com">
-  <meta property="twitter:description" content="Free online DevSecOps & SRE tools — decode X.509 SSL certificates and generate secure ASP.NET Machine Keys in-browser. Zero server logging.">
-  <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
-      <script>
+  <script>
     (function(){
-      var t=localStorage.getItem('cr-theme')||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-      document.documentElement.setAttribute('data-theme',t);
+      var t = localStorage.getItem('cr-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
-
+  <link rel="stylesheet" href="assets/css/style.css?v=3.0.0">
 </head>
 
 <body>
-<div class="layout">
+  <!-- ═══ TOP MISSION CONTROL BAR ═══ -->
+  <header class="mission-control-header" role="banner">
+    <div class="header-left-cluster">
+      <a href="index.html" class="brand-sigil" aria-label="CodexRelic Home">
+        <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo">
+      </a>
+      <div class="cluster-status-pill">
+        <span class="pulse-dot-green"></span>
+        <span>k8s-prod: HEALTHY · 0 alerts</span>
+      </div>
+    </div>
 
-  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
-  <aside class="sidebar" aria-label="Main navigation">
-    <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
-    </a>
-
-    <nav class="nav" role="navigation">
-      <span class="nav-group-label">Navigation</span>
-      <a href="index.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Identity</span>
-      <a href="about.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Engineering</span>
-      <a href="projects.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        Tech News
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Tools</span>
-      <a href="tools.html" class="nav-link active" aria-current="page">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Leisure</span>
-      <a href="movies.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Community</span>
-      <a href="community.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+    <nav class="header-nav-dock" aria-label="Primary Navigation">
+      <a href="index.html" class="nav-link-btn">Cockpit</a>
+      <a href="projects.html" class="nav-link-btn">Projects</a>
+      <a href="tech-news.html" class="nav-link-btn">Tech News</a>
+      <a href="tools.html" class="nav-link-btn active">Tools</a>
+      <a href="movies.html" class="nav-link-btn">Cinema</a>
+      <a href="resume.html" class="nav-link-btn">Resume</a>
+      <a href="about.html" class="nav-link-btn">About</a>
+      <a href="contact.html" class="nav-link-btn">Contact</a>
     </nav>
 
-    <div class="sidebar-footer">
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Available · Hyderabad, IN
+    <div class="header-right-cluster">
+      <div class="clock-ticker">
+        <span id="clock-utc">UTC 00:00:00</span>
+        <span style="opacity: 0.3;">|</span>
+        <span id="clock-ist" style="color: var(--c-cyan);">IST 00:00:00</span>
       </div>
-      <div class="sidebar-socials">
-        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
-        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
-        <a class="social-btn" href="contact.html" title="Contact">@</a>
-      </div>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
-        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <span class="toggle-label">Light mode</span>
+
+      <button class="cmd-k-trigger-btn" id="cmd-k-trigger" aria-label="Search (⌘K)">
+        <span>⌘K</span>
+        <span>Search</span>
+      </button>
+
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-  </aside>
+  </header>
 
-  <!-- ═══ MAIN ════════════════════════════════════════ -->
-  <main class="main" id="main-content">
-    <div class="dashboard-layout">
-    <div class="content-wrap">
-      <div class="page-header reveal">
-        <h1 class="page-title">Sysadmin Tools</h1>
-        <p class="page-desc">A growing suite of DevSecOps and Systems Engineering utilities built for maximum privacy and zero-trust.</p>
+  <!-- ═══ MAIN APPLICATION CANVAS ═══ -->
+  <main style="max-width: 1180px; margin: 0 auto; padding: var(--sp-6) var(--sp-6) var(--sp-12);" id="main-content">
+    
+    <div style="margin-bottom: var(--sp-8); text-align: center;">
+      <div class="hero-eyebrow" style="justify-content: center;">
+        <span class="pulse-dot-green"></span>
+        <span>CLIENT-SIDE CRYPTOGRAPHY &bull; ZERO-TRUST UTILITIES</span>
+      </div>
+      <h1 class="hero-main-title" style="font-size: 2.4rem;">SRE &amp; DevSecOps <span class="gradient-text-cyan">Utilities</span></h1>
+      <p style="max-width: 650px; margin: 0 auto; color: var(--c-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+        100% in-browser cryptographic decoders and generators. Zero server tracking, zero log persistence.
+      </p>
+
+      <div style="display: inline-flex; gap: 8px; margin-top: var(--sp-5); background: var(--c-surface); padding: 4px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+        <button class="btn-cockpit btn-cockpit-primary tool-tab-btn active" data-target="tab-cert-decoder" style="padding: 6px 14px; font-size: 0.78rem;">X.509 Certificate Decoder</button>
+        <button class="btn-cockpit btn-cockpit-glass tool-tab-btn" data-target="tab-machine-key" style="padding: 6px 14px; font-size: 0.78rem;">ASP.NET MachineKey Generator</button>
+      </div>
+    </div>
+
+    <!-- ═══ TAB 1: SSL CERTIFICATE DECODER ═══ -->
+    <div id="tab-cert-decoder" class="tool-tab-pane active" style="display: block;">
+      
+      <div class="sre-panel" style="margin-bottom: var(--sp-6);">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>🔒</span> Input PEM Encoded Certificate
+          </span>
+          <div style="display: flex; gap: 6px;">
+            <button class="chip-btn" id="load-sample-cert-btn" style="color: var(--c-cyan); border-color: var(--c-border-accent);">Load Sample PEM</button>
+            <span class="sre-badge">RFC 5280</span>
+          </div>
+        </div>
+
+        <textarea id="cert-input" style="width: 100%; height: 180px; background: var(--c-bg); color: var(--c-text); font-family: var(--font-mono); font-size: 0.82rem; padding: 14px; border: 1px solid var(--c-border); border-radius: var(--r-sm); resize: vertical; outline: none; line-height: 1.5;" placeholder="-----BEGIN CERTIFICATE-----&#10;MII...&#10;-----END CERTIFICATE-----"></textarea>
         
-        <div class="tools-tabs" style="display: flex; gap: var(--sp-2); margin-top: var(--sp-6); border-bottom: 1px solid var(--c-border); padding-bottom: var(--sp-2); flex-wrap: wrap;">
-          <button class="tool-tab-btn active" data-target="tab-cert-decoder" style="padding: var(--sp-2) var(--sp-4); border-radius: var(--r-sm); font-weight: 500; font-size: 0.9rem; transition: all var(--t-fast); background: var(--c-accent-dim); color: var(--c-accent); border: 1px solid var(--c-accent);">SSL Certificate Decoder</button>
-          <button class="tool-tab-btn" data-target="tab-machine-key" style="padding: var(--sp-2) var(--sp-4); border-radius: var(--r-sm); font-weight: 500; font-size: 0.9rem; transition: all var(--t-fast); color: var(--c-text-muted); display: inline-flex; align-items: center; gap: 6px;">
-            Machine Key Generator 
-            <span style="font-size: 0.68rem; font-weight: 700; background: rgba(16,185,129,0.15); color: var(--c-green); padding: 1px 6px; border-radius: var(--r-full); border: 1px solid rgba(16,185,129,0.3);">SECURE</span>
+        <div style="display: flex; gap: 10px;">
+          <button id="decode-btn" class="btn-cockpit btn-cockpit-primary" style="flex: 1; justify-content: center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Decode Certificate</span>
+          </button>
+          <button id="clear-cert-btn" class="btn-cockpit btn-cockpit-glass">
+            <span>Clear</span>
           </button>
         </div>
       </div>
 
-      <!-- ═══ TAB 1: SSL CERTIFICATE DECODER ═══ -->
-      <div id="tab-cert-decoder" class="tool-tab-pane active" style="display: block;">
-        <div class="bento-panel reveal" style="margin-bottom: var(--sp-8);">
-        <div class="bento-panel-inner">
-          <div class="bento-header">
-            <span class="bento-label">SYS.TOOL.INPUT</span>
-          </div>
-          <p class="bento-desc" style="margin-bottom: var(--sp-4);">Paste your PEM encoded certificate below (must include <code>-----BEGIN CERTIFICATE-----</code>):</p>
-          <textarea id="cert-input" style="width: 100%; height: 250px; background: var(--c-bg); color: var(--c-text); font-family: var(--font-mono); font-size: 0.85rem; padding: var(--sp-4); border: 1px solid var(--c-border); border-radius: var(--r-sm); resize: vertical; margin-bottom: var(--sp-4);" placeholder="-----BEGIN CERTIFICATE-----&#10;MII...&#10;-----END CERTIFICATE-----"></textarea>
-          <button id="decode-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">Decode Certificate</button>
-        </div>
-      </div>
-
-      <div id="cert-results" class="bento-panel reveal" style="display: none;">
-        <div class="bento-panel-inner">
-          <div class="bento-header">
-            <span class="bento-label">SYS.TOOL.OUTPUT</span>
-            <span id="cert-status" class="bento-status status-green">VALID</span>
-          </div>
-          
-          <div class="terminal-output" style="margin-top: var(--sp-4);">
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Common Name:</span> <span id="cert-cn" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Subject Alternative Names:</span> <span id="cert-sans" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Organization:</span> <span id="cert-org" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Organization Unit:</span> <span id="cert-ou" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Locality:</span> <span id="cert-locality" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">State:</span> <span id="cert-state" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Country:</span> <span id="cert-country" style="color:var(--c-text)"></span></div>
-            <br>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Valid From:</span> <span id="cert-valid-from" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Valid To:</span> <span id="cert-valid-to" style="color:var(--c-text)"></span> <span id="cert-days-left" style="font-weight:bold;"></span></div>
-            <br>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Serial Number:</span> <span id="cert-serial" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Signature Alg:</span> <span id="cert-sig-alg" style="color:var(--c-text)"></span></div>
-            <br>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Subject:</span> <span id="cert-subject" style="color:var(--c-text)"></span></div>
-            <div class="term-line"><span class="term-info" style="color:var(--c-accent)">Issuer:</span> <span id="cert-issuer" style="color:var(--c-text)"></span></div>
-          </div>
-        </div>
-      </div>
-      </div> <!-- /tab-cert-decoder -->
-
-      <!-- ═══ TAB 2: ASP.NET MACHINE KEY GENERATOR ═══ -->
-      <div id="tab-machine-key" class="tool-tab-pane" style="display: none;">
-        
-        <!-- Privacy Guarantee Banner -->
-        <div class="tool-security-banner reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <div>
-            <strong>100% In-Browser Cryptography:</strong> Keys are generated using standard Web Crypto API (<code>window.crypto.getRandomValues</code>). No data ever leaves your device or touches any server. Keys are purely ephemeral and automatically destroyed on page refresh.
-          </div>
+      <!-- Decoded Results Output Panel -->
+      <div id="cert-results" class="sre-panel" style="display: none; margin-bottom: var(--sp-8);">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>📋</span> Decoded Certificate Details
+          </span>
+          <span id="cert-status" class="sre-badge sre-badge-green">VALID CERTIFICATE</span>
         </div>
 
-        <!-- Configuration Panel -->
-        <div class="bento-panel reveal" style="margin-bottom: var(--sp-6);">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYS.TOOL.CONFIG</span>
-              <span class="bento-status status-green">EPHEMERAL MEMORY</span>
-            </div>
-
-            <!-- Framework Preset -->
-            <div class="tool-option-group" style="margin-top: var(--sp-4);">
-              <label class="tool-option-label">Framework Preset:</label>
-              <div class="tool-pill-grid" id="mk-preset-group">
-                <button type="button" class="tool-pill-btn active" data-preset="net45">ASP.NET 4.5+ (HMACSHA256 + AES)</button>
-                <button type="button" class="tool-pill-btn" data-preset="net20">ASP.NET 2.0 - 4.0 (SHA1 + AES)</button>
-                <button type="button" class="tool-pill-btn" data-preset="net11">ASP.NET 1.1 (SHA1 + 3DES)</button>
-                <button type="button" class="tool-pill-btn" data-preset="custom">Custom Configuration</button>
-              </div>
-            </div>
-
-            <!-- Validation Algorithm -->
-            <div class="tool-option-group">
-              <label class="tool-option-label">
-                Validation Method:
-                <span id="mk-val-info" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-muted); font-weight:normal;">(64 Bytes · 128 Hex Characters)</span>
-              </label>
-              <div class="tool-pill-grid" id="mk-val-group">
-                <button type="button" class="tool-pill-btn active" data-val="HMACSHA256" data-bytes="64">HMACSHA256</button>
-                <button type="button" class="tool-pill-btn" data-val="HMACSHA384" data-bytes="96">HMACSHA384</button>
-                <button type="button" class="tool-pill-btn" data-val="HMACSHA512" data-bytes="128">HMACSHA512</button>
-                <button type="button" class="tool-pill-btn" data-val="SHA1" data-bytes="64">SHA1</button>
-                <button type="button" class="tool-pill-btn" data-val="AES" data-bytes="32">AES</button>
-                <button type="button" class="tool-pill-btn" data-val="3DES" data-bytes="24">3DES</button>
-                <button type="button" class="tool-pill-btn" data-val="MD5" data-bytes="32">MD5</button>
-              </div>
-            </div>
-
-            <!-- Decryption Algorithm -->
-            <div class="tool-option-group">
-              <label class="tool-option-label">
-                Decryption Method:
-                <span id="mk-dec-info" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-muted); font-weight:normal;">(32 Bytes · 64 Hex Characters)</span>
-              </label>
-              <div class="tool-pill-grid" id="mk-dec-group">
-                <button type="button" class="tool-pill-btn active" data-dec="AES" data-bytes="32" data-name="AES-256">AES-256 (Default)</button>
-                <button type="button" class="tool-pill-btn" data-dec="AES" data-bytes="24" data-name="AES-192">AES-192</button>
-                <button type="button" class="tool-pill-btn" data-dec="AES" data-bytes="16" data-name="AES-128">AES-128</button>
-                <button type="button" class="tool-pill-btn" data-dec="3DES" data-bytes="24" data-name="3DES">3DES / TripleDES</button>
-                <button type="button" class="tool-pill-btn" data-dec="DES" data-bytes="8" data-name="DES">DES</button>
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div style="display: flex; gap: var(--sp-3); margin-top: var(--sp-6); flex-wrap: wrap;">
-              <button id="mk-generate-btn" class="btn btn-primary" style="flex: 1; justify-content: center;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                Generate Machine Key
-              </button>
-              <button id="mk-clear-btn" class="btn btn-outline" style="justify-content: center;">
-                Clear Memory
-              </button>
-            </div>
-
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; font-family: var(--font-mono); font-size: 0.8rem;">
+          <div style="background: var(--c-surface); padding: 12px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+            <div style="color: var(--c-text-muted); font-size: 0.7rem;">COMMON NAME (CN)</div>
+            <div id="cert-cn" style="color: var(--c-cyan); font-weight: 700; margin-top: 4px; word-break: break-all;"></div>
           </div>
-        </div>
 
-        <!-- Output Panel -->
-        <div id="mk-results-panel" class="bento-panel reveal" style="display: none; margin-bottom: var(--sp-8);">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYS.TOOL.OUTPUT</span>
-              <span class="bento-status status-green" id="mk-status-badge">GENERATED (IN-MEMORY)</span>
-            </div>
-
-            <!-- Full Web.config snippet -->
-            <div style="margin-top: var(--sp-4);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">Web.config &lt;machineKey&gt; Element:</span>
-                <button class="copy-badge-btn" id="mk-copy-xml-btn">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  <span>Copy XML</span>
-                </button>
-              </div>
-              <div class="terminal-output" style="margin-top: 0;">
-                <pre id="mk-xml-output" style="margin: 0; white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 0.8rem; color: var(--c-text);"></pre>
-              </div>
-            </div>
-
-            <!-- Validation Key breakdown -->
-            <div style="margin-top: var(--sp-5);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">
-                  Validation Key <span id="mk-val-key-count" style="color: var(--c-text-muted); font-size: 0.75rem; font-family: var(--font-mono); font-weight: normal;">(128 Hex)</span>:
-                </span>
-                <button class="copy-badge-btn" id="mk-copy-val-btn">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  <span>Copy Key</span>
-                </button>
-              </div>
-              <div class="tool-key-box" id="mk-val-key-box"></div>
-            </div>
-
-            <!-- Decryption Key breakdown -->
-            <div style="margin-top: var(--sp-4);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2);">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--c-text);">
-                  Decryption Key <span id="mk-dec-key-count" style="color: var(--c-text-muted); font-size: 0.75rem; font-family: var(--font-mono); font-weight: normal;">(64 Hex)</span>:
-                </span>
-                <button class="copy-badge-btn" id="mk-copy-dec-btn">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  <span>Copy Key</span>
-                </button>
-              </div>
-              <div class="tool-key-box" id="mk-dec-key-box"></div>
-            </div>
-
+          <div style="background: var(--c-surface); padding: 12px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+            <div style="color: var(--c-text-muted); font-size: 0.7rem;">SUBJECT ALTERNATIVE NAMES (SANs)</div>
+            <div id="cert-sans" style="color: var(--c-text); font-weight: 600; margin-top: 4px; word-break: break-all;"></div>
           </div>
-        </div>
 
-        <!-- Educational Bento Section -->
-        <div class="bento-panel reveal">
-          <div class="bento-panel-inner">
-            <h3 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--c-text); margin-bottom: var(--sp-2);">What is an ASP.NET Machine Key?</h3>
-            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; margin-bottom: var(--sp-4);">
-              The <code>&lt;machineKey&gt;</code> element in ASP.NET <code>web.config</code> specifies the algorithms and cryptographic keys used for encryption, decryption, and hash validation of <strong>Forms Authentication tickets</strong>, <strong>ViewState data</strong>, and anti-CSRF tokens.
-            </p>
-            <h4 style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--c-accent); margin-bottom: var(--sp-2);">Why Static Keys in Web Farms / Kubernetes?</h4>
-            <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; margin-bottom: 0;">
-              By default, IIS sets keys to <code>AutoGenerate</code>. In a load-balanced cluster (AWS ALB, Azure App Service, Kubernetes, or IIS Web Farm), different servers generate differing random keys. A user authenticated on Server A will receive an encryption error when routed to Server B unless all nodes share identical, synchronized static machine keys in <code>web.config</code>.
-            </p>
+          <div style="background: var(--c-surface); padding: 12px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+            <div style="color: var(--c-text-muted); font-size: 0.7rem;">ISSUER AUTHORITY</div>
+            <div id="cert-issuer" style="color: var(--c-text); margin-top: 4px; word-break: break-all;"></div>
           </div>
-        </div>
 
-      </div> <!-- /tab-machine-key -->
-
-    </div>
-
-    <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
-    <aside class="right-sidebar">
-      <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
-      <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
-        <div class="vm-widget-header">
-          <span class="vm-widget-title">htop - Live VM</span>
-      <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
-        <button class="htop-tab active">Live</button>
-      </div>
-          <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
-        </div>
-        <div class="vm-widget-body">
-          <div id="vm-cpu-container" class="vm-stat-section">
-            <!-- CPU bars will be injected here -->
-          </div>
-          <div class="vm-stat-section">
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Mem[</span>
-              <div class="vm-bar-track">
-                <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
-              </div>
-              <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
-            </div>
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Swp[</span>
-              <div class="vm-bar-track">
-                <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
-              </div>
-              <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
+          <div style="background: var(--c-surface); padding: 12px; border-radius: var(--r-sm); border: 1px solid var(--c-border);">
+            <div style="color: var(--c-text-muted); font-size: 0.7rem;">VALIDITY &amp; EXPIRY</div>
+            <div style="margin-top: 4px; color: var(--c-text-secondary);">
+              <span id="cert-valid-from"></span> &rarr; <span id="cert-valid-to" style="color: var(--c-green); font-weight: 700;"></span>
+              <div id="cert-days-left" style="color: var(--c-cyan); font-weight: 700; margin-top: 2px;"></div>
             </div>
           </div>
-          <div class="vm-stat-text-group">
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Tasks:</span>
-              <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Load average:</span>
-              <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Uptime:</span>
-              <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
+
+          <div style="background: var(--c-surface); padding: 12px; border-radius: var(--r-sm); border: 1px solid var(--c-border); grid-column: 1 / -1;">
+            <div style="color: var(--c-text-muted); font-size: 0.7rem;">SERIAL NUMBER &bull; SIGNATURE ALGORITHM</div>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+              <span id="cert-serial" style="color: var(--c-text);"></span>
+              <span id="cert-sig-alg" style="color: var(--c-purple); font-weight: 600;"></span>
             </div>
           </div>
         </div>
       </div>
-    </aside>
+
     </div>
 
-  <!-- Footer (Full Width) -->
-  <footer class="page-footer">
-    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-      <span class="latex-badge">
-        <img src="assets/images/logo-dark.png" style="display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
-        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
-      </span>
-      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+    <!-- ═══ TAB 2: MACHINE KEY GENERATOR ═══ -->
+    <div id="tab-machine-key" class="tool-tab-pane" style="display: none;">
+      
+      <div class="sre-panel" style="margin-bottom: var(--sp-6);">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>🔑</span> Cryptographic Machine Key Generator
+          </span>
+          <span class="sre-badge sre-badge-green">IN-MEMORY CRYPTO</span>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.55;">
+          Generates cryptographically random keys using the standard Web Crypto API (<code>window.crypto.getRandomValues</code>) for synchronization across load-balanced web clusters.
+        </p>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button id="mk-generate-btn" class="btn-cockpit btn-cockpit-primary" style="flex: 1; justify-content: center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Generate Cryptographic Machine Key</span>
+          </button>
+          <button id="mk-clear-btn" class="btn-cockpit btn-cockpit-glass">
+            <span>Clear</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Output Panel -->
+      <div id="mk-results-panel" class="sre-panel" style="display: none; margin-bottom: var(--sp-8);">
+        <div class="sre-panel-header">
+          <span class="sre-panel-title">
+            <span>📄</span> Web.config &lt;machineKey&gt; Element
+          </span>
+          <button class="chip-btn" id="mk-copy-xml-btn" style="color: var(--c-cyan);">Copy XML</button>
+        </div>
+
+        <div style="background: var(--c-bg); padding: 14px; border-radius: var(--r-sm); border: 1px solid var(--c-border); overflow-x: auto;">
+          <pre id="mk-xml-output" style="margin: 0; white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); font-size: 0.8rem; color: var(--c-text);"></pre>
+        </div>
+      </div>
+
     </div>
-    <div class="footer-links">
-      <a href="resume.html">Resume</a>
-      <a href="blog.html">Blog</a>
-      <a href="movies.html">Movies</a>
-      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
-    </div>
-  </footer>
 
   </main>
 
-
-
-  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <div class="mobile-nav-items">
-      <a href="index.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <a href="about.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <a href="projects.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        News
-      </a>
-      <a href="tools.html" class="mobile-nav-item active" aria-current="page">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <a href="movies.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+  <!-- ═══ COMMAND PALETTE MODAL ═══ -->
+  <div class="modal-backdrop-cockpit" id="cockpit-cmd-modal" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="modal-window-cockpit">
+      <div class="modal-search-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cockpit-cmd-search" class="modal-search-input" placeholder="Search modules or run commands..." autofocus>
+        <span class="sre-badge" id="cmd-close-btn" style="cursor: pointer;">ESC</span>
+      </div>
+      <div class="modal-results-list" id="cockpit-cmd-results"></div>
     </div>
-  </nav>
+  </div>
 
-</div>
-<script src="assets/js/forge.min.js"></script>
-<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
-<script src="assets/js/tools.js"></script>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="cockpit-footer">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo" style="height: 18px; width: auto;">
+      <span>&copy; 2026 Mohd Azam &bull; Engineered with SRE Cockpit architecture.</span>
+    </div>
+    <div class="footer-nav-row">
+      <a href="index.html">Cockpit</a>
+      <a href="projects.html">Projects</a>
+      <a href="tech-news.html">News</a>
+      <a href="tools.html">Tools</a>
+      <a href="movies.html">Cinema</a>
+      <a href="resume.html">Resume</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/forge.min.js"></script>
+  <script src="assets/js/main.js?v=3.0.0"></script>
+  <script src="assets/js/tools.js"></script>
+  <script>
+    // Sample Certificate Loader
+    const sampleCertBtn = document.getElementById('load-sample-cert-btn');
+    const certInputEl = document.getElementById('cert-input');
+    const clearCertBtn = document.getElementById('clear-cert-btn');
+
+    const SAMPLE_PEM = `-----BEGIN CERTIFICATE-----
+MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjQwOTAxMDAwMDAw
+WhcNMjUxMTMwMjM1OTU5WjBTMQswCQYDVQQGEwJVUzEUMBIGA1UEChMLRXhhbXBs
+ZSBDb3JwMRcwFQYDVQQDEw5jb2RleHJlbGljLmNvbTERMA8GA1UEBRMIU1JFLVBK
+STCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALt7z+P8W2gS4YQ9/Qy
+-----END CERTIFICATE-----`;
+
+    if (sampleCertBtn && certInputEl) {
+      sampleCertBtn.addEventListener('click', () => {
+        certInputEl.value = SAMPLE_PEM;
+        document.getElementById('decode-btn').click();
+      });
+    }
+
+    if (clearCertBtn && certInputEl) {
+      clearCertBtn.addEventListener('click', () => {
+        certInputEl.value = '';
+        document.getElementById('cert-results').style.display = 'none';
+      });
+    }
+  </script>
 </body>
 </html>

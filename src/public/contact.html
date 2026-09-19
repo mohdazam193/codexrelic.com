@@ -3,795 +3,373 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07151e">
-  <link rel="icon" type="image/png" href="assets/images/logo-dark.png">
-  <title>Contact — Mohd Azam · codexrelic.com</title>
-  <meta name="description" content="Get in touch with Mohd Azam — reach out for SRE consulting, DevOps collaboration, or platform engineering opportunities. Based in Hyderabad, India.">
-  <meta name="keywords" content="Contact, Mohd Azam, SRE Consulting, DevOps, Hire, Platform Engineer, Hyderabad, DevSecOps">
+  <meta name="theme-color" content="#06080d">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo-dark.svg">
+  <title>Contact &amp; Connect — Mohd Azam · codexrelic.com</title>
+  <meta name="description" content="Direct message ingress gateway to Mohd Azam for SRE roles, platform consulting, and open-source collaboration.">
+  <meta name="keywords" content="Contact, Mohd Azam, SRE Consulting, DevOps, Hire, Platform Engineer">
   <meta name="author" content="Mohd Azam">
   <link rel="canonical" href="https://codexrelic.com/contact.html">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://codexrelic.com/contact.html">
-  <meta property="og:title" content="Contact — Mohd Azam · codexrelic.com">
-  <meta property="og:description" content="Reach out to Mohd Azam for SRE consulting, DevOps collaboration, or career opportunities.">
-  <meta property="og:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://codexrelic.com/contact.html">
-  <meta name="twitter:title" content="Contact — Mohd Azam · codexrelic.com">
-  <meta name="twitter:description" content="Reach out to Mohd Azam for SRE consulting, DevOps collaboration, or career opportunities.">
-  <meta name="twitter:image" content="https://codexrelic.com/assets/images/logo-dark.png">
-
   <script>
     (function(){
-      var t=localStorage.getItem('cr-theme')||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-      document.documentElement.setAttribute('data-theme',t);
+      var t = localStorage.getItem('cr-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=codexrelic.com v1.0.0">
+  <link rel="stylesheet" href="assets/css/style.css?v=3.0.0">
+
+  <style>
+    .contact-cockpit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--sp-6);
+    }
+    @media (max-width: 860px) {
+      .contact-cockpit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-group-cockpit {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: var(--sp-4);
+    }
+    .form-label-cockpit {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--c-text);
+      font-family: var(--font-mono);
+    }
+    .form-input-cockpit, .form-textarea-cockpit {
+      background: var(--c-bg);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-sm);
+      padding: 11px 14px;
+      font-size: 0.88rem;
+      color: var(--c-text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--t-fast);
+    }
+    .form-input-cockpit:focus, .form-textarea-cockpit:focus {
+      border-color: var(--c-cyan);
+      box-shadow: 0 0 0 2px var(--c-cyan-dim);
+    }
+    .form-textarea-cockpit {
+      min-height: 130px;
+      resize: vertical;
+    }
+  </style>
 </head>
 
 <body>
-<div class="layout">
+  <!-- ═══ TOP MISSION CONTROL BAR ═══ -->
+  <header class="mission-control-header" role="banner">
+    <div class="header-left-cluster">
+      <a href="index.html" class="brand-sigil" aria-label="CodexRelic Home">
+        <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo">
+      </a>
+      <div class="cluster-status-pill">
+        <span class="pulse-dot-green"></span>
+        <span>k8s-prod: HEALTHY · 0 alerts</span>
+      </div>
+    </div>
 
-  <!-- ═══ SIDEBAR ════════════════════════════════════ -->
-  <aside class="sidebar" aria-label="Main navigation">
-    <a class="sidebar-brand" href="index.html">
-      <img src="assets/images/logo-dark.png" style="height:24px;object-fit:contain" alt="Logo">
-    </a>
-
-    <nav class="nav" role="navigation">
-      <span class="nav-group-label">Navigation</span>
-      <a href="index.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Identity</span>
-      <a href="about.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Engineering</span>
-      <a href="projects.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        Tech News
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Tools</span>
-      <a href="tools.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Leisure</span>
-      <a href="movies.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <div class="nav-sep"></div>
-      <span class="nav-group-label">Community</span>
-      <a href="community.html" class="nav-link">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="nav-link active" aria-current="page">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+    <nav class="header-nav-dock" aria-label="Primary Navigation">
+      <a href="index.html" class="nav-link-btn">Cockpit</a>
+      <a href="projects.html" class="nav-link-btn">Projects</a>
+      <a href="tech-news.html" class="nav-link-btn">Tech News</a>
+      <a href="tools.html" class="nav-link-btn">Tools</a>
+      <a href="movies.html" class="nav-link-btn">Cinema</a>
+      <a href="resume.html" class="nav-link-btn">Resume</a>
+      <a href="about.html" class="nav-link-btn">About</a>
+      <a href="contact.html" class="nav-link-btn active">Contact</a>
     </nav>
 
-    <div class="sidebar-footer">
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Available · Hyderabad, IN
+    <div class="header-right-cluster">
+      <div class="clock-ticker">
+        <span id="clock-utc">UTC 00:00:00</span>
+        <span style="opacity: 0.3;">|</span>
+        <span id="clock-ist" style="color: var(--c-cyan);">IST 00:00:00</span>
       </div>
-      <div class="sidebar-socials">
-        <a class="social-btn" href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" title="LinkedIn">in</a>
-        <a class="social-btn" href="https://github.com/mohdazam193" target="_blank" rel="noopener" title="GitHub">gh</a>
-        <a class="social-btn" href="contact.html" title="Contact">@</a>
-      </div>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme">
-        <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <span class="toggle-label">Light mode</span>
+
+      <button class="cmd-k-trigger-btn" id="cmd-k-trigger" aria-label="Search (⌘K)">
+        <span>⌘K</span>
+        <span>Search</span>
+      </button>
+
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-  </aside>
+  </header>
 
-  <!-- ═══ MAIN ════════════════════════════════════════ -->
-  <main class="main" id="main-content">
-    <div class="dashboard-layout">
-    <div class="content-wrap">
+  <!-- ═══ MAIN APPLICATION CANVAS ═══ -->
+  <main style="max-width: 1180px; margin: 0 auto; padding: var(--sp-6) var(--sp-6) var(--sp-12);" id="main-content">
+    
+    <div style="margin-bottom: var(--sp-8); text-align: center;">
+      <div class="hero-eyebrow" style="justify-content: center;">
+        <span class="pulse-dot-green"></span>
+        <span>DIRECT INGRESS &bull; ENCRYPTED MESSAGE GATEWAY</span>
+      </div>
+      <h1 class="hero-main-title" style="font-size: 2.4rem;">Get in <span class="gradient-text-cyan">Touch</span></h1>
+      <p style="max-width: 650px; margin: 0 auto; color: var(--c-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+        Available for Senior SRE &amp; Platform roles, cloud infrastructure consulting, and open-source systems discussions.
+      </p>
+    </div>
 
-      <!-- Page Header -->
-      <header class="page-header">
-        <div class="page-header-text">
-          <p class="page-eyebrow">Connect</p>
-          <h1 class="page-title">Get in Touch</h1>
-          <p class="page-subtitle">Available for SRE consulting, platform engineering opportunities, and open-source collaboration.</p>
-        </div>
-      </header>
-
-      <!-- ── Modern Two-Column Layout ── -->
-      <div class="contact-layout-grid reveal">
+    <div class="contact-cockpit-grid">
+      
+      <!-- Left Column: Location & Direct Channels -->
+      <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
         
-        <!-- Left Column: Quick Channels & Presence -->
-        <div class="contact-info-col">
-          
-          <!-- Direct Message Ingress Card -->
-          <div class="contact-card">
-            <div class="contact-card-header">
-              <span class="contact-card-badge">Direct Ingress</span>
-              <span class="contact-pulse-badge">
-                <span class="pulse-dot"></span> Online
-              </span>
-            </div>
-            <h3 class="contact-card-title">Inbox Gateway</h3>
-            <p class="contact-card-desc">Send a message through this portal to route directly to my private mailbox. Zero public email exposure and zero tracking scripts.</p>
-            
-            <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.76rem; color: var(--c-green); background: var(--c-green-dim); padding: 5px 10px; border-radius: var(--r-sm); border: 1px solid rgba(16, 185, 129, 0.25);">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Typical Response SLA &lt; 24h</span>
-            </div>
+        <div class="sre-panel">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="sre-badge sre-badge-cyan">LOCATION &bull; TIME</span>
+            <span class="pulse-dot-green"></span>
           </div>
-
-          <!-- Location & Availability Card -->
-          <div class="contact-card">
-            <div class="contact-card-header">
-              <span class="contact-card-badge">Location &amp; Time</span>
-            </div>
-            <h3 class="contact-card-title">Hyderabad, India</h3>
-            <div class="contact-time-display">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              <span id="live-clock">IST (UTC+5:30) &bull; --:--:--</span>
-            </div>
-            <p class="contact-card-desc">Open for Remote &amp; Hybrid Senior SRE, Platform Engineering &amp; DevSecOps opportunities.</p>
+          <h3 style="font-size: 1.1rem; color: var(--c-text); margin: 4px 0;">Hyderabad, India</h3>
+          <div id="contact-live-clock" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--c-cyan);">
+            IST (UTC+5:30) &bull; --:--:--
           </div>
-
-          <!-- Social Profiles Card -->
-          <div class="contact-card">
-            <div class="contact-card-header">
-              <span class="contact-card-badge">Profiles</span>
-            </div>
-            <div class="contact-social-links">
-              <a href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener" class="contact-social-item">
-                <div class="contact-social-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </div>
-                <div class="contact-social-info">
-                  <span class="contact-social-name">LinkedIn</span>
-                  <span class="contact-social-handle">/in/mohdazam193</span>
-                </div>
-                <span class="contact-social-arrow">&nearr;</span>
-              </a>
-
-              <a href="https://github.com/mohdazam193" target="_blank" rel="noopener" class="contact-social-item">
-                <div class="contact-social-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                </div>
-                <div class="contact-social-info">
-                  <span class="contact-social-name">GitHub</span>
-                  <span class="contact-social-handle">@mohdazam193</span>
-                </div>
-                <span class="contact-social-arrow">&nearr;</span>
-              </a>
-            </div>
-          </div>
-
+          <p style="font-size: 0.82rem; color: var(--c-text-secondary); line-height: 1.5; margin-top: 4px;">
+            Open to Remote &amp; Hybrid Senior SRE / Platform Engineering opportunities globally.
+          </p>
         </div>
 
-        <!-- Right Column: Interactive Contact Form Panel -->
-        <div class="contact-form-panel">
-          
-          <div class="form-panel-header">
-            <h2 class="form-panel-title">Send a Message</h2>
-            <p class="form-panel-subtitle">Fill in your inquiry below. Submitting will deliver your note directly into my private inbox via our secure backend gateway.</p>
+        <div class="sre-panel">
+          <h3 style="font-size: 0.95rem; margin-bottom: 8px;">Direct Network Profiles</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <a href="https://linkedin.com/in/mohdazam193" target="_blank" rel="noopener noreferrer" class="btn-cockpit btn-cockpit-glass" style="justify-content: space-between; font-size: 0.82rem;">
+              <span>LinkedIn Profile</span>
+              <span style="color: var(--c-cyan);">&nearr;</span>
+            </a>
+            <a href="https://github.com/mohdazam193" target="_blank" rel="noopener noreferrer" class="btn-cockpit btn-cockpit-glass" style="justify-content: space-between; font-size: 0.82rem;">
+              <span>GitHub Repositories</span>
+              <span style="color: var(--c-cyan);">&nearr;</span>
+            </a>
           </div>
-
-          <!-- Quick Subject Presets -->
-          <div class="contact-preset-wrap">
-            <span class="contact-preset-label">Inquiry Topic</span>
-            <div class="contact-preset-grid">
-              <button type="button" class="contact-preset-btn active" data-subject="[SRE Role / Opportunity]">SRE Opportunity</button>
-              <button type="button" class="contact-preset-btn" data-subject="[DevOps Consulting / Contract]">DevOps Consulting</button>
-              <button type="button" class="contact-preset-btn" data-subject="[Open Source Collaboration]">Open Source</button>
-              <button type="button" class="contact-preset-btn" data-subject="[General Inquiry]">General Inquiry</button>
-            </div>
-          </div>
-
-          <!-- Form Element -->
-          <form id="contact-form" novalidate>
-            
-            <!-- Success Confirmation Box -->
-            <div id="form-success-alert" class="form-alert form-alert-success" style="display: none;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span id="form-success-msg">Message sent successfully! I will review and reply within 24 hours.</span>
-            </div>
-
-            <!-- Error Notification Box -->
-            <div id="form-security-alert" class="form-alert" style="display: none;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              <span id="form-security-msg"></span>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="form-name">Your Name <span class="required">*</span></label>
-                <input class="form-input" type="text" id="form-name" required maxlength="80" autocomplete="name" placeholder="e.g. Sarah Connor">
-                <div class="form-field-error" id="error-form-name"></div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="form-email">Your Email Address <span class="required">*</span></label>
-                <input class="form-input" type="email" id="form-email" required maxlength="120" autocomplete="email" placeholder="e.g. sarah@example.com">
-                <div class="form-field-error" id="error-form-email"></div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="form-subject">Subject Line <span class="required">*</span></label>
-              <input class="form-input" type="text" id="form-subject" required maxlength="150" value="[SRE Role / Opportunity]">
-              <div class="form-field-error" id="error-form-subject"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="form-message">Message <span class="required">*</span></label>
-              <textarea class="form-textarea" id="form-message" required maxlength="3000" placeholder="Describe your team requirements, architecture challenges, or discussion topic..."></textarea>
-              <div class="form-field-error" id="error-form-message"></div>
-            </div>
-
-            <div class="form-actions">
-              <button class="btn btn-primary form-submit-btn" type="submit" id="submit-btn">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                <span id="submit-btn-text">Send Message</span>
-              </button>
-              <button type="button" class="btn btn-outline" id="copy-payload-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span>Copy Message</span>
-              </button>
-            </div>
-
-            <!-- Clean Note -->
-            <p class="form-privacy-note">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              <span>Encrypted dispatch via backend API. Zero tracking scripts and zero spam scrapers.</span>
-            </p>
-
-          </form>
-
         </div>
 
       </div>
 
-    </div>
-  
-    <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
-    <aside class="right-sidebar">
-      <!-- ═══ LIVE VM STATS WIDGET ════════════════════════ -->
-      <div id="vm-stats-widget" class="vm-stats-widget" aria-label="Live VM Statistics">
-        <div class="vm-widget-header">
-          <span class="vm-widget-title">htop - Live VM</span>
-          <div class="htop-history-tabs" style="display:flex;gap:4px;margin-right:auto;margin-left:12px;">
-            <button class="htop-tab active">Live</button>
-          </div>
-          <span class="bento-status status-green" id="vm-connection-status">WS CON</span>
-        </div>
-        <div class="vm-widget-body">
-          <div id="vm-cpu-container" class="vm-stat-section">
-            <!-- CPU bars injected dynamically -->
-          </div>
-          <div class="vm-stat-section">
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Mem[</span>
-              <div class="vm-bar-track">
-                <div id="vm-mem-bar" class="vm-bar-fill" style="width:0%; background:var(--c-accent)"></div>
-              </div>
-              <span id="vm-mem-text" class="vm-stat-value">0G/0G]</span>
-            </div>
-            <div class="vm-stat-row">
-              <span class="vm-stat-label">Swp[</span>
-              <div class="vm-bar-track">
-                <div id="vm-swp-bar" class="vm-bar-fill" style="width:0%; background:var(--c-red)"></div>
-              </div>
-              <span id="vm-swp-text" class="vm-stat-value">0K/0K]</span>
-            </div>
-          </div>
-          <div class="vm-stat-text-group">
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Tasks:</span>
-              <span id="vm-tasks-text" class="vm-text-val">0, 0 running</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Load average:</span>
-              <span id="vm-load-text" class="vm-text-val">0.00 0.00 0.00</span>
-            </div>
-            <div class="vm-stat-text-row">
-              <span class="vm-text-label">Uptime:</span>
-              <span id="vm-uptime-text" class="vm-text-val">0 days, 00:00:00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
-    </div>
+      <!-- Right Column: Form -->
+      <div class="sre-panel" style="padding: var(--sp-6);">
+        <h2 style="font-size: 1.25rem; margin-bottom: 4px;">Send Direct Message</h2>
+        <p style="font-size: 0.82rem; color: var(--c-text-secondary); margin-bottom: var(--sp-4);">
+          Routes directly into private mailbox via backend API. Zero tracking scripts.
+        </p>
 
-  <!-- Footer (Full Width) -->
-  <footer class="page-footer">
-    <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-      <span class="latex-badge">
-        <img src="assets/images/logo-dark.png" style="display:inline;margin-right:4px;vertical-align:middle" alt="Sigil">
-        codexrelic.com v1.0.0 &copy; 2026 All Rights Reserved
-      </span>
-      <span style="color:var(--c-text-muted);font-size:0.75rem">Powered by static Nginx &amp; K8s</span>
+        <!-- Topic Presets -->
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--sp-4);">
+          <button type="button" class="chip-btn active contact-preset-btn" data-subject="[SRE Role / Opportunity]" style="color: var(--c-cyan); border-color: var(--c-border-accent);">SRE Opportunity</button>
+          <button type="button" class="chip-btn contact-preset-btn" data-subject="[DevOps Consulting]">Consulting</button>
+          <button type="button" class="chip-btn contact-preset-btn" data-subject="[Open Source Collaboration]">Open Source</button>
+          <button type="button" class="chip-btn contact-preset-btn" data-subject="[General Inquiry]">General</button>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div id="form-success-alert" style="display: none; padding: 10px 14px; background: rgba(16,185,129,0.15); border: 1px solid var(--c-green); border-radius: var(--r-sm); color: var(--c-green); font-size: 0.82rem; margin-bottom: 12px;">
+            Message delivered successfully! I will reply within 24 hours.
+          </div>
+
+          <div id="form-security-alert" style="display: none; padding: 10px 14px; background: rgba(239,68,68,0.15); border: 1px solid var(--c-red); border-radius: var(--r-sm); color: var(--c-red); font-size: 0.82rem; margin-bottom: 12px;">
+            <span id="form-security-msg"></span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group-cockpit">
+              <label class="form-label-cockpit" for="form-name">Name *</label>
+              <input class="form-input-cockpit" type="text" id="form-name" required maxlength="80" placeholder="e.g. Sarah Connor">
+            </div>
+
+            <div class="form-group-cockpit">
+              <label class="form-label-cockpit" for="form-email">Email *</label>
+              <input class="form-input-cockpit" type="email" id="form-email" required maxlength="120" placeholder="e.g. sarah@example.com">
+            </div>
+          </div>
+
+          <div class="form-group-cockpit">
+            <label class="form-label-cockpit" for="form-subject">Subject Line *</label>
+            <input class="form-input-cockpit" type="text" id="form-subject" required maxlength="150" value="[SRE Role / Opportunity]">
+          </div>
+
+          <div class="form-group-cockpit">
+            <label class="form-label-cockpit" for="form-message">Message *</label>
+            <textarea class="form-textarea-cockpit" id="form-message" required maxlength="3000" placeholder="Describe your team requirements or discussion topic..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-cockpit btn-cockpit-primary" type="submit" id="submit-btn" style="flex: 1; justify-content: center;">
+              <span id="submit-btn-text">Send Message</span>
+            </button>
+            <button type="button" class="btn-cockpit btn-cockpit-glass" id="copy-payload-btn">
+              <span>Copy</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
     </div>
-    <div class="footer-links">
-      <a href="resume.html">Resume</a>
-      <a href="blog.html">Blog</a>
-      <a href="movies.html">Movies</a>
-      <a href="admin/login.html" style="color:var(--c-accent)">Admin</a>
-    </div>
-  </footer>
 
   </main>
 
-  <!-- ═══ MOBILE NAV ══════════════════════════════════ -->
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    <div class="mobile-nav-items">
-      <a href="index.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Home
-      </a>
-      <a href="about.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        About
-      </a>
-      <a href="resume.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Resume
-      </a>
-      <a href="projects.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Projects
-      </a>
-      <a href="blog.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Blog
-      </a>
-      <a href="tech-news.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16l-3-3z"/><path d="M12 8h6"/><path d="M12 12h6"/><path d="M12 16h6"/></svg>
-        News
-      </a>
-      <a href="tools.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tools
-      </a>
-      <a href="movies.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-        Movies
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community
-      </a>
-      <a href="contact.html" class="mobile-nav-item active" aria-current="page">
-        <svg class="mobile-nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contact
-      </a>
+  <!-- ═══ COMMAND PALETTE MODAL ═══ -->
+  <div class="modal-backdrop-cockpit" id="cockpit-cmd-modal" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="modal-window-cockpit">
+      <div class="modal-search-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cockpit-cmd-search" class="modal-search-input" placeholder="Search modules or run commands..." autofocus>
+        <span class="sre-badge" id="cmd-close-btn" style="cursor: pointer;">ESC</span>
+      </div>
+      <div class="modal-results-list" id="cockpit-cmd-results"></div>
     </div>
-  </nav>
+  </div>
 
-</div>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="cockpit-footer">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/images/logo-dark.svg" alt="CodexRelic" class="brand-logo" style="height: 18px; width: auto;">
+      <span>&copy; 2026 Mohd Azam &bull; Engineered with SRE Cockpit architecture.</span>
+    </div>
+    <div class="footer-nav-row">
+      <a href="index.html">Cockpit</a>
+      <a href="projects.html">Projects</a>
+      <a href="tech-news.html">News</a>
+      <a href="tools.html">Tools</a>
+      <a href="movies.html">Cinema</a>
+      <a href="resume.html">Resume</a>
+    </div>
+  </footer>
 
-<script src="assets/js/main.js?v=codexrelic.com v1.0.0"></script>
+  <script src="assets/js/main.js?v=3.0.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Live clock in sidebar
+      const clockEl = document.getElementById('contact-live-clock');
+      function updateContactClock() {
+        if (!clockEl) return;
+        const now = new Date();
+        const istTime = now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        });
+        clockEl.textContent = `IST (UTC+5:30) • ${istTime}`;
+      }
+      updateContactClock();
+      setInterval(updateContactClock, 1000);
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Live Local Clock (IST · UTC+5:30)
-    const clockEl = document.getElementById('live-clock');
-    function updateClock() {
-      if (!clockEl) return;
-      const now = new Date();
-      const istTime = now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      });
-      clockEl.textContent = `IST (UTC+5:30) • ${istTime}`;
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
+      // Preset buttons
+      const presetBtns = document.querySelectorAll('.contact-preset-btn');
+      const subjectInput = document.getElementById('form-subject');
+      const messageInput = document.getElementById('form-message');
+      const nameInput = document.getElementById('form-name');
+      const emailInput = document.getElementById('form-email');
 
-    // 2. Subject Preset Pills
-    const presetBtns = document.querySelectorAll('.contact-preset-btn');
-    const nameInput = document.getElementById('form-name');
-    const emailInput = document.getElementById('form-email');
-    const subjectInput = document.getElementById('form-subject');
-    const messageInput = document.getElementById('form-message');
-    const alertBox = document.getElementById('form-security-alert');
-    const alertMsg = document.getElementById('form-security-msg');
-    const successBox = document.getElementById('form-success-alert');
-    const successMsg = document.getElementById('form-success-msg');
-
-    presetBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        presetBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (subjectInput) {
-          subjectInput.value = btn.getAttribute('data-subject');
-          clearError(subjectInput);
-        }
-        if (messageInput) {
-          messageInput.focus();
-        }
-      });
-    });
-
-    // ── SECURITY & ANTI-INJECTION VALIDATORS ──
-    const patterns = {
-      // XSS: HTML tags, event handlers, javascript/data/vbscript URIs
-      xss: /<\s*script|javascript:|data:|vbscript:|on\w+\s*=|<\s*\/?\s*(iframe|object|embed|svg|img|style|link|meta|applet|form|body|html)/i,
-      // CRLF header injection (newlines in single-line headers)
-      crlf: /[\r\n]/,
-      // SQL injection signatures
-      sql: /(\b(union\s+select|select\s+.*\s+from|insert\s+into|delete\s+from|drop\s+table|update\s+.*\s+set|exec\s*\(|xp_cmdshell)\b|(--|;--|\/\*|\*\/))/i,
-      // Template / Code interpolation
-      template: /(\{\{.*?\}\}|\$\{.*?\}|<%.*?%>)/i,
-      // Strict Active Email regex (RFC 5322 compliant with mandatory valid TLD)
-      emailStrict: /^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,24}$/,
-      // Name: alphabetic, spaces, hyphens, periods, apostrophes
-      safeName: /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s.'\-]+$/
-    };
-
-    const DISPOSABLE_OR_DUMMY_DOMAINS = new Set([
-      'example.com', 'example.org', 'example.net',
-      'test.com', 'test.org', 'test.net',
-      'fake.com', 'sample.com', 'invalid.com',
-      'tempmail.com', 'temp-mail.org', 'dispostable.com',
-      '10minutemail.com', 'trashmail.com', 'guerrillamail.com',
-      'mailinator.com', 'yopmail.com', 'sharklasers.com',
-      'localhost', 'test', 'local'
-    ]);
-
-    const errorName = document.getElementById('error-form-name');
-    const errorEmail = document.getElementById('error-form-email');
-    const errorSubject = document.getElementById('error-form-subject');
-    const errorMessage = document.getElementById('error-form-message');
-
-    function setFieldError(inputEl, errorEl, message) {
-      if (inputEl) {
-        inputEl.classList.remove('is-valid');
-        inputEl.classList.add('is-invalid');
-      }
-      if (errorEl) {
-        errorEl.textContent = message;
-        errorEl.style.display = 'block';
-      }
-      if (alertBox && alertMsg) {
-        alertMsg.textContent = message;
-        alertBox.style.display = 'flex';
-      }
-    }
-
-    function setFieldValid(inputEl, errorEl) {
-      if (inputEl) {
-        inputEl.classList.remove('is-invalid');
-        inputEl.classList.add('is-valid');
-      }
-      if (errorEl) {
-        errorEl.textContent = '';
-        errorEl.style.display = 'none';
-      }
-      if (alertBox) {
-        alertBox.style.display = 'none';
-      }
-    }
-
-    function clearFieldState(inputEl, errorEl) {
-      if (inputEl) {
-        inputEl.classList.remove('is-invalid');
-        inputEl.classList.remove('is-valid');
-      }
-      if (errorEl) {
-        errorEl.textContent = '';
-        errorEl.style.display = 'none';
-      }
-      if (alertBox) {
-        alertBox.style.display = 'none';
-      }
-    }
-
-    // High-precision email validator
-    function getEmailValidationError(rawEmail) {
-      const email = (rawEmail || '').trim();
-      if (!email) {
-        return 'Sender email address is required.';
-      }
-      if (email.length > 100) {
-        return 'Email address exceeds maximum length of 100 characters.';
-      }
-      if (/[\s\r\n\t]/.test(email)) {
-        return 'Email cannot contain spaces, tabs, or newline characters.';
-      }
-      if (patterns.xss.test(email) || patterns.sql.test(email) || patterns.template.test(email)) {
-        return 'Security Alert: Script, SQL, or injection payload detected in email.';
-      }
-      if (!email.includes('@')) {
-        return 'Email address is missing the "@" symbol (e.g. name@domain.com).';
-      }
-      const parts = email.split('@');
-      if (parts.length !== 2) {
-        return 'Email address can only contain a single "@" symbol.';
-      }
-      const [localPart, domainPart] = parts;
-      if (!localPart || localPart.length < 1) {
-        return 'Email username portion before "@" cannot be empty.';
-      }
-      if (!domainPart || domainPart.length < 3) {
-        return 'Email domain portion after "@" is incomplete (e.g. domain.com).';
-      }
-      if (/\.{2,}/.test(email)) {
-        return 'Email cannot contain consecutive dots (..).';
-      }
-      if (localPart.startsWith('.') || localPart.endsWith('.')) {
-        return 'Email username cannot start or end with a dot.';
-      }
-      if (!patterns.emailStrict.test(email)) {
-        return 'Please enter a valid, active email address with a valid domain (e.g. name@domain.com).';
-      }
-      const domainLower = domainPart.toLowerCase();
-      if (DISPOSABLE_OR_DUMMY_DOMAINS.has(domainLower)) {
-        return 'Please provide an active business or personal email address (temporary/test domains not allowed).';
-      }
-      const domainSections = domainLower.split('.');
-      const tld = domainSections[domainSections.length - 1];
-      if (!tld || tld.length < 2 || !/^[a-z]{2,24}$/i.test(tld)) {
-        return 'Email requires a valid top-level domain extension (e.g. .com, .org, .io).';
-      }
-      return null;
-    }
-
-    // Live validation event bindings
-    emailInput.addEventListener('blur', () => {
-      const val = emailInput.value.trim();
-      if (!val) {
-        clearFieldState(emailInput, errorEmail);
-        return;
-      }
-      const err = getEmailValidationError(val);
-      if (err) {
-        setFieldError(emailInput, errorEmail, err);
-      } else {
-        setFieldValid(emailInput, errorEmail);
-      }
-    });
-
-    emailInput.addEventListener('input', () => {
-      const val = emailInput.value.trim();
-      if (!val) {
-        clearFieldState(emailInput, errorEmail);
-        return;
-      }
-      const err = getEmailValidationError(val);
-      if (!err) {
-        setFieldValid(emailInput, errorEmail);
-      } else if (emailInput.classList.contains('is-invalid')) {
-        setFieldError(emailInput, errorEmail, err);
-      }
-    });
-
-    nameInput.addEventListener('blur', () => {
-      const val = nameInput.value.trim();
-      if (!val) {
-        clearFieldState(nameInput, errorName);
-        return;
-      }
-      if (val.length < 2 || !patterns.safeName.test(val)) {
-        setFieldError(nameInput, errorName, 'Please provide a valid sender name (min 2 characters, letters only).');
-      } else {
-        setFieldValid(nameInput, errorName);
-      }
-    });
-
-    nameInput.addEventListener('input', () => {
-      if (nameInput.classList.contains('is-invalid')) {
-        const val = nameInput.value.trim();
-        if (val.length >= 2 && patterns.safeName.test(val)) {
-          setFieldValid(nameInput, errorName);
-        }
-      }
-    });
-
-    subjectInput.addEventListener('input', () => clearFieldState(subjectInput, errorSubject));
-    messageInput.addEventListener('input', () => clearFieldState(messageInput, errorMessage));
-
-    // Deep payload sanitizer
-    function validateAndSanitize() {
-      const name = (nameInput.value || '').trim();
-      const email = (emailInput.value || '').trim();
-      const subject = (subjectInput.value || '').trim();
-      const message = (messageInput.value || '').trim();
-
-      // 1. Name validation
-      if (!name || name.length < 2) {
-        setFieldError(nameInput, errorName, 'Please provide a valid sender name (min 2 characters).');
-        nameInput.focus();
-        return null;
-      }
-      if (name.length > 80) {
-        setFieldError(nameInput, errorName, 'Name exceeds maximum length of 80 characters.');
-        nameInput.focus();
-        return null;
-      }
-      if (patterns.crlf.test(name)) {
-        setFieldError(nameInput, errorName, 'Security Alert: Newline characters are not allowed in name field.');
-        nameInput.focus();
-        return null;
-      }
-      if (patterns.xss.test(name) || patterns.sql.test(name) || patterns.template.test(name) || !patterns.safeName.test(name)) {
-        setFieldError(nameInput, errorName, 'Security Alert: Invalid characters or script tags detected in name.');
-        nameInput.focus();
-        return null;
-      }
-      setFieldValid(nameInput, errorName);
-
-      // 2. Strict Email validation
-      const emailError = getEmailValidationError(email);
-      if (emailError) {
-        setFieldError(emailInput, errorEmail, emailError);
-        emailInput.focus();
-        return null;
-      }
-      setFieldValid(emailInput, errorEmail);
-
-      // 3. Subject validation
-      if (!subject || subject.length < 3) {
-        setFieldError(subjectInput, errorSubject, 'Please enter a subject line (min 3 characters).');
-        subjectInput.focus();
-        return null;
-      }
-      if (subject.length > 150) {
-        setFieldError(subjectInput, errorSubject, 'Subject exceeds maximum length of 150 characters.');
-        subjectInput.focus();
-        return null;
-      }
-      if (patterns.crlf.test(subject)) {
-        setFieldError(subjectInput, errorSubject, 'Security Alert: Header injection (CRLF) detected in subject line.');
-        subjectInput.focus();
-        return null;
-      }
-      if (patterns.xss.test(subject) || patterns.sql.test(subject) || patterns.template.test(subject)) {
-        setFieldError(subjectInput, errorSubject, 'Security Alert: Script or SQL injection signatures detected in subject.');
-        subjectInput.focus();
-        return null;
-      }
-      setFieldValid(subjectInput, errorSubject);
-
-      // 4. Message Payload validation
-      if (!message || message.length < 10) {
-        setFieldError(messageInput, errorMessage, 'Message payload is too short (min 10 characters).');
-        messageInput.focus();
-        return null;
-      }
-      if (message.length > 3000) {
-        setFieldError(messageInput, errorMessage, 'Message payload exceeds maximum limit of 3,000 characters.');
-        messageInput.focus();
-        return null;
-      }
-      if (patterns.xss.test(message)) {
-        setFieldError(messageInput, errorMessage, 'Security Alert: Raw HTML, <script>, or active event handlers are blocked in payload.');
-        messageInput.focus();
-        return null;
-      }
-      setFieldValid(messageInput, errorMessage);
-
-      // Clean/strip null bytes and control characters
-      const cleanName = name.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
-      const cleanEmail = email.replace(/[\x00-\x1F\x7F]/g, '');
-      const cleanSubject = subject.replace(/[\x00-\x1F\x7F]/g, '');
-      const cleanMessage = message.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
-
-      return {
-        name: cleanName,
-        email: cleanEmail,
-        subject: cleanSubject,
-        message: cleanMessage
-      };
-    }
-
-    // 3. Copy Payload helper
-    const copyPayloadBtn = document.getElementById('copy-payload-btn');
-    if (copyPayloadBtn) {
-      copyPayloadBtn.addEventListener('click', () => {
-        const validated = validateAndSanitize();
-        if (!validated) return;
-
-        const payload = `Name: ${validated.name}\nEmail: ${validated.email}\nSubject: ${validated.subject}\n\n${validated.message}`;
-
-        navigator.clipboard.writeText(payload).then(() => {
-          const originalText = copyPayloadBtn.innerHTML;
-          copyPayloadBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span style="color:var(--c-green)">Message Copied!</span>`;
-          setTimeout(() => { copyPayloadBtn.innerHTML = originalText; }, 2000);
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          presetBtns.forEach(b => {
+            b.classList.remove('active');
+            b.style.color = '';
+            b.style.borderColor = '';
+          });
+          btn.classList.add('active');
+          btn.style.color = 'var(--c-cyan)';
+          btn.style.borderColor = 'var(--c-border-accent)';
+          if (subjectInput) subjectInput.value = btn.getAttribute('data-subject');
+          if (messageInput) messageInput.focus();
         });
       });
-    }
 
-    // 4. Form Submit -> Backend API Gateway
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const submitBtnText = document.getElementById('submit-btn-text');
+      // Submit
+      const form = document.getElementById('contact-form');
+      const alertBox = document.getElementById('form-security-alert');
+      const alertMsg = document.getElementById('form-security-msg');
+      const successBox = document.getElementById('form-success-alert');
+      const submitBtn = document.getElementById('submit-btn');
+      const submitBtnText = document.getElementById('submit-btn-text');
 
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (alertBox) alertBox.style.display = 'none';
-        if (successBox) successBox.style.display = 'none';
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (alertBox) alertBox.style.display = 'none';
+          if (successBox) successBox.style.display = 'none';
 
-        const validated = validateAndSanitize();
-        if (!validated) return;
+          const name = (nameInput.value || '').trim();
+          const email = (emailInput.value || '').trim();
+          const subject = (subjectInput.value || '').trim();
+          const message = (messageInput.value || '').trim();
 
-        // UI Loading State
-        if (submitBtn) submitBtn.disabled = true;
-        if (submitBtnText) submitBtnText.textContent = 'Sending Message...';
-
-        try {
-          const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(validated)
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            if (successBox) {
-              if (successMsg && data.message) successMsg.textContent = data.message;
-              successBox.style.display = 'flex';
+          if (!name || name.length < 2) {
+            if (alertBox) {
+              alertMsg.textContent = 'Please enter your name (minimum 2 characters).';
+              alertBox.style.display = 'block';
             }
-            form.reset();
-            if (subjectInput) subjectInput.value = '[SRE Role / Opportunity]';
-            // Reset active preset button
-            presetBtns.forEach((b, idx) => {
-              if (idx === 0) b.classList.add('active');
-              else b.classList.remove('active');
+            nameInput.focus();
+            return;
+          }
+
+          if (!email || !email.includes('@') || !email.includes('.')) {
+            if (alertBox) {
+              alertMsg.textContent = 'Please enter a valid email address.';
+              alertBox.style.display = 'block';
+            }
+            emailInput.focus();
+            return;
+          }
+
+          if (!message || message.length < 10) {
+            if (alertBox) {
+              alertMsg.textContent = 'Message is too short (minimum 10 characters).';
+              alertBox.style.display = 'block';
+            }
+            messageInput.focus();
+            return;
+          }
+
+          if (submitBtn) submitBtn.disabled = true;
+          if (submitBtnText) submitBtnText.textContent = 'Sending...';
+
+          try {
+            const res = await fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email, subject, message })
             });
-          } else {
-            throw new Error(data.detail || data.message || 'Unable to send message at this time.');
+            const data = await res.json();
+            if (res.ok && data.success) {
+              if (successBox) successBox.style.display = 'block';
+              form.reset();
+              if (subjectInput) subjectInput.value = '[SRE Role / Opportunity]';
+            } else {
+              throw new Error(data.detail || data.message || 'Error delivering message.');
+            }
+          } catch (err) {
+            if (alertBox) {
+              alertMsg.textContent = err.message || 'Network error.';
+              alertBox.style.display = 'block';
+            }
+          } finally {
+            if (submitBtn) submitBtn.disabled = false;
+            if (submitBtnText) submitBtnText.textContent = 'Send Message';
           }
-        } catch (err) {
-          if (alertBox && alertMsg) {
-            alertMsg.textContent = err.message || 'Network error: could not connect to contact gateway.';
-            alertBox.style.display = 'flex';
-          }
-        } finally {
-          if (submitBtn) submitBtn.disabled = false;
-          if (submitBtnText) submitBtnText.textContent = 'Send Message';
-        }
-      });
-    }
-  });
-</script>
+        });
+      }
+
+      const copyBtn = document.getElementById('copy-payload-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const payload = `Name: ${nameInput.value}\nEmail: ${emailInput.value}\nSubject: ${subjectInput.value}\n\n${messageInput.value}`;
+          navigator.clipboard.writeText(payload).then(() => {
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
-
