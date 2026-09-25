@@ -154,51 +154,29 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 
 /* 5. SIDEBAR COMPONENTS */
 .sidebar-brand {
-  display: flex; align-items: center; gap: var(--sp-3);
-  margin-bottom: var(--sp-8); text-decoration: none; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
+  padding: var(--sp-2) var(--sp-3);
+  text-decoration: none;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-subtle);
 }
 
-/* Palette selector swatches */
-.palette-selector-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--c-text-muted);
-  margin-bottom: var(--sp-2);
-  display: block;
-}
-.palette-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: var(--sp-6);
-  align-items: center;
-}
-.palette-swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: transform var(--t-fast), border-color var(--t-fast);
-  padding: 0;
-  outline: none;
-}
-.palette-swatch:hover {
-  transform: scale(1.25);
-}
-.palette-swatch.active {
-  border-color: var(--c-text);
-  transform: scale(1.15);
-  box-shadow: 0 0 10px var(--c-accent);
-}
-.sidebar-brand img, img[alt="Sigil"] {
-  height: 40px !important;
+.sidebar-brand img, img.brand-logo {
+  height: 52px !important;
   width: auto;
   max-width: 100%;
   object-fit: contain;
   filter: var(--logo-filter);
-  transition: filter var(--t-base);
+  transition: filter var(--t-base), transform var(--t-fast);
+}
+
+.sidebar-brand:hover img {
+  transform: scale(1.02);
 }
 
 .brand-mark {
