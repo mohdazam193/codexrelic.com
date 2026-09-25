@@ -8,28 +8,29 @@
 /* 1. DESIGN TOKENS */
 
 :root {
-  --c-bg:            #0b0f14;
-  --c-surface:       #111720;
-  --c-card:          #161f2c;
-  --c-card-hover:    #1c2738;
-  --c-border:        #233042;
-  --c-border-subtle: rgba(255, 255, 255, 0.07);
+  /* Warm Soothing Dark Mode (Calm Obsidian / Zinc, Low Eye-Strain) */
+  --c-bg:            #121316;
+  --c-surface:       #181a1f;
+  --c-card:          #1f2228;
+  --c-card-hover:    #262a32;
+  --c-border:        #2b303a;
+  --c-border-subtle: rgba(255, 255, 255, 0.05);
   --c-border-accent: #38bdf8;
-  --c-text:          #f1f5f9;
-  --c-text-secondary:#94a3b8;
-  --c-text-muted:    #64748b;
-  --c-accent:        #38bdf8;
-  --c-accent-hover:  #7dd3fc;
-  --c-accent-dim:    rgba(56, 189, 248, 0.08);
-  --c-accent-glow:   0 0 24px rgba(56, 189, 248, 0.18);
-  --c-green:         #10b981;
-  --c-green-dim:     rgba(16, 185, 129, 0.10);
-  --c-red:           #f43f5e;
+  --c-text:          #e6edf3;
+  --c-text-secondary:#9ba8b8;
+  --c-text-muted:    #657383;
+  --c-accent:        #5eead4;
+  --c-accent-hover:  #2dd4bf;
+  --c-accent-dim:    rgba(94, 234, 212, 0.08);
+  --c-accent-glow:   0 0 20px rgba(94, 234, 212, 0.12);
+  --c-green:         #34d399;
+  --c-green-dim:     rgba(52, 211, 153, 0.10);
+  --c-red:           #fb7185;
   --c-amber:         #fbbf24;
-  --sidebar-w:       320px;
-  --content-max:     960px;
+  --sidebar-w:       300px;
+  --content-max:     920px;
   --logo-watermark:  url('../images/logo-dark.png');
-  --logo-filter:     hue-rotate(0deg);
+  --logo-filter:     none;
   --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
   --sp-5: 1.25rem; --sp-6: 1.5rem; --sp-8: 2rem; --sp-10: 2.5rem;
   --sp-12: 3rem; --sp-16: 4rem;
@@ -39,29 +40,28 @@
   --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 9999px;
   --t-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   --t-base: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  --grid-pattern:    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
 }
 
 [data-theme="light"] {
-  --c-bg:            #f8fafc;
+  /* Warm Soothing Light Mode (Soft Cream/Oatmeal, Zero Glare) */
+  --c-bg:            #f7f8f8;
   --c-surface:       #ffffff;
-  --c-card:          #f1f5f9;
-  --c-card-hover:    #e2e8f0;
-  --c-border:        #e2e8f0;
-  --c-border-subtle: rgba(0, 0, 0, 0.05);
-  --c-border-accent: #0284c7;
-  --c-text:          #0f172a;
+  --c-card:          #f0f2f3;
+  --c-card-hover:    #e5e8ea;
+  --c-border:        #e2e5e7;
+  --c-border-subtle: rgba(0, 0, 0, 0.04);
+  --c-border-accent: #0f766e;
+  --c-text:          #1e293b;
   --c-text-secondary:#475569;
   --c-text-muted:    #94a3b8;
-  --c-accent:        #0284c7;
-  --c-accent-hover:  #0369a1;
-  --c-accent-dim:    rgba(2, 132, 199, 0.08);
-  --c-accent-glow:   0 0 24px rgba(2, 132, 199, 0.12);
+  --c-accent:        #0f766e;
+  --c-accent-hover:  #115e59;
+  --c-accent-dim:    rgba(15, 118, 110, 0.08);
+  --c-accent-glow:   0 0 20px rgba(15, 118, 110, 0.10);
   --c-green:         #059669;
   --c-red:           #e11d48;
   --c-amber:         #d97706;
   --logo-watermark:  url('../images/logo-light.png');
-  --grid-pattern:    radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
 }
 
 /* 2. RESET */
@@ -640,22 +640,22 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
 
 .editorial-title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--c-text);
   margin: 0;
 }
 
 .editorial-title .highlight-text {
-  background: linear-gradient(135deg, var(--c-accent), #38bdf8, #818cf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--c-accent);
+  background: none;
+  -webkit-text-fill-color: initial;
 }
 
 .editorial-bio {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
   line-height: 1.75;
   color: var(--c-text-secondary);
   max-width: 680px;
