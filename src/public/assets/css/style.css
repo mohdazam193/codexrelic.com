@@ -158,24 +158,25 @@ p { color: var(--c-text-secondary); line-height: 1.8; }
   align-items: center;
   justify-content: flex-start;
   margin-bottom: var(--sp-6);
-  padding: var(--sp-3) var(--sp-2);
+  padding: var(--sp-2) 0 var(--sp-4);
   text-decoration: none;
   flex-shrink: 0;
   border-bottom: 1px solid var(--c-border);
 }
 
 .sidebar-brand img, img.brand-logo {
-  height: 64px !important;
+  height: 48px !important;
   width: auto;
   max-width: 100%;
   object-fit: contain;
   object-position: left center;
+  image-rendering: -webkit-optimize-contrast;
   filter: var(--logo-filter);
-  transition: filter var(--t-base), transform var(--t-fast), opacity var(--t-fast);
+  transition: transform var(--t-fast), opacity var(--t-fast);
 }
 
 .sidebar-brand:hover img {
-  opacity: 0.9;
+  opacity: 0.95;
   transform: scale(1.02);
 }
 
