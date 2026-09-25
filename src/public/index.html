@@ -148,145 +148,187 @@
     <div class="dashboard-layout">
       <div class="content-wrap">
 
-        <!-- Premium Bento Dashboard -->
-      <section class="bento-grid reveal" aria-label="Command Center Dashboard">
-        
-        <!-- Panel 1: Identity (2x2) -->
-        <div class="bento-panel bento-identity">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYSTEM.IDENTITY</span>
-              <span class="bento-status status-green">ONLINE</span>
+        <!-- ═══ MINIMALIST EDITORIAL & ENGINEER'S NOTEBOOK HERO ═══ -->
+        <section class="editorial-hero reveal" aria-label="Engineer's Identity">
+          <div class="editorial-status-pill">
+            <span class="status-dot"></span>
+            <span>Available for SRE &amp; Platform Architecture &bull; Hyderabad, IN</span>
+          </div>
+
+          <h1 class="editorial-title">
+            Engineering resilient platforms, <br>
+            <span class="highlight-text">eliminating toil</span>, &amp; scaling systems.
+          </h1>
+
+          <p class="editorial-bio">
+            I am <strong>Mohd Azam</strong>, a <strong>Site Reliability Engineer &amp; Platform Architect</strong> with 6+ years designing, automating, and operating high-availability cloud infrastructure for enterprise SaaS. Focused on Kubernetes orchestration, zero-trust security, distributed observability, and automated incident resilience.
+          </p>
+
+          <div class="editorial-tags">
+            <span class="editorial-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Kubernetes (AKS/EKS)</span>
+            <span class="editorial-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Terraform &amp; GitOps</span>
+            <span class="editorial-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Observability &amp; SLOs</span>
+            <span class="editorial-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> DevSecOps &amp; ACME</span>
+          </div>
+
+          <div class="editorial-actions">
+            <a href="resume.html" class="btn btn-primary">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Engineering Resume
+            </a>
+            <a href="projects.html" class="btn btn-outline">
+              Explore Case Studies &rarr;
+            </a>
+            <a href="contact.html" class="btn btn-outline" style="border-style:dashed;">
+              Get in Touch
+            </a>
+          </div>
+        </section>
+
+        <!-- ═══ SYSTEM TELEMETRY PULSE ═══ -->
+        <section class="notebook-telemetry reveal" aria-label="System Pulse & Telemetry">
+          <div class="telemetry-header">
+            <div class="telemetry-title">
+              <span class="status-dot"></span>
+              Infrastructure Pulse &amp; SRE Observability
             </div>
-            <h1 class="bento-title">Mohd Azam</h1>
-            <h2 class="bento-subtitle">Platform Engineer &amp; SRE</h2>
-            <p class="bento-desc">
-              Maintaining high-availability production architectures for enterprise SaaS. Specialist in observability platform engineering, toil elimination, and DevSecOps integrations.
-            </p>
-            <div class="bento-actions">
-              <a href="resume.html" class="btn btn-primary">View Resume</a>
-              <a href="contact.html" class="btn btn-outline">Initialize Contact</a>
+            <a href="tools.html" class="notebook-header-link">Open Diagnostic Tools &rarr;</a>
+          </div>
+
+          <div class="telemetry-grid">
+            <div class="telemetry-box">
+              <span class="telemetry-box-label">Production Core SLO</span>
+              <span class="telemetry-box-val status-ok">99.995% Uptime</span>
+            </div>
+            <div class="telemetry-box">
+              <span class="telemetry-box-label">TLS Rotation Engine</span>
+              <span class="telemetry-box-val status-ok">cert-manager &bull; ACME Active</span>
+            </div>
+            <div class="telemetry-box">
+              <span class="telemetry-box-label">CI/CD Automation</span>
+              <span class="telemetry-box-val">GitHub Actions + Azure</span>
+            </div>
+            <div class="telemetry-box">
+              <span class="telemetry-box-label">Observability Stack</span>
+              <span class="telemetry-box-val">Prometheus &bull; Grafana &bull; htop</span>
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Panel 2: Projects (2x1) -->
-        <a href="projects.html" class="bento-panel bento-projects">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">ACTIVE.DEPLOYMENTS</span>
-              <span class="bento-status status-amber">SYNCING</span>
-            </div>
-            <h3 class="bento-card-title">CodexRelic Architecture v2</h3>
-            <p class="bento-card-desc">
-              Migrating core services to a Kubernetes cluster provisioned via Terraform.
-            </p>
-            <div class="bento-tags">
-              <span class="bento-tag">Kubernetes</span>
-            </div>
+        <!-- ═══ FEATURED TECHNICAL CASE STUDIES ═══ -->
+        <section class="reveal" aria-label="Featured Technical Case Studies">
+          <div class="notebook-header">
+            <div class="notebook-header-title">Featured Production Case Studies</div>
+            <a href="projects.html" class="notebook-header-link">All Projects &rarr;</a>
           </div>
-        </a>
 
-        <!-- Panel 3: Blog (1x1) -->
-        <a href="blog.html" class="bento-panel bento-blog">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">KNOWLEDGE.BASE</span>
-            </div>
-            <h3 class="bento-card-title">Distributed Systems</h3>
-            <p class="bento-card-desc">Latest notes on highly available architecture design.</p>
-          </div>
-        </a>
-
-        <!-- Panel 4: Cinema (1x1) -->
-        <a href="movies.html" class="bento-panel bento-cinema">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">DB.CINEMA</span>
-            </div>
-            <h3 class="bento-card-title">Sci-Fi &amp; Philosophy</h3>
-            <p class="bento-card-desc">Curated catalog of favorite cinematic experiences.</p>
-          </div>
-        </a>
-
-        <!-- Panel 5: Automated Zero-Cost SSL Lifecycle Tracker (4x1) -->
-        <div class="bento-panel bento-ssl" id="ssl-tracker">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">K8S.CERT_MANAGER &bull; ZERO-COST SSL LIFECYCLE</span>
-              <span class="bento-status status-green" id="ssl-status-badge">AUTO-RENEW ACTIVE</span>
-            </div>
+          <div class="editorial-showcase-grid">
             
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:var(--sp-2);">
-              <div>
-                <h3 class="bento-card-title" style="margin-bottom:2px; font-size:1.15rem;">Automated Kubernetes TLS Rotation</h3>
-                <p class="bento-card-desc" style="margin-bottom:0; font-size:0.8rem;">
-                  Let's Encrypt ACME automated issuance via in-cluster <code>cert-manager</code> &amp; daily CI/CD health verification.
+            <!-- Case Study 1: SSL Automation -->
+            <a href="projects/automated-ssl-upgrade.html" class="editorial-card">
+              <div class="editorial-card-top">
+                <div class="editorial-card-meta">
+                  <span>PRODUCTION SRE</span>
+                  <span>90-DAY ZERO-COST CYCLE</span>
+                </div>
+                <h2 class="editorial-card-title">
+                  Zero-Cost Automated TLS/SSL Rotation Engine
+                  <svg class="editorial-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </h2>
+                <p class="editorial-card-desc">
+                  Eliminated manual certificate renewal toil and commercial SSL costs by implementing Kubernetes cert-manager with Let's Encrypt ACME HTTP-01 solvers and automated CI/CD expiry guards.
                 </p>
+                <div class="editorial-card-highlights">
+                  <div>&bull; Auto-renewal window triggered at &le; 30 days</div>
+                  <div>&bull; Multi-namespace certificate sync (prod/stage/uat)</div>
+                  <div>&bull; 100% human-error elimination on certificate expiry</div>
+                </div>
               </div>
-              <a href="projects.html#ssl-automation" class="btn btn-outline btn-sm" style="font-size:0.75rem; padding:4px 10px;">
-                View SRE Spec &rarr;
-              </a>
-            </div>
+              <div class="editorial-card-bottom">
+                <div class="editorial-card-stack">
+                  <span class="stack-pill">Kubernetes</span>
+                  <span class="stack-pill">cert-manager</span>
+                  <span class="stack-pill">Let's Encrypt</span>
+                  <span class="stack-pill">NGINX Ingress</span>
+                </div>
+                <span class="notebook-header-link">Case Study &rarr;</span>
+              </div>
+            </a>
 
-            <!-- 4-Metric Telemetry Cards -->
-            <div class="ssl-tracker-grid">
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Last Audit Run</span>
-                <span class="ssl-item-val" id="ssl-last-check">Daily @ 00:00 UTC</span>
-                <span class="ssl-item-sub">Azure DevOps Pipeline</span>
+            <!-- Case Study 2: Infrastructure as Code -->
+            <a href="projects.html#infra-modernization" class="editorial-card">
+              <div class="editorial-card-top">
+                <div class="editorial-card-meta">
+                  <span>CLOUD ARCHITECTURE</span>
+                  <span>ENTERPRISE HA</span>
+                </div>
+                <h2 class="editorial-card-title">
+                  Enterprise Kubernetes Platform on Terraform
+                  <svg class="editorial-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </h2>
+                <p class="editorial-card-desc">
+                  Fully reproducible, modular infrastructure-as-code deployment for high-density microservices workloads with automated node auto-scaling, network policies, and RBAC isolation.
+                </p>
+                <div class="editorial-card-highlights">
+                  <div>&bull; Terraform state locking &amp; modular VPC peering</div>
+                  <div>&bull; Calico network policies with zero-trust posture</div>
+                  <div>&bull; GitOps synchronization via ArgoCD</div>
+                </div>
               </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Certificate Health</span>
-                <span class="ssl-item-val" style="color:var(--c-green);">&bull; 4/4 Namespaces OK</span>
-                <span class="ssl-item-sub">prod &bull; stage &bull; uat &bull; observe</span>
+              <div class="editorial-card-bottom">
+                <div class="editorial-card-stack">
+                  <span class="stack-pill">Terraform</span>
+                  <span class="stack-pill">Azure / AWS</span>
+                  <span class="stack-pill">ArgoCD</span>
+                  <span class="stack-pill">Calico</span>
+                </div>
+                <span class="notebook-header-link">Architecture &rarr;</span>
               </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Auto-Renew Window</span>
-                <span class="ssl-item-val" id="ssl-renew-trigger">&le; 30 Days Remaining</span>
-                <span class="ssl-item-sub">Short 90-Day ACME Cycle</span>
-              </div>
-
-              <div class="ssl-tracker-item">
-                <span class="ssl-item-label">Issuer &amp; Cipher</span>
-                <span class="ssl-item-val">Let's Encrypt E6</span>
-                <span class="ssl-item-sub">TLS 1.3 &bull; RSA 2048 &bull; HTTP-01</span>
-              </div>
-            </div>
-
-            <!-- Progress countdown bar -->
-            <div class="ssl-progress-wrap">
-              <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.7rem; color:var(--c-text-muted); flex-wrap:wrap; gap:4px;">
-                <span>Current Status: <strong style="color:var(--c-green);">100% Valid &amp; Ready</strong></span>
-                <span id="ssl-next-renew-text">Next Auto-Rotation Window: in ~38 Days</span>
-              </div>
-              <div class="ssl-progress-bar">
-                <div class="ssl-progress-fill" id="ssl-progress-fill" style="width: 72%;"></div>
-              </div>
-            </div>
+            </a>
 
           </div>
-        </div>
+        </section>
 
-        <!-- Panel 6: Terminal (4x1) -->
-        <div class="bento-panel bento-terminal">
-          <div class="bento-panel-inner">
-            <div class="bento-header">
-              <span class="bento-label">SYSTEM.OBSERVABILITY</span>
-              <span class="bento-status status-green">HEALTHY</span>
-            </div>
-            <div class="terminal-output">
-              <div class="term-line"><span class="term-time">[00:00:02]</span> <span class="term-info">AUDIT</span> cert-manager: Daily SSL scan completed. 4/4 namespaces READY=True.</div>
-              <div class="term-line"><span class="term-time">[14:02:45]</span> <span class="term-info">INFO</span> core-router: Traffic successfully routed to Ingress Gateway.</div>
-              <div class="term-line"><span class="term-time">[14:02:46]</span> <span class="term-info">INFO</span> telemetry-agent: SLO tracking active. Current uptime: 99.998%.</div>
-              <div class="term-line"><span class="term-time">[14:03:01]</span> <span class="term-info">INFO</span> tls-engine: Auto-rotation trigger armed for short-expiry threshold.<span class="term-cursor"></span></div>
-            </div>
+        <!-- ═══ NOTEBOOK ENTRIES & QUICK ACCESS ═══ -->
+        <section class="reveal" aria-label="Notebook Sections">
+          <div class="notebook-header">
+            <div class="notebook-header-title">Engineer's Notebook &amp; Sections</div>
           </div>
-        </div>
 
-      </section>
+          <div class="notebook-links-grid">
+            <a href="blog.html" class="notebook-link-card">
+              <div class="notebook-link-info">
+                <span class="notebook-link-title">Engineering Blog</span>
+                <span class="notebook-link-subtitle">Notes on distributed systems &amp; postmortems</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+
+            <a href="tech-news.html" class="notebook-link-card">
+              <div class="notebook-link-info">
+                <span class="notebook-link-title">Tech &amp; SRE News</span>
+                <span class="notebook-link-subtitle">Curated feeds on platform &amp; cloud engineering</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+
+            <a href="tools.html" class="notebook-link-card">
+              <div class="notebook-link-info">
+                <span class="notebook-link-title">SRE Utilities</span>
+                <span class="notebook-link-subtitle">Subnet calculator, TLS inspectors &amp; converters</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+
+            <a href="community.html" class="notebook-link-card">
+              <div class="notebook-link-info">
+                <span class="notebook-link-title">Tech Events &amp; Meetups</span>
+                <span class="notebook-link-subtitle">Community conferences, talks &amp; presentations</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </section>
       </div>
 
     <!-- ═══ RIGHT SIDEBAR (BIFURCATION) ══════════════════ -->
