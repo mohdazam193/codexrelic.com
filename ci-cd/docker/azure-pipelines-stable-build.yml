@@ -24,14 +24,18 @@ pool:
 
 variables:
   # 3-Point Semantic Versioning: Major.Minor.Patch
-  # Patch auto-increments with $[counter(variables['minorVersion'], 0)] or $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 0)]
+  # Patch auto-increments with $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 1)]
   majorVersion: '1'
   minorVersion: '0'
   patchVersion: $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 1)]
   
-  # Image & Service Connection Definitions
-  imageName: 'aazammohammad193/codexrelic-api'
-  dockerRegistryServiceConnection: 'dockerhub-connection'
+  # CloudRepo Container Registry Configuration
+  cloudRepoRegistryUrl: 'codexrelic.mycloudrepo.io'
+  imageRepository: 'codexrelic-api'
+  fullImageName: '$(cloudRepoRegistryUrl)/$(imageRepository)'
+  
+  # Azure DevOps Service Connection (Docker Registry connection configured with CloudRepo URL)
+  dockerRegistryServiceConnection: 'cloudrepo-connection'
   snykServiceConnection: 'Synk'
 
 stages:
@@ -47,9 +51,10 @@ stages:
     - script: |
         echo "=========================================="
         echo "Evaluating Stable Build Version: $(Build.BuildNumber)"
+        echo "Registry Target: $(fullImageName)"
         echo "Major: $(majorVersion) | Minor: $(minorVersion) | Patch: $(patchVersion)"
         echo "=========================================="
-      displayName: 'Print Semantic Version'
+      displayName: 'Print Semantic Version & Registry'
 
     - script: |
         echo "Installing Python dependencies for linting & tests..."
@@ -83,7 +88,7 @@ stages:
       displayName: 'Setup Multi-Arch QEMU'
 
     - task: Docker@2
-      displayName: 'Login to DockerHub Container Registry'
+      displayName: 'Login to CloudRepo Registry'
       inputs:
         command: login
         containerRegistry: $(dockerRegistryServiceConnection)
@@ -91,14 +96,14 @@ stages:
     - script: |
         docker buildx create --name stable-builder --driver docker-container --use --driver-opt network=host || docker buildx use stable-builder
         
-        # Build image locally with 3-point version tags
+        # Build image locally with 3-point version tags for CloudRepo
         docker buildx build \
           --platform linux/arm64 \
-          --cache-from type=registry,ref=$(imageName):buildcache \
-          --cache-to type=registry,ref=$(imageName):buildcache,mode=max \
+          --cache-from type=registry,ref=$(fullImageName):buildcache \
+          --cache-to type=registry,ref=$(fullImageName):buildcache,mode=max \
           --load \
-          -t $(imageName):$(Build.BuildNumber) \
-          -t $(imageName):latest \
+          -t $(fullImageName):$(Build.BuildNumber) \
+          -t $(fullImageName):latest \
           -f docker/Dockerfile .
       displayName: 'Build Production Image ($(Build.BuildNumber))'
 
@@ -107,7 +112,7 @@ stages:
       inputs:
         serviceConnectionEndpoint: $(snykServiceConnection)
         testType: 'container'
-        dockerImageName: '$(imageName):$(Build.BuildNumber)'
+        dockerImageName: '$(fullImageName):$(Build.BuildNumber)'
         dockerfilePath: 'docker/Dockerfile'
         monitorWhen: 'always'
         failOnIssues: true
@@ -129,20 +134,20 @@ stages:
   condition: succeeded()
   jobs:
   - job: PushToRegistry
-    displayName: "Push 3-Point Semantic Version ($(Build.BuildNumber))"
+    displayName: "Push 3-Point Semantic Version to CloudRepo"
     steps:
     - task: Docker@2
-      displayName: 'Login to Container Registry'
+      displayName: 'Login to CloudRepo'
       inputs:
         command: login
         containerRegistry: $(dockerRegistryServiceConnection)
 
     - script: |
-        echo "Pushing verified stable build $(Build.BuildNumber) and latest to Cloud Repository..."
-        docker push $(imageName):$(Build.BuildNumber)
-        docker push $(imageName):latest
-        echo "Successfully published stable version $(Build.BuildNumber) to $(imageName)"
-      displayName: 'Push Image with 3-Point Version'
+        echo "Pushing verified stable build $(Build.BuildNumber) and latest to CloudRepo (codexrelic.mycloudrepo.io)..."
+        docker push $(fullImageName):$(Build.BuildNumber)
+        docker push $(fullImageName):latest
+        echo "Successfully published stable version $(Build.BuildNumber) to $(fullImageName)"
+      displayName: 'Push Image to CloudRepo'
 
     - script: |
         echo "##vso[task.setvariable variable=STABLE_VERSION;isOutput=true]$(Build.BuildNumber)"
