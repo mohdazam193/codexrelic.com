@@ -1,0 +1,151 @@
+name: $(majorVersion).$(minorVersion).$(patchVersion)
+
+# Triggers only when commits land on the main branch
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - src/**
+      - docker/**
+      - kubernetes/**
+      - ci-cd/docker/**
+    exclude:
+      - iac/**
+      - docs/**
+      - old/**
+      - README.md
+
+pr: none # Do not build pull requests to prevent intermediate/noise builds
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # 3-Point Semantic Versioning: Major.Minor.Patch
+  # Patch auto-increments with $[counter(variables['minorVersion'], 0)] or $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 0)]
+  majorVersion: '1'
+  minorVersion: '0'
+  patchVersion: $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 1)]
+  
+  # Image & Service Connection Definitions
+  imageName: 'aazammohammad193/codexrelic-api'
+  dockerRegistryServiceConnection: 'dockerhub-connection'
+  snykServiceConnection: 'Synk'
+
+stages:
+# ═════════════════════════════════════════════════════════════════════════════════
+# STAGE 1: VALIDATE & BUILD STABLE IMAGE (Quality Gates + Security + Test)
+# ═════════════════════════════════════════════════════════════════════════════════
+- stage: ValidateAndBuild
+  displayName: "Quality & Security Gates"
+  jobs:
+  - job: TestAndScan
+    displayName: "Static Analysis, Security & ARM64 Build"
+    steps:
+    - script: |
+        echo "=========================================="
+        echo "Evaluating Stable Build Version: $(Build.BuildNumber)"
+        echo "Major: $(majorVersion) | Minor: $(minorVersion) | Patch: $(patchVersion)"
+        echo "=========================================="
+      displayName: 'Print Semantic Version'
+
+    - script: |
+        echo "Installing Python dependencies for linting & tests..."
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r src/requirements.txt pytest flake8
+      displayName: 'Install Test & Lint Dependencies'
+
+    - script: |
+        echo "Running Python syntax validation..."
+        python3 -m flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
+      displayName: 'Validate Code Integrity'
+
+    - task: SnykSecurityScan@1
+      displayName: 'Snyk SCA Dependency Security Gate'
+      inputs:
+        serviceConnectionEndpoint: $(snykServiceConnection)
+        testType: 'app'
+        targetFile: 'src/requirements.txt'
+        monitorWhen: 'always'
+        failOnIssues: true
+        severityThreshold: 'high'
+
+    - script: |
+        echo "Injecting 3-point semantic version into UI assets..."
+        find src/public -type f -name "*.html" -exec sed -i "s/codexrelic.com v1.0.0/codexrelic.com v$(Build.BuildNumber)/g" {} +
+      displayName: 'Inject 3-Point Version $(Build.BuildNumber)'
+
+    - script: |
+        echo "Setting up QEMU for multi-arch ARM64 build..."
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      displayName: 'Setup Multi-Arch QEMU'
+
+    - task: Docker@2
+      displayName: 'Login to DockerHub Container Registry'
+      inputs:
+        command: login
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+    - script: |
+        docker buildx create --name stable-builder --driver docker-container --use --driver-opt network=host || docker buildx use stable-builder
+        
+        # Build image locally with 3-point version tags
+        docker buildx build \
+          --platform linux/arm64 \
+          --cache-from type=registry,ref=$(imageName):buildcache \
+          --cache-to type=registry,ref=$(imageName):buildcache,mode=max \
+          --load \
+          -t $(imageName):$(Build.BuildNumber) \
+          -t $(imageName):latest \
+          -f docker/Dockerfile .
+      displayName: 'Build Production Image ($(Build.BuildNumber))'
+
+    - task: SnykSecurityScan@1
+      displayName: 'Snyk Container Vulnerability Gate'
+      inputs:
+        serviceConnectionEndpoint: $(snykServiceConnection)
+        testType: 'container'
+        dockerImageName: '$(imageName):$(Build.BuildNumber)'
+        dockerfilePath: 'docker/Dockerfile'
+        monitorWhen: 'always'
+        failOnIssues: true
+        severityThreshold: 'high'
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Kubernetes Manifests'
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/kubernetes'
+        artifact: 'k8s-manifests'
+        publishLocation: 'pipeline'
+
+# ═════════════════════════════════════════════════════════════════════════════════
+# STAGE 2: PUSH STABLE BUILD TO CLOUD REPOSITORY (Only executed when Stage 1 passes)
+# ═════════════════════════════════════════════════════════════════════════════════
+- stage: PushStableRelease
+  displayName: "Push Stable Release to CloudRepo"
+  dependsOn: ValidateAndBuild
+  condition: succeeded()
+  jobs:
+  - job: PushToRegistry
+    displayName: "Push 3-Point Semantic Version ($(Build.BuildNumber))"
+    steps:
+    - task: Docker@2
+      displayName: 'Login to Container Registry'
+      inputs:
+        command: login
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+    - script: |
+        echo "Pushing verified stable build $(Build.BuildNumber) and latest to Cloud Repository..."
+        docker push $(imageName):$(Build.BuildNumber)
+        docker push $(imageName):latest
+        echo "Successfully published stable version $(Build.BuildNumber) to $(imageName)"
+      displayName: 'Push Image with 3-Point Version'
+
+    - script: |
+        echo "##vso[task.setvariable variable=STABLE_VERSION;isOutput=true]$(Build.BuildNumber)"
+        echo "Stable Build $(Build.BuildNumber) marked as READY for deployment."
+      name: MarkStable
+      displayName: 'Tag Release Milestone'
