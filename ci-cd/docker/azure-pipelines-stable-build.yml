@@ -88,10 +88,19 @@ stages:
       displayName: 'Setup Multi-Arch QEMU'
 
     - task: Docker@2
-      displayName: 'Login to CloudRepo Registry'
+      displayName: 'Login to CloudRepo (Service Connection)'
+      condition: eq(variables['useServiceConnection'], 'true')
       inputs:
         command: login
         containerRegistry: $(dockerRegistryServiceConnection)
+
+    - script: |
+        if [ -n "$(CLOUDREPO_API_KEY)" ]; then
+          echo "Logging into CloudRepo using API Key secret..."
+          echo "$(CLOUDREPO_API_KEY)" | docker login $(cloudRepoRegistryUrl) -u "$(CLOUDREPO_USER)" --password-stdin
+        fi
+      displayName: 'Login to CloudRepo (API Key Token)'
+      condition: ne(variables['useServiceConnection'], 'true')
 
     - script: |
         docker buildx create --name stable-builder --driver docker-container --use --driver-opt network=host || docker buildx use stable-builder
@@ -137,10 +146,19 @@ stages:
     displayName: "Push 3-Point Semantic Version to CloudRepo"
     steps:
     - task: Docker@2
-      displayName: 'Login to CloudRepo'
+      displayName: 'Login to CloudRepo (Service Connection)'
+      condition: eq(variables['useServiceConnection'], 'true')
       inputs:
         command: login
         containerRegistry: $(dockerRegistryServiceConnection)
+
+    - script: |
+        if [ -n "$(CLOUDREPO_API_KEY)" ]; then
+          echo "Logging into CloudRepo using API Key secret..."
+          echo "$(CLOUDREPO_API_KEY)" | docker login $(cloudRepoRegistryUrl) -u "$(CLOUDREPO_USER)" --password-stdin
+        fi
+      displayName: 'Login to CloudRepo (API Key Token)'
+      condition: ne(variables['useServiceConnection'], 'true')
 
     - script: |
         echo "Pushing verified stable build $(Build.BuildNumber) and latest to CloudRepo (codexrelic.mycloudrepo.io)..."
