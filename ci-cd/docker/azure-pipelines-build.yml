@@ -18,6 +18,7 @@ variables:
   imageName: 'aazammohammad193/codexrelic-api'
   dockerRegistryServiceConnection: 'dockerhub-connection' # Replace with actual connection name
   snykServiceConnection: 'Synk' # Matching the user's existing Service Connection name
+  PIP_CACHE_DIR: $(Pipeline.Workspace)/.pip
 
 stages:
 - stage: BuildAndScan
@@ -33,18 +34,25 @@ stages:
         trufflehog filesystem . || echo "TruffleHog found secrets, but we are running in Audit Mode so the build will not fail."
       displayName: 'Run TruffleHog Secret Scan'
 
+    - task: Cache@2
+      displayName: 'Cache Python Pip Packages'
+      inputs:
+        key: 'pip | "$(Agent.OS)" | src/requirements.txt'
+        restoreKeys: |
+          pip | "$(Agent.OS)"
+        path: $(PIP_CACHE_DIR)
+
     - script: |
         echo "Installing Python dependencies so Snyk can build the dependency tree..."
-        python3 -m pip install --upgrade pip
         for attempt in 1 2 3; do
           echo "Attempt $attempt: Installing dependencies..."
-          python3 -m pip install --upgrade --default-timeout=100 --retries 5 -r src/requirements.txt && break || {
+          python3 -m pip install --prefer-binary --no-compile --default-timeout=60 --retries 3 -r src/requirements.txt && break || {
             if [ "$attempt" -eq 3 ]; then
               echo "Failed to install dependencies after 3 attempts."
               exit 1
             fi
-            echo "Retrying in 10 seconds..."
-            sleep 10
+            echo "Retrying in 5 seconds..."
+            sleep 5
           }
         done
       displayName: 'Install Dependencies for Snyk SCA'

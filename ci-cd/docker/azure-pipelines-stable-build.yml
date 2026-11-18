@@ -20,147 +20,155 @@ trigger:
 pr: none # Do not build pull requests to prevent intermediate/noise builds
 
 pool:
-  vmImage: 'ubuntu-26.04'
+  vmImage: "ubuntu-26.04"
 
 variables:
   # 3-Point Semantic Versioning: Major.Minor.Patch
   # Patch auto-increments with $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 1)]
-  majorVersion: '1'
-  minorVersion: '0'
+  majorVersion: "1"
+  minorVersion: "0"
   patchVersion: $[counter(format('{0}.{1}', variables['majorVersion'], variables['minorVersion']), 1)]
-  
+
   # CloudRepo Container Registry Configuration
-  cloudRepoRegistryUrl: 'codexrelic.mycloudrepo.io'
-  imageRepository: 'codexrelic-api'
-  fullImageName: '$(cloudRepoRegistryUrl)/$(imageRepository)'
-  
+  cloudRepoRegistryUrl: "codexrelic.mycloudrepo.io"
+  imageRepository: "codexrelic-api"
+  fullImageName: "$(cloudRepoRegistryUrl)/$(imageRepository)"
+
   # Azure DevOps Service Connection (Docker Registry connection configured with CloudRepo URL)
-  dockerRegistryServiceConnection: 'cloudrepo-connection'
-  snykServiceConnection: 'Synk'
+  dockerRegistryServiceConnection: "cloudrepo-connection"
+  snykServiceConnection: "Synk"
+  PIP_CACHE_DIR: $(Pipeline.Workspace)/.pip
 
 stages:
-# ═════════════════════════════════════════════════════════════════════════════════
-# STAGE 1: VALIDATE & BUILD STABLE IMAGE (Quality Gates + Security + Test)
-# ═════════════════════════════════════════════════════════════════════════════════
-- stage: ValidateAndBuild
-  displayName: "Quality & Security Gates"
-  jobs:
-  - job: TestAndScan
-    displayName: "Static Analysis, Security & ARM64 Build"
-    steps:
-    - script: |
-        echo "=========================================="
-        echo "Evaluating Stable Build Version: $(Build.BuildNumber)"
-        echo "Registry Target: $(fullImageName)"
-        echo "Major: $(majorVersion) | Minor: $(minorVersion) | Patch: $(patchVersion)"
-        echo "=========================================="
-      displayName: 'Print Semantic Version & Registry'
+  # ═════════════════════════════════════════════════════════════════════════════════
+  # STAGE 1: VALIDATE & BUILD STABLE IMAGE (Quality Gates + Security + Test)
+  # ═════════════════════════════════════════════════════════════════════════════════
+  - stage: ValidateAndBuild
+    displayName: "Quality & Security Gates"
+    jobs:
+      - job: TestAndScan
+        displayName: "Static Analysis, Security & ARM64 Build"
+        steps:
+          - script: |
+              echo "=========================================="
+              echo "Evaluating Stable Build Version: $(Build.BuildNumber)"
+              echo "Registry Target: $(fullImageName)"
+              echo "Major: $(majorVersion) | Minor: $(minorVersion) | Patch: $(patchVersion)"
+              echo "=========================================="
+            displayName: "Print Semantic Version & Registry"
 
-    - script: |
-        echo "Installing Python dependencies for linting & tests..."
-        python3 -m pip install --upgrade pip
-        for attempt in 1 2 3; do
-          echo "Attempt $attempt: Installing dependencies..."
-          python3 -m pip install --default-timeout=100 --retries 5 -r src/requirements.txt pytest flake8 && break || {
-            if [ "$attempt" -eq 3 ]; then
-              echo "Failed to install dependencies after 3 attempts."
-              exit 1
-            fi
-            echo "Retrying in 10 seconds..."
-            sleep 10
-          }
-        done
-      displayName: 'Install Test & Lint Dependencies'
+          - task: Cache@2
+            displayName: "Cache Python Pip Packages"
+            inputs:
+              key: 'pip | "$(Agent.OS)" | src/requirements.txt'
+              restoreKeys: |
+                pip | "$(Agent.OS)"
+              path: $(PIP_CACHE_DIR)
 
-    - script: |
-        echo "Running Python syntax validation..."
-        python3 -m flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
-      displayName: 'Validate Code Integrity'
+          - script: |
+              echo "Installing Python dependencies for linting & tests..."
+              for attempt in 1 2 3; do
+                echo "Attempt $attempt: Installing dependencies..."
+                python3 -m pip install --prefer-binary --no-compile --default-timeout=60 --retries 3 -r src/requirements.txt pytest flake8 && break || {
+                  if [ "$attempt" -eq 3 ]; then
+                    echo "Failed to install dependencies after 3 attempts."
+                    exit 1
+                  fi
+                  echo "Retrying in 5 seconds..."
+                  sleep 5
+                }
+              done
+            displayName: "Install Test & Lint Dependencies"
 
-    - task: SnykSecurityScan@1
-      displayName: 'Snyk SCA Dependency Security Gate'
-      inputs:
-        serviceConnectionEndpoint: $(snykServiceConnection)
-        testType: 'app'
-        targetFile: 'src/requirements.txt'
-        monitorWhen: 'always'
-        failOnIssues: true
-        severityThreshold: 'high'
+          - script: |
+              echo "Running Python syntax validation..."
+              python3 -m flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
+            displayName: "Validate Code Integrity"
 
-    - script: |
-        echo "Injecting 3-point semantic version into UI assets..."
-        find src/public -type f -name "*.html" -exec sed -i "s/codexrelic.com v1.0.0/codexrelic.com v$(Build.BuildNumber)/g" {} +
-      displayName: 'Inject 3-Point Version $(Build.BuildNumber)'
+          - task: SnykSecurityScan@1
+            displayName: "Snyk SCA Dependency Security Gate"
+            inputs:
+              serviceConnectionEndpoint: $(snykServiceConnection)
+              testType: "app"
+              targetFile: "src/requirements.txt"
+              monitorWhen: "always"
+              failOnIssues: true
+              severityThreshold: "high"
 
-    - script: |
-        echo "Setting up QEMU for multi-arch ARM64 build..."
-        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      displayName: 'Setup Multi-Arch QEMU'
+          - script: |
+              echo "Injecting 3-point semantic version into UI assets..."
+              find src/public -type f -name "*.html" -exec sed -i "s/codexrelic.com v1.0.0/codexrelic.com v$(Build.BuildNumber)/g" {} +
+            displayName: "Inject 3-Point Version $(Build.BuildNumber)"
 
-    - task: Docker@2
-      displayName: 'Login to CloudRepo'
-      inputs:
-        command: login
-        containerRegistry: $(dockerRegistryServiceConnection)
+          - script: |
+              echo "Setting up QEMU for multi-arch ARM64 build..."
+              docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            displayName: "Setup Multi-Arch QEMU"
 
-    - script: |
-        docker buildx create --name stable-builder --driver docker-container --use --driver-opt network=host || docker buildx use stable-builder
-        
-        # Build image locally with 3-point version tags for CloudRepo
-        docker buildx build \
-          --platform linux/arm64 \
-          --cache-from type=registry,ref=$(fullImageName):buildcache \
-          --cache-to type=registry,ref=$(fullImageName):buildcache,mode=max \
-          --load \
-          -t $(fullImageName):$(Build.BuildNumber) \
-          -t $(fullImageName):latest \
-          -f docker/Dockerfile .
-      displayName: 'Build Production Image ($(Build.BuildNumber))'
+          - task: Docker@2
+            displayName: "Login to CloudRepo"
+            inputs:
+              command: login
+              containerRegistry: $(dockerRegistryServiceConnection)
 
-    - task: SnykSecurityScan@1
-      displayName: 'Snyk Container Vulnerability Gate'
-      inputs:
-        serviceConnectionEndpoint: $(snykServiceConnection)
-        testType: 'container'
-        dockerImageName: '$(fullImageName):$(Build.BuildNumber)'
-        dockerfilePath: 'docker/Dockerfile'
-        monitorWhen: 'always'
-        failOnIssues: true
-        severityThreshold: 'high'
+          - script: |
+              docker buildx create --name stable-builder --driver docker-container --use --driver-opt network=host || docker buildx use stable-builder
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Kubernetes Manifests'
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/kubernetes'
-        artifact: 'k8s-manifests'
-        publishLocation: 'pipeline'
+              # Build image locally with 3-point version tags for CloudRepo
+              docker buildx build \
+                --platform linux/arm64 \
+                --cache-from type=registry,ref=$(fullImageName):buildcache \
+                --cache-to type=registry,ref=$(fullImageName):buildcache,mode=max \
+                --load \
+                -t $(fullImageName):$(Build.BuildNumber) \
+                -t $(fullImageName):latest \
+                -f docker/Dockerfile .
+            displayName: "Build Production Image ($(Build.BuildNumber))"
 
-# ═════════════════════════════════════════════════════════════════════════════════
-# STAGE 2: PUSH STABLE BUILD TO CLOUD REPOSITORY (Only executed when Stage 1 passes)
-# ═════════════════════════════════════════════════════════════════════════════════
-- stage: PushStableRelease
-  displayName: "Push Stable Release to CloudRepo"
-  dependsOn: ValidateAndBuild
-  condition: succeeded()
-  jobs:
-  - job: PushToRegistry
-    displayName: "Push 3-Point Semantic Version to CloudRepo"
-    steps:
-    - task: Docker@2
-      displayName: 'Login to CloudRepo'
-      inputs:
-        command: login
-        containerRegistry: $(dockerRegistryServiceConnection)
+          - task: SnykSecurityScan@1
+            displayName: "Snyk Container Vulnerability Gate"
+            inputs:
+              serviceConnectionEndpoint: $(snykServiceConnection)
+              testType: "container"
+              dockerImageName: "$(fullImageName):$(Build.BuildNumber)"
+              dockerfilePath: "docker/Dockerfile"
+              monitorWhen: "always"
+              failOnIssues: true
+              severityThreshold: "high"
 
-    - script: |
-        echo "Pushing verified stable build $(Build.BuildNumber) and latest to CloudRepo (codexrelic.mycloudrepo.io)..."
-        docker push $(fullImageName):$(Build.BuildNumber)
-        docker push $(fullImageName):latest
-        echo "Successfully published stable version $(Build.BuildNumber) to $(fullImageName)"
-      displayName: 'Push Image to CloudRepo'
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Kubernetes Manifests"
+            inputs:
+              targetPath: "$(System.DefaultWorkingDirectory)/kubernetes"
+              artifact: "k8s-manifests"
+              publishLocation: "pipeline"
 
-    - script: |
-        echo "##vso[task.setvariable variable=STABLE_VERSION;isOutput=true]$(Build.BuildNumber)"
-        echo "Stable Build $(Build.BuildNumber) marked as READY for deployment."
-      name: MarkStable
-      displayName: 'Tag Release Milestone'
+  # ═════════════════════════════════════════════════════════════════════════════════
+  # STAGE 2: PUSH STABLE BUILD TO CLOUD REPOSITORY (Only executed when Stage 1 passes)
+  # ═════════════════════════════════════════════════════════════════════════════════
+  - stage: PushStableRelease
+    displayName: "Push Stable Release to CloudRepo"
+    dependsOn: ValidateAndBuild
+    condition: succeeded()
+    jobs:
+      - job: PushToRegistry
+        displayName: "Push 3-Point Semantic Version to CloudRepo"
+        steps:
+          - task: Docker@2
+            displayName: "Login to CloudRepo"
+            inputs:
+              command: login
+              containerRegistry: $(dockerRegistryServiceConnection)
+
+          - script: |
+              echo "Pushing verified stable build $(Build.BuildNumber) and latest to CloudRepo (codexrelic.mycloudrepo.io)..."
+              docker push $(fullImageName):$(Build.BuildNumber)
+              docker push $(fullImageName):latest
+              echo "Successfully published stable version $(Build.BuildNumber) to $(fullImageName)"
+            displayName: "Push Image to CloudRepo"
+
+          - script: |
+              echo "##vso[task.setvariable variable=STABLE_VERSION;isOutput=true]$(Build.BuildNumber)"
+              echo "Stable Build $(Build.BuildNumber) marked as READY for deployment."
+            name: MarkStable
+            displayName: "Tag Release Milestone"
