@@ -20,7 +20,7 @@ trigger:
 pr: none # Do not build pull requests to prevent intermediate/noise builds
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-26.04'
 
 variables:
   # 3-Point Semantic Versioning: Major.Minor.Patch

@@ -12,7 +12,7 @@ trigger:
       - iac/**
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-26.04'
 
 variables:
   imageName: 'aazammohammad193/codexrelic-api'
