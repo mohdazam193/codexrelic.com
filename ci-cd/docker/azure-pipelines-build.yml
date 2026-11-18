@@ -38,7 +38,7 @@ stages:
         python3 -m pip install --upgrade pip
         for attempt in 1 2 3; do
           echo "Attempt $attempt: Installing dependencies..."
-          python3 -m pip install --default-timeout=100 --retries 5 -r src/requirements.txt && break || {
+          python3 -m pip install --upgrade --default-timeout=100 --retries 5 -r src/requirements.txt && break || {
             if [ "$attempt" -eq 3 ]; then
               echo "Failed to install dependencies after 3 attempts."
               exit 1
