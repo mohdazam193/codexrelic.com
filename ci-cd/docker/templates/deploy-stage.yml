@@ -132,6 +132,7 @@ stages:
             inputs:
               sshEndpoint: 'oci-vm-ssh'
               runOptions: 'inline'
+              failOnStdErr: false
               inline: |
                 cd ${{ parameters.deployFolder }}
                 
